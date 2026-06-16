@@ -11,10 +11,11 @@ import { InspectorPanel } from "./InspectorPanel";
 import { ValidationDrawer } from "./ValidationDrawer";
 import { VersionSelector } from "./VersionSelector";
 import { MaterialsPanel } from "./MaterialsPanel";
-import { placeHeads } from "@/lib/domain/placement";
+import { placeHeads, pointInPolygon } from "@/lib/domain/placement";
+import { resolveHeadAssembly } from "@/lib/catalog/compat";
 import { validateDesign } from "@/lib/domain/validation";
 import { buildMaterialList, calculateMaterialTotal } from "@/lib/domain/materials";
-import { generateId } from "@/lib/utils";
+import { generateId, distanceBetweenPoints, POLYGON_CLOSE_RADIUS } from "@/lib/utils";
 import type { CatalogItemData, DesignDocument, Point, PricingProfileData } from "@/lib/domain/types";
 import type { DesignVersion, Project } from "@prisma/client";
 import { DesignTour, TourHelpButton } from "./tour/DesignTour";
@@ -100,84 +101,7 @@ export function DesignWorkspace({
     return imageUrl;
   }, [document.propertyImage?.blobPath, imageUrl]);
 
-  const handleCanvasClick = useCallback(
-    (point: Point) => {
-      if (activeTool === "scale") {
-        if (!scalePointA) {
-          setScalePointA(point);
-        } else if (!scalePointB) {
-          setScalePointB(point);
-        }
-        return;
-      }
-
-      if (activeTool === "hydrozone" || activeTool === "exclusion") {
-        addDrawingVertex(point);
-        return;
-      }
-
-      if (activeTool === "head") {
-        const zoneId = document.zones[0]?.id;
-        if (!zoneId) {
-          toast.error("Create a zone first");
-          return;
-        }
-        const nozzle = catalog.find((c) => c.id === "cat_nozzle_12h") || catalog[0];
-        if (!nozzle) return;
-        const head = {
-          id: generateId("head"),
-          zoneId,
-          position: point,
-          catalogItemId: nozzle.id,
-          arcDegrees: 360,
-          radiusFeet: (nozzle.specs.radiusFeet as number) || 12,
-          rotationDegrees: 0,
-          locked: false,
-        };
-        setDocument({ ...document, heads: [...document.heads, head] });
-        return;
-      }
-
-      if (activeTool === "pipe") {
-        const zoneId = document.zones[0]?.id;
-        if (!zoneId) {
-          toast.error("Create a zone first");
-          return;
-        }
-        const pipeItem = catalog.find((c) => c.category === "PIPE");
-        const newVertices = [...drawingVertices, point];
-        if (newVertices.length >= 2) {
-          const pipe = {
-            id: generateId("pipe"),
-            zoneId,
-            catalogItemId: pipeItem?.id ?? "cat_pipe_1pvc",
-            points: newVertices,
-            diameterInches: 1,
-            material: "PVC",
-          };
-          setDocument({ ...document, pipes: [...document.pipes, pipe] });
-          clearDrawing();
-        } else {
-          addDrawingVertex(point);
-        }
-      }
-    },
-    [
-      activeTool,
-      scalePointA,
-      scalePointB,
-      setScalePointA,
-      setScalePointB,
-      addDrawingVertex,
-      document,
-      catalog,
-      setDocument,
-      drawingVertices,
-      clearDrawing,
-    ]
-  );
-
-  function finishPolygon() {
+  const finishPolygon = useCallback(() => {
     if (drawingVertices.length < 3) {
       toast.error("Need at least 3 points");
       return;
@@ -237,7 +161,107 @@ export function DesignWorkspace({
     }
     clearDrawing();
     toast.success("Polygon added");
-  }
+  }, [activeTool, drawingVertices, document, setDocument, clearDrawing]);
+
+  const handleCanvasClick = useCallback(
+    (point: Point) => {
+      if (activeTool === "scale") {
+        if (!scalePointA) {
+          setScalePointA(point);
+        } else if (!scalePointB) {
+          setScalePointB(point);
+        }
+        return;
+      }
+
+      if (activeTool === "hydrozone" || activeTool === "exclusion") {
+        if (drawingVertices.length >= 3) {
+          const dist = distanceBetweenPoints(point, drawingVertices[0]);
+          if (dist <= POLYGON_CLOSE_RADIUS) {
+            finishPolygon();
+            return;
+          }
+        }
+        addDrawingVertex(point);
+        return;
+      }
+
+      if (activeTool === "head") {
+        const zoneId = document.zones[0]?.id;
+        if (!zoneId) {
+          toast.error("Create a zone first");
+          return;
+        }
+        const hydrozone = document.hydrozones.find((h) =>
+          pointInPolygon(point, h.vertices)
+        );
+        const assembly = resolveHeadAssembly(
+          catalog,
+          hydrozone?.headPreference ?? "SPRAY",
+          document.waterSource?.staticPressurePsi ?? 45
+        );
+        if (!assembly) {
+          toast.error("No compatible head/nozzle in catalog");
+          return;
+        }
+        const nozzle = catalog.find((c) => c.id === assembly.nozzleId);
+        const head = {
+          id: generateId("head"),
+          zoneId,
+          hydrozoneId: hydrozone?.id,
+          position: point,
+          headBodyId: assembly.headBodyId,
+          catalogItemId: assembly.nozzleId,
+          arcDegrees: (nozzle?.specs.arcDegrees as number) ?? 360,
+          radiusFeet: assembly.radiusFeet,
+          rotationDegrees: 0,
+          gpm: assembly.gpm,
+          precipInPerHr: assembly.precipInPerHr,
+          locked: false,
+        };
+        setDocument({ ...document, heads: [...document.heads, head] });
+        return;
+      }
+
+      if (activeTool === "pipe") {
+        const zoneId = document.zones[0]?.id;
+        if (!zoneId) {
+          toast.error("Create a zone first");
+          return;
+        }
+        const pipeItem = catalog.find((c) => c.category === "PIPE");
+        const newVertices = [...drawingVertices, point];
+        if (newVertices.length >= 2) {
+          const pipe = {
+            id: generateId("pipe"),
+            zoneId,
+            catalogItemId: pipeItem?.id ?? "cat_pipe_1pvc",
+            points: newVertices,
+            diameterInches: 1,
+            material: "PVC",
+          };
+          setDocument({ ...document, pipes: [...document.pipes, pipe] });
+          clearDrawing();
+        } else {
+          addDrawingVertex(point);
+        }
+      }
+    },
+    [
+      activeTool,
+      scalePointA,
+      scalePointB,
+      setScalePointA,
+      setScalePointB,
+      addDrawingVertex,
+      document,
+      catalog,
+      setDocument,
+      drawingVertices,
+      clearDrawing,
+      finishPolygon,
+    ]
+  );
 
   function handleScaleCalibrate(feet: number) {
     if (!scalePointA || !scalePointB) return;
@@ -345,20 +369,25 @@ export function DesignWorkspace({
         <DesignToolbar />
         <div className="flex min-h-0 flex-1 flex-col">
           {(activeTool === "hydrozone" || activeTool === "exclusion") && drawingVertices.length > 0 && (
-            <div className="border-b bg-amber-50 px-4 py-2 text-sm">
-              Click to add vertices.{" "}
-              <button className="font-medium text-primary underline" onClick={finishPolygon}>
-                Close polygon ({drawingVertices.length} points)
-              </button>
+            <div className="border-b bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
+              Click to place points.{" "}
+              {drawingVertices.length >= 3
+                ? "Click the first point to close the shape."
+                : `Add ${3 - drawingVertices.length} more point(s) to close.`}
             </div>
           )}
           <div className="min-h-0 flex-1" data-tour="tour-canvas">
-            <DesignCanvas imageUrl={displayImageUrl} onCanvasClick={handleCanvasClick} />
+            <DesignCanvas
+              imageUrl={displayImageUrl}
+              onCanvasClick={handleCanvasClick}
+              onClosePolygon={finishPolygon}
+            />
           </div>
           <ValidationDrawer />
           <MaterialsPanel items={materials} totals={materialTotals} />
         </div>
         <InspectorPanel
+          catalog={catalog}
           onUploadImage={handleUploadImage}
           onAutoPlace={handleAutoPlace}
           onValidate={handleValidate}

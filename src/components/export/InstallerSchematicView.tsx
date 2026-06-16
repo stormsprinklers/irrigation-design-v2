@@ -1,17 +1,30 @@
 import type { InstallerSchematic } from "@/lib/domain/export";
+import type { DesignDocument } from "@/lib/domain/types";
+import { ShareDesignSection } from "./ShareDesignSection";
 
 type Props = {
   schematic: InstallerSchematic;
   projectName: string;
+  designDocument?: DesignDocument;
+  designImageUrl?: string;
 };
 
-export function InstallerSchematicView({ schematic, projectName }: Props) {
+export function InstallerSchematicView({
+  schematic,
+  projectName,
+  designDocument,
+  designImageUrl,
+}: Props) {
   return (
     <div className="mx-auto max-w-5xl px-6 py-12 print:py-6">
       <header className="border-b pb-6">
         <p className="text-sm text-muted-foreground">Installer Schematic</p>
         <h1 className="text-3xl font-bold">{projectName}</h1>
       </header>
+
+      {designDocument && (
+        <ShareDesignSection document={designDocument} imageUrl={designImageUrl} />
+      )}
 
       {schematic.zones.map((zone) => (
         <section key={zone.name} className="mt-8">

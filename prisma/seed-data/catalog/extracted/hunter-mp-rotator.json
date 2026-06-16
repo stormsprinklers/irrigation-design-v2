@@ -1,0 +1,1901 @@
+[
+  {
+    "id": "noz_hunter_mp800sr_arc90_min",
+    "model": "MP-800SR 90° (min radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 90,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        6
+      ],
+      "gpm": [
+        0.13
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc90_mid",
+    "model": "MP-800SR 90° (mid radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 90,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        8
+      ],
+      "gpm": [
+        0.17
+      ],
+      "precipInPerHr": [
+        0.9
+      ],
+      "precipTriInPerHr": [
+        1.04
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc90_max",
+    "model": "MP-800SR 90° (max radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 90,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        14
+      ],
+      "gpm": [
+        0.42
+      ],
+      "precipInPerHr": [
+        0.83
+      ],
+      "precipTriInPerHr": [
+        0.95
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc40_min",
+    "model": "MP-800SR 40° (min radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 40,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "radiusFeet": [
+        0.16,
+        0.32,
+        0.37,
+        0.56
+      ],
+      "gpm": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc40_mid",
+    "model": "MP-800SR 40° (mid radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 40,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "radiusFeet": [
+        0.23,
+        0.42,
+        0.43,
+        0.78
+      ],
+      "gpm": [
+        13.8,
+        25.2,
+        29.4,
+        46.8
+      ],
+      "precipInPerHr": [
+        0.96,
+        0.93,
+        0.91,
+        0.91
+      ],
+      "precipTriInPerHr": [
+        15,
+        15,
+        15,
+        15
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc40_max",
+    "model": "MP-800SR 40° (max radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 40,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "radiusFeet": [
+        0.49,
+        0.93,
+        1.1,
+        1.87
+      ],
+      "gpm": [
+        0.84,
+        0.8,
+        0.81,
+        0.8
+      ],
+      "precipInPerHr": [
+        0.97,
+        0.92,
+        0.93,
+        0.92
+      ],
+      "precipTriInPerHr": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc50_min",
+    "model": "MP-800SR 50° (min radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 50,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "radiusFeet": [
+        0.19,
+        0.38,
+        0.44,
+        0.63
+      ],
+      "gpm": [
+        11,
+        11,
+        11,
+        11
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc50_mid",
+    "model": "MP-800SR 50° (mid radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 50,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "radiusFeet": [
+        0.27,
+        0.48,
+        0.49,
+        0.88
+      ],
+      "gpm": [
+        16.2,
+        28.8,
+        33.6,
+        52.8
+      ],
+      "precipInPerHr": [
+        0.92,
+        0.88,
+        0.85,
+        0.85
+      ],
+      "precipTriInPerHr": [
+        16,
+        16,
+        16,
+        16
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc50_max",
+    "model": "MP-800SR 50° (max radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 50,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "radiusFeet": [
+        0.55,
+        1.06,
+        1.24,
+        2.13
+      ],
+      "gpm": [
+        0.83,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "precipInPerHr": [
+        0.96,
+        0.92,
+        0.92,
+        0.92
+      ],
+      "precipTriInPerHr": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc180_min",
+    "model": "MP-800SR 180° (min radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 180,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        6
+      ],
+      "gpm": [
+        0.26
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc180_mid",
+    "model": "MP-800SR 180° (mid radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 180,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        8
+      ],
+      "gpm": [
+        0.33
+      ],
+      "precipInPerHr": [
+        0.88
+      ],
+      "precipTriInPerHr": [
+        1.02
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc180_max",
+    "model": "MP-800SR 180° (max radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 180,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        0.75
+      ],
+      "precipInPerHr": [
+        0.85
+      ],
+      "precipTriInPerHr": [
+        0.99
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc210_min",
+    "model": "MP-800SR 210° (min radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 210,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        6
+      ],
+      "gpm": [
+        0.3
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc210_mid",
+    "model": "MP-800SR 210° (mid radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 210,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        8
+      ],
+      "gpm": [
+        0.35
+      ],
+      "precipInPerHr": [
+        0.8
+      ],
+      "precipTriInPerHr": [
+        0.93
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc210_max",
+    "model": "MP-800SR 210° (max radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 210,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        0.88
+      ],
+      "precipInPerHr": [
+        0.86
+      ],
+      "precipTriInPerHr": [
+        0.99
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc270_max",
+    "model": "MP-800SR 270° (max radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 270,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        1.14
+      ],
+      "precipInPerHr": [
+        0.87
+      ],
+      "precipTriInPerHr": [
+        1
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc360_min",
+    "model": "MP-800SR 360° (min radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 360,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        6
+      ],
+      "gpm": [
+        0.47
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc360_mid",
+    "model": "MP-800SR 360° (mid radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 360,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        8
+      ],
+      "gpm": [
+        0.66
+      ],
+      "precipInPerHr": [
+        0.89
+      ],
+      "precipTriInPerHr": [
+        1.03
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc360_max",
+    "model": "MP-800SR 360° (max radius)",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-800SR",
+      "arcDegrees": 360,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        1.52
+      ],
+      "precipInPerHr": [
+        0.87
+      ],
+      "precipTriInPerHr": [
+        1
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc90",
+    "model": "MP-1000 90°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-1000",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.13,
+        0.17
+      ],
+      "precipInPerHr": [
+        0.17,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        9.6,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc90",
+    "model": "MP-2000 90°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-2000",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.9,
+        18
+      ],
+      "gpm": [
+        1.04,
+        0.38
+      ],
+      "precipInPerHr": [
+        14,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        0.42,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc40",
+    "model": "MP-1000 40°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-1000",
+      "arcDegrees": 40
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8,
+        14,
+        14,
+        14,
+        14,
+        14
+      ],
+      "radiusFeet": [
+        0.16,
+        0.32,
+        0.37,
+        0.56,
+        0.21,
+        0.42,
+        0.49,
+        0.63,
+        0.84
+      ],
+      "gpm": [
+        10,
+        10,
+        10,
+        10,
+        12.6,
+        25.2,
+        29.4,
+        37.8,
+        50.4
+      ],
+      "precipInPerHr": [
+        13.8,
+        25.2,
+        29.4,
+        46.8,
+        0.48,
+        0.48,
+        0.48,
+        0.48,
+        0.48
+      ],
+      "precipTriInPerHr": [
+        0.83,
+        0.81,
+        0.81,
+        0.79,
+        20,
+        19,
+        19,
+        19,
+        19
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc40",
+    "model": "MP-2000 40°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-2000",
+      "arcDegrees": 40
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "radiusFeet": [
+        0.96,
+        0.93,
+        0.91,
+        0.91
+      ],
+      "gpm": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.93,
+        1.1,
+        1.87
+      ],
+      "precipTriInPerHr": [
+        0.84,
+        0.8,
+        0.81,
+        0.8
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc50",
+    "model": "MP-1000 50°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-1000",
+      "arcDegrees": 50
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9,
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "radiusFeet": [
+        0.19,
+        0.38,
+        0.44,
+        0.63,
+        0.25,
+        0.5,
+        0.57,
+        0.72,
+        0.98
+      ],
+      "gpm": [
+        11,
+        11,
+        11,
+        11,
+        15,
+        30,
+        34.2,
+        43.2,
+        58.8
+      ],
+      "precipInPerHr": [
+        16.2,
+        28.8,
+        33.6,
+        52.8,
+        0.49,
+        0.49,
+        0.48,
+        0.47,
+        0.48
+      ],
+      "precipTriInPerHr": [
+        0.79,
+        0.76,
+        0.73,
+        0.73,
+        21,
+        21,
+        21,
+        21,
+        21
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc50",
+    "model": "MP-2000 50°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-2000",
+      "arcDegrees": 50
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "radiusFeet": [
+        0.92,
+        0.88,
+        0.85,
+        0.85
+      ],
+      "gpm": [
+        16,
+        16,
+        16,
+        16
+      ],
+      "precipInPerHr": [
+        0.55,
+        1.06,
+        1.24,
+        2.13
+      ],
+      "precipTriInPerHr": [
+        0.83,
+        0.8,
+        0.8,
+        0.8
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc180",
+    "model": "MP-1000 180°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-1000",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.26,
+        0.34
+      ],
+      "precipInPerHr": [
+        0.33,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        19.2,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc180",
+    "model": "MP-2000 180°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-2000",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.88,
+        17
+      ],
+      "gpm": [
+        1.02,
+        0.64
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc210",
+    "model": "MP-1000 210°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-1000",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.3,
+        0.4
+      ],
+      "precipInPerHr": [
+        0.35,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        22.2,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc210",
+    "model": "MP-2000 210°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-2000",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.8,
+        17
+      ],
+      "gpm": [
+        0.93,
+        0.75
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.88,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc360",
+    "model": "MP-1000 360°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-1000",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.47,
+        0.69
+      ],
+      "precipInPerHr": [
+        0.66,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        37.8,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc360",
+    "model": "MP-2000 360°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-2000",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.89,
+        17
+      ],
+      "gpm": [
+        1.03,
+        1.28
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        1.52,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc270",
+    "model": "MP-1000 270°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-1000",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.48
+      ],
+      "precipInPerHr": [
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc270",
+    "model": "MP-2000 270°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-2000",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        17
+      ],
+      "gpm": [
+        0.95
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc90",
+    "model": "MP-3000 90°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-3000",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        0.76
+      ],
+      "precipInPerHr": [
+        0.4
+      ],
+      "precipTriInPerHr": [
+        0.46
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc180",
+    "model": "MP-3000 180°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-3000",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        1.58
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc210",
+    "model": "MP-3000 210°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-3000",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        1.84
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc270",
+    "model": "MP-3000 270°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-3000",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        2.37
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc360",
+    "model": "MP-3000 360°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-3000",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        3.15
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc45",
+    "model": "MP Corner 45°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP Corner",
+      "arcDegrees": 45
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.17
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc40",
+    "model": "MP Corner 40°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP Corner",
+      "arcDegrees": 40
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        14,
+        14,
+        14
+      ],
+      "radiusFeet": [
+        0.19,
+        0.39,
+        0.45
+      ],
+      "gpm": [
+        11.4,
+        23.4,
+        27
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc50",
+    "model": "MP Corner 50°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP Corner",
+      "arcDegrees": 50
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        14,
+        15,
+        15
+      ],
+      "radiusFeet": [
+        0.22,
+        0.43,
+        0.51
+      ],
+      "gpm": [
+        13.2,
+        25.8,
+        30.6
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc90",
+    "model": "MP Corner 90°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP Corner",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.34
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc105",
+    "model": "MP Corner 105°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP Corner",
+      "arcDegrees": 105
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.39
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3500_arc90",
+    "model": "MP-3500 90°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-3500",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        34,
+        35,
+        35
+      ],
+      "gpm": [
+        1.13,
+        1.28,
+        1.43
+      ],
+      "precipInPerHr": [
+        0.38,
+        0.4,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        0.43,
+        0.46,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3500_arc180",
+    "model": "MP-3500 180°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-3500",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        34,
+        35,
+        35
+      ],
+      "gpm": [
+        2.24,
+        2.86,
+        3.21
+      ],
+      "precipInPerHr": [
+        0.37,
+        0.45,
+        0.5
+      ],
+      "precipTriInPerHr": [
+        0.43,
+        0.52,
+        0.58
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3500_arc210",
+    "model": "MP-3500 210°",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-3500",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        34,
+        35,
+        35
+      ],
+      "gpm": [
+        2.84,
+        3.29,
+        3.76
+      ],
+      "precipInPerHr": [
+        0.41,
+        0.44,
+        0.51
+      ],
+      "precipTriInPerHr": [
+        0.47,
+        0.51,
+        0.59
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_lcs_515",
+    "model": "MP-LCS-515",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-LCS-515",
+      "stripPattern": "left_corner"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        30,
+        40,
+        50,
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        6,
+        4,
+        5,
+        6,
+        4,
+        5,
+        6
+      ],
+      "gpm": [
+        0.19,
+        0.22,
+        0.25,
+        0.19,
+        0.22,
+        0.25,
+        0.38,
+        0.44,
+        0.49
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_rcs_515",
+    "model": "MP-RCS-515",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-RCS-515",
+      "stripPattern": "right_corner"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        30,
+        40,
+        50,
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        6,
+        4,
+        5,
+        6,
+        4,
+        5,
+        6
+      ],
+      "gpm": [
+        0.19,
+        0.22,
+        0.25,
+        0.19,
+        0.22,
+        0.25,
+        0.38,
+        0.44,
+        0.49
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_ss_530",
+    "model": "MP-SS-530",
+    "nozzleFamily": "hunter_mp_rotator",
+    "compatibleHeadFamilies": [
+      "hunter_pro_spray",
+      "hunter_pro_spray_prs40"
+    ],
+    "specs": {
+      "mpModel": "MP-SS-530",
+      "stripPattern": "side"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        30,
+        40,
+        50,
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        6,
+        4,
+        5,
+        6,
+        4,
+        5,
+        6
+      ],
+      "gpm": [
+        0.19,
+        0.22,
+        0.25,
+        0.19,
+        0.22,
+        0.25,
+        0.38,
+        0.44,
+        0.49
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  }
+]

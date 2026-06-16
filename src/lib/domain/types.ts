@@ -81,7 +81,10 @@ export type SprinklerHead = {
   zoneId: string;
   hydrozoneId?: string;
   position: Point;
+  /** Nozzle catalog item (performance chart). */
   catalogItemId: string;
+  /** Spray/rotor body catalog item. */
+  headBodyId?: string;
   arcDegrees: number;
   radiusFeet: number;
   rotationDegrees: number;
@@ -183,6 +186,8 @@ export type CatalogItemData = {
     gpm: number[];
     radiusFeet?: number[];
     precipInPerHr?: number[];
+    precipTriInPerHr?: number[];
+    recommendedPressurePsi?: number;
   };
 };
 

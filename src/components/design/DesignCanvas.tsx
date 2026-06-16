@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Stage, Layer, Line, Circle, Image as KonvaImage, Arc, Group } from "react-konva";
 import type Konva from "konva";
 import { useDesignStore } from "@/lib/stores/design-store";
-import { generateId } from "@/lib/utils";
+import { distanceBetweenPoints, generateId, POLYGON_CLOSE_RADIUS } from "@/lib/utils";
 import type { HydrozonePolygon, ExclusionZone, Point } from "@/lib/domain/types";
 
 const HYDROZONE_COLORS: Record<string, string> = {
@@ -14,6 +14,21 @@ const HYDROZONE_COLORS: Record<string, string> = {
   DRIP: "rgba(59, 130, 246, 0.25)",
   GARDEN: "rgba(234, 179, 8, 0.25)",
 };
+
+const POLYGON_DRAW_STYLES = {
+  hydrozone: {
+    stroke: "#16a34a",
+    fill: "rgba(34, 197, 94, 0.15)",
+    vertex: "#22c55e",
+    firstVertex: "#16a34a",
+  },
+  exclusion: {
+    stroke: "#dc2626",
+    fill: "rgba(239, 68, 68, 0.12)",
+    vertex: "#f87171",
+    firstVertex: "#dc2626",
+  },
+} as const;
 
 function useBackgroundImage(url?: string) {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -33,10 +48,12 @@ function useBackgroundImage(url?: string) {
 type Props = {
   imageUrl?: string;
   onCanvasClick: (point: Point) => void;
+  onClosePolygon?: () => void;
 };
 
-export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
+export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props) {
   const stageRef = useRef<Konva.Stage>(null);
+  const [previewPoint, setPreviewPoint] = useState<Point | null>(null);
   const {
     document,
     activeTool,
@@ -53,17 +70,56 @@ export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
   const width = document.propertyImage?.width ?? 1200;
   const height = document.propertyImage?.height ?? 800;
 
+  const isDrawingPolygon = activeTool === "hydrozone" || activeTool === "exclusion";
+  const drawStyle = isDrawingPolygon ? POLYGON_DRAW_STYLES[activeTool] : null;
+
+  const nearFirstVertex =
+    isDrawingPolygon &&
+    drawingVertices.length >= 3 &&
+    previewPoint !== null &&
+    distanceBetweenPoints(previewPoint, drawingVertices[0]) <= POLYGON_CLOSE_RADIUS;
+
+  useEffect(() => {
+    if (!isDrawingPolygon) {
+      setPreviewPoint(null);
+    }
+  }, [isDrawingPolygon]);
+
   function isDimmed(zoneId?: string) {
     return activeZoneId !== null && zoneId !== activeZoneId;
   }
 
+  function getPointerPosition(): Point | null {
+    const stage = stageRef.current;
+    if (!stage) return null;
+    const pos = stage.getPointerPosition();
+    return pos ? { x: pos.x, y: pos.y } : null;
+  }
+
+  function handleStageMouseMove() {
+    if (!isDrawingPolygon || drawingVertices.length === 0) {
+      setPreviewPoint(null);
+      return;
+    }
+    setPreviewPoint(getPointerPosition());
+  }
+
+  function handleStageMouseLeave() {
+    setPreviewPoint(null);
+  }
+
   function handleStageClick(e: Konva.KonvaEventObject<MouseEvent>) {
     if (e.target !== e.target.getStage()) return;
-    const stage = stageRef.current;
-    if (!stage) return;
-    const pos = stage.getPointerPosition();
+    const pos = getPointerPosition();
     if (!pos) return;
-    onCanvasClick({ x: pos.x, y: pos.y });
+    onCanvasClick(pos);
+  }
+
+  function handleFirstVertexClick(e: Konva.KonvaEventObject<MouseEvent>) {
+    e.cancelBubble = true;
+    if (drawingVertices.length >= 3) {
+      onClosePolygon?.();
+    }
   }
 
   function handleHeadDrag(headId: string, x: number, y: number) {
@@ -73,6 +129,11 @@ export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
     setDocument({ ...document, heads });
   }
 
+  const previewPolygonPoints =
+    previewPoint && drawingVertices.length >= 2
+      ? [...drawingVertices, previewPoint]
+      : null;
+
   return (
     <div className="h-full w-full overflow-auto bg-muted/30">
       <Stage
@@ -80,7 +141,10 @@ export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
         width={width}
         height={height}
         onClick={handleStageClick}
+        onMouseMove={handleStageMouseMove}
+        onMouseLeave={handleStageMouseLeave}
         draggable={activeTool === "pan"}
+        style={{ cursor: isDrawingPolygon ? "crosshair" : undefined }}
         className="mx-auto shadow-sm"
       >
         <Layer>
@@ -191,13 +255,93 @@ export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
             />
           )}
 
-          {drawingVertices.length > 0 && (
-            <Line
-              points={drawingVertices.flatMap((p) => [p.x, p.y])}
-              stroke="#16a34a"
-              strokeWidth={2}
-              dash={[6, 4]}
-            />
+          {isDrawingPolygon && drawingVertices.length > 0 && drawStyle && (
+            <>
+              {previewPolygonPoints && previewPolygonPoints.length >= 3 && (
+                <Line
+                  points={previewPolygonPoints.flatMap((p) => [p.x, p.y])}
+                  closed
+                  fill={drawStyle.fill}
+                  stroke={drawStyle.stroke}
+                  strokeWidth={1}
+                  opacity={0.85}
+                  listening={false}
+                />
+              )}
+
+              {drawingVertices.length >= 2 && (
+                <Line
+                  points={drawingVertices.flatMap((p) => [p.x, p.y])}
+                  stroke={drawStyle.stroke}
+                  strokeWidth={2}
+                  listening={false}
+                />
+              )}
+
+              {previewPoint && drawingVertices.length > 0 && (
+                <Line
+                  points={[
+                    drawingVertices[drawingVertices.length - 1].x,
+                    drawingVertices[drawingVertices.length - 1].y,
+                    previewPoint.x,
+                    previewPoint.y,
+                  ]}
+                  stroke={drawStyle.stroke}
+                  strokeWidth={2}
+                  dash={[6, 4]}
+                  listening={false}
+                />
+              )}
+
+              {previewPoint &&
+                drawingVertices.length >= 3 &&
+                nearFirstVertex && (
+                  <Line
+                    points={[
+                      previewPoint.x,
+                      previewPoint.y,
+                      drawingVertices[0].x,
+                      drawingVertices[0].y,
+                    ]}
+                    stroke={drawStyle.firstVertex}
+                    strokeWidth={2}
+                    dash={[4, 4]}
+                    listening={false}
+                  />
+                )}
+
+              {drawingVertices.map((vertex, index) => {
+                const isFirst = index === 0;
+                const canClose = isFirst && drawingVertices.length >= 3;
+                const isNear = isFirst && nearFirstVertex;
+
+                return (
+                  <Group key={`draw-vertex-${index}`}>
+                    {canClose && (
+                      <Circle
+                        x={vertex.x}
+                        y={vertex.y}
+                        radius={POLYGON_CLOSE_RADIUS}
+                        stroke={drawStyle.firstVertex}
+                        strokeWidth={isNear ? 2 : 1}
+                        dash={[4, 4]}
+                        opacity={isNear ? 0.9 : 0.45}
+                        onClick={handleFirstVertexClick}
+                      />
+                    )}
+                    <Circle
+                      x={vertex.x}
+                      y={vertex.y}
+                      radius={isFirst && canClose ? 7 : 5}
+                      fill={isFirst ? drawStyle.firstVertex : drawStyle.vertex}
+                      stroke="#ffffff"
+                      strokeWidth={2}
+                      onClick={isFirst ? handleFirstVertexClick : undefined}
+                    />
+                  </Group>
+                );
+              })}
+            </>
           )}
 
           {scalePointA && <Circle x={scalePointA.x} y={scalePointA.y} radius={5} fill="#ea580c" />}

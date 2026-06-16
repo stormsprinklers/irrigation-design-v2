@@ -7,9 +7,9 @@ import { Input } from "@/components/ui/input";
 import {
   activateDesignVersion,
   createDesignVersion,
-  createShareLink,
 } from "@/lib/actions/design";
 import type { DesignVersion } from "@prisma/client";
+import { ShareMenu } from "./ShareMenu";
 
 type Props = {
   projectId: string;
@@ -20,7 +20,6 @@ type Props = {
 export function VersionSelector({ projectId, versions, activeVersionId }: Props) {
   const router = useRouter();
   const [label, setLabel] = useState("");
-  const [shareUrl, setShareUrl] = useState<string | null>(null);
 
   async function handleSaveVersion() {
     if (!label.trim()) return;
@@ -35,11 +34,6 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
   async function handleRestore(versionId: string) {
     await activateDesignVersion(projectId, versionId);
     router.refresh();
-  }
-
-  async function handleShare(view: "CUSTOMER" | "INSTALLER") {
-    const link = await createShareLink(projectId, view);
-    setShareUrl(`${window.location.origin}/share/${link.token}`);
   }
 
   return (
@@ -64,17 +58,7 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
       <Button size="sm" variant="outline" onClick={handleSaveVersion}>
         Save version
       </Button>
-      <Button size="sm" variant="outline" onClick={() => handleShare("CUSTOMER")}>
-        Share customer
-      </Button>
-      <Button size="sm" variant="outline" onClick={() => handleShare("INSTALLER")}>
-        Share installer
-      </Button>
-      {shareUrl && (
-        <span className="max-w-xs truncate text-xs text-muted-foreground" title={shareUrl}>
-          {shareUrl}
-        </span>
-      )}
+      <ShareMenu projectId={projectId} />
     </div>
   );
 }

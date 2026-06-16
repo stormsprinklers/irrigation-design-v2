@@ -1,17 +1,30 @@
 import type { CustomerProposal } from "@/lib/domain/export";
+import type { DesignDocument } from "@/lib/domain/types";
+import { ShareDesignSection } from "./ShareDesignSection";
 
 type Props = {
   proposal: CustomerProposal;
   projectName: string;
+  designDocument?: DesignDocument;
+  designImageUrl?: string;
 };
 
-export function CustomerProposalView({ proposal, projectName }: Props) {
+export function CustomerProposalView({
+  proposal,
+  projectName,
+  designDocument,
+  designImageUrl,
+}: Props) {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 print:py-6">
       <header className="border-b pb-6">
         <p className="text-sm text-muted-foreground">Irrigation Proposal</p>
         <h1 className="text-3xl font-bold">{projectName}</h1>
       </header>
+
+      {designDocument && (
+        <ShareDesignSection document={designDocument} imageUrl={designImageUrl} />
+      )}
 
       <section className="mt-8">
         <h2 className="text-lg font-semibold">Scope</h2>

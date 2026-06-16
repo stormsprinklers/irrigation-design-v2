@@ -6,8 +6,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { generateId } from "@/lib/utils";
+import type { CatalogItemData } from "@/lib/domain/types";
+import { calculateHeadGpm } from "@/lib/domain/hydraulics";
+import {
+  getHeadBodies,
+  getNozzlesForHead,
+  nozzleCompatibleWithHead,
+} from "@/lib/catalog/compat";
 
 type Props = {
+  catalog: CatalogItemData[];
   onUploadImage: (file: File) => void;
   onAutoPlace: (hydrozoneId: string) => void;
   onValidate: () => void;
@@ -15,6 +23,7 @@ type Props = {
 };
 
 export function InspectorPanel({
+  catalog,
   onUploadImage,
   onAutoPlace,
   onValidate,
@@ -230,6 +239,94 @@ export function InspectorPanel({
             <p className="text-xs text-muted-foreground">
               GPM: {selectedHead.gpm?.toFixed(2) ?? "—"} · Radius: {selectedHead.radiusFeet} ft
             </p>
+            <div>
+              <Label className="text-xs">Sprinkler body</Label>
+              <select
+                className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
+                value={selectedHead.headBodyId ?? ""}
+                onChange={(e) => {
+                  const headBodyId = e.target.value;
+                  const compatible = getNozzlesForHead(catalog, headBodyId);
+                  const currentNozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
+                  const nozzle =
+                    currentNozzle &&
+                    catalog.find((c) => c.id === headBodyId) &&
+                    nozzleCompatibleWithHead(
+                      currentNozzle,
+                      catalog.find((c) => c.id === headBodyId)!
+                    )
+                      ? currentNozzle
+                      : compatible[0];
+                  const pressure = document.waterSource?.staticPressurePsi ?? 45;
+                  const hydraulics = nozzle ? calculateHeadGpm(nozzle, pressure) : null;
+                  const heads = document.heads.map((h) =>
+                    h.id === selectedHead.id
+                      ? {
+                          ...h,
+                          headBodyId,
+                          catalogItemId: nozzle?.id ?? h.catalogItemId,
+                          radiusFeet:
+                            hydraulics?.radiusFeet ??
+                            (typeof nozzle?.specs.radiusFeet === "number"
+                              ? nozzle.specs.radiusFeet
+                              : h.radiusFeet),
+                          gpm: hydraulics?.gpm ?? h.gpm,
+                          precipInPerHr: hydraulics?.precipInPerHr ?? h.precipInPerHr,
+                          arcDegrees:
+                            (nozzle?.specs.arcDegrees as number | undefined) ?? h.arcDegrees,
+                        }
+                      : h
+                  );
+                  setDocument({ ...document, heads });
+                }}
+              >
+                <option value="">— Select body —</option>
+                {getHeadBodies(catalog).map((body) => (
+                  <option key={body.id} value={body.id}>
+                    {body.manufacturer} {body.model}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {selectedHead.headBodyId && (
+              <div>
+                <Label className="text-xs">Nozzle</Label>
+                <select
+                  className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
+                  value={selectedHead.catalogItemId}
+                  onChange={(e) => {
+                    const nozzle = catalog.find((c) => c.id === e.target.value);
+                    if (!nozzle) return;
+                    const pressure = document.waterSource?.staticPressurePsi ?? 45;
+                    const hydraulics = calculateHeadGpm(nozzle, pressure);
+                    const heads = document.heads.map((h) =>
+                      h.id === selectedHead.id
+                        ? {
+                            ...h,
+                            catalogItemId: nozzle.id,
+                            radiusFeet:
+                              hydraulics.radiusFeet ??
+                              (typeof nozzle.specs.radiusFeet === "number"
+                                ? nozzle.specs.radiusFeet
+                                : h.radiusFeet),
+                            gpm: hydraulics.gpm,
+                            precipInPerHr: hydraulics.precipInPerHr,
+                            arcDegrees:
+                              (nozzle.specs.arcDegrees as number | undefined) ?? h.arcDegrees,
+                          }
+                        : h
+                    );
+                    setDocument({ ...document, heads });
+                  }}
+                >
+                  {getNozzlesForHead(catalog, selectedHead.headBodyId).map((nozzle) => (
+                    <option key={nozzle.id} value={nozzle.id}>
+                      {nozzle.model}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             <label className="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"

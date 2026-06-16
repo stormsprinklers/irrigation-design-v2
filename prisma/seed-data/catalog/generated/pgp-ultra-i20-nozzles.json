@@ -1,0 +1,1746 @@
+[
+  {
+    "id": "noz_pgp_ultra_i20_blue_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 1.5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        29,
+        31,
+        31,
+        32,
+        32
+      ],
+      "gpm": [
+        1.2,
+        1.4,
+        1.5,
+        1.8,
+        1.9
+      ],
+      "precipInPerHr": [
+        0.27,
+        0.28,
+        0.3,
+        0.34,
+        0.36
+      ],
+      "precipTriInPerHr": [
+        0.32,
+        0.32,
+        0.35,
+        0.39,
+        0.41
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        33,
+        33,
+        34,
+        34,
+        34
+      ],
+      "gpm": [
+        1.4,
+        1.7,
+        2,
+        2.1,
+        2.3
+      ],
+      "precipInPerHr": [
+        0.25,
+        0.3,
+        0.33,
+        0.35,
+        0.38
+      ],
+      "precipTriInPerHr": [
+        0.29,
+        0.35,
+        0.38,
+        0.4,
+        0.44
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_2_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 2.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2.5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        33,
+        35,
+        35,
+        35,
+        35
+      ],
+      "gpm": [
+        1.7,
+        2.1,
+        2.5,
+        2.6,
+        2.9
+      ],
+      "precipInPerHr": [
+        0.3,
+        0.33,
+        0.39,
+        0.41,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        0.35,
+        0.38,
+        0.45,
+        0.47,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 3,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        35,
+        36,
+        38,
+        39,
+        39
+      ],
+      "gpm": [
+        2.2,
+        2.7,
+        3,
+        3.4,
+        3.7
+      ],
+      "precipInPerHr": [
+        0.35,
+        0.4,
+        0.4,
+        0.43,
+        0.47
+      ],
+      "precipTriInPerHr": [
+        0.4,
+        0.46,
+        0.46,
+        0.5,
+        0.54
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_4_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 4.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 4,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        40,
+        41,
+        41
+      ],
+      "gpm": [
+        3,
+        3.5,
+        4,
+        4.5,
+        4.8
+      ],
+      "precipInPerHr": [
+        0.42,
+        0.44,
+        0.48,
+        0.52,
+        0.55
+      ],
+      "precipTriInPerHr": [
+        0.49,
+        0.51,
+        0.56,
+        0.6,
+        0.63
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_5_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 5.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        42,
+        42,
+        42
+      ],
+      "gpm": [
+        3.7,
+        4.5,
+        5,
+        5.7,
+        6.2
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.57,
+        0.55,
+        0.62,
+        0.68
+      ],
+      "precipTriInPerHr": [
+        0.6,
+        0.66,
+        0.63,
+        0.72,
+        0.78
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_6_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 6.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 6,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        38,
+        40,
+        43,
+        44,
+        44
+      ],
+      "gpm": [
+        4.3,
+        5.6,
+        6,
+        6.7,
+        7.3
+      ],
+      "precipInPerHr": [
+        0.57,
+        0.67,
+        0.62,
+        0.67,
+        0.73
+      ],
+      "precipTriInPerHr": [
+        0.66,
+        0.78,
+        0.72,
+        0.77,
+        0.84
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_8_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 8.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 8,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        41,
+        44,
+        46,
+        46
+      ],
+      "gpm": [
+        6,
+        7,
+        8,
+        9,
+        9.8
+      ],
+      "precipInPerHr": [
+        0.84,
+        0.8,
+        0.8,
+        0.82,
+        0.89
+      ],
+      "precipTriInPerHr": [
+        0.97,
+        0.93,
+        0.92,
+        0.95,
+        1.03
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_la_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        25,
+        27,
+        28,
+        30
+      ],
+      "gpm": [
+        1.6,
+        1.9,
+        2.1,
+        2.3
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.5,
+        0.52,
+        0.49
+      ],
+      "precipTriInPerHr": [
+        0.57,
+        0.58,
+        0.6,
+        0.57
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_la_2_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 2.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2.5,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        27,
+        30,
+        33,
+        35
+      ],
+      "gpm": [
+        2.1,
+        2.5,
+        2.8,
+        3
+      ],
+      "precipInPerHr": [
+        0.55,
+        0.53,
+        0.49,
+        0.47
+      ],
+      "precipTriInPerHr": [
+        0.64,
+        0.62,
+        0.57,
+        0.54
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_la_3_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 3.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 3.5,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        29,
+        32,
+        35,
+        37
+      ],
+      "gpm": [
+        2.8,
+        3.1,
+        3.5,
+        3.8
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.58,
+        0.55,
+        0.53
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.67,
+        0.64,
+        0.62
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_la_4_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 4.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 4.5,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        29,
+        32,
+        35,
+        37
+      ],
+      "gpm": [
+        3.4,
+        3.9,
+        4.4,
+        4.7
+      ],
+      "precipInPerHr": [
+        0.78,
+        0.73,
+        0.69,
+        0.66
+      ],
+      "precipTriInPerHr": [
+        0.9,
+        0.85,
+        0.8,
+        0.76
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_hf_10",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "HF Green Nozzle 10",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_hf",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 10,
+      "color": "HF"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        42,
+        43,
+        45,
+        47
+      ],
+      "gpm": [
+        8.4,
+        9.5,
+        10.5,
+        11.4
+      ],
+      "precipInPerHr": [
+        0.92,
+        0.99,
+        1,
+        0.99
+      ],
+      "precipTriInPerHr": [
+        1.06,
+        1.14,
+        1.15,
+        1.15
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_hf_13",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "HF Green Nozzle 13",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_hf",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 13,
+      "color": "HF"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        43,
+        44,
+        45,
+        47
+      ],
+      "gpm": [
+        10.9,
+        12.3,
+        13.6,
+        14.8
+      ],
+      "precipInPerHr": [
+        1.13,
+        1.22,
+        1.29,
+        1.29
+      ],
+      "precipTriInPerHr": [
+        1.31,
+        1.41,
+        1.49,
+        1.49
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_hf_6_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "HF Green Nozzle 6.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_hf",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 6,
+      "color": "HF"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        31,
+        35,
+        37,
+        39
+      ],
+      "gpm": [
+        4.2,
+        5,
+        5.8,
+        6.3
+      ],
+      "precipInPerHr": [
+        0.84,
+        0.79,
+        0.82,
+        0.8
+      ],
+      "precipTriInPerHr": [
+        0.97,
+        0.91,
+        0.94,
+        0.92
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_hf_8_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "HF Green Nozzle 8.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_hf",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 8,
+      "color": "HF"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        41,
+        41
+      ],
+      "gpm": [
+        6.7,
+        7.7,
+        8.5,
+        9.2
+      ],
+      "precipInPerHr": [
+        0.94,
+        0.97,
+        0.97,
+        1.05
+      ],
+      "precipTriInPerHr": [
+        1.09,
+        1.13,
+        1.12,
+        1.22
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_0_50",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 0.50",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 0.5,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        17,
+        17,
+        18,
+        19
+      ],
+      "gpm": [
+        0.36,
+        0.43,
+        0.5,
+        0.57
+      ],
+      "precipInPerHr": [
+        0.24,
+        0.29,
+        0.3,
+        0.3
+      ],
+      "precipTriInPerHr": [
+        0.28,
+        0.33,
+        0.34,
+        0.35
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_1_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 1.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 1,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        17,
+        17,
+        18,
+        19
+      ],
+      "gpm": [
+        0.78,
+        0.9,
+        1,
+        1.1
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.6,
+        0.59,
+        0.59
+      ],
+      "precipTriInPerHr": [
+        0.6,
+        0.69,
+        0.69,
+        0.68
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        17,
+        17,
+        18,
+        19
+      ],
+      "gpm": [
+        1.4,
+        1.7,
+        2,
+        2.2
+      ],
+      "precipInPerHr": [
+        0.93,
+        1.13,
+        1.19,
+        1.17
+      ],
+      "precipTriInPerHr": [
+        1.08,
+        1.31,
+        1.37,
+        1.35
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_0_75",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 0.75",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 0.75,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "gpm": [
+        0.58,
+        0.68,
+        0.75,
+        0.83
+      ],
+      "precipInPerHr": [
+        0.21,
+        0.23,
+        0.23,
+        0.24
+      ],
+      "precipTriInPerHr": [
+        0.24,
+        0.26,
+        0.27,
+        0.27
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 1.5,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "gpm": [
+        1.1,
+        1.3,
+        1.5,
+        1.6
+      ],
+      "precipInPerHr": [
+        0.4,
+        0.43,
+        0.46,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        0.46,
+        0.5,
+        0.53,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 3,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "gpm": [
+        2.5,
+        2.7,
+        3,
+        3.1
+      ],
+      "precipInPerHr": [
+        0.91,
+        0.9,
+        0.92,
+        0.88
+      ],
+      "precipTriInPerHr": [
+        1.05,
+        1.04,
+        1.07,
+        1.02
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr25_arc90",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-25 Red 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr25",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 90,
+      "color": "MPR-25",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        24,
+        25,
+        25,
+        25
+      ],
+      "radiusFeet": [
+        23,
+        0.88,
+        1,
+        1.11,
+        1.21
+      ],
+      "gpm": [
+        0.74,
+        0.59,
+        0.62,
+        0.68,
+        0.75
+      ],
+      "precipInPerHr": [
+        0.54,
+        0.68,
+        0.71,
+        0.79,
+        0.86
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr25_arc120",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-25 Red 120°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr25",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 120,
+      "color": "MPR-25",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        24,
+        25,
+        25,
+        25
+      ],
+      "radiusFeet": [
+        23,
+        1.21,
+        1.38,
+        1.53,
+        1.67
+      ],
+      "gpm": [
+        1,
+        0.61,
+        0.64,
+        0.71,
+        0.77
+      ],
+      "precipInPerHr": [
+        0.55,
+        0.7,
+        0.74,
+        0.82,
+        0.89
+      ],
+      "precipTriInPerHr": [
+        0.63,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr25_arc180",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-25 Red 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr25",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 180,
+      "color": "MPR-25",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        24,
+        25,
+        25,
+        25
+      ],
+      "radiusFeet": [
+        23,
+        1.73,
+        1.98,
+        2.21,
+        2.41
+      ],
+      "gpm": [
+        1.44,
+        0.58,
+        0.61,
+        0.68,
+        0.74
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.67,
+        0.7,
+        0.79,
+        0.86
+      ],
+      "precipTriInPerHr": [
+        0.61,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr25_arc360",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-25 Red 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr25",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 360,
+      "color": "MPR-25",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        24,
+        25,
+        25,
+        25
+      ],
+      "radiusFeet": [
+        23,
+        3.34,
+        3.82,
+        4.25,
+        4.63
+      ],
+      "gpm": [
+        2.78,
+        0.56,
+        0.59,
+        0.65,
+        0.71
+      ],
+      "precipInPerHr": [
+        0.51,
+        0.64,
+        0.68,
+        0.76,
+        0.82
+      ],
+      "precipTriInPerHr": [
+        0.58,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr30_arc90",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-30 Lt. Green 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr30",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 90,
+      "color": "MPR-30",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        30,
+        30,
+        30,
+        30
+      ],
+      "radiusFeet": [
+        29,
+        1.23,
+        1.4,
+        1.56,
+        1.69
+      ],
+      "gpm": [
+        1.03,
+        0.53,
+        0.6,
+        0.67,
+        0.72
+      ],
+      "precipInPerHr": [
+        0.47,
+        0.61,
+        0.69,
+        0.77,
+        0.83
+      ],
+      "precipTriInPerHr": [
+        0.54,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr30_arc120",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-30 Lt. Green 120°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr30",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 120,
+      "color": "MPR-30",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        30,
+        30,
+        30,
+        30
+      ],
+      "radiusFeet": [
+        29,
+        1.62,
+        1.85,
+        2.06,
+        2.24
+      ],
+      "gpm": [
+        1.34,
+        0.52,
+        0.59,
+        0.66,
+        0.72
+      ],
+      "precipInPerHr": [
+        0.46,
+        0.6,
+        0.69,
+        0.76,
+        0.83
+      ],
+      "precipTriInPerHr": [
+        0.53,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr30_arc180",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-30 Lt. Green 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr30",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 180,
+      "color": "MPR-30",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        30,
+        30,
+        30,
+        30
+      ],
+      "radiusFeet": [
+        29,
+        2.59,
+        2.96,
+        3.3,
+        3.6
+      ],
+      "gpm": [
+        2.15,
+        0.55,
+        0.63,
+        0.71,
+        0.77
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.64,
+        0.73,
+        0.82,
+        0.89
+      ],
+      "precipTriInPerHr": [
+        0.57,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr30_arc360",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-30 Lt. Green 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr30",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 360,
+      "color": "MPR-30",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        30,
+        30,
+        30,
+        30
+      ],
+      "radiusFeet": [
+        29,
+        5.08,
+        5.78,
+        6.39,
+        6.92
+      ],
+      "gpm": [
+        4.24,
+        0.54,
+        0.62,
+        0.68,
+        0.74
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.63,
+        0.71,
+        0.79,
+        0.85
+      ],
+      "precipTriInPerHr": [
+        0.56,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr35_arc90",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-35 Beige 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr35",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 90,
+      "color": "MPR-35",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        34,
+        35,
+        35,
+        35
+      ],
+      "radiusFeet": [
+        32,
+        1.67,
+        1.92,
+        2.13,
+        2.31
+      ],
+      "gpm": [
+        1.4,
+        0.56,
+        0.6,
+        0.67,
+        0.73
+      ],
+      "precipInPerHr": [
+        0.53,
+        0.64,
+        0.7,
+        0.77,
+        0.84
+      ],
+      "precipTriInPerHr": [
+        0.61,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr35_arc120",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-35 Beige 120°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr35",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 120,
+      "color": "MPR-35",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        34,
+        35,
+        35,
+        35
+      ],
+      "radiusFeet": [
+        32,
+        2.15,
+        2.46,
+        2.74,
+        2.99
+      ],
+      "gpm": [
+        1.77,
+        0.54,
+        0.58,
+        0.65,
+        0.7
+      ],
+      "precipInPerHr": [
+        0.5,
+        0.62,
+        0.67,
+        0.75,
+        0.81
+      ],
+      "precipTriInPerHr": [
+        0.58,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr35_arc180",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-35 Beige 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr35",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 180,
+      "color": "MPR-35",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        34,
+        35,
+        35,
+        35
+      ],
+      "radiusFeet": [
+        32,
+        3.33,
+        3.81,
+        4.23,
+        4.62
+      ],
+      "gpm": [
+        2.75,
+        0.55,
+        0.6,
+        0.66,
+        0.73
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.64,
+        0.69,
+        0.77,
+        0.84
+      ],
+      "precipTriInPerHr": [
+        0.6,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr35_arc360",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-35 Beige 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr35",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 360,
+      "color": "MPR-35",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        34,
+        35,
+        35,
+        35
+      ],
+      "radiusFeet": [
+        32,
+        6.62,
+        7.58,
+        8.43,
+        9.18
+      ],
+      "gpm": [
+        5.36,
+        0.55,
+        0.6,
+        0.66,
+        0.72
+      ],
+      "precipInPerHr": [
+        0.5,
+        0.64,
+        0.69,
+        0.76,
+        0.83
+      ],
+      "precipTriInPerHr": [
+        0.58,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  }
+]

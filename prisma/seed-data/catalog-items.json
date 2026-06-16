@@ -1,61 +1,7945 @@
 [
   {
-    "id": "cat_spray_1804",
-    "category": "SPRAY",
-    "manufacturer": "Rain Bird",
-    "model": "1804 Spray Body",
-    "specs": { "popUpHeight": 4, "inlet": "1/2\"" }
-  },
-  {
-    "id": "cat_nozzle_12h",
-    "category": "SPRAY",
-    "manufacturer": "Rain Bird",
-    "model": "U-Series 12' Half Circle",
-    "specs": { "radiusFeet": 12, "arc": 180 },
-    "nozzleChart": {
-      "pressurePsi": [20, 30, 40, 50],
-      "gpm": [0.85, 1.04, 1.20, 1.34],
-      "radiusFeet": [10, 11, 12, 12.5],
-      "precipInPerHr": [1.2, 1.4, 1.5, 1.6]
+    "id": "head_hunter_pgp_adj_4",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "PGP-ADJ 4\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pgp_adj",
+      "popUpInches": 4,
+      "inlet": "3/4\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        25,
+        70
+      ],
+      "checkValve": false
     }
   },
   {
-    "id": "cat_nozzle_15q",
-    "category": "SPRAY",
-    "manufacturer": "Rain Bird",
-    "model": "U-Series 15' Quarter Circle",
-    "specs": { "radiusFeet": 15, "arc": 90 },
-    "nozzleChart": {
-      "pressurePsi": [20, 30, 40, 50],
-      "gpm": [0.95, 1.15, 1.32, 1.48],
-      "radiusFeet": [13, 14, 15, 15.5],
-      "precipInPerHr": [1.1, 1.3, 1.45, 1.55]
+    "id": "head_hunter_pgp_ultra_4",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "PGP Ultra 4\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pgp_ultra",
+      "popUpInches": 4,
+      "inlet": "3/4\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        25,
+        70
+      ],
+      "checkValve": false
     }
   },
   {
-    "id": "cat_pgp",
+    "id": "head_hunter_pgp_ultra_6",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "PGP Ultra 6\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pgp_ultra",
+      "popUpInches": 6,
+      "inlet": "3/4\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        25,
+        70
+      ],
+      "checkValve": false
+    }
+  },
+  {
+    "id": "head_hunter_pgj_04",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "PGJ-04 4\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pgj",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        30,
+        50
+      ],
+      "checkValve": false
+    }
+  },
+  {
+    "id": "head_hunter_pgj_06",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "PGJ-06 6\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pgj",
+      "popUpInches": 6,
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        30,
+        50
+      ],
+      "checkValve": false
+    }
+  },
+  {
+    "id": "head_hunter_pgj_12",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "PGJ-12 12\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pgj",
+      "popUpInches": 12,
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        30,
+        50
+      ],
+      "checkValve": false
+    }
+  },
+  {
+    "id": "head_hunter_pgj_00",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "PGJ-00 Shrub",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pgj",
+      "popUpInches": "shrub",
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        30,
+        50
+      ],
+      "checkValve": false
+    }
+  },
+  {
+    "id": "head_hunter_i20_04",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "I-20 4\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_i20",
+      "popUpInches": 4,
+      "inlet": "3/4\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        25,
+        70
+      ],
+      "checkValve": false
+    }
+  },
+  {
+    "id": "head_hunter_i20_06",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "I-20 6\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_i20",
+      "popUpInches": 6,
+      "inlet": "3/4\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        25,
+        70
+      ],
+      "checkValve": false
+    }
+  },
+  {
+    "id": "head_hunter_i20_12",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Hunter",
+    "model": "I-20 12\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_i20",
+      "popUpInches": 12,
+      "inlet": "3/4\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 20,
+      "pressurePsiMax": 100,
+      "pressurePsiRecommended": [
+        25,
+        70
+      ],
+      "checkValve": false
+    }
+  },
+  {
+    "id": "head_hunter_pros_04",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Hunter",
+    "model": "Pro-Spray PROS-04 4\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pro_spray",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 100,
+      "checkValve": false,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_hunter_pros_06",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Hunter",
+    "model": "Pro-Spray PROS-06 6\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pro_spray",
+      "popUpInches": 6,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 100,
+      "checkValve": false,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_hunter_pros_12",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Hunter",
+    "model": "Pro-Spray PROS-12 12\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pro_spray",
+      "popUpInches": 12,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 100,
+      "checkValve": false,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_hunter_pros_prs40_04",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Hunter",
+    "model": "Pro-Spray PRS40 PROS-04-PRS40 4\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pro_spray_prs40",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 100,
+      "prsPsi": 40,
+      "checkValve": false,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_hunter_pros_prs40_06",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Hunter",
+    "model": "Pro-Spray PRS40 PROS-06-PRS40 6\"",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "hunter_pro_spray_prs40",
+      "popUpInches": 6,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 100,
+      "prsPsi": 40,
+      "checkValve": false,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_1802",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "1802 2\" Spray Body",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_1800",
+      "popUpInches": 2,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 70,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_1804",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "1804 4\" Spray Body",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_1800",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 70,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_1806",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "1806 6\" Spray Body",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_1800",
+      "popUpInches": 6,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 70,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_1812",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "1812 12\" Spray Body",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_1800",
+      "popUpInches": 12,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 70,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_1804_prs",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "1804 PRS-30 Adjustable Pattern",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_1800_prs",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 70,
+      "prsPsi": 30,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_1806_prs",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "1806 PRS-30 Adjustable Pattern",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_1800_prs",
+      "popUpInches": 6,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 70,
+      "prsPsi": 30,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_1804_sam",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "1804SAM 4\" SAM Spray Body",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_1800_sam",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 70,
+      "sam": true,
+      "sku": "A43905"
+    }
+  },
+  {
+    "id": "head_rb_1806_sam",
+    "category": "SPRAY_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "1806SAM 6\" SAM Spray Body",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_1800_sam",
+      "popUpInches": 6,
+      "inlet": "1/2\" NPT",
+      "pressurePsiMin": 15,
+      "pressurePsiMax": 70,
+      "sam": true
+    }
+  },
+  {
+    "id": "head_rb_3504",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "3504-PC 4\" Rotor",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_3500",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 25,
+      "pressurePsiMax": 55,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_3504_sam",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "3504-PC-SAM 4\" Rotor SAM",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_3500",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 25,
+      "pressurePsiMax": 55,
+      "sam": true
+    }
+  },
+  {
+    "id": "head_rb_5004",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "5004-PC 4\" Rotor",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_5000",
+      "popUpInches": 4,
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 25,
+      "pressurePsiMax": 65,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_5006",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "5006-PC 6\" Rotor",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_5000",
+      "popUpInches": 6,
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 25,
+      "pressurePsiMax": 65,
+      "sam": false
+    }
+  },
+  {
+    "id": "head_rb_5012",
+    "category": "ROTOR_BODY",
+    "manufacturer": "Rain Bird",
+    "model": "5012+PCSAMR 12\" Rotor PRS SAM",
+    "specs": {
+      "itemRole": "body",
+      "headFamily": "rainbird_5000",
+      "popUpInches": 12,
+      "inlet": "1/2\" NPT",
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "pressurePsiMin": 25,
+      "pressurePsiMax": 65,
+      "sam": true
+    }
+  },
+  {
+    "id": "noz_pgj_red_0_50",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 0.50",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 0.5,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        14,
+        15,
+        16
+      ],
+      "gpm": [
+        0.42,
+        0.5,
+        0.58
+      ],
+      "precipInPerHr": [
+        0.41,
+        0.43,
+        0.44
+      ],
+      "precipTriInPerHr": [
+        0.48,
+        0.49,
+        0.5
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_0_75",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 0.75",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 0.75,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        15,
+        16,
+        17
+      ],
+      "gpm": [
+        0.64,
+        0.75,
+        0.85
+      ],
+      "precipInPerHr": [
+        0.55,
+        0.56,
+        0.57
+      ],
+      "precipTriInPerHr": [
+        0.63,
+        0.65,
+        0.65
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_1_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 1.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 1,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        18,
+        19,
+        19
+      ],
+      "gpm": [
+        0.85,
+        1,
+        1.1
+      ],
+      "precipInPerHr": [
+        0.51,
+        0.53,
+        0.59
+      ],
+      "precipTriInPerHr": [
+        0.58,
+        0.62,
+        0.68
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 1.5,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        21,
+        22,
+        22
+      ],
+      "gpm": [
+        1.3,
+        1.5,
+        1.7
+      ],
+      "precipInPerHr": [
+        0.57,
+        0.6,
+        0.68
+      ],
+      "precipTriInPerHr": [
+        0.66,
+        0.69,
+        0.78
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 2,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        24,
+        25,
+        25
+      ],
+      "gpm": [
+        1.7,
+        2,
+        2.3
+      ],
+      "precipInPerHr": [
+        0.57,
+        0.62,
+        0.71
+      ],
+      "precipTriInPerHr": [
+        0.66,
+        0.71,
+        0.82
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_2_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 2.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 2.5,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        27,
+        28,
+        28
+      ],
+      "gpm": [
+        2.2,
+        2.5,
+        2.8
+      ],
+      "precipInPerHr": [
+        0.58,
+        0.61,
+        0.69
+      ],
+      "precipTriInPerHr": [
+        0.67,
+        0.71,
+        0.79
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 3,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        30,
+        31,
+        31
+      ],
+      "gpm": [
+        2.5,
+        3,
+        3.4
+      ],
+      "precipInPerHr": [
+        0.53,
+        0.6,
+        0.68
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.69,
+        0.79
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_4_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 4.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 4,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        33,
+        34,
+        34
+      ],
+      "gpm": [
+        3.7,
+        4,
+        4.3
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.67,
+        0.72
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.77,
+        0.83
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_1",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 1",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 1,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        28,
+        29,
+        29,
+        30
+      ],
+      "gpm": [
+        0.5,
+        0.6,
+        0.7,
+        0.8
+      ],
+      "precipInPerHr": [
+        0.12,
+        0.14,
+        0.16,
+        0.17
+      ],
+      "precipTriInPerHr": [
+        0.14,
+        0.16,
+        0.19,
+        0.2
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_2",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 2",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 2,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        29,
+        30,
+        30,
+        31
+      ],
+      "gpm": [
+        0.7,
+        0.8,
+        0.9,
+        1
+      ],
+      "precipInPerHr": [
+        0.16,
+        0.17,
+        0.19,
+        0.2
+      ],
+      "precipTriInPerHr": [
+        0.19,
+        0.2,
+        0.22,
+        0.23
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_3",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 3",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 3,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        30,
+        31,
+        31,
+        32
+      ],
+      "gpm": [
+        0.9,
+        1,
+        1.2,
+        1.3
+      ],
+      "precipInPerHr": [
+        0.19,
+        0.2,
+        0.24,
+        0.24
+      ],
+      "precipTriInPerHr": [
+        0.22,
+        0.23,
+        0.28,
+        0.28
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_4",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 4",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 4,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        32,
+        33,
+        34,
+        34
+      ],
+      "gpm": [
+        1.2,
+        1.4,
+        1.6,
+        1.8
+      ],
+      "precipInPerHr": [
+        0.23,
+        0.25,
+        0.27,
+        0.3
+      ],
+      "precipTriInPerHr": [
+        0.26,
+        0.29,
+        0.31,
+        0.35
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 5,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        32,
+        36,
+        38,
+        38
+      ],
+      "gpm": [
+        1.6,
+        1.8,
+        2,
+        2.2
+      ],
+      "precipInPerHr": [
+        0.3,
+        0.27,
+        0.27,
+        0.29
+      ],
+      "precipTriInPerHr": [
+        0.35,
+        0.31,
+        0.31,
+        0.34
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_6",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 6",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 6,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        34,
+        36,
+        38,
+        38
+      ],
+      "gpm": [
+        2,
+        2.4,
+        2.7,
+        2.9
+      ],
+      "precipInPerHr": [
+        0.33,
+        0.36,
+        0.36,
+        0.39
+      ],
+      "precipTriInPerHr": [
+        0.38,
+        0.41,
+        0.42,
+        0.45
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_7",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 7",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 7,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        34,
+        38,
+        40,
+        40
+      ],
+      "gpm": [
+        2.6,
+        3,
+        3.4,
+        3.7
+      ],
+      "precipInPerHr": [
+        0.43,
+        0.4,
+        0.41,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        0.5,
+        0.46,
+        0.47,
+        0.51
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_8",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 8",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 8,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        41,
+        42
+      ],
+      "gpm": [
+        3.2,
+        3.7,
+        3.9,
+        4.6
+      ],
+      "precipInPerHr": [
+        0.45,
+        0.47,
+        0.45,
+        0.5
+      ],
+      "precipTriInPerHr": [
+        0.52,
+        0.54,
+        0.52,
+        0.58
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_9",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 9",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 9,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        38,
+        41,
+        44,
+        45
+      ],
+      "gpm": [
+        3.6,
+        4.3,
+        5.2,
+        5.5
+      ],
+      "precipInPerHr": [
+        0.48,
+        0.49,
+        0.52,
+        0.52
+      ],
+      "precipTriInPerHr": [
+        0.55,
+        0.57,
+        0.6,
+        0.6
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_10",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 10",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 10,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        44,
+        46,
+        47,
+        49
+      ],
+      "gpm": [
+        6,
+        6.8,
+        7.6,
+        8.2
+      ],
+      "precipInPerHr": [
+        0.6,
+        0.62,
+        0.66,
+        0.66
+      ],
+      "precipTriInPerHr": [
+        0.69,
+        0.71,
+        0.76,
+        0.76
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_11",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 11",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 11,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        46,
+        48,
+        50,
+        51
+      ],
+      "gpm": [
+        8,
+        8.9,
+        9.8,
+        10.5
+      ],
+      "precipInPerHr": [
+        0.73,
+        0.74,
+        0.75,
+        0.78
+      ],
+      "precipTriInPerHr": [
+        0.84,
+        0.86,
+        0.87,
+        0.9
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_red_12",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 12",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 12,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        46,
+        48,
+        50,
+        52
+      ],
+      "gpm": [
+        10.5,
+        11.9,
+        12.7,
+        14.1
+      ],
+      "precipInPerHr": [
+        0.96,
+        0.99,
+        0.98,
+        1
+      ],
+      "precipTriInPerHr": [
+        1.1,
+        1.15,
+        1.13,
+        1.16
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_blue_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 1.5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        29,
+        31,
+        31,
+        32,
+        32
+      ],
+      "gpm": [
+        1.2,
+        1.4,
+        1.5,
+        1.8,
+        1.9
+      ],
+      "precipInPerHr": [
+        0.27,
+        0.28,
+        0.3,
+        0.34,
+        0.36
+      ],
+      "precipTriInPerHr": [
+        0.32,
+        0.32,
+        0.35,
+        0.39,
+        0.41
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_blue_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 2,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        33,
+        33,
+        34,
+        34,
+        34
+      ],
+      "gpm": [
+        1.4,
+        1.7,
+        2,
+        2.1,
+        2.3
+      ],
+      "precipInPerHr": [
+        0.25,
+        0.3,
+        0.33,
+        0.35,
+        0.38
+      ],
+      "precipTriInPerHr": [
+        0.29,
+        0.35,
+        0.38,
+        0.4,
+        0.44
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_blue_2_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 2.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 2.5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        33,
+        35,
+        35,
+        35,
+        35
+      ],
+      "gpm": [
+        1.7,
+        2.1,
+        2.5,
+        2.6,
+        2.9
+      ],
+      "precipInPerHr": [
+        0.3,
+        0.33,
+        0.39,
+        0.41,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        0.35,
+        0.38,
+        0.45,
+        0.47,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_blue_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 3,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        35,
+        36,
+        38,
+        39,
+        39
+      ],
+      "gpm": [
+        2.2,
+        2.7,
+        3,
+        3.4,
+        3.7
+      ],
+      "precipInPerHr": [
+        0.35,
+        0.4,
+        0.4,
+        0.43,
+        0.47
+      ],
+      "precipTriInPerHr": [
+        0.4,
+        0.46,
+        0.46,
+        0.5,
+        0.54
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_blue_4_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 4.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 4,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        40,
+        41,
+        41
+      ],
+      "gpm": [
+        3,
+        3.5,
+        4,
+        4.5,
+        4.8
+      ],
+      "precipInPerHr": [
+        0.42,
+        0.44,
+        0.48,
+        0.52,
+        0.55
+      ],
+      "precipTriInPerHr": [
+        0.49,
+        0.51,
+        0.56,
+        0.6,
+        0.63
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_blue_5_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 5.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        42,
+        42,
+        42
+      ],
+      "gpm": [
+        3.7,
+        4.5,
+        5,
+        5.7,
+        6.2
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.57,
+        0.55,
+        0.62,
+        0.68
+      ],
+      "precipTriInPerHr": [
+        0.6,
+        0.66,
+        0.63,
+        0.72,
+        0.78
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_blue_6_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 6.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 6,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        38,
+        40,
+        43,
+        44,
+        44
+      ],
+      "gpm": [
+        4.3,
+        5.6,
+        6,
+        6.7,
+        7.3
+      ],
+      "precipInPerHr": [
+        0.57,
+        0.67,
+        0.62,
+        0.67,
+        0.73
+      ],
+      "precipTriInPerHr": [
+        0.66,
+        0.78,
+        0.72,
+        0.77,
+        0.84
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_blue_8_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 8.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 8,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        41,
+        44,
+        46,
+        46
+      ],
+      "gpm": [
+        6,
+        7,
+        8,
+        9,
+        9.8
+      ],
+      "precipInPerHr": [
+        0.84,
+        0.8,
+        0.8,
+        0.82,
+        0.89
+      ],
+      "precipTriInPerHr": [
+        0.97,
+        0.93,
+        0.92,
+        0.95,
+        1.03
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_la_4",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 4",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 4,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        22,
+        24,
+        26,
+        28
+      ],
+      "gpm": [
+        1.4,
+        1.7,
+        1.8,
+        2
+      ],
+      "precipInPerHr": [
+        0.56,
+        0.57,
+        0.51,
+        0.49
+      ],
+      "precipTriInPerHr": [
+        0.64,
+        0.66,
+        0.59,
+        0.57
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_la_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 5,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        25,
+        27,
+        28,
+        30
+      ],
+      "gpm": [
+        1.6,
+        1.9,
+        2.1,
+        2.3
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.5,
+        0.52,
+        0.49
+      ],
+      "precipTriInPerHr": [
+        0.57,
+        0.58,
+        0.6,
+        0.57
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_la_6",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 6",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 6,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        27,
+        30,
+        33,
+        35
+      ],
+      "gpm": [
+        2.1,
+        2.5,
+        2.8,
+        3
+      ],
+      "precipInPerHr": [
+        0.55,
+        0.53,
+        0.49,
+        0.47
+      ],
+      "precipTriInPerHr": [
+        0.64,
+        0.62,
+        0.57,
+        0.54
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_la_7",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 7",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 7,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        29,
+        32,
+        35,
+        37
+      ],
+      "gpm": [
+        2.8,
+        3.1,
+        3.5,
+        3.8
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.58,
+        0.55,
+        0.53
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.67,
+        0.64,
+        0.62
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_la_8",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 8",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 8,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        31,
+        34,
+        37,
+        38
+      ],
+      "gpm": [
+        3.4,
+        3.9,
+        4.4,
+        4.7
+      ],
+      "precipInPerHr": [
+        0.68,
+        0.65,
+        0.62,
+        0.63
+      ],
+      "precipTriInPerHr": [
+        0.79,
+        0.75,
+        0.71,
+        0.72
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_la_9",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 9",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 9,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        33,
+        37,
+        40,
+        42
+      ],
+      "gpm": [
+        4.3,
+        5,
+        5.6,
+        6.1
+      ],
+      "precipInPerHr": [
+        0.76,
+        0.7,
+        0.67,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.88,
+        0.81,
+        0.78,
+        0.77
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_adj_la_10",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 10",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_adj_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_adj"
+      ],
+      "nozzleSize": 10,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        38,
+        40,
+        42,
+        44
+      ],
+      "gpm": [
+        6.5,
+        7.3,
+        8,
+        8.6
+      ],
+      "precipInPerHr": [
+        0.87,
+        0.88,
+        0.87,
+        0.86
+      ],
+      "precipTriInPerHr": [
+        1,
+        1.01,
+        1.01,
+        0.99
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 1.5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        29,
+        31,
+        31,
+        32,
+        32
+      ],
+      "gpm": [
+        1.2,
+        1.4,
+        1.5,
+        1.8,
+        1.9
+      ],
+      "precipInPerHr": [
+        0.27,
+        0.28,
+        0.3,
+        0.34,
+        0.36
+      ],
+      "precipTriInPerHr": [
+        0.32,
+        0.32,
+        0.35,
+        0.39,
+        0.41
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        33,
+        33,
+        34,
+        34,
+        34
+      ],
+      "gpm": [
+        1.4,
+        1.7,
+        2,
+        2.1,
+        2.3
+      ],
+      "precipInPerHr": [
+        0.25,
+        0.3,
+        0.33,
+        0.35,
+        0.38
+      ],
+      "precipTriInPerHr": [
+        0.29,
+        0.35,
+        0.38,
+        0.4,
+        0.44
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_2_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 2.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2.5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        33,
+        35,
+        35,
+        35,
+        35
+      ],
+      "gpm": [
+        1.7,
+        2.1,
+        2.5,
+        2.6,
+        2.9
+      ],
+      "precipInPerHr": [
+        0.3,
+        0.33,
+        0.39,
+        0.41,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        0.35,
+        0.38,
+        0.45,
+        0.47,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 3,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        35,
+        36,
+        38,
+        39,
+        39
+      ],
+      "gpm": [
+        2.2,
+        2.7,
+        3,
+        3.4,
+        3.7
+      ],
+      "precipInPerHr": [
+        0.35,
+        0.4,
+        0.4,
+        0.43,
+        0.47
+      ],
+      "precipTriInPerHr": [
+        0.4,
+        0.46,
+        0.46,
+        0.5,
+        0.54
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_4_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 4.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 4,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        40,
+        41,
+        41
+      ],
+      "gpm": [
+        3,
+        3.5,
+        4,
+        4.5,
+        4.8
+      ],
+      "precipInPerHr": [
+        0.42,
+        0.44,
+        0.48,
+        0.52,
+        0.55
+      ],
+      "precipTriInPerHr": [
+        0.49,
+        0.51,
+        0.56,
+        0.6,
+        0.63
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_5_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 5.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 5,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        42,
+        42,
+        42
+      ],
+      "gpm": [
+        3.7,
+        4.5,
+        5,
+        5.7,
+        6.2
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.57,
+        0.55,
+        0.62,
+        0.68
+      ],
+      "precipTriInPerHr": [
+        0.6,
+        0.66,
+        0.63,
+        0.72,
+        0.78
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_6_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 6.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 6,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        38,
+        40,
+        43,
+        44,
+        44
+      ],
+      "gpm": [
+        4.3,
+        5.6,
+        6,
+        6.7,
+        7.3
+      ],
+      "precipInPerHr": [
+        0.57,
+        0.67,
+        0.62,
+        0.67,
+        0.73
+      ],
+      "precipTriInPerHr": [
+        0.66,
+        0.78,
+        0.72,
+        0.77,
+        0.84
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_blue_8_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Blue Nozzle 8.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_blue",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 8,
+      "color": "Blue"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        41,
+        44,
+        46,
+        46
+      ],
+      "gpm": [
+        6,
+        7,
+        8,
+        9,
+        9.8
+      ],
+      "precipInPerHr": [
+        0.84,
+        0.8,
+        0.8,
+        0.82,
+        0.89
+      ],
+      "precipTriInPerHr": [
+        0.97,
+        0.93,
+        0.92,
+        0.95,
+        1.03
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_la_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        25,
+        27,
+        28,
+        30
+      ],
+      "gpm": [
+        1.6,
+        1.9,
+        2.1,
+        2.3
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.5,
+        0.52,
+        0.49
+      ],
+      "precipTriInPerHr": [
+        0.57,
+        0.58,
+        0.6,
+        0.57
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_la_2_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 2.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2.5,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        27,
+        30,
+        33,
+        35
+      ],
+      "gpm": [
+        2.1,
+        2.5,
+        2.8,
+        3
+      ],
+      "precipInPerHr": [
+        0.55,
+        0.53,
+        0.49,
+        0.47
+      ],
+      "precipTriInPerHr": [
+        0.64,
+        0.62,
+        0.57,
+        0.54
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_la_3_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 3.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 3.5,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        29,
+        32,
+        35,
+        37
+      ],
+      "gpm": [
+        2.8,
+        3.1,
+        3.5,
+        3.8
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.58,
+        0.55,
+        0.53
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.67,
+        0.64,
+        0.62
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_la_4_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "LA Grey Nozzle 4.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_la",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 4.5,
+      "color": "LA"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        29,
+        32,
+        35,
+        37
+      ],
+      "gpm": [
+        3.4,
+        3.9,
+        4.4,
+        4.7
+      ],
+      "precipInPerHr": [
+        0.78,
+        0.73,
+        0.69,
+        0.66
+      ],
+      "precipTriInPerHr": [
+        0.9,
+        0.85,
+        0.8,
+        0.76
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_hf_10",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "HF Green Nozzle 10",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_hf",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 10,
+      "color": "HF"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        42,
+        43,
+        45,
+        47
+      ],
+      "gpm": [
+        8.4,
+        9.5,
+        10.5,
+        11.4
+      ],
+      "precipInPerHr": [
+        0.92,
+        0.99,
+        1,
+        0.99
+      ],
+      "precipTriInPerHr": [
+        1.06,
+        1.14,
+        1.15,
+        1.15
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_hf_13",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "HF Green Nozzle 13",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_hf",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 13,
+      "color": "HF"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        43,
+        44,
+        45,
+        47
+      ],
+      "gpm": [
+        10.9,
+        12.3,
+        13.6,
+        14.8
+      ],
+      "precipInPerHr": [
+        1.13,
+        1.22,
+        1.29,
+        1.29
+      ],
+      "precipTriInPerHr": [
+        1.31,
+        1.41,
+        1.49,
+        1.49
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_hf_6_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "HF Green Nozzle 6.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_hf",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 6,
+      "color": "HF"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        31,
+        35,
+        37,
+        39
+      ],
+      "gpm": [
+        4.2,
+        5,
+        5.8,
+        6.3
+      ],
+      "precipInPerHr": [
+        0.84,
+        0.79,
+        0.82,
+        0.8
+      ],
+      "precipTriInPerHr": [
+        0.97,
+        0.91,
+        0.94,
+        0.92
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_hf_8_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "HF Green Nozzle 8.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_hf",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 8,
+      "color": "HF"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        40,
+        50,
+        60,
+        70
+      ],
+      "radiusFeet": [
+        37,
+        39,
+        41,
+        41
+      ],
+      "gpm": [
+        6.7,
+        7.7,
+        8.5,
+        9.2
+      ],
+      "precipInPerHr": [
+        0.94,
+        0.97,
+        0.97,
+        1.05
+      ],
+      "precipTriInPerHr": [
+        1.09,
+        1.13,
+        1.12,
+        1.22
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_0_50",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 0.50",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 0.5,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        17,
+        17,
+        18,
+        19
+      ],
+      "gpm": [
+        0.36,
+        0.43,
+        0.5,
+        0.57
+      ],
+      "precipInPerHr": [
+        0.24,
+        0.29,
+        0.3,
+        0.3
+      ],
+      "precipTriInPerHr": [
+        0.28,
+        0.33,
+        0.34,
+        0.35
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_1_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 1.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 1,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        17,
+        17,
+        18,
+        19
+      ],
+      "gpm": [
+        0.78,
+        0.9,
+        1,
+        1.1
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.6,
+        0.59,
+        0.59
+      ],
+      "precipTriInPerHr": [
+        0.6,
+        0.69,
+        0.69,
+        0.68
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 2,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        17,
+        17,
+        18,
+        19
+      ],
+      "gpm": [
+        1.4,
+        1.7,
+        2,
+        2.2
+      ],
+      "precipInPerHr": [
+        0.93,
+        1.13,
+        1.19,
+        1.17
+      ],
+      "precipTriInPerHr": [
+        1.08,
+        1.31,
+        1.37,
+        1.35
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_0_75",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 0.75",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 0.75,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "gpm": [
+        0.58,
+        0.68,
+        0.75,
+        0.83
+      ],
+      "precipInPerHr": [
+        0.21,
+        0.23,
+        0.23,
+        0.24
+      ],
+      "precipTriInPerHr": [
+        0.24,
+        0.26,
+        0.27,
+        0.27
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 1.5,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "gpm": [
+        1.1,
+        1.3,
+        1.5,
+        1.6
+      ],
+      "precipInPerHr": [
+        0.4,
+        0.43,
+        0.46,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        0.46,
+        0.5,
+        0.53,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_sr_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "SR Black Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_sr",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "nozzleSize": 3,
+      "color": "SR"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        60
+      ],
+      "radiusFeet": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "gpm": [
+        2.5,
+        2.7,
+        3,
+        3.1
+      ],
+      "precipInPerHr": [
+        0.91,
+        0.9,
+        0.92,
+        0.88
+      ],
+      "precipTriInPerHr": [
+        1.05,
+        1.04,
+        1.07,
+        1.02
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr25_arc90",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-25 Red 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr25",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 90,
+      "color": "MPR-25",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        24,
+        25,
+        25,
+        25
+      ],
+      "radiusFeet": [
+        23,
+        0.88,
+        1,
+        1.11,
+        1.21
+      ],
+      "gpm": [
+        0.74,
+        0.59,
+        0.62,
+        0.68,
+        0.75
+      ],
+      "precipInPerHr": [
+        0.54,
+        0.68,
+        0.71,
+        0.79,
+        0.86
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr25_arc120",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-25 Red 120°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr25",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 120,
+      "color": "MPR-25",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        24,
+        25,
+        25,
+        25
+      ],
+      "radiusFeet": [
+        23,
+        1.21,
+        1.38,
+        1.53,
+        1.67
+      ],
+      "gpm": [
+        1,
+        0.61,
+        0.64,
+        0.71,
+        0.77
+      ],
+      "precipInPerHr": [
+        0.55,
+        0.7,
+        0.74,
+        0.82,
+        0.89
+      ],
+      "precipTriInPerHr": [
+        0.63,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr25_arc180",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-25 Red 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr25",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 180,
+      "color": "MPR-25",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        24,
+        25,
+        25,
+        25
+      ],
+      "radiusFeet": [
+        23,
+        1.73,
+        1.98,
+        2.21,
+        2.41
+      ],
+      "gpm": [
+        1.44,
+        0.58,
+        0.61,
+        0.68,
+        0.74
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.67,
+        0.7,
+        0.79,
+        0.86
+      ],
+      "precipTriInPerHr": [
+        0.61,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr25_arc360",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-25 Red 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr25",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 360,
+      "color": "MPR-25",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        24,
+        25,
+        25,
+        25
+      ],
+      "radiusFeet": [
+        23,
+        3.34,
+        3.82,
+        4.25,
+        4.63
+      ],
+      "gpm": [
+        2.78,
+        0.56,
+        0.59,
+        0.65,
+        0.71
+      ],
+      "precipInPerHr": [
+        0.51,
+        0.64,
+        0.68,
+        0.76,
+        0.82
+      ],
+      "precipTriInPerHr": [
+        0.58,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr30_arc90",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-30 Lt. Green 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr30",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 90,
+      "color": "MPR-30",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        30,
+        30,
+        30,
+        30
+      ],
+      "radiusFeet": [
+        29,
+        1.23,
+        1.4,
+        1.56,
+        1.69
+      ],
+      "gpm": [
+        1.03,
+        0.53,
+        0.6,
+        0.67,
+        0.72
+      ],
+      "precipInPerHr": [
+        0.47,
+        0.61,
+        0.69,
+        0.77,
+        0.83
+      ],
+      "precipTriInPerHr": [
+        0.54,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr30_arc120",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-30 Lt. Green 120°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr30",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 120,
+      "color": "MPR-30",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        30,
+        30,
+        30,
+        30
+      ],
+      "radiusFeet": [
+        29,
+        1.62,
+        1.85,
+        2.06,
+        2.24
+      ],
+      "gpm": [
+        1.34,
+        0.52,
+        0.59,
+        0.66,
+        0.72
+      ],
+      "precipInPerHr": [
+        0.46,
+        0.6,
+        0.69,
+        0.76,
+        0.83
+      ],
+      "precipTriInPerHr": [
+        0.53,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr30_arc180",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-30 Lt. Green 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr30",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 180,
+      "color": "MPR-30",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        30,
+        30,
+        30,
+        30
+      ],
+      "radiusFeet": [
+        29,
+        2.59,
+        2.96,
+        3.3,
+        3.6
+      ],
+      "gpm": [
+        2.15,
+        0.55,
+        0.63,
+        0.71,
+        0.77
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.64,
+        0.73,
+        0.82,
+        0.89
+      ],
+      "precipTriInPerHr": [
+        0.57,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr30_arc360",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-30 Lt. Green 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr30",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 360,
+      "color": "MPR-30",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        30,
+        30,
+        30,
+        30
+      ],
+      "radiusFeet": [
+        29,
+        5.08,
+        5.78,
+        6.39,
+        6.92
+      ],
+      "gpm": [
+        4.24,
+        0.54,
+        0.62,
+        0.68,
+        0.74
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.63,
+        0.71,
+        0.79,
+        0.85
+      ],
+      "precipTriInPerHr": [
+        0.56,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr35_arc90",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-35 Beige 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr35",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 90,
+      "color": "MPR-35",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        34,
+        35,
+        35,
+        35
+      ],
+      "radiusFeet": [
+        32,
+        1.67,
+        1.92,
+        2.13,
+        2.31
+      ],
+      "gpm": [
+        1.4,
+        0.56,
+        0.6,
+        0.67,
+        0.73
+      ],
+      "precipInPerHr": [
+        0.53,
+        0.64,
+        0.7,
+        0.77,
+        0.84
+      ],
+      "precipTriInPerHr": [
+        0.61,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr35_arc120",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-35 Beige 120°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr35",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 120,
+      "color": "MPR-35",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        34,
+        35,
+        35,
+        35
+      ],
+      "radiusFeet": [
+        32,
+        2.15,
+        2.46,
+        2.74,
+        2.99
+      ],
+      "gpm": [
+        1.77,
+        0.54,
+        0.58,
+        0.65,
+        0.7
+      ],
+      "precipInPerHr": [
+        0.5,
+        0.62,
+        0.67,
+        0.75,
+        0.81
+      ],
+      "precipTriInPerHr": [
+        0.58,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr35_arc180",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-35 Beige 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr35",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 180,
+      "color": "MPR-35",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        34,
+        35,
+        35,
+        35
+      ],
+      "radiusFeet": [
+        32,
+        3.33,
+        3.81,
+        4.23,
+        4.62
+      ],
+      "gpm": [
+        2.75,
+        0.55,
+        0.6,
+        0.66,
+        0.73
+      ],
+      "precipInPerHr": [
+        0.52,
+        0.64,
+        0.69,
+        0.77,
+        0.84
+      ],
+      "precipTriInPerHr": [
+        0.6,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_pgp_ultra_i20_mpr35_arc360",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "MPR-35 Beige 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgp_ultra_i20_mpr35",
+      "compatibleHeadFamilies": [
+        "hunter_pgp_ultra",
+        "hunter_i20"
+      ],
+      "arcDegrees": 360,
+      "color": "MPR-35",
+      "mpr": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        34,
+        35,
+        35,
+        35
+      ],
+      "radiusFeet": [
+        32,
+        6.62,
+        7.58,
+        8.43,
+        9.18
+      ],
+      "gpm": [
+        5.36,
+        0.55,
+        0.6,
+        0.66,
+        0.72
+      ],
+      "precipInPerHr": [
+        0.5,
+        0.64,
+        0.69,
+        0.76,
+        0.83
+      ],
+      "precipTriInPerHr": [
+        0.58,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_3500_0_75",
     "category": "ROTOR",
     "manufacturer": "Rain Bird",
-    "model": "PGP Ultra",
-    "specs": { "radiusFeetMin": 18, "radiusFeetMax": 45 },
+    "model": "3500 Nozzle 0.75",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_3500",
+      "compatibleHeadFamilies": [
+        "rainbird_3500"
+      ],
+      "nozzleSize": 0.75,
+      "trajectoryDeg": 25
+    },
     "nozzleChart": {
-      "pressurePsi": [30, 40, 50, 60],
-      "gpm": [2.1, 2.5, 2.9, 3.2],
-      "radiusFeet": [30, 35, 40, 42],
-      "precipInPerHr": [0.4, 0.45, 0.5, 0.52]
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55
+      ],
+      "radiusFeet": [
+        15,
+        17,
+        17,
+        18
+      ],
+      "gpm": [
+        0.54,
+        0.67,
+        0.77,
+        0.85
+      ],
+      "precipInPerHr": [
+        0.46,
+        0.45,
+        0.51,
+        0.51
+      ],
+      "precipTriInPerHr": [
+        0.53,
+        0.52,
+        0.59,
+        0.58
+      ]
     }
   },
   {
-    "id": "cat_mp1000",
+    "id": "noz_rb_3500_1_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "3500 Nozzle 1.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_3500",
+      "compatibleHeadFamilies": [
+        "rainbird_3500"
+      ],
+      "nozzleSize": 1,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55
+      ],
+      "radiusFeet": [
+        20,
+        21,
+        21,
+        22
+      ],
+      "gpm": [
+        0.77,
+        0.92,
+        1.06,
+        1.18
+      ],
+      "precipInPerHr": [
+        0.37,
+        0.4,
+        0.46,
+        0.47
+      ],
+      "precipTriInPerHr": [
+        0.43,
+        0.46,
+        0.53,
+        0.54
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_3500_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "3500 Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_3500",
+      "compatibleHeadFamilies": [
+        "rainbird_3500"
+      ],
+      "nozzleSize": 1.5,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55
+      ],
+      "radiusFeet": [
+        23,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        1.06,
+        1.28,
+        1.48,
+        1.65
+      ],
+      "precipInPerHr": [
+        0.39,
+        0.47,
+        0.49,
+        0.55
+      ],
+      "precipTriInPerHr": [
+        0.45,
+        0.54,
+        0.57,
+        0.64
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_3500_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "3500 Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_3500",
+      "compatibleHeadFamilies": [
+        "rainbird_3500"
+      ],
+      "nozzleSize": 2,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55
+      ],
+      "radiusFeet": [
+        27,
+        27,
+        27,
+        28
+      ],
+      "gpm": [
+        1.4,
+        1.69,
+        1.93,
+        2.15
+      ],
+      "precipInPerHr": [
+        0.37,
+        0.45,
+        0.51,
+        0.53
+      ],
+      "precipTriInPerHr": [
+        0.43,
+        0.52,
+        0.59,
+        0.61
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_3500_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "3500 Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_3500",
+      "compatibleHeadFamilies": [
+        "rainbird_3500"
+      ],
+      "nozzleSize": 3,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55
+      ],
+      "radiusFeet": [
+        29,
+        31,
+        31,
+        32
+      ],
+      "gpm": [
+        2.17,
+        2.6,
+        3,
+        3.25
+      ],
+      "precipInPerHr": [
+        0.5,
+        0.52,
+        0.6,
+        0.61
+      ],
+      "precipTriInPerHr": [
+        0.57,
+        0.6,
+        0.69,
+        0.71
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_3500_4_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "3500 Nozzle 4.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_3500",
+      "compatibleHeadFamilies": [
+        "rainbird_3500"
+      ],
+      "nozzleSize": 4,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55
+      ],
+      "radiusFeet": [
+        31,
+        33,
+        35,
+        35
+      ],
+      "gpm": [
+        2.97,
+        3.58,
+        4.13,
+        4.6
+      ],
+      "precipInPerHr": [
+        0.59,
+        0.63,
+        0.65,
+        0.72
+      ],
+      "precipTriInPerHr": [
+        0.69,
+        0.73,
+        0.75,
+        0.83
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_la_1_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 1.0 LA",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 1,
+      "trajectoryDeg": 25,
+      "lowAngle": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        25,
+        28,
+        29,
+        29,
+        29
+      ],
+      "gpm": [
+        0.76,
+        0.92,
+        1.05,
+        1.17,
+        1.27
+      ],
+      "precipInPerHr": [
+        0.23,
+        0.23,
+        0.24,
+        0.27,
+        0.29
+      ],
+      "precipTriInPerHr": [
+        0.27,
+        0.26,
+        0.28,
+        0.31,
+        0.34
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 1.5,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        33,
+        34,
+        35,
+        35,
+        34
+      ],
+      "gpm": [
+        1.12,
+        1.35,
+        1.54,
+        1.71,
+        1.86
+      ],
+      "precipInPerHr": [
+        0.2,
+        0.22,
+        0.24,
+        0.27,
+        0.31
+      ],
+      "precipTriInPerHr": [
+        0.23,
+        0.26,
+        0.28,
+        0.31,
+        0.36
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_la_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 1.5 LA",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 1.5,
+      "trajectoryDeg": 25,
+      "lowAngle": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        27,
+        30,
+        31,
+        31,
+        31
+      ],
+      "gpm": [
+        1.15,
+        1.38,
+        1.58,
+        1.76,
+        1.92
+      ],
+      "precipInPerHr": [
+        0.3,
+        0.3,
+        0.32,
+        0.35,
+        0.38
+      ],
+      "precipTriInPerHr": [
+        0.35,
+        0.34,
+        0.37,
+        0.41,
+        0.44
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 2,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        35,
+        36,
+        37,
+        37,
+        35
+      ],
+      "gpm": [
+        1.5,
+        1.81,
+        2.07,
+        2.3,
+        2.52
+      ],
+      "precipInPerHr": [
+        0.24,
+        0.27,
+        0.29,
+        0.32,
+        0.4
+      ],
+      "precipTriInPerHr": [
+        0.27,
+        0.31,
+        0.34,
+        0.37,
+        0.46
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_la_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 2.0 LA",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 2,
+      "trajectoryDeg": 25,
+      "lowAngle": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        29,
+        31,
+        32,
+        33,
+        33
+      ],
+      "gpm": [
+        1.47,
+        1.77,
+        2.02,
+        2.24,
+        2.45
+      ],
+      "precipInPerHr": [
+        0.34,
+        0.35,
+        0.38,
+        0.4,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.39,
+        0.41,
+        0.44,
+        0.46,
+        0.5
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_2_5",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 2.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 2.5,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        35,
+        37,
+        37,
+        37,
+        37
+      ],
+      "gpm": [
+        1.81,
+        2.17,
+        2.51,
+        2.76,
+        3.01
+      ],
+      "precipInPerHr": [
+        0.28,
+        0.31,
+        0.35,
+        0.39,
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.33,
+        0.35,
+        0.41,
+        0.45,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 3,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        36,
+        38,
+        40,
+        40,
+        40
+      ],
+      "gpm": [
+        2.26,
+        2.71,
+        3.09,
+        3.47,
+        3.78
+      ],
+      "precipInPerHr": [
+        0.34,
+        0.36,
+        0.37,
+        0.42,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        0.39,
+        0.42,
+        0.43,
+        0.48,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_la_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 3.0 LA",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 3,
+      "trajectoryDeg": 25,
+      "lowAngle": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        29,
+        33,
+        35,
+        36,
+        36
+      ],
+      "gpm": [
+        2.23,
+        2.68,
+        3.07,
+        3.41,
+        3.72
+      ],
+      "precipInPerHr": [
+        0.51,
+        0.47,
+        0.48,
+        0.51,
+        0.55
+      ],
+      "precipTriInPerHr": [
+        0.59,
+        0.55,
+        0.56,
+        0.58,
+        0.64
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_4_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 4.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 4,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        37,
+        40,
+        42,
+        42,
+        42
+      ],
+      "gpm": [
+        2.91,
+        3.5,
+        4.01,
+        4.44,
+        4.83
+      ],
+      "precipInPerHr": [
+        0.41,
+        0.42,
+        0.44,
+        0.48,
+        0.53
+      ],
+      "precipTriInPerHr": [
+        0.47,
+        0.49,
+        0.51,
+        0.56,
+        0.61
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_5_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 5.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 5,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        39,
+        41,
+        45,
+        45,
+        45
+      ],
+      "gpm": [
+        3.72,
+        4.47,
+        5.09,
+        5.66,
+        6.16
+      ],
+      "precipInPerHr": [
+        0.47,
+        0.51,
+        0.48,
+        0.54,
+        0.59
+      ],
+      "precipTriInPerHr": [
+        0.54,
+        0.59,
+        0.56,
+        0.62,
+        0.68
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_6_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 6.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 6,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        39,
+        43,
+        46,
+        47,
+        48
+      ],
+      "gpm": [
+        4.25,
+        5.23,
+        6.01,
+        6.63,
+        7.22
+      ],
+      "precipInPerHr": [
+        0.54,
+        0.54,
+        0.55,
+        0.58,
+        0.6
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.63,
+        0.63,
+        0.67,
+        0.7
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_5000_8_0",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "5000 Nozzle 8.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_5000",
+      "compatibleHeadFamilies": [
+        "rainbird_5000"
+      ],
+      "nozzleSize": 8,
+      "trajectoryDeg": 25
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        25,
+        35,
+        45,
+        55,
+        65
+      ],
+      "radiusFeet": [
+        36,
+        43,
+        47,
+        50,
+        50
+      ],
+      "gpm": [
+        5.9,
+        7.06,
+        8.03,
+        8.86,
+        9.63
+      ],
+      "precipInPerHr": [
+        0.88,
+        0.74,
+        0.7,
+        0.68,
+        0.74
+      ],
+      "precipTriInPerHr": [
+        1.01,
+        0.85,
+        0.81,
+        0.79,
+        0.86
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_r_van14_arc270",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN14 270°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN14",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.84,
+        0.87,
+        0.92,
+        0.94,
+        1.11,
+        1.17
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.6,
+        0.62,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van14_arc210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN14 210°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN14",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.65,
+        0.68,
+        0.72,
+        0.73,
+        0.86,
+        0.91
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.6,
+        0.62,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van14_arc180",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN14 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN14",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.56,
+        0.58,
+        0.61,
+        0.63,
+        0.74,
+        0.78
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.6,
+        0.62,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van14_arc90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN14 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN14",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.28,
+        0.29,
+        0.31,
+        0.32,
+        0.37,
+        0.39
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.62,
+        0.61,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van14-360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN14-360",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN14-360",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        1.1,
+        1.12,
+        1.22,
+        1.27,
+        1.41,
+        1.45
+      ],
+      "precipInPerHr": [
+        0.63,
+        0.64,
+        0.6,
+        0.62,
+        0.6,
+        0.62
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.74,
+        0.69,
+        0.72,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van18_arc270",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN18 270°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN18",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        1.26,
+        1.35,
+        1.42,
+        1.51,
+        1.57,
+        1.62
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.64,
+        0.63,
+        0.64,
+        0.6,
+        0.6
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.74,
+        0.73,
+        0.73,
+        0.69,
+        0.69
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van18_arc210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN18 210°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN18",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        0.98,
+        1.05,
+        1.1,
+        1.17,
+        1.22,
+        1.26
+      ],
+      "precipInPerHr": [
+        0.63,
+        0.68,
+        0.63,
+        0.64,
+        0.62,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.73,
+        0.78,
+        0.73,
+        0.77,
+        0.72,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van18_arc180",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN18 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN18",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        0.85,
+        0.91,
+        0.98,
+        1.01,
+        1.07,
+        1.09
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.64,
+        0.63,
+        0.64,
+        0.6,
+        0.6
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.74,
+        0.73,
+        0.73,
+        0.69,
+        0.69
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van18_arc90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN18 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN18",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        0.42,
+        0.47,
+        0.5,
+        0.5,
+        0.54,
+        0.58
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.64,
+        0.63,
+        0.64,
+        0.6,
+        0.6
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.74,
+        0.73,
+        0.73,
+        0.69,
+        0.69
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van18-360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN18-360",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN18-360",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        1.65,
+        1.67,
+        1.8,
+        1.85,
+        2.05,
+        2.11
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.63,
+        0.6,
+        0.62,
+        0.61,
+        0.63
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.73,
+        0.69,
+        0.71,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van24_arc270",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN24 270°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN24",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        1.8,
+        1.95,
+        2.31,
+        2.52,
+        2.82,
+        2.88
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van24_arc210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN24 210°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN24",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        1.4,
+        1.52,
+        1.8,
+        1.96,
+        2.19,
+        2.24
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van24_arc180",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN24 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN24",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        1.2,
+        1.3,
+        1.54,
+        1.68,
+        1.88,
+        1.92
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van24_arc90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN24 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN24",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        0.6,
+        0.65,
+        0.77,
+        0.84,
+        0.94,
+        0.96
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van24-360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN24-360",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN24-360",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        2.35,
+        2.52,
+        3.13,
+        3.48,
+        3.61,
+        3.74
+      ],
+      "precipInPerHr": [
+        0.63,
+        0.61,
+        0.62,
+        0.63,
+        0.6,
+        0.62
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.7,
+        0.72,
+        0.73,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van-lcs",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN-LCS",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN-LCS",
+      "stripPattern": "left_corner",
+      "patternSize": "4’x14’"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.18,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.28
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van-rcs",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN-RCS",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN-RCS",
+      "stripPattern": "right_corner",
+      "patternSize": "4’x14’"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.18,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.28
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van-sst",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN-SST",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN-SST",
+      "stripPattern": "side",
+      "patternSize": "4’x28’"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.36,
+        0.44,
+        0.46,
+        0.48,
+        0.5,
+        0.56
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc90_min",
     "category": "MP_ROTATOR",
     "manufacturer": "Hunter",
-    "model": "MP1000-90",
-    "specs": { "radiusFeet": 12, "arc": 90 },
+    "model": "MP-800SR 90° (min radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 90,
+      "radiusSetting": "min"
+    },
     "nozzleChart": {
-      "pressurePsi": [30, 40, 50],
-      "gpm": [0.22, 0.25, 0.28],
-      "radiusFeet": [10, 11, 12],
-      "precipInPerHr": [0.35, 0.38, 0.4]
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        6
+      ],
+      "gpm": [
+        0.13
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc90_mid",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 90° (mid radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 90,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        8
+      ],
+      "gpm": [
+        0.17
+      ],
+      "precipInPerHr": [
+        0.9
+      ],
+      "precipTriInPerHr": [
+        1.04
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc90_max",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 90° (max radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 90,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        14
+      ],
+      "gpm": [
+        0.42
+      ],
+      "precipInPerHr": [
+        0.83
+      ],
+      "precipTriInPerHr": [
+        0.95
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc40_min",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 40° (min radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 40,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "radiusFeet": [
+        0.16,
+        0.32,
+        0.37,
+        0.56
+      ],
+      "gpm": [
+        10,
+        10,
+        10,
+        10
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc40_mid",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 40° (mid radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 40,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "radiusFeet": [
+        0.23,
+        0.42,
+        0.43,
+        0.78
+      ],
+      "gpm": [
+        13.8,
+        25.2,
+        29.4,
+        46.8
+      ],
+      "precipInPerHr": [
+        0.96,
+        0.93,
+        0.91,
+        0.91
+      ],
+      "precipTriInPerHr": [
+        15,
+        15,
+        15,
+        15
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc40_max",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 40° (max radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 40,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "radiusFeet": [
+        0.49,
+        0.93,
+        1.1,
+        1.87
+      ],
+      "gpm": [
+        0.84,
+        0.8,
+        0.81,
+        0.8
+      ],
+      "precipInPerHr": [
+        0.97,
+        0.92,
+        0.93,
+        0.92
+      ],
+      "precipTriInPerHr": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc50_min",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 50° (min radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 50,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "radiusFeet": [
+        0.19,
+        0.38,
+        0.44,
+        0.63
+      ],
+      "gpm": [
+        11,
+        11,
+        11,
+        11
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc50_mid",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 50° (mid radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 50,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "radiusFeet": [
+        0.27,
+        0.48,
+        0.49,
+        0.88
+      ],
+      "gpm": [
+        16.2,
+        28.8,
+        33.6,
+        52.8
+      ],
+      "precipInPerHr": [
+        0.92,
+        0.88,
+        0.85,
+        0.85
+      ],
+      "precipTriInPerHr": [
+        16,
+        16,
+        16,
+        16
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc50_max",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 50° (max radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 50,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "radiusFeet": [
+        0.55,
+        1.06,
+        1.24,
+        2.13
+      ],
+      "gpm": [
+        0.83,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "precipInPerHr": [
+        0.96,
+        0.92,
+        0.92,
+        0.92
+      ],
+      "precipTriInPerHr": [
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc180_min",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 180° (min radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 180,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        6
+      ],
+      "gpm": [
+        0.26
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc180_mid",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 180° (mid radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 180,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        8
+      ],
+      "gpm": [
+        0.33
+      ],
+      "precipInPerHr": [
+        0.88
+      ],
+      "precipTriInPerHr": [
+        1.02
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc180_max",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 180° (max radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 180,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        0.75
+      ],
+      "precipInPerHr": [
+        0.85
+      ],
+      "precipTriInPerHr": [
+        0.99
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc210_min",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 210° (min radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 210,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        6
+      ],
+      "gpm": [
+        0.3
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc210_mid",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 210° (mid radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 210,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        8
+      ],
+      "gpm": [
+        0.35
+      ],
+      "precipInPerHr": [
+        0.8
+      ],
+      "precipTriInPerHr": [
+        0.93
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc210_max",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 210° (max radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 210,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        0.88
+      ],
+      "precipInPerHr": [
+        0.86
+      ],
+      "precipTriInPerHr": [
+        0.99
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc270_max",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 270° (max radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 270,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        1.14
+      ],
+      "precipInPerHr": [
+        0.87
+      ],
+      "precipTriInPerHr": [
+        1
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc360_min",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 360° (min radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 360,
+      "radiusSetting": "min"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        6
+      ],
+      "gpm": [
+        0.47
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc360_mid",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 360° (mid radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 360,
+      "radiusSetting": "mid"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        8
+      ],
+      "gpm": [
+        0.66
+      ],
+      "precipInPerHr": [
+        0.89
+      ],
+      "precipTriInPerHr": [
+        1.03
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_arc360_max",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-800SR 360° (max radius)",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "arcDegrees": 360,
+      "radiusSetting": "max"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        1.52
+      ],
+      "precipInPerHr": [
+        0.87
+      ],
+      "precipTriInPerHr": [
+        1
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-1000 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.13,
+        0.17
+      ],
+      "precipInPerHr": [
+        0.17,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        9.6,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-2000 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.9,
+        18
+      ],
+      "gpm": [
+        1.04,
+        0.38
+      ],
+      "precipInPerHr": [
+        14,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        0.42,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc40",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-1000 40°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "arcDegrees": 40
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8,
+        14,
+        14,
+        14,
+        14,
+        14
+      ],
+      "radiusFeet": [
+        0.16,
+        0.32,
+        0.37,
+        0.56,
+        0.21,
+        0.42,
+        0.49,
+        0.63,
+        0.84
+      ],
+      "gpm": [
+        10,
+        10,
+        10,
+        10,
+        12.6,
+        25.2,
+        29.4,
+        37.8,
+        50.4
+      ],
+      "precipInPerHr": [
+        13.8,
+        25.2,
+        29.4,
+        46.8,
+        0.48,
+        0.48,
+        0.48,
+        0.48,
+        0.48
+      ],
+      "precipTriInPerHr": [
+        0.83,
+        0.81,
+        0.81,
+        0.79,
+        20,
+        19,
+        19,
+        19,
+        19
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc40",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-2000 40°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "arcDegrees": 40
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "radiusFeet": [
+        0.96,
+        0.93,
+        0.91,
+        0.91
+      ],
+      "gpm": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "precipInPerHr": [
+        0.49,
+        0.93,
+        1.1,
+        1.87
+      ],
+      "precipTriInPerHr": [
+        0.84,
+        0.8,
+        0.81,
+        0.8
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc50",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-1000 50°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "arcDegrees": 50
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9,
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "radiusFeet": [
+        0.19,
+        0.38,
+        0.44,
+        0.63,
+        0.25,
+        0.5,
+        0.57,
+        0.72,
+        0.98
+      ],
+      "gpm": [
+        11,
+        11,
+        11,
+        11,
+        15,
+        30,
+        34.2,
+        43.2,
+        58.8
+      ],
+      "precipInPerHr": [
+        16.2,
+        28.8,
+        33.6,
+        52.8,
+        0.49,
+        0.49,
+        0.48,
+        0.47,
+        0.48
+      ],
+      "precipTriInPerHr": [
+        0.79,
+        0.76,
+        0.73,
+        0.73,
+        21,
+        21,
+        21,
+        21,
+        21
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc50",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-2000 50°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "arcDegrees": 50
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        9,
+        9,
+        9,
+        9
+      ],
+      "radiusFeet": [
+        0.92,
+        0.88,
+        0.85,
+        0.85
+      ],
+      "gpm": [
+        16,
+        16,
+        16,
+        16
+      ],
+      "precipInPerHr": [
+        0.55,
+        1.06,
+        1.24,
+        2.13
+      ],
+      "precipTriInPerHr": [
+        0.83,
+        0.8,
+        0.8,
+        0.8
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc180",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-1000 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.26,
+        0.34
+      ],
+      "precipInPerHr": [
+        0.33,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        19.2,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc180",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-2000 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.88,
+        17
+      ],
+      "gpm": [
+        1.02,
+        0.64
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-1000 210°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.3,
+        0.4
+      ],
+      "precipInPerHr": [
+        0.35,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        22.2,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-2000 210°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.8,
+        17
+      ],
+      "gpm": [
+        0.93,
+        0.75
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.88,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-1000 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.47,
+        0.69
+      ],
+      "precipInPerHr": [
+        0.66,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        37.8,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-2000 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.89,
+        17
+      ],
+      "gpm": [
+        1.03,
+        1.28
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        1.52,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_arc270",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-1000 270°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.48
+      ],
+      "precipInPerHr": [
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_arc270",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-2000 270°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        17
+      ],
+      "gpm": [
+        0.95
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-3000 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3000",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        0.76
+      ],
+      "precipInPerHr": [
+        0.4
+      ],
+      "precipTriInPerHr": [
+        0.46
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc180",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-3000 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3000",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        1.58
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-3000 210°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3000",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        1.84
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc270",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-3000 270°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3000",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        2.37
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_arc360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-3000 360°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3000",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        3.15
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc45",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP Corner 45°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP Corner",
+      "arcDegrees": 45
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.17
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc40",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP Corner 40°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP Corner",
+      "arcDegrees": 40
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        14,
+        14,
+        14
+      ],
+      "radiusFeet": [
+        0.19,
+        0.39,
+        0.45
+      ],
+      "gpm": [
+        11.4,
+        23.4,
+        27
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc50",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP Corner 50°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP Corner",
+      "arcDegrees": 50
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        14,
+        15,
+        15
+      ],
+      "radiusFeet": [
+        0.22,
+        0.43,
+        0.51
+      ],
+      "gpm": [
+        13.2,
+        25.8,
+        30.6
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP Corner 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP Corner",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.34
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner_arc105",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP Corner 105°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP Corner",
+      "arcDegrees": 105
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.39
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3500_arc90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-3500 90°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3500",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        34,
+        35,
+        35
+      ],
+      "gpm": [
+        1.13,
+        1.28,
+        1.43
+      ],
+      "precipInPerHr": [
+        0.38,
+        0.4,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        0.43,
+        0.46,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3500_arc180",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-3500 180°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3500",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        34,
+        35,
+        35
+      ],
+      "gpm": [
+        2.24,
+        2.86,
+        3.21
+      ],
+      "precipInPerHr": [
+        0.37,
+        0.45,
+        0.5
+      ],
+      "precipTriInPerHr": [
+        0.43,
+        0.52,
+        0.58
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3500_arc210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-3500 210°",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3500",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        34,
+        35,
+        35
+      ],
+      "gpm": [
+        2.84,
+        3.29,
+        3.76
+      ],
+      "precipInPerHr": [
+        0.41,
+        0.44,
+        0.51
+      ],
+      "precipTriInPerHr": [
+        0.47,
+        0.51,
+        0.59
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_lcs_515",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-LCS-515",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-LCS-515",
+      "stripPattern": "left_corner"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        30,
+        40,
+        50,
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        6,
+        4,
+        5,
+        6,
+        4,
+        5,
+        6
+      ],
+      "gpm": [
+        0.19,
+        0.22,
+        0.25,
+        0.19,
+        0.22,
+        0.25,
+        0.38,
+        0.44,
+        0.49
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_rcs_515",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-RCS-515",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-RCS-515",
+      "stripPattern": "right_corner"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        30,
+        40,
+        50,
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        6,
+        4,
+        5,
+        6,
+        4,
+        5,
+        6
+      ],
+      "gpm": [
+        0.19,
+        0.22,
+        0.25,
+        0.19,
+        0.22,
+        0.25,
+        0.38,
+        0.44,
+        0.49
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_ss_530",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP-SS-530",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-SS-530",
+      "stripPattern": "side"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50,
+        30,
+        40,
+        50,
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        6,
+        4,
+        5,
+        6,
+        4,
+        5,
+        6
+      ],
+      "gpm": [
+        0.19,
+        0.22,
+        0.25,
+        0.19,
+        0.22,
+        0.25,
+        0.38,
+        0.44,
+        0.49
+      ],
+      "precipInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "precipTriInPerHr": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
     }
   },
   {
@@ -63,48 +7947,71 @@
     "category": "DRIP",
     "manufacturer": "Rain Bird",
     "model": "XFS Dripline 0.6 GPH",
-    "specs": { "spacingInches": 12, "gphPerEmitter": 0.6 }
+    "specs": {
+      "spacingInches": 12,
+      "gphPerEmitter": 0.6
+    }
   },
   {
     "id": "cat_valve_pgv",
     "category": "VALVE",
     "manufacturer": "Rain Bird",
     "model": "PGV 1\" Valve",
-    "specs": { "sizeInches": 1, "flowGpmMax": 40 }
+    "specs": {
+      "sizeInches": 1,
+      "flowGpmMax": 40
+    }
   },
   {
     "id": "cat_pipe_1pvc",
     "category": "PIPE",
     "manufacturer": "Generic",
     "model": "1\" Schedule 40 PVC",
-    "specs": { "diameterInches": 1, "material": "PVC", "cCoefficient": 150 }
+    "specs": {
+      "diameterInches": 1,
+      "material": "PVC",
+      "cCoefficient": 150
+    }
   },
   {
     "id": "cat_pipe_075pvc",
     "category": "PIPE",
     "manufacturer": "Generic",
     "model": "3/4\" Schedule 40 PVC",
-    "specs": { "diameterInches": 0.75, "material": "PVC", "cCoefficient": 150 }
+    "specs": {
+      "diameterInches": 0.75,
+      "material": "PVC",
+      "cCoefficient": 150
+    }
   },
   {
     "id": "cat_fitting_elbow",
     "category": "FITTING",
     "manufacturer": "Generic",
     "model": "90° Elbow 1\"",
-    "specs": { "type": "elbow", "sizeInches": 1 }
+    "specs": {
+      "type": "elbow",
+      "sizeInches": 1
+    }
   },
   {
     "id": "cat_fitting_tee",
     "category": "FITTING",
     "manufacturer": "Generic",
     "model": "Tee 1\"",
-    "specs": { "type": "tee", "sizeInches": 1 }
+    "specs": {
+      "type": "tee",
+      "sizeInches": 1
+    }
   },
   {
     "id": "cat_controller",
     "category": "CONTROLLER",
     "manufacturer": "Rain Bird",
     "model": "ESP-ME3 8 Station",
-    "specs": { "stations": 8, "wifi": true }
+    "specs": {
+      "stations": 8,
+      "wifi": true
+    }
   }
 ]

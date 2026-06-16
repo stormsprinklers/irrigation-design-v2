@@ -1,0 +1,338 @@
+[
+  {
+    "id": "noz_pgj_red_0_50",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 0.50",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 0.5,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        14,
+        15,
+        16
+      ],
+      "gpm": [
+        0.42,
+        0.5,
+        0.58
+      ],
+      "precipInPerHr": [
+        0.41,
+        0.43,
+        0.44
+      ],
+      "precipTriInPerHr": [
+        0.48,
+        0.49,
+        0.5
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_0_75",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 0.75",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 0.75,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        15,
+        16,
+        17
+      ],
+      "gpm": [
+        0.64,
+        0.75,
+        0.85
+      ],
+      "precipInPerHr": [
+        0.55,
+        0.56,
+        0.57
+      ],
+      "precipTriInPerHr": [
+        0.63,
+        0.65,
+        0.65
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_1_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 1.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 1,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        18,
+        19,
+        19
+      ],
+      "gpm": [
+        0.85,
+        1,
+        1.1
+      ],
+      "precipInPerHr": [
+        0.51,
+        0.53,
+        0.59
+      ],
+      "precipTriInPerHr": [
+        0.58,
+        0.62,
+        0.68
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_1_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 1.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 1.5,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        21,
+        22,
+        22
+      ],
+      "gpm": [
+        1.3,
+        1.5,
+        1.7
+      ],
+      "precipInPerHr": [
+        0.57,
+        0.6,
+        0.68
+      ],
+      "precipTriInPerHr": [
+        0.66,
+        0.69,
+        0.78
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_2_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 2.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 2,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        24,
+        25,
+        25
+      ],
+      "gpm": [
+        1.7,
+        2,
+        2.3
+      ],
+      "precipInPerHr": [
+        0.57,
+        0.62,
+        0.71
+      ],
+      "precipTriInPerHr": [
+        0.66,
+        0.71,
+        0.82
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_2_5",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 2.5",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 2.5,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        27,
+        28,
+        28
+      ],
+      "gpm": [
+        2.2,
+        2.5,
+        2.8
+      ],
+      "precipInPerHr": [
+        0.58,
+        0.61,
+        0.69
+      ],
+      "precipTriInPerHr": [
+        0.67,
+        0.71,
+        0.79
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_3_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 3.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 3,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        30,
+        31,
+        31
+      ],
+      "gpm": [
+        2.5,
+        3,
+        3.4
+      ],
+      "precipInPerHr": [
+        0.53,
+        0.6,
+        0.68
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.69,
+        0.79
+      ]
+    }
+  },
+  {
+    "id": "noz_pgj_red_4_0",
+    "category": "ROTOR",
+    "manufacturer": "Hunter",
+    "model": "Red Nozzle 4.0",
+    "specs": {
+      "itemRole": "nozzle",
+      "nozzleFamily": "pgj_red",
+      "compatibleHeadFamilies": [
+        "hunter_pgj"
+      ],
+      "nozzleSize": 4,
+      "color": "Red"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        33,
+        34,
+        34
+      ],
+      "gpm": [
+        3.7,
+        4,
+        4.3
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.67,
+        0.72
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.77,
+        0.83
+      ]
+    }
+  }
+]

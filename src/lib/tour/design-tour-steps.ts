@@ -110,7 +110,7 @@ export const DESIGN_TOUR_STEPS: DesignTourStep[] = [
     id: "versions",
     target: "tour-versions",
     title: "Versions and sharing",
-    body: "Save named versions as designs evolve. Share customer proposals or installer schematics with a single link.",
+    body: "Save named versions as designs evolve. Use the share button to send customer or contractor links.",
     placement: "bottom",
   },
 ];

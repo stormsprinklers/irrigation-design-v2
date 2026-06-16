@@ -1,6 +1,9 @@
 import { prisma } from "../src/lib/prisma";
-import catalogItems from "./seed-data/catalog-items.json";
+import catalogItemsJson from "./seed-data/catalog-items.json";
+import type { CatalogSeedItem } from "./seed-data/catalog/chart";
 import bcrypt from "bcryptjs";
+
+const catalogItems = catalogItemsJson as CatalogSeedItem[];
 
 async function main() {
   const org = await prisma.organization.upsert({

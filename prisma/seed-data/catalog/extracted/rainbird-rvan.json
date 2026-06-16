@@ -1,0 +1,1046 @@
+[
+  {
+    "id": "noz_rb_r-van14_arc270",
+    "model": "R-VAN14 270°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN14",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.84,
+        0.87,
+        0.92,
+        0.94,
+        1.11,
+        1.17
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.6,
+        0.62,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van14_arc210",
+    "model": "R-VAN14 210°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN14",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.65,
+        0.68,
+        0.72,
+        0.73,
+        0.86,
+        0.91
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.6,
+        0.62,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van14_arc180",
+    "model": "R-VAN14 180°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN14",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.56,
+        0.58,
+        0.61,
+        0.63,
+        0.74,
+        0.78
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.6,
+        0.62,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van14_arc90",
+    "model": "R-VAN14 90°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN14",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.28,
+        0.29,
+        0.31,
+        0.32,
+        0.37,
+        0.39
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.62,
+        0.61,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van14-360",
+    "model": "R-VAN14-360",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN14-360",
+      "radiusRangeFt": "8-14",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        1.1,
+        1.12,
+        1.22,
+        1.27,
+        1.41,
+        1.45
+      ],
+      "precipInPerHr": [
+        0.63,
+        0.64,
+        0.6,
+        0.62,
+        0.6,
+        0.62
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.74,
+        0.69,
+        0.72,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van18_arc270",
+    "model": "R-VAN18 270°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN18",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        1.26,
+        1.35,
+        1.42,
+        1.51,
+        1.57,
+        1.62
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.64,
+        0.63,
+        0.64,
+        0.6,
+        0.6
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.74,
+        0.73,
+        0.73,
+        0.69,
+        0.69
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van18_arc210",
+    "model": "R-VAN18 210°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN18",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        0.98,
+        1.05,
+        1.1,
+        1.17,
+        1.22,
+        1.26
+      ],
+      "precipInPerHr": [
+        0.63,
+        0.68,
+        0.63,
+        0.64,
+        0.62,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.73,
+        0.78,
+        0.73,
+        0.77,
+        0.72,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van18_arc180",
+    "model": "R-VAN18 180°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN18",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        0.85,
+        0.91,
+        0.98,
+        1.01,
+        1.07,
+        1.09
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.64,
+        0.63,
+        0.64,
+        0.6,
+        0.6
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.74,
+        0.73,
+        0.73,
+        0.69,
+        0.69
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van18_arc90",
+    "model": "R-VAN18 90°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN18",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        0.42,
+        0.47,
+        0.5,
+        0.5,
+        0.54,
+        0.58
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.64,
+        0.63,
+        0.64,
+        0.6,
+        0.6
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.74,
+        0.73,
+        0.73,
+        0.69,
+        0.69
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van18-360",
+    "model": "R-VAN18-360",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN18-360",
+      "radiusRangeFt": "13-18",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        1.65,
+        1.67,
+        1.8,
+        1.85,
+        2.05,
+        2.11
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.63,
+        0.6,
+        0.62,
+        0.61,
+        0.63
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.73,
+        0.69,
+        0.71,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van24_arc270",
+    "model": "R-VAN24 270°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN24",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 270
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        1.8,
+        1.95,
+        2.31,
+        2.52,
+        2.82,
+        2.88
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van24_arc210",
+    "model": "R-VAN24 210°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN24",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 210
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        1.4,
+        1.52,
+        1.8,
+        1.96,
+        2.19,
+        2.24
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van24_arc180",
+    "model": "R-VAN24 180°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN24",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 180
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        1.2,
+        1.3,
+        1.54,
+        1.68,
+        1.88,
+        1.92
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van24_arc90",
+    "model": "R-VAN24 90°",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN24",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 90
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        0.6,
+        0.65,
+        0.77,
+        0.84,
+        0.94,
+        0.96
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van24-360",
+    "model": "R-VAN24-360",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN24-360",
+      "radiusRangeFt": "17-24",
+      "arcDegrees": 360
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        2.35,
+        2.52,
+        3.13,
+        3.48,
+        3.61,
+        3.74
+      ],
+      "precipInPerHr": [
+        0.63,
+        0.61,
+        0.62,
+        0.63,
+        0.6,
+        0.62
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.7,
+        0.72,
+        0.73,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van-lcs",
+    "model": "R-VAN-LCS",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN-LCS",
+      "stripPattern": "left_corner",
+      "patternSize": "4’x14’"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.18,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.28
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van-rcs",
+    "model": "R-VAN-RCS",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN-RCS",
+      "stripPattern": "right_corner",
+      "patternSize": "4’x14’"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.18,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.28
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r-van-sst",
+    "model": "R-VAN-SST",
+    "nozzleFamily": "rainbird_rvan",
+    "compatibleHeadFamilies": [
+      "rainbird_1800",
+      "rainbird_1800_prs",
+      "rainbird_1800_sam"
+    ],
+    "specs": {
+      "rvanModel": "R-VAN-SST",
+      "stripPattern": "side",
+      "patternSize": "4’x28’"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.36,
+        0.44,
+        0.46,
+        0.48,
+        0.5,
+        0.56
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
+    }
+  }
+]

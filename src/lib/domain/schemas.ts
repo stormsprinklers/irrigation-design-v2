@@ -70,6 +70,7 @@ export const sprinklerHeadSchema = z.object({
   hydrozoneId: z.string().optional(),
   position: pointSchema,
   catalogItemId: z.string(),
+  headBodyId: z.string().optional(),
   arcDegrees: z.number().min(0).max(360),
   radiusFeet: z.number().positive(),
   rotationDegrees: z.number(),

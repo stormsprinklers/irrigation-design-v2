@@ -28,6 +28,9 @@ export default async function SharePage({ params }: Props) {
   if (!version) notFound();
 
   const doc = version.designData as DesignDocument;
+  const designImageUrl = doc.propertyImage?.blobPath
+    ? `/api/share/${token}/property-image`
+    : undefined;
   const catalog = await getCatalogItems();
   const pricing: PricingProfileData = {
     pipePerFoot: 1.25,
@@ -42,7 +45,14 @@ export default async function SharePage({ params }: Props) {
 
   if (link.view === "CUSTOMER") {
     const proposal = buildCustomerProposal(doc, link.project.name, catalog);
-    return <CustomerProposalView proposal={proposal} projectName={link.project.name} />;
+    return (
+      <CustomerProposalView
+        proposal={proposal}
+        projectName={link.project.name}
+        designDocument={doc}
+        designImageUrl={designImageUrl}
+      />
+    );
   }
 
   const schematic = buildInstallerSchematic(doc, catalog, pricing, (zoneId) => {
@@ -59,5 +69,12 @@ export default async function SharePage({ params }: Props) {
     return { totalGpm: hyd.totalGpm, criticalHeadPressurePsi: hyd.criticalHeadPressurePsi };
   });
 
-  return <InstallerSchematicView schematic={schematic} projectName={link.project.name} />;
+  return (
+    <InstallerSchematicView
+      schematic={schematic}
+      projectName={link.project.name}
+      designDocument={doc}
+      designImageUrl={designImageUrl}
+    />
+  );
 }

@@ -10,7 +10,11 @@
     "lint": "next lint",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
-    "db:seed": "npx tsx prisma/seed.ts"
+    "db:seed": "npx tsx prisma/seed.ts",
+    "catalog:parse-hunter": "node scripts/parse-hunter-charts.mjs",
+    "catalog:extract-pdfs": "node scripts/extract-catalog-pdfs.mjs",
+    "catalog:build": "npm run catalog:parse-hunter && npx tsx prisma/seed-data/catalog/build-catalog.ts",
+    "predb:seed": "npm run catalog:build"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

@@ -1,5 +1,9 @@
 import { generateId } from "@/lib/utils";
-import { feetToPixels, pixelsPerFoot } from "../hydraulics";
+import { feetToPixels, pixelsPerFoot, calculateHeadGpm } from "../hydraulics";
+import {
+  getDefaultNozzleForHead,
+  resolveHeadAssembly,
+} from "@/lib/catalog/compat";
 import type {
   CatalogItemData,
   DesignDocument,
@@ -31,7 +35,7 @@ function polygonBounds(vertices: Point[]) {
   };
 }
 
-function pointInPolygon(point: Point, vertices: Point[]): boolean {
+export function pointInPolygon(point: Point, vertices: Point[]): boolean {
   let inside = false;
   for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
     const xi = vertices[i].x;
@@ -70,12 +74,25 @@ export function placeHeads(input: PlacementInput): PlacementResult {
     };
   }
 
-  const sprayNozzle =
-    catalog.find((c) => c.id === input.defaultNozzleId) ||
-    catalog.find((c) => c.category === "SPRAY" && c.model.includes("12")) ||
-    catalog.find((c) => c.category === "SPRAY");
+  const assembly =
+    resolveHeadAssembly(catalog, hydrozone.headPreference) ??
+    (() => {
+      const fallbackHead = catalog.find((c) => c.id === "head_rb_1804");
+      const fallbackNozzle = fallbackHead
+        ? getDefaultNozzleForHead(catalog, fallbackHead.id)
+        : catalog.find((c) => c.nozzleChart);
+      if (!fallbackHead || !fallbackNozzle) return null;
+      const hydraulics = calculateHeadGpm(fallbackNozzle, 45);
+      return {
+        headBodyId: fallbackHead.id,
+        nozzleId: fallbackNozzle.id,
+        radiusFeet: hydraulics.radiusFeet ?? 12,
+        gpm: hydraulics.gpm,
+        precipInPerHr: hydraulics.precipInPerHr,
+      };
+    })();
 
-  if (!sprayNozzle) {
+  if (!assembly) {
     return {
       heads: [],
       coveragePercent: 0,
@@ -83,14 +100,15 @@ export function placeHeads(input: PlacementInput): PlacementResult {
         {
           code: "MANUAL_REVIEW",
           severity: "warning",
-          message: "No spray nozzle found in catalog",
+          message: "No compatible head and nozzle found in catalog",
           entityIds: [hydrozone.id],
         },
       ],
     };
   }
 
-  const radiusFeet = (sprayNozzle.specs.radiusFeet as number) || 12;
+  const sprayNozzle = catalog.find((c) => c.id === assembly.nozzleId)!;
+  const radiusFeet = assembly.radiusFeet;
   const spacingFeet = radiusFeet * 0.5;
   const spacingPx = feetToPixels(spacingFeet, ppf);
   const radiusPx = feetToPixels(radiusFeet, ppf);
@@ -113,12 +131,13 @@ export function placeHeads(input: PlacementInput): PlacementResult {
         zoneId,
         hydrozoneId: hydrozone.id,
         position: point,
-        catalogItemId: sprayNozzle.id,
-        arcDegrees: 360,
+        headBodyId: assembly.headBodyId,
+        catalogItemId: assembly.nozzleId,
+        arcDegrees: (sprayNozzle.specs.arcDegrees as number) ?? 360,
         radiusFeet,
         rotationDegrees: 0,
-        gpm: (sprayNozzle.nozzleChart?.gpm[2] as number) ?? 1.5,
-        precipInPerHr: (sprayNozzle.nozzleChart?.precipInPerHr?.[2] as number) ?? 1.5,
+        gpm: assembly.gpm,
+        precipInPerHr: assembly.precipInPerHr,
         locked: false,
       });
     }
