@@ -9,7 +9,7 @@ type Props = {
 
 export function MaterialsPanel({ items, totals }: Props) {
   return (
-    <div className="border-t bg-card p-4">
+    <div className="border-t bg-card p-4" data-tour="tour-materials">
       <h3 className="text-sm font-medium">Material estimate</h3>
       <table className="mt-2 w-full text-xs">
         <thead>

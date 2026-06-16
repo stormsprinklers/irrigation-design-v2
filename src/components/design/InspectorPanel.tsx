@@ -59,7 +59,7 @@ export function InspectorPanel({
         <h2 className="font-semibold">Inspector</h2>
       </div>
       <div className="flex-1 space-y-6 overflow-y-auto p-4">
-        <section className="space-y-3">
+        <section className="space-y-3" data-tour="tour-property-image">
           <h3 className="text-sm font-medium">Property image</h3>
           <Input
             type="file"
@@ -105,7 +105,7 @@ export function InspectorPanel({
           )}
         </section>
 
-        <section className="space-y-3">
+        <section className="space-y-3" data-tour="tour-water-source">
           <h3 className="text-sm font-medium">Water source</h3>
           <div className="grid grid-cols-2 gap-2">
             <div>
@@ -150,7 +150,7 @@ export function InspectorPanel({
           />
         </section>
 
-        <section className="space-y-3">
+        <section className="space-y-3" data-tour="tour-zone-isolation">
           <h3 className="text-sm font-medium">Zone isolation</h3>
           <select
             className="w-full rounded-md border px-2 py-1.5 text-sm"
@@ -185,6 +185,21 @@ export function InspectorPanel({
           </Button>
         </section>
 
+        <section className="space-y-3" data-tour="tour-auto-place">
+          <h3 className="text-sm font-medium">Head placement</h3>
+          <p className="text-xs text-muted-foreground">
+            Select a hydrozone on the canvas, then auto-place or adjust heads manually.
+          </p>
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={!selectedHydrozone}
+            onClick={() => selectedHydrozone && onAutoPlace(selectedHydrozone.id)}
+          >
+            Auto-place heads
+          </Button>
+        </section>
+
         {selectedHydrozone && (
           <section className="space-y-3">
             <h3 className="text-sm font-medium">Hydrozone: {selectedHydrozone.name}</h3>
@@ -206,9 +221,6 @@ export function InspectorPanel({
                 </option>
               ))}
             </select>
-            <Button size="sm" onClick={() => onAutoPlace(selectedHydrozone.id)}>
-              Auto-place heads
-            </Button>
           </section>
         )}
 
@@ -250,9 +262,11 @@ export function InspectorPanel({
           </section>
         )}
 
-        <Button variant="outline" className="w-full" onClick={onValidate}>
-          Run validation
-        </Button>
+        <div data-tour="tour-validation">
+          <Button variant="outline" className="w-full" onClick={onValidate}>
+            Run validation
+          </Button>
+        </div>
       </div>
     </div>
   );

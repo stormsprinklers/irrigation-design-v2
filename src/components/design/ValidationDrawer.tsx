@@ -6,13 +6,21 @@ import { cn } from "@/lib/utils";
 export function ValidationDrawer() {
   const { validationIssues } = useDesignStore();
 
-  if (validationIssues.length === 0) return null;
-
   const critical = validationIssues.filter((i) => i.severity === "critical").length;
   const warnings = validationIssues.filter((i) => i.severity === "warning").length;
 
+  if (validationIssues.length === 0) {
+    return (
+      <div
+        data-tour="tour-validation-drawer"
+        className="border-t bg-card/50 px-4 py-2 min-h-[2.5rem]"
+        aria-hidden
+      />
+    );
+  }
+
   return (
-    <div className="border-t bg-card px-4 py-3">
+    <div className="border-t bg-card px-4 py-3" data-tour="tour-validation-drawer">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-medium">
           Validation report

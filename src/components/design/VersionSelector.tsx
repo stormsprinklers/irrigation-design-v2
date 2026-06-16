@@ -43,7 +43,7 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2" data-tour="tour-versions">
       <select
         className="rounded-md border px-2 py-1 text-sm"
         value={activeVersionId}

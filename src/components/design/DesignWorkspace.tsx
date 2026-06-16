@@ -17,6 +17,8 @@ import { buildMaterialList, calculateMaterialTotal } from "@/lib/domain/material
 import { generateId } from "@/lib/utils";
 import type { CatalogItemData, DesignDocument, Point, PricingProfileData } from "@/lib/domain/types";
 import type { DesignVersion, Project } from "@prisma/client";
+import { DesignTour, TourHelpButton } from "./tour/DesignTour";
+import type { TourStatus } from "@/lib/actions/tour";
 import { Button } from "@/components/ui/button";
 
 const DesignCanvas = dynamic(() => import("./DesignCanvas").then((m) => m.DesignCanvas), {
@@ -30,6 +32,7 @@ type Props = {
   catalog: CatalogItemData[];
   pricing: PricingProfileData;
   imageUrl?: string;
+  tourStatus: TourStatus;
 };
 
 export function DesignWorkspace({
@@ -39,6 +42,7 @@ export function DesignWorkspace({
   catalog,
   pricing,
   imageUrl,
+  tourStatus,
 }: Props) {
   const store = useDesignStore();
   const {
@@ -301,11 +305,13 @@ export function DesignWorkspace({
 
   return (
     <div className="flex h-screen flex-col">
+      <DesignTour initialStatus={tourStatus} />
       <header className="flex items-center justify-between border-b bg-card px-4 py-2">
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="sm" asChild>
             <Link href="/projects">← Projects</Link>
           </Button>
+          <TourHelpButton />
           <div>
             <h1 className="font-semibold">{project.name}</h1>
             <p className="text-xs text-muted-foreground">
@@ -336,7 +342,7 @@ export function DesignWorkspace({
               </button>
             </div>
           )}
-          <div className="min-h-0 flex-1">
+          <div className="min-h-0 flex-1" data-tour="tour-canvas">
             <DesignCanvas imageUrl={imageUrl} onCanvasClick={handleCanvasClick} />
           </div>
           <ValidationDrawer />

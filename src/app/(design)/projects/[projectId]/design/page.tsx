@@ -6,6 +6,7 @@ import {
 } from "@/lib/actions/design";
 import { getCatalogItems } from "@/lib/catalog";
 import { getPricingProfile } from "@/lib/actions/design";
+import { getTourStatus } from "@/lib/actions/tour";
 import { auth } from "@/lib/auth";
 import { DesignWorkspace } from "@/components/design/DesignWorkspace";
 import type { DesignDocument, PricingProfileData } from "@/lib/domain/types";
@@ -19,12 +20,13 @@ export default async function DesignPage({ params }: Props) {
   const session = await auth();
   if (!session?.user) notFound();
 
-  const [project, version, versions, catalog, pricing] = await Promise.all([
+  const [project, version, versions, catalog, pricing, tourStatus] = await Promise.all([
     getProject(projectId),
     getActiveDesignVersion(projectId),
     getDesignVersions(projectId),
     getCatalogItems(session.user.organizationId),
     getPricingProfile(),
+    getTourStatus(),
   ]);
 
   const pricingData: PricingProfileData = pricing
@@ -62,6 +64,10 @@ export default async function DesignPage({ params }: Props) {
       catalog={catalog}
       pricing={pricingData}
       imageUrl={imageUrl}
+      tourStatus={{
+        completedAt: tourStatus.completedAt,
+        autoShow: tourStatus.autoShow,
+      }}
     />
   );
 }
