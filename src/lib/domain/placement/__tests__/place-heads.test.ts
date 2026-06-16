@@ -7,8 +7,8 @@ import type { CatalogItemData, HydrozonePolygon, Point } from "../../types";
 import { analyzePolygon } from "../geometry";
 import { planEdgeRuns } from "../edge-spacing";
 import { placeHeads } from "../index";
-import { wedgeHitsExclusion, wedgeStartDeg, wedgeEndDeg } from "../wedge";
-import { bearingDeg } from "../geometry";
+import { wedgeHitsExclusion, wedgeStartDeg, wedgeEndDeg, isPointInWedge } from "../wedge";
+import { bearingDeg, polygonCentroid } from "../geometry";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const catalog = JSON.parse(
@@ -51,6 +51,21 @@ function baseHydrozone(
 
 function headsOnEdge(heads: ReturnType<typeof placeHeads>["heads"], y: number, tolerance = 1): typeof heads {
   return heads.filter((h) => Math.abs(h.position.y - y) < tolerance);
+}
+
+function angleDiff(a: number, b: number): number {
+  let d = Math.abs(a - b);
+  if (d > 180) d = 360 - d;
+  return d;
+}
+
+function inwardSamplePoint(head: { position: Point; rotationDegrees: number; arcDegrees: number; radiusFeet: number }, ppf: number): Point {
+  const rad = (head.rotationDegrees * Math.PI) / 180;
+  const dist = head.radiusFeet * ppf * 0.5;
+  return {
+    x: head.position.x + Math.cos(rad) * dist,
+    y: head.position.y + Math.sin(rad) * dist,
+  };
 }
 
 describe("edge-spacing", () => {
@@ -115,14 +130,58 @@ describe("placeHeads head-to-head spacing", () => {
     const toLeft = bearingDeg(center.position, leftCorner.position);
     const toRight = bearingDeg(center.position, rightCorner.position);
 
-    const angleDiff = (a: number, b: number) => {
-      let d = Math.abs(a - b);
-      if (d > 180) d = 360 - d;
-      return d;
-    };
-
     assert.ok(angleDiff(start, toLeft) < 15 || angleDiff(end, toLeft) < 15);
     assert.ok(angleDiff(start, toRight) < 15 || angleDiff(end, toRight) < 15);
+  });
+
+  it("orients top and bottom edge center heads 180° inward with pixel scale", () => {
+    const ppf = 100 / 55;
+    const w = 55 * ppf;
+    const h = 30 * ppf;
+    const vertices = [
+      { x: 0, y: 0 },
+      { x: w, y: 0 },
+      { x: w, y: h },
+      { x: 0, y: h },
+    ];
+    const pixelScale = {
+      pointA: { x: 0, y: 0 },
+      pointB: { x: 100, y: 0 },
+      realWorldFeet: 55,
+    };
+    const result = placeHeads({
+      hydrozone: baseHydrozone("hz-pixel", vertices),
+      zoneId: "zone-1",
+      catalog,
+      scale: pixelScale,
+      exclusionZones: [],
+      pressurePsi: 65,
+    });
+
+    const centroid = polygonCentroid(vertices);
+    const topCenter = result.heads.find(
+      (head) => Math.abs(head.position.y) < 1 && head.position.x > 10 && head.position.x < w - 10
+    );
+    const bottomCenter = result.heads.find(
+      (head) => Math.abs(head.position.y - h) < 1 && head.position.x > 10 && head.position.x < w - 10
+    );
+    assert.ok(topCenter, "expected top edge center head");
+    assert.ok(bottomCenter, "expected bottom edge center head");
+    assert.ok(topCenter.arcDegrees >= 170 && topCenter.arcDegrees <= 190);
+    assert.ok(bottomCenter.arcDegrees >= 170 && bottomCenter.arcDegrees <= 190);
+
+    for (const head of [topCenter, bottomCenter]) {
+      const sample = inwardSamplePoint(head, ppf);
+      assert.ok(
+        isPointInWedge(head, sample, ppf),
+        "arc center should lie inside the wedge"
+      );
+      const toCentroid = bearingDeg(head.position, centroid);
+      assert.ok(
+        angleDiff(head.rotationDegrees, toCentroid) < 45,
+        `head should spray toward interior, rot=${head.rotationDegrees} centroid=${toCentroid.toFixed(0)}`
+      );
+    }
   });
 
   it("avoids wedge overspray into exclusion zones", () => {

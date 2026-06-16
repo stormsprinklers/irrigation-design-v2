@@ -5,8 +5,10 @@ import type { ExclusionZone, Point, SpacingPattern, SprinklerHead } from "../typ
 import type { EdgeRun } from "./edge-spacing";
 import {
   bearingDeg,
+  bisectorBearingDeg,
   distanceFt,
   edgeBearingDeg,
+  perpendicularInwardBearing,
   projectPointOnEdge,
   type PolygonAnalysis,
 } from "./geometry";
@@ -22,9 +24,71 @@ export type PlacementNode = {
 };
 
 const NEIGHBOR_MAX_FT_FACTOR = 1.25;
+const ON_EDGE_PERP_FT = 2;
 
 function headKey(p: Point): string {
   return `${Math.round(p.x * 1000)}:${Math.round(p.y * 1000)}`;
+}
+
+function findEdgeRunForHead(
+  position: Point,
+  edgeRuns: EdgeRun[],
+  ppf: number
+): EdgeRun | undefined {
+  for (const run of edgeRuns) {
+    const t = projectPointOnEdge(run.start, run.end, position);
+    if (t < -0.01 || t > 1.01) continue;
+    const onSeg = {
+      x: run.start.x + (run.end.x - run.start.x) * t,
+      y: run.start.y + (run.end.y - run.start.y) * t,
+    };
+    if (distanceFt(position, onSeg, ppf) <= ON_EDGE_PERP_FT) return run;
+  }
+  return undefined;
+}
+
+function effectiveRole(
+  node: PlacementNode,
+  head: SprinklerHead,
+  edgeRuns: EdgeRun[],
+  ppf: number
+): { role: HeadRole; edgeIndex?: number } {
+  if (node.role === "corner") return { role: "corner" };
+
+  const run = findEdgeRunForHead(head.position, edgeRuns, ppf);
+  if (run) {
+    const t = projectPointOnEdge(run.start, run.end, head.position);
+    if (t > 0.02 && t < 0.98) return { role: "edge", edgeIndex: run.edgeIndex };
+  }
+
+  return { role: node.role, edgeIndex: node.edgeIndex };
+}
+
+function inwardBearingForHead(
+  head: SprinklerHead,
+  role: HeadRole,
+  edgeIndex: number | undefined,
+  vertices: Point[],
+  edgeRuns: EdgeRun[],
+  analysis: PolygonAnalysis
+): number | undefined {
+  if (role === "edge" && edgeIndex !== undefined) {
+    const run = edgeRuns.find((r) => r.edgeIndex === edgeIndex);
+    if (run) return perpendicularInwardBearing(run.start, run.end, analysis.centroid);
+  }
+
+  if (role === "corner") {
+    const vi = vertices.findIndex((v) => headKey(v) === headKey(head.position));
+    if (vi < 0) return undefined;
+    const n = vertices.length;
+    return bisectorBearingDeg(
+      vertices[(vi - 1 + n) % n],
+      vertices[vi],
+      vertices[(vi + 1) % n]
+    );
+  }
+
+  return undefined;
 }
 
 export function buildPlacementGraph(
@@ -50,7 +114,7 @@ export function buildPlacementGraph(
             x: run.start.x + (run.end.x - run.start.x) * t,
             y: run.start.y + (run.end.y - run.start.y) * t,
           };
-          if (distanceFt(onSeg, head.position, ppf) < 0.5) {
+          if (distanceFt(onSeg, head.position, ppf) <= ON_EDGE_PERP_FT) {
             role = "edge";
             edgeIndex = run.edgeIndex;
             break;
@@ -127,7 +191,8 @@ function nearestOnEdgeToward(
 
 function targetBearingsForHead(
   head: SprinklerHead,
-  node: PlacementNode,
+  role: HeadRole,
+  edgeIndex: number | undefined,
   heads: SprinklerHead[],
   vertices: Point[],
   edgeRuns: EdgeRun[],
@@ -136,7 +201,7 @@ function targetBearingsForHead(
 ): [number, number] {
   const maxDist = spacingFt * NEIGHBOR_MAX_FT_FACTOR;
 
-  if (node.role === "corner") {
+  if (role === "corner") {
     const vi = vertices.findIndex((v) => headKey(v) === headKey(head.position));
     const n = vertices.length;
     const prev = vertices[(vi - 1 + n) % n];
@@ -149,8 +214,8 @@ function targetBearingsForHead(
     ];
   }
 
-  if (node.role === "edge" && node.edgeIndex !== undefined) {
-    const run = edgeRuns.find((r) => r.edgeIndex === node.edgeIndex);
+  if (role === "edge" && edgeIndex !== undefined) {
+    const run = edgeRuns.find((r) => r.edgeIndex === edgeIndex);
     if (run) {
       const { left, right } = neighborsOnEdgeRun(head.position, run, heads, ppf, maxDist);
       const edgeBearing = edgeBearingDeg(run.start, run.end);
@@ -223,9 +288,12 @@ export function assignArcsAndRotations(
     const node = graph.get(head.id);
     if (!node) return head;
 
+    const { role, edgeIndex } = effectiveRole(node, head, edgeRuns, ppf);
+
     const edgeBearings = targetBearingsForHead(
       head,
-      node,
+      role,
+      edgeIndex,
       heads,
       vertices,
       edgeRuns,
@@ -234,16 +302,25 @@ export function assignArcsAndRotations(
     );
 
     let cornerAngle: number | undefined;
-    if (node.role === "corner") {
+    if (role === "corner") {
       const vi = vertices.findIndex((v) => headKey(v) === headKey(head.position));
       cornerAngle = analysis.interiorAnglesDeg[vi];
     }
 
     const arcDegrees = targetArcForRole(
-      node.role,
+      role,
       countNearby(head.position, heads, spacingFt, ppf),
       cornerAngle,
       adj
+    );
+
+    const inwardBearing = inwardBearingForHead(
+      head,
+      role,
+      edgeIndex,
+      vertices,
+      edgeRuns,
+      analysis
     );
 
     const wedgeHead: WedgeHead = {
@@ -253,13 +330,20 @@ export function assignArcsAndRotations(
       rotationDegrees: 0,
     };
 
-    const optimized = optimizeWedge(wedgeHead, edgeBearings, exclusions, ppf, {
-      arcDegreesMin: adj.arcDegreesMin,
-      arcDegreesMax: adj.arcDegreesMax,
-      radiusFeetMin: adj.radiusFeetMin,
-      radiusFeetMax: adj.radiusFeetMax,
-      fixedLeftEdge: adj.fixedLeftEdge,
-    });
+    const optimized = optimizeWedge(
+      wedgeHead,
+      edgeBearings,
+      exclusions,
+      ppf,
+      {
+        arcDegreesMin: adj.arcDegreesMin,
+        arcDegreesMax: adj.arcDegreesMax,
+        radiusFeetMin: adj.radiusFeetMin,
+        radiusFeetMax: adj.radiusFeetMax,
+        fixedLeftEdge: adj.fixedLeftEdge,
+      },
+      inwardBearing
+    );
 
     if (optimized.hitExclusion) oversprayHeadIds.push(head.id);
 

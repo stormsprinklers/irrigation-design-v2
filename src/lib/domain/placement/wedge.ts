@@ -167,10 +167,22 @@ export function rotationFromEdgeBearings(
   b1: number,
   b2: number,
   arcDegrees: number,
-  fixedLeftEdge: boolean
+  fixedLeftEdge: boolean,
+  inwardBearingDeg?: number
 ): number {
   const n1 = normalizeDeg(b1);
   const n2 = normalizeDeg(b2);
+
+  if (inwardBearingDeg !== undefined) {
+    const rotA = normalizeDeg(n1 + arcDegrees / 2);
+    const rotB = normalizeDeg(n2 + arcDegrees / 2);
+    const toInward = (rot: number) => {
+      let d = Math.abs(normalizeDeg(rot) - normalizeDeg(inwardBearingDeg));
+      if (d > 180) d = 360 - d;
+      return d;
+    };
+    return toInward(rotA) <= toInward(rotB) ? rotA : rotB;
+  }
 
   if (fixedLeftEdge) {
     const forwardSpan = normalizeDeg(n2 - n1);
@@ -197,7 +209,8 @@ export function optimizeWedge(
   targetEdgeBearings: [number, number],
   exclusions: ExclusionZone[],
   ppf: number,
-  limits: WedgeLimits
+  limits: WedgeLimits,
+  inwardBearingDeg?: number
 ): {
   radiusFeet: number;
   rotationDegrees: number;
@@ -219,7 +232,8 @@ export function optimizeWedge(
     targetEdgeBearings[0],
     targetEdgeBearings[1],
     arcDegrees,
-    limits.fixedLeftEdge
+    limits.fixedLeftEdge,
+    inwardBearingDeg
   );
 
   let radiusFeet = Math.min(limits.radiusFeetMax, Math.max(limits.radiusFeetMin, head.radiusFeet));
