@@ -20,6 +20,7 @@ import type { DesignVersion, Project } from "@prisma/client";
 import { DesignTour, TourHelpButton } from "./tour/DesignTour";
 import type { TourStatus } from "@/lib/actions/tour";
 import { Button } from "@/components/ui/button";
+import { blobProxyUrl } from "@/lib/blob/urls";
 
 const DesignCanvas = dynamic(() => import("./DesignCanvas").then((m) => m.DesignCanvas), {
   ssr: false,
@@ -92,6 +93,12 @@ export function DesignWorkspace({
     () => calculateMaterialTotal(materials, pricing),
     [materials, pricing]
   );
+
+  const displayImageUrl = useMemo(() => {
+    const path = document.propertyImage?.blobPath;
+    if (path) return blobProxyUrl(path);
+    return imageUrl;
+  }, [document.propertyImage?.blobPath, imageUrl]);
 
   const handleCanvasClick = useCallback(
     (point: Point) => {
@@ -291,13 +298,16 @@ export function DesignWorkspace({
     const data = await res.json();
     const img = new window.Image();
     img.src = URL.createObjectURL(file);
-    await new Promise((r) => (img.onload = r));
+    await new Promise((r) => {
+      img.onload = r;
+      img.onerror = r;
+    });
     setDocument({
       ...document,
       propertyImage: {
         blobPath: data.blobPath,
-        width: img.width,
-        height: img.height,
+        width: img.naturalWidth || img.width || 1200,
+        height: img.naturalHeight || img.height || 800,
       },
     });
     toast.success("Property image uploaded");
@@ -343,7 +353,7 @@ export function DesignWorkspace({
             </div>
           )}
           <div className="min-h-0 flex-1" data-tour="tour-canvas">
-            <DesignCanvas imageUrl={imageUrl} onCanvasClick={handleCanvasClick} />
+            <DesignCanvas imageUrl={displayImageUrl} onCanvasClick={handleCanvasClick} />
           </div>
           <ValidationDrawer />
           <MaterialsPanel items={materials} totals={materialTotals} />

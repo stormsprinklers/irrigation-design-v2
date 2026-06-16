@@ -8,6 +8,7 @@ import { getCatalogItems } from "@/lib/catalog";
 import { getPricingProfile } from "@/lib/actions/design";
 import { getTourStatus } from "@/lib/actions/tour";
 import { auth } from "@/lib/auth";
+import { blobProxyUrl } from "@/lib/blob/urls";
 import { DesignWorkspace } from "@/components/design/DesignWorkspace";
 import type { DesignDocument, PricingProfileData } from "@/lib/domain/types";
 
@@ -53,7 +54,7 @@ export default async function DesignPage({ params }: Props) {
 
   const designData = version.designData as DesignDocument;
   const imageUrl = designData.propertyImage?.blobPath
-    ? `/api/blob/${encodeURIComponent(designData.propertyImage.blobPath)}`
+    ? blobProxyUrl(designData.propertyImage.blobPath)
     : undefined;
 
   return (

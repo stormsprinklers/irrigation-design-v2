@@ -20,6 +20,7 @@ export async function POST(req: Request) {
     const pathname = `properties/${session.user.organizationId}/${projectId}/${file.name}`;
     const blob = await uploadPrivateBlob(pathname, file, {
       contentType: file.type,
+      allowOverwrite: true,
     });
 
     return NextResponse.json({

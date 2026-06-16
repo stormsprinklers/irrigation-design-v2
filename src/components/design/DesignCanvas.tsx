@@ -23,9 +23,9 @@ function useBackgroundImage(url?: string) {
       return;
     }
     const img = new window.Image();
-    img.crossOrigin = "anonymous";
     img.src = url;
     img.onload = () => setImage(img);
+    img.onerror = () => setImage(null);
   }, [url]);
   return image;
 }
