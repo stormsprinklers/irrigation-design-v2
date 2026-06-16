@@ -11,7 +11,7 @@ export default function HomePage() {
             <Link href="/login">Sign in</Link>
           </Button>
           <Button asChild>
-            <Link href="/projects">Open app</Link>
+            <Link href="/register">Create account</Link>
           </Button>
         </div>
       </header>
@@ -25,7 +25,10 @@ export default function HomePage() {
         </p>
         <div className="mt-10 flex justify-center gap-4">
           <Button size="lg" asChild>
-            <Link href="/login">Get started</Link>
+            <Link href="/register">Create free account</Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/login">Sign in</Link>
           </Button>
         </div>
         <div className="mt-16 grid gap-4 text-left sm:grid-cols-3">

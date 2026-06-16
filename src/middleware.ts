@@ -19,7 +19,7 @@ export default auth((req) => {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (pathname === "/login" && isLoggedIn) {
+  if ((pathname === "/login" || pathname === "/register") && isLoggedIn) {
     return NextResponse.redirect(new URL("/projects", req.nextUrl.origin));
   }
 
@@ -27,5 +27,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/projects/:path*", "/settings/:path*", "/login"],
+  matcher: ["/projects/:path*", "/settings/:path*", "/login", "/register"],
 };

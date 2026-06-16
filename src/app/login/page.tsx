@@ -7,7 +7,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md rounded-xl border bg-card p-8 shadow-sm">
         <h1 className="text-2xl font-semibold">Sign in</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Irrigation design workspace for your organization
+          Sign in to your irrigation design workspace
         </p>
         <Suspense fallback={<div className="mt-6 h-32 animate-pulse rounded bg-muted" />}>
           <LoginForm />
