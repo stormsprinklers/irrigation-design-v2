@@ -58,7 +58,7 @@ export const DESIGN_TOUR_STEPS: DesignTourStep[] = [
     id: "auto-place",
     target: "tour-auto-place",
     title: "Auto-place heads",
-    body: "After drawing a hydrozone, select it and use Auto-place heads. The system proposes a layout with coverage warnings — you refine from there.",
+    body: "After drawing a hydrozone, select it and use Auto-place heads. The engine places corners first, then fills edges and interior at head-to-head spacing with overlap validation.",
     placement: "left",
     scrollIntoView: true,
   },

@@ -1,4 +1,4 @@
-import type { CatalogItemData, Point } from "../types";
+import type { CatalogItemData, Point, SpacingPattern } from "../types";
 
 export function distance(p1: Point, p2: Point): number {
   return Math.hypot(p2.x - p1.x, p2.y - p1.y);
@@ -29,22 +29,29 @@ export function polylineLengthFeet(points: Point[], ppf: number): number {
   return pixelsToFeet(total, ppf);
 }
 
-export function interpolateGpm(
-  nozzle: CatalogItemData,
+type NozzleChartValues = {
+  gpm: number;
+  radiusFeet?: number;
+  precipInPerHr?: number;
+  precipTriInPerHr?: number;
+};
+
+function interpolateChartRow(
+  chart: NonNullable<CatalogItemData["nozzleChart"]>,
   pressurePsi: number
-): { gpm: number; radiusFeet?: number; precipInPerHr?: number } {
-  const chart = nozzle.nozzleChart;
-  if (!chart || chart.pressurePsi.length === 0) {
+): NozzleChartValues {
+  const pressures = chart.pressurePsi;
+  if (pressures.length === 0) {
     return { gpm: 1.5, radiusFeet: 12, precipInPerHr: 1.5 };
   }
 
-  const pressures = chart.pressurePsi;
   const idx = pressures.findIndex((p) => p >= pressurePsi);
   if (idx <= 0) {
     return {
       gpm: chart.gpm[0],
       radiusFeet: chart.radiusFeet?.[0],
       precipInPerHr: chart.precipInPerHr?.[0],
+      precipTriInPerHr: chart.precipTriInPerHr?.[0],
     };
   }
   if (idx === -1) {
@@ -53,6 +60,7 @@ export function interpolateGpm(
       gpm: chart.gpm[last],
       radiusFeet: chart.radiusFeet?.[last],
       precipInPerHr: chart.precipInPerHr?.[last],
+      precipTriInPerHr: chart.precipTriInPerHr?.[last],
     };
   }
 
@@ -60,18 +68,52 @@ export function interpolateGpm(
   const p1 = pressures[idx];
   const t = (pressurePsi - p0) / (p1 - p0);
   const lerp = (a: number, b: number) => a + (b - a) * t;
+  const lerpOpt = (arr: number[] | undefined) =>
+    arr && arr[idx - 1] !== undefined && arr[idx] !== undefined
+      ? lerp(arr[idx - 1], arr[idx]!)
+      : undefined;
 
   return {
     gpm: lerp(chart.gpm[idx - 1], chart.gpm[idx]),
-    radiusFeet:
-      chart.radiusFeet && chart.radiusFeet[idx - 1] !== undefined
-        ? lerp(chart.radiusFeet[idx - 1], chart.radiusFeet[idx]!)
-        : undefined,
-    precipInPerHr:
-      chart.precipInPerHr && chart.precipInPerHr[idx - 1] !== undefined
-        ? lerp(chart.precipInPerHr[idx - 1], chart.precipInPerHr[idx]!)
-        : undefined,
+    radiusFeet: lerpOpt(chart.radiusFeet),
+    precipInPerHr: lerpOpt(chart.precipInPerHr),
+    precipTriInPerHr: lerpOpt(chart.precipTriInPerHr),
   };
+}
+
+export function interpolateGpm(
+  nozzle: CatalogItemData,
+  pressurePsi: number
+): NozzleChartValues {
+  const chart = nozzle.nozzleChart;
+  if (!chart) {
+    return { gpm: 1.5, radiusFeet: 12, precipInPerHr: 1.5 };
+  }
+  return interpolateChartRow(chart, pressurePsi);
+}
+
+export function calculateNozzleHydraulics(
+  nozzle: CatalogItemData,
+  pressurePsi: number,
+  arcDegrees?: number,
+  pattern?: SpacingPattern
+): NozzleChartValues {
+  const base = interpolateGpm(nozzle, pressurePsi);
+  const chartArc =
+    typeof nozzle.specs.arcDegrees === "number" ? nozzle.specs.arcDegrees : 360;
+  const arc = arcDegrees ?? chartArc;
+  const arcRatio = Math.min(1, arc / chartArc);
+  const gpm = base.gpm * arcRatio;
+
+  const precipInPerHr = base.precipInPerHr;
+  const precipTriInPerHr = base.precipTriInPerHr ?? base.precipInPerHr;
+
+  if (pattern === "triangular" && precipTriInPerHr !== undefined) {
+    return { ...base, gpm, precipTriInPerHr };
+  }
+
+  void pattern;
+  return { ...base, gpm, precipInPerHr, precipTriInPerHr };
 }
 
 /** Hazen-Williams friction loss in PSI for imperial units */

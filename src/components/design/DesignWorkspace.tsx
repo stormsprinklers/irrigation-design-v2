@@ -291,6 +291,7 @@ export function DesignWorkspace({
       catalog,
       scale: document.scale,
       exclusionZones: document.exclusionZones,
+      pressurePsi: document.waterSource?.staticPressurePsi,
     });
     const unlockedHeads = document.heads.filter(
       (h) => h.hydrozoneId !== hydrozoneId || h.locked
@@ -300,7 +301,12 @@ export function DesignWorkspace({
       heads: [...unlockedHeads, ...result.heads],
     });
     setValidationIssues([...store.validationIssues, ...result.warnings]);
-    toast.success(`Placed ${result.heads.length} heads (${result.coveragePercent}% coverage)`);
+    const patternLabel = result.pattern === "triangular" ? "triangular" : "square";
+    const nozzleLabel = result.nozzleModel ?? "nozzle";
+    const overlap = result.overlapPercent ?? result.coveragePercent;
+    toast.success(
+      `Placed ${result.heads.length} heads · ${patternLabel} · ${nozzleLabel} · R ${result.radiusFeet?.toFixed(0) ?? "?"} ft · ${overlap}% overlap`
+    );
   }
 
   function handleValidate() {

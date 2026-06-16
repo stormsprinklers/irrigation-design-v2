@@ -14,7 +14,8 @@
     "catalog:parse-hunter": "node scripts/parse-hunter-charts.mjs",
     "catalog:extract-pdfs": "node scripts/extract-catalog-pdfs.mjs",
     "catalog:build": "npm run catalog:parse-hunter && npx tsx prisma/seed-data/catalog/build-catalog.ts",
-    "predb:seed": "npm run catalog:build"
+    "predb:seed": "npm run catalog:build",
+    "test": "node --import tsx --test src/lib/domain/placement/__tests__/*.test.ts"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

@@ -5,6 +5,7 @@ import type {
   DesignDocument,
   ValidationIssue,
 } from "../types";
+import { wedgeHitsExclusion } from "../placement/wedge";
 
 function headFamiliesInZone(
   zoneId: string,
@@ -20,12 +21,9 @@ function headFamiliesInZone(
   return families;
 }
 
-function precipRatesInZone(
-  zoneId: string,
-  doc: DesignDocument
-): number[] {
+function precipRatesInHydrozone(hydrozoneId: string, doc: DesignDocument): number[] {
   return doc.heads
-    .filter((h) => h.zoneId === zoneId && h.precipInPerHr)
+    .filter((h) => h.hydrozoneId === hydrozoneId && h.precipInPerHr)
     .map((h) => h.precipInPerHr!);
 }
 
@@ -67,20 +65,6 @@ export function validateDesign(
       });
     }
 
-    const precips = precipRatesInZone(zone.id, doc);
-    if (precips.length > 1) {
-      const min = Math.min(...precips);
-      const max = Math.max(...precips);
-      if (max - min > 0.3) {
-        issues.push({
-          code: "PRECIP_MISMATCH",
-          severity: "warning",
-          message: `${zone.name} has mismatched precipitation rates (${min.toFixed(1)}–${max.toFixed(1)} in/hr)`,
-          entityIds: [zone.id],
-        });
-      }
-    }
-
     const hydraulics = calculateZoneHydraulics(
       zone,
       doc.heads,
@@ -90,6 +74,22 @@ export function validateDesign(
       doc.scale
     );
     issues.push(...hydraulics.velocityWarnings);
+  }
+
+  for (const hydrozone of doc.hydrozones) {
+    const precips = precipRatesInHydrozone(hydrozone.id, doc);
+    if (precips.length > 1) {
+      const min = Math.min(...precips);
+      const max = Math.max(...precips);
+      if (max - min > 0.3) {
+        issues.push({
+          code: "PRECIP_MISMATCH",
+          severity: "warning",
+          message: `${hydrozone.name} has mismatched precipitation rates (${min.toFixed(1)}–${max.toFixed(1)} in/hr)`,
+          entityIds: [hydrozone.id],
+        });
+      }
+    }
   }
 
   if (doc.heads.length === 0 && doc.hydrozones.length > 0) {
@@ -105,17 +105,19 @@ export function validateDesign(
   if (ppf && doc.heads.length > 0 && doc.exclusionZones.length > 0) {
     for (const head of doc.heads) {
       for (const ex of doc.exclusionZones) {
-        const radiusPx = head.radiusFeet * ppf;
-        const nearExclusion = ex.vertices.some(
-          (v) => Math.hypot(v.x - head.position.x, v.y - head.position.y) < radiusPx
-        );
-        if (nearExclusion) {
+        const wedgeHead = {
+          position: head.position,
+          arcDegrees: head.arcDegrees,
+          radiusFeet: head.radiusFeet,
+          rotationDegrees: head.rotationDegrees,
+        };
+        if (wedgeHitsExclusion(wedgeHead, [ex], ppf)) {
           issues.push({
             code: "OVERSPRAY_EXCLUSION",
             severity: "warning",
-            message: `Head near ${ex.name} may overspray excluded area`,
+            message: `Head spray wedge intersects ${ex.name}`,
             entityIds: [head.id, ex.id],
-            suggestedAction: "Adjust nozzle arc or reposition head",
+            suggestedAction: "Reduce radius, adjust arc, or reposition head",
           });
         }
       }

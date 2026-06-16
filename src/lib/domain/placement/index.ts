@@ -1,21 +1,22 @@
-import { generateId } from "@/lib/utils";
-import { feetToPixels, pixelsPerFoot, calculateHeadGpm } from "../hydraulics";
-import {
-  getDefaultNozzleForHead,
-  resolveHeadAssembly,
-} from "@/lib/catalog/compat";
-import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
-import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
+import { pixelsPerFoot } from "../hydraulics";
+import { DEFAULT_PRESSURE_PSI } from "../types";
 import type {
   CatalogItemData,
   DesignDocument,
   ExclusionZone,
   HydrozonePolygon,
   PlacementResult,
-  Point,
-  SprinklerHead,
   ValidationIssue,
 } from "../types";
+import { evaluateCoverage } from "./coverage";
+import { analyzePolygon, detectSpacingPattern } from "./geometry";
+import {
+  refineSpacingRadius,
+  selectNozzleAssembly,
+} from "./nozzle-selection";
+import { placeCornerHeads } from "./place-corners";
+import { placeEdgeHeads } from "./place-edges";
+import { placeInteriorHeads } from "./place-interior";
 
 type PlacementInput = {
   hydrozone: HydrozonePolygon;
@@ -23,43 +24,16 @@ type PlacementInput = {
   catalog: CatalogItemData[];
   scale: DesignDocument["scale"];
   exclusionZones: ExclusionZone[];
-  defaultNozzleId?: string;
+  pressurePsi?: number;
 };
 
-function polygonBounds(vertices: Point[]) {
-  const xs = vertices.map((v) => v.x);
-  const ys = vertices.map((v) => v.y);
-  return {
-    minX: Math.min(...xs),
-    maxX: Math.max(...xs),
-    minY: Math.min(...ys),
-    maxY: Math.max(...ys),
-  };
-}
-
-export function pointInPolygon(point: Point, vertices: Point[]): boolean {
-  let inside = false;
-  for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
-    const xi = vertices[i].x;
-    const yi = vertices[i].y;
-    const xj = vertices[j].x;
-    const yj = vertices[j].y;
-    const intersect =
-      yi > point.y !== yj > point.y &&
-      point.x < ((xj - xi) * (point.y - yi)) / (yj - yi + Number.EPSILON) + xi;
-    if (intersect) inside = !inside;
-  }
-  return inside;
-}
-
-function isInExclusion(point: Point, exclusions: ExclusionZone[]): boolean {
-  return exclusions.some((z) => pointInPolygon(point, z.vertices));
-}
+export { pointInPolygon } from "./geometry";
 
 export function placeHeads(input: PlacementInput): PlacementResult {
   const { hydrozone, zoneId, catalog, scale, exclusionZones } = input;
   const warnings: ValidationIssue[] = [];
   const ppf = pixelsPerFoot(scale);
+  const pressurePsi = input.pressurePsi ?? DEFAULT_PRESSURE_PSI;
 
   if (!ppf) {
     return {
@@ -76,25 +50,33 @@ export function placeHeads(input: PlacementInput): PlacementResult {
     };
   }
 
-  const assembly =
-    resolveHeadAssembly(catalog, hydrozone.headPreference) ??
-    (() => {
-      const fallbackHead = catalog.find((c) => c.id === "head_rb_1804");
-      const fallbackNozzle = fallbackHead
-        ? getDefaultNozzleForHead(catalog, fallbackHead.id)
-        : catalog.find((c) => c.nozzleChart);
-      if (!fallbackHead || !fallbackNozzle) return null;
-      const settings = resolveDefaultHeadSettings(fallbackNozzle, DEFAULT_PRESSURE_PSI);
-      return {
-        headBodyId: fallbackHead.id,
-        nozzleId: fallbackNozzle.id,
-        radiusFeet: settings.radiusFeet,
-        gpm: settings.gpm ?? calculateHeadGpm(fallbackNozzle, DEFAULT_PRESSURE_PSI).gpm,
-        precipInPerHr: settings.precipInPerHr,
-        arcDegrees: settings.arcDegrees,
-        rotationDegrees: settings.rotationDegrees,
-      };
-    })();
+  if (hydrozone.headPreference === "DRIP") {
+    return {
+      heads: [],
+      coveragePercent: 0,
+      warnings: [
+        {
+          code: "MANUAL_REVIEW",
+          severity: "info",
+          message: "Drip hydrozones require manual emitter placement",
+          entityIds: [hydrozone.id],
+        },
+      ],
+    };
+  }
+
+  const analysis = analyzePolygon(hydrozone.vertices, ppf);
+  const pattern = detectSpacingPattern(
+    analysis.interiorAnglesDeg,
+    hydrozone.spacingPattern
+  );
+
+  const assembly = selectNozzleAssembly(
+    catalog,
+    hydrozone.headPreference,
+    analysis,
+    pressurePsi
+  );
 
   if (!assembly) {
     return {
@@ -111,75 +93,60 @@ export function placeHeads(input: PlacementInput): PlacementResult {
     };
   }
 
-  const radiusFeet = assembly.radiusFeet;
-  const spacingFeet = radiusFeet * 0.5;
-  const spacingPx = feetToPixels(spacingFeet, ppf);
-  const radiusPx = feetToPixels(radiusFeet, ppf);
+  const radiusFeet = refineSpacingRadius(analysis, assembly);
+  const shared = {
+    zoneId,
+    hydrozoneId: hydrozone.id,
+    vertices: hydrozone.vertices,
+    analysis,
+    assembly,
+    radiusFeet,
+    pressurePsi,
+    pattern,
+    exclusions: exclusionZones,
+    ppf,
+  };
 
-  const bounds = polygonBounds(hydrozone.vertices);
-  const heads: SprinklerHead[] = [];
-  let gridPoints = 0;
-  let coveredPoints = 0;
+  const cornerHeads = placeCornerHeads(shared);
+  const edgeHeads = placeEdgeHeads({
+    ...shared,
+    existingHeads: cornerHeads,
+  });
+  const interiorHeads = placeInteriorHeads({
+    ...shared,
+    existingHeads: [...cornerHeads, ...edgeHeads],
+  });
 
-  for (let y = bounds.minY + spacingPx / 2; y <= bounds.maxY; y += spacingPx) {
-    for (let x = bounds.minX + spacingPx / 2; x <= bounds.maxX; x += spacingPx) {
-      const point = { x, y };
-      gridPoints++;
-      if (!pointInPolygon(point, hydrozone.vertices)) continue;
-      if (isInExclusion(point, exclusionZones)) continue;
+  const heads = [...cornerHeads, ...edgeHeads, ...interiorHeads];
 
-      coveredPoints++;
-      heads.push({
-        id: generateId("head"),
-        zoneId,
-        hydrozoneId: hydrozone.id,
-        position: point,
-        headBodyId: assembly.headBodyId,
-        catalogItemId: assembly.nozzleId,
-        arcDegrees: assembly.arcDegrees,
-        radiusFeet,
-        rotationDegrees: assembly.rotationDegrees,
-        gpm: assembly.gpm,
-        precipInPerHr: assembly.precipInPerHr,
-        locked: false,
-      });
-    }
-  }
-
-  const coveragePercent =
-    gridPoints > 0 ? Math.round((coveredPoints / gridPoints) * 100) : 0;
-
-  if (coveragePercent < 85) {
+  if (heads.length === 0) {
     warnings.push({
       code: "COVERAGE_GAP",
       severity: "warning",
-      message: `Coverage is ${coveragePercent}% head-to-head compliant in ${hydrozone.name}`,
+      message: `No heads could be placed in ${hydrozone.name}`,
       entityIds: [hydrozone.id],
-      suggestedAction: "Add manual heads or adjust spacing",
+      suggestedAction: "Check exclusions or hydrozone shape",
     });
+    return { heads, coveragePercent: 0, warnings };
   }
 
-  if (heads.length > 1) {
-    const idealSpacing = radiusPx;
-    let spacingIssues = 0;
-    for (let i = 0; i < heads.length; i++) {
-      for (let j = i + 1; j < heads.length; j++) {
-        const d = Math.hypot(
-          heads[i].position.x - heads[j].position.x,
-          heads[i].position.y - heads[j].position.y
-        );
-        if (d > idealSpacing * 1.08) spacingIssues++;
-      }
-    }
-    if (spacingIssues > 0) {
-      warnings.push({
-        code: "HEAD_SPACING",
-        severity: "warning",
-        message: `${spacingIssues} head pairs exceed ideal spacing by 8%`,
-        entityIds: heads.map((h) => h.id),
-      });
-    }
-  }
+  const { coverage, warnings: coverageWarnings } = evaluateCoverage(
+    heads,
+    analysis,
+    ppf,
+    hydrozone.id,
+    hydrozone.name,
+    radiusFeet
+  );
+  warnings.push(...coverageWarnings);
 
-  return { heads, coveragePercent, warnings };
+  return {
+    heads,
+    coveragePercent: coverage.coveragePercent,
+    overlapPercent: coverage.overlapPercent,
+    pattern,
+    nozzleModel: assembly.nozzle.model,
+    radiusFeet,
+    warnings,
+  };
 }

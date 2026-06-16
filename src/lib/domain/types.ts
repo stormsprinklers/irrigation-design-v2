@@ -12,9 +12,12 @@ export type ExclusionType =
 export type SunExposure = "FULL_SUN" | "PART_SHADE" | "FULL_SHADE";
 export type SoilType = "CLAY" | "LOAM" | "SAND" | "ROCKY";
 export type HeadFamily = "SPRAY" | "ROTOR" | "MP_ROTATOR" | "DRIP";
+export type SpacingPatternOverride = "auto" | "square" | "triangular";
+export type SpacingPattern = "square" | "triangular";
 export type WarningCode =
   | "COVERAGE_GAP"
   | "HEAD_SPACING"
+  | "LOW_OVERLAP"
   | "PRECIP_MISMATCH"
   | "PRESSURE_LOW"
   | "FLOW_EXCEEDED"
@@ -72,6 +75,7 @@ export type HydrozonePolygon = {
   soilType: SoilType;
   waterPriority: number;
   headPreference: HeadFamily;
+  spacingPattern?: SpacingPatternOverride;
 };
 
 export type ExclusionZone = {
@@ -158,6 +162,10 @@ export type ValidationIssue = {
 export type PlacementResult = {
   heads: SprinklerHead[];
   coveragePercent: number;
+  overlapPercent?: number;
+  pattern?: SpacingPattern;
+  nozzleModel?: string;
+  radiusFeet?: number;
   warnings: ValidationIssue[];
 };
 

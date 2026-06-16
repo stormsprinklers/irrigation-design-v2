@@ -39,6 +39,7 @@ export const hydrozoneSchema = z.object({
   soilType: z.enum(["CLAY", "LOAM", "SAND", "ROCKY"]),
   waterPriority: z.number().int().min(1).max(5),
   headPreference: z.enum(["SPRAY", "ROTOR", "MP_ROTATOR", "DRIP"]),
+  spacingPattern: z.enum(["auto", "square", "triangular"]).optional(),
 });
 
 export const exclusionZoneSchema = z.object({

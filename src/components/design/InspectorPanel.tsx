@@ -209,24 +209,71 @@ export function InspectorPanel({
         {selectedHydrozone && (
           <section className="space-y-3">
             <h3 className="text-sm font-medium">Hydrozone: {selectedHydrozone.name}</h3>
-            <select
-              className="w-full rounded-md border px-2 py-1.5 text-sm"
-              value={selectedHydrozone.hydrozoneType}
-              onChange={(e) => {
-                const hydrozones = document.hydrozones.map((h) =>
-                  h.id === selectedHydrozone.id
-                    ? { ...h, hydrozoneType: e.target.value as typeof h.hydrozoneType }
-                    : h
-                );
-                setDocument({ ...document, hydrozones });
-              }}
-            >
-              {["TURF", "SHRUBS", "TREES", "DRIP", "GARDEN"].map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
+            <div>
+              <Label className="text-xs">Hydrozone type</Label>
+              <select
+                className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
+                value={selectedHydrozone.hydrozoneType}
+                onChange={(e) => {
+                  const hydrozones = document.hydrozones.map((h) =>
+                    h.id === selectedHydrozone.id
+                      ? { ...h, hydrozoneType: e.target.value as typeof h.hydrozoneType }
+                      : h
+                  );
+                  setDocument({ ...document, hydrozones });
+                }}
+              >
+                {["TURF", "SHRUBS", "TREES", "DRIP", "GARDEN"].map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <Label className="text-xs">Head preference</Label>
+              <select
+                className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
+                value={selectedHydrozone.headPreference}
+                onChange={(e) => {
+                  const hydrozones = document.hydrozones.map((h) =>
+                    h.id === selectedHydrozone.id
+                      ? { ...h, headPreference: e.target.value as typeof h.headPreference }
+                      : h
+                  );
+                  setDocument({ ...document, hydrozones });
+                }}
+              >
+                {["SPRAY", "ROTOR", "MP_ROTATOR", "DRIP"].map((t) => (
+                  <option key={t} value={t}>
+                    {t.replace("_", " ")}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <Label className="text-xs">Spacing pattern</Label>
+              <select
+                className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
+                value={selectedHydrozone.spacingPattern ?? "auto"}
+                onChange={(e) => {
+                  const value = e.target.value as "auto" | "square" | "triangular";
+                  const hydrozones = document.hydrozones.map((h) =>
+                    h.id === selectedHydrozone.id
+                      ? { ...h, spacingPattern: value === "auto" ? undefined : value }
+                      : h
+                  );
+                  setDocument({ ...document, hydrozones });
+                }}
+              >
+                <option value="auto">Auto-detect</option>
+                <option value="square">Square</option>
+                <option value="triangular">Triangular</option>
+              </select>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Auto-place uses head-to-head spacing with corners first, then edges and interior fill.
+            </p>
           </section>
         )}
 
