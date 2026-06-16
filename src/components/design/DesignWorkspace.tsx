@@ -386,7 +386,6 @@ export function DesignWorkspace({
             <DesignCanvas
               imageUrl={displayImageUrl}
               onCanvasClick={handleCanvasClick}
-              onClosePolygon={finishPolygon}
             />
           </div>
           <ValidationDrawer />

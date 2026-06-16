@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Stage, Layer, Line, Circle, Image as KonvaImage, Arc, Group } from "react-konva";
+import { Stage, Layer, Line, Circle, Image as KonvaImage, Arc, Group, Rect } from "react-konva";
 import type Konva from "konva";
 import { useDesignStore } from "@/lib/stores/design-store";
 import { distanceBetweenPoints, generateId, POLYGON_CLOSE_RADIUS } from "@/lib/utils";
@@ -48,10 +48,9 @@ function useBackgroundImage(url?: string) {
 type Props = {
   imageUrl?: string;
   onCanvasClick: (point: Point) => void;
-  onClosePolygon?: () => void;
 };
 
-export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props) {
+export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
   const stageRef = useRef<Konva.Stage>(null);
   const layerRef = useRef<Konva.Layer>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -144,32 +143,74 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     return activeZoneId !== null && zoneId !== activeZoneId;
   }
 
-  function getPointerPosition(): Point | null {
-    const stage = stageRef.current;
+  function clientToCanvas(clientX: number, clientY: number): Point | null {
+    const container = containerRef.current;
     const layer = layerRef.current;
-    if (!stage || !layer) return null;
-    const pos = stage.getPointerPosition();
-    if (!pos) return null;
+    if (!container || !layer) return null;
+
+    const rect = container.getBoundingClientRect();
+    const stageX = clientX - rect.left;
+    const stageY = clientY - rect.top;
     const transform = layer.getAbsoluteTransform().copy();
     transform.invert();
-    return transform.point(pos);
+    return transform.point({ x: stageX, y: stageY });
   }
 
-  function handleWheel(e: Konva.KonvaEventObject<WheelEvent>) {
-    e.evt.preventDefault();
-    const stage = stageRef.current;
-    if (!stage) return;
+  const isPlacementTool =
+    isDrawingPolygon ||
+    activeTool === "scale" ||
+    activeTool === "head" ||
+    activeTool === "pipe";
+
+  function handleContainerPointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    if (activeTool === "pan") {
+      isPanningRef.current = true;
+      panMovedRef.current = false;
+      lastPanPointRef.current = { x: e.clientX, y: e.clientY };
+      e.currentTarget.setPointerCapture(e.pointerId);
+      e.preventDefault();
+      return;
+    }
+
+    if (!isPlacementTool) return;
+
+    const pos = clientToCanvas(e.clientX, e.clientY);
+    if (!pos) return;
+    onCanvasClick(pos);
+  }
+
+  function handleContainerPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (activeTool === "pan" && isPanningRef.current && lastPanPointRef.current) {
+      const dx = e.clientX - lastPanPointRef.current.x;
+      const dy = e.clientY - lastPanPointRef.current.y;
+      if (dx !== 0 || dy !== 0) panMovedRef.current = true;
+      lastPanPointRef.current = { x: e.clientX, y: e.clientY };
+      const { canvasZoom: zoom, stagePosition: pos } = useDesignStore.getState();
+      setCanvasView(zoom, { x: pos.x + dx, y: pos.y + dy });
+      return;
+    }
+
+    if (isDrawingPolygon && drawingVertices.length > 0) {
+      const pos = clientToCanvas(e.clientX, e.clientY);
+      if (pos) setPreviewPoint(pos);
+    }
+  }
+
+  function handleContainerWheel(e: React.WheelEvent<HTMLDivElement>) {
+    e.preventDefault();
+    const container = containerRef.current;
+    if (!container) return;
 
     const oldScale = canvasZoom;
-    const pointer = stage.getPointerPosition();
-    if (!pointer) return;
+    const rect = container.getBoundingClientRect();
+    const pointer = { x: e.clientX - rect.left, y: e.clientY - rect.top };
 
     const mousePointTo = {
       x: (pointer.x - stagePosition.x) / oldScale,
       y: (pointer.y - stagePosition.y) / oldScale,
     };
 
-    const direction = e.evt.deltaY > 0 ? -1 : 1;
+    const direction = e.deltaY > 0 ? -1 : 1;
     const scaleFactor = 1.08;
     const newScale =
       direction > 0
@@ -183,26 +224,6 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     });
   }
 
-  function handlePanPointerDown(e: React.PointerEvent<HTMLDivElement>) {
-    if (activeTool !== "pan") return;
-    isPanningRef.current = true;
-    panMovedRef.current = false;
-    lastPanPointRef.current = { x: e.clientX, y: e.clientY };
-    e.currentTarget.setPointerCapture(e.pointerId);
-    e.preventDefault();
-  }
-
-  function handlePanPointerMove(e: React.PointerEvent<HTMLDivElement>) {
-    if (activeTool !== "pan" || !isPanningRef.current || !lastPanPointRef.current) return;
-
-    const dx = e.clientX - lastPanPointRef.current.x;
-    const dy = e.clientY - lastPanPointRef.current.y;
-    if (dx !== 0 || dy !== 0) panMovedRef.current = true;
-    lastPanPointRef.current = { x: e.clientX, y: e.clientY };
-    const { canvasZoom: zoom, stagePosition: pos } = useDesignStore.getState();
-    setCanvasView(zoom, { x: pos.x + dx, y: pos.y + dy });
-  }
-
   function handlePanPointerUp(e: React.PointerEvent<HTMLDivElement>) {
     if (isPanningRef.current) {
       isPanningRef.current = false;
@@ -213,33 +234,6 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
       window.setTimeout(() => {
         panMovedRef.current = false;
       }, 0);
-    }
-  }
-
-  function handleCanvasPlacementClick(e: Konva.KonvaEventObject<MouseEvent>) {
-    if (activeTool === "pan" || panMovedRef.current) return;
-
-    if (isDrawingPolygon && e.target.getClassName() === "Circle") {
-      return;
-    }
-
-    const isPlacementTool =
-      isDrawingPolygon ||
-      activeTool === "scale" ||
-      activeTool === "head" ||
-      activeTool === "pipe";
-
-    if (!isPlacementTool) return;
-
-    const pos = getPointerPosition();
-    if (!pos) return;
-    onCanvasClick(pos);
-  }
-
-  function handleFirstVertexClick(e: Konva.KonvaEventObject<MouseEvent>) {
-    e.cancelBubble = true;
-    if (drawingVertices.length >= 3) {
-      onClosePolygon?.();
     }
   }
 
@@ -258,7 +252,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
   const stageWidth = Math.max(viewportSize.width, 1);
   const stageHeight = Math.max(viewportSize.height, 1);
   const isPanTool = activeTool === "pan";
-  const passThroughPointer = isPanTool || isDrawingPolygon;
+  const passThroughPointer = activeTool !== "select";
 
   return (
     <div
@@ -274,21 +268,22 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
             : undefined,
         touchAction: isPanTool ? "none" : undefined,
       }}
-      onPointerDownCapture={handlePanPointerDown}
-      onPointerMove={handlePanPointerMove}
+      onPointerDown={handleContainerPointerDown}
+      onPointerMove={handleContainerPointerMove}
       onPointerUp={handlePanPointerUp}
       onPointerCancel={handlePanPointerUp}
+      onWheel={handleContainerWheel}
+      onPointerLeave={() => {
+        isPanningRef.current = false;
+        lastPanPointRef.current = null;
+        setPreviewPoint(null);
+      }}
     >
       <Stage
         ref={stageRef}
         width={stageWidth}
         height={stageHeight}
-        onMouseMove={() => {
-          if (!isDrawingPolygon || drawingVertices.length === 0) return;
-          setPreviewPoint(getPointerPosition());
-        }}
-        onMouseLeave={() => setPreviewPoint(null)}
-        onWheel={handleWheel}
+        style={{ pointerEvents: isPlacementTool || isPanTool ? "none" : "auto" }}
       >
         <Layer
           ref={layerRef}
@@ -296,8 +291,15 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
           y={stagePosition.y}
           scaleX={canvasZoom}
           scaleY={canvasZoom}
-          onClick={handleCanvasPlacementClick}
         >
+          <Rect
+            x={0}
+            y={0}
+            width={width}
+            height={height}
+            fill="transparent"
+            listening={false}
+          />
           {bgImage && (
             <KonvaImage image={bgImage} width={width} height={height} listening={false} />
           )}
@@ -482,7 +484,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
                         strokeWidth={isNear ? 2 : 1}
                         dash={[4, 4]}
                         opacity={isNear ? 0.9 : 0.45}
-                        onClick={handleFirstVertexClick}
+                        listening={false}
                       />
                     )}
                     <Circle
@@ -492,7 +494,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
                       fill={isFirst ? drawStyle.firstVertex : drawStyle.vertex}
                       stroke="#ffffff"
                       strokeWidth={2}
-                      onClick={isFirst ? handleFirstVertexClick : undefined}
+                      listening={false}
                     />
                   </Group>
                 );
