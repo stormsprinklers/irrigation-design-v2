@@ -1,0 +1,46 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30">
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+        <div className="text-xl font-semibold text-primary">Irrigation Design</div>
+        <div className="flex gap-3">
+          <Button variant="outline" asChild>
+            <Link href="/login">Sign in</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/projects">Open app</Link>
+          </Button>
+        </div>
+      </header>
+      <main className="mx-auto max-w-4xl px-6 py-20 text-center">
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          Draw the property. Design the system. Share with confidence.
+        </h1>
+        <p className="mt-6 text-lg text-muted-foreground">
+          Professional irrigation design with editable zones, pipe sizing, material costs, and
+          customer-ready schematics. Automation proposes — you refine and explain.
+        </p>
+        <div className="mt-10 flex justify-center gap-4">
+          <Button size="lg" asChild>
+            <Link href="/login">Get started</Link>
+          </Button>
+        </div>
+        <div className="mt-16 grid gap-4 text-left sm:grid-cols-3">
+          {[
+            { title: "Scale & layout", desc: "Import plat maps, calibrate scale, draw hydrozones" },
+            { title: "Hydraulics", desc: "GPM, pressure, friction loss, and zone isolation" },
+            { title: "Customer exports", desc: "Clean proposals and installer schematics" },
+          ].map((f) => (
+            <div key={f.title} className="rounded-xl border bg-card p-5">
+              <h3 className="font-semibold">{f.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+}

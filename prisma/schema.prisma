@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  ADMIN
+  DESIGNER
+  INSTALLER
+}
+
+enum ProjectStatus {
+  DRAFT
+  IN_REVIEW
+  PROPOSED
+  APPROVED
+  AS_BUILT
+}
+
+enum DesignVersionKind {
+  INITIAL
+  CUSTOMER_REVISION
+  FIELD_ADJUSTMENT
+  AS_BUILT
+}
+
+enum ShareView {
+  CUSTOMER
+  INSTALLER
+}
+
+enum CatalogCategory {
+  SPRAY
+  ROTOR
+  MP_ROTATOR
+  DRIP
+  VALVE
+  PIPE
+  FITTING
+  CONTROLLER
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users           User[]
+  projects        Project[]
+  pricingProfiles PricingProfile[]
+  catalogItems    CatalogItem[]
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  name             String
+  passwordHash   String
+  role           UserRole @default(DESIGNER)
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  projects     Project[]    @relation("ProjectCreator")
+}
+
+model Project {
+  id             String        @id @default(cuid())
+  name           String
+  customerName   String?
+  address        String?
+  status         ProjectStatus @default(DRAFT)
+  organizationId String
+  createdById    String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  organization Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdBy    User              @relation("ProjectCreator", fields: [createdById], references: [id])
+  versions     DesignVersion[]
+  shareLinks   DesignShareLink[]
+}
+
+model DesignVersion {
+  id        String            @id @default(cuid())
+  projectId String
+  label     String
+  kind      DesignVersionKind @default(INITIAL)
+  isActive  Boolean           @default(false)
+  designData Json
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model DesignShareLink {
+  id        String    @id @default(cuid())
+  projectId String
+  token     String    @unique @default(cuid())
+  view      ShareView @default(CUSTOMER)
+  versionId String?
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+}
+
+model PricingProfile {
+  id                 String   @id @default(cuid())
+  organizationId     String
+  name               String   @default("Default")
+  isDefault          Boolean  @default(true)
+  pipePerFoot        Float    @default(1.25)
+  headCost           Float    @default(8.5)
+  valveCost          Float    @default(45)
+  laborMultiplier    Float    @default(1.5)
+  markup             Float    @default(0.25)
+  tax                Float    @default(0.08)
+  wasteFactor        Float    @default(0.1)
+  fittingAssumptions Json     @default("{}")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
+
+model CatalogItem {
+  id             String          @id @default(cuid())
+  organizationId String?
+  category       CatalogCategory
+  manufacturer   String
+  model          String
+  sku            String?
+  specs          Json            @default("{}")
+  nozzleChart    Json?
+  isSystem       Boolean         @default(true)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  organization Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([category])
+  @@index([organizationId])
+}

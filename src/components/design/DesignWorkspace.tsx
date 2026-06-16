@@ -1,0 +1,354 @@
+"use client";
+
+import { useCallback, useEffect, useMemo } from "react";
+import dynamic from "next/dynamic";
+import { toast } from "sonner";
+import Link from "next/link";
+import { saveDesignDocument } from "@/lib/actions/design";
+import { useDesignStore } from "@/lib/stores/design-store";
+import { DesignToolbar } from "./DesignToolbar";
+import { InspectorPanel } from "./InspectorPanel";
+import { ValidationDrawer } from "./ValidationDrawer";
+import { VersionSelector } from "./VersionSelector";
+import { MaterialsPanel } from "./MaterialsPanel";
+import { placeHeads } from "@/lib/domain/placement";
+import { validateDesign } from "@/lib/domain/validation";
+import { buildMaterialList, calculateMaterialTotal } from "@/lib/domain/materials";
+import { generateId } from "@/lib/utils";
+import type { CatalogItemData, DesignDocument, Point, PricingProfileData } from "@/lib/domain/types";
+import type { DesignVersion, Project } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+
+const DesignCanvas = dynamic(() => import("./DesignCanvas").then((m) => m.DesignCanvas), {
+  ssr: false,
+});
+
+type Props = {
+  project: Project;
+  version: DesignVersion;
+  versions: DesignVersion[];
+  catalog: CatalogItemData[];
+  pricing: PricingProfileData;
+  imageUrl?: string;
+};
+
+export function DesignWorkspace({
+  project,
+  version,
+  versions,
+  catalog,
+  pricing,
+  imageUrl,
+}: Props) {
+  const store = useDesignStore();
+  const {
+    init,
+    document,
+    setDocument,
+    activeTool,
+    drawingVertices,
+    addDrawingVertex,
+    clearDrawing,
+    scalePointA,
+    scalePointB,
+    setScalePointA,
+    setScalePointB,
+    isDirty,
+    setValidationIssues,
+    markSaved,
+    setSaving,
+    projectId,
+    versionId,
+  } = store;
+
+  useEffect(() => {
+    init(project.id, version.id, version.kind, version.designData as DesignDocument);
+  }, [project.id, version.id, version.kind, version.designData, init]);
+
+  useEffect(() => {
+    if (!isDirty || !projectId || !versionId) return;
+    const timer = setTimeout(async () => {
+      setSaving(true);
+      try {
+        await saveDesignDocument(projectId, versionId, document);
+        markSaved();
+      } catch {
+        toast.error("Failed to save design");
+        setSaving(false);
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [document, isDirty, projectId, versionId, markSaved, setSaving]);
+
+  const materials = useMemo(
+    () => buildMaterialList(document, catalog, pricing),
+    [document, catalog, pricing]
+  );
+  const materialTotals = useMemo(
+    () => calculateMaterialTotal(materials, pricing),
+    [materials, pricing]
+  );
+
+  const handleCanvasClick = useCallback(
+    (point: Point) => {
+      if (activeTool === "scale") {
+        if (!scalePointA) {
+          setScalePointA(point);
+        } else if (!scalePointB) {
+          setScalePointB(point);
+        }
+        return;
+      }
+
+      if (activeTool === "hydrozone" || activeTool === "exclusion") {
+        addDrawingVertex(point);
+        return;
+      }
+
+      if (activeTool === "head") {
+        const zoneId = document.zones[0]?.id;
+        if (!zoneId) {
+          toast.error("Create a zone first");
+          return;
+        }
+        const nozzle = catalog.find((c) => c.id === "cat_nozzle_12h") || catalog[0];
+        if (!nozzle) return;
+        const head = {
+          id: generateId("head"),
+          zoneId,
+          position: point,
+          catalogItemId: nozzle.id,
+          arcDegrees: 360,
+          radiusFeet: (nozzle.specs.radiusFeet as number) || 12,
+          rotationDegrees: 0,
+          locked: false,
+        };
+        setDocument({ ...document, heads: [...document.heads, head] });
+        return;
+      }
+
+      if (activeTool === "pipe") {
+        const zoneId = document.zones[0]?.id;
+        if (!zoneId) {
+          toast.error("Create a zone first");
+          return;
+        }
+        const pipeItem = catalog.find((c) => c.category === "PIPE");
+        const newVertices = [...drawingVertices, point];
+        if (newVertices.length >= 2) {
+          const pipe = {
+            id: generateId("pipe"),
+            zoneId,
+            catalogItemId: pipeItem?.id ?? "cat_pipe_1pvc",
+            points: newVertices,
+            diameterInches: 1,
+            material: "PVC",
+          };
+          setDocument({ ...document, pipes: [...document.pipes, pipe] });
+          clearDrawing();
+        } else {
+          addDrawingVertex(point);
+        }
+      }
+    },
+    [
+      activeTool,
+      scalePointA,
+      scalePointB,
+      setScalePointA,
+      setScalePointB,
+      addDrawingVertex,
+      document,
+      catalog,
+      setDocument,
+      drawingVertices,
+      clearDrawing,
+    ]
+  );
+
+  function finishPolygon() {
+    if (drawingVertices.length < 3) {
+      toast.error("Need at least 3 points");
+      return;
+    }
+
+    if (activeTool === "hydrozone") {
+      let zoneId = document.zones[0]?.id;
+      if (!zoneId) {
+        zoneId = generateId("zone");
+        const zone = { id: zoneId, name: "Zone 1", hydrozoneIds: [] };
+        const hydrozone = {
+          id: generateId("hz"),
+          name: `Hydrozone ${document.hydrozones.length + 1}`,
+          vertices: drawingVertices,
+          zoneId,
+          hydrozoneType: "TURF" as const,
+          sunExposure: "FULL_SUN" as const,
+          slopePercent: 0,
+          soilType: "LOAM" as const,
+          waterPriority: 3,
+          headPreference: "SPRAY" as const,
+        };
+        setDocument({
+          ...document,
+          zones: [...document.zones, { ...zone, hydrozoneIds: [hydrozone.id] }],
+          hydrozones: [...document.hydrozones, hydrozone],
+        });
+      } else {
+        const hydrozone = {
+          id: generateId("hz"),
+          name: `Hydrozone ${document.hydrozones.length + 1}`,
+          vertices: drawingVertices,
+          zoneId,
+          hydrozoneType: "TURF" as const,
+          sunExposure: "FULL_SUN" as const,
+          slopePercent: 0,
+          soilType: "LOAM" as const,
+          waterPriority: 3,
+          headPreference: "SPRAY" as const,
+        };
+        setDocument({
+          ...document,
+          hydrozones: [...document.hydrozones, hydrozone],
+          zones: document.zones.map((z) =>
+            z.id === zoneId ? { ...z, hydrozoneIds: [...z.hydrozoneIds, hydrozone.id] } : z
+          ),
+        });
+      }
+    } else if (activeTool === "exclusion") {
+      const exclusion = {
+        id: generateId("ex"),
+        name: `Exclusion ${document.exclusionZones.length + 1}`,
+        vertices: drawingVertices,
+        exclusionType: "BUILDING" as const,
+      };
+      setDocument({ ...document, exclusionZones: [...document.exclusionZones, exclusion] });
+    }
+    clearDrawing();
+    toast.success("Polygon added");
+  }
+
+  function handleScaleCalibrate(feet: number) {
+    if (!scalePointA || !scalePointB) return;
+    setDocument({
+      ...document,
+      scale: { pointA: scalePointA, pointB: scalePointB, realWorldFeet: feet },
+    });
+    setScalePointA(null);
+    setScalePointB(null);
+    toast.success(`Scale set: ${feet} ft`);
+  }
+
+  function handleAutoPlace(hydrozoneId: string) {
+    const hydrozone = document.hydrozones.find((h) => h.id === hydrozoneId);
+    if (!hydrozone) return;
+    let zoneId = hydrozone.zoneId ?? document.zones[0]?.id;
+    if (!zoneId) {
+      zoneId = generateId("zone");
+      setDocument({
+        ...document,
+        zones: [...document.zones, { id: zoneId!, name: "Zone 1", hydrozoneIds: [hydrozoneId] }],
+      });
+    }
+    const result = placeHeads({
+      hydrozone,
+      zoneId: zoneId!,
+      catalog,
+      scale: document.scale,
+      exclusionZones: document.exclusionZones,
+    });
+    const unlockedHeads = document.heads.filter(
+      (h) => h.hydrozoneId !== hydrozoneId || h.locked
+    );
+    setDocument({
+      ...document,
+      heads: [...unlockedHeads, ...result.heads],
+    });
+    setValidationIssues([...store.validationIssues, ...result.warnings]);
+    toast.success(`Placed ${result.heads.length} heads (${result.coveragePercent}% coverage)`);
+  }
+
+  function handleValidate() {
+    const issues = validateDesign(document, catalog);
+    setValidationIssues(issues);
+    toast.info(`${issues.length} validation item(s)`);
+  }
+
+  async function handleUploadImage(file: File) {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("projectId", project.id);
+    const res = await fetch("/api/upload/property-image", { method: "POST", body: formData });
+    if (!res.ok) {
+      const data = await res.json();
+      toast.error(data.error ?? "Upload failed");
+      return;
+    }
+    const data = await res.json();
+    const img = new window.Image();
+    img.src = URL.createObjectURL(file);
+    await new Promise((r) => (img.onload = r));
+    setDocument({
+      ...document,
+      propertyImage: {
+        blobPath: data.blobPath,
+        width: img.width,
+        height: img.height,
+      },
+    });
+    toast.success("Property image uploaded");
+  }
+
+  return (
+    <div className="flex h-screen flex-col">
+      <header className="flex items-center justify-between border-b bg-card px-4 py-2">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/projects">← Projects</Link>
+          </Button>
+          <div>
+            <h1 className="font-semibold">{project.name}</h1>
+            <p className="text-xs text-muted-foreground">
+              {version.label}
+              {version.kind === "AS_BUILT" && (
+                <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-amber-800">
+                  As-built
+                </span>
+              )}
+            </p>
+          </div>
+        </div>
+        <VersionSelector
+          projectId={project.id}
+          versions={versions}
+          activeVersionId={version.id}
+        />
+      </header>
+
+      <div className="flex min-h-0 flex-1">
+        <DesignToolbar />
+        <div className="flex min-h-0 flex-1 flex-col">
+          {(activeTool === "hydrozone" || activeTool === "exclusion") && drawingVertices.length > 0 && (
+            <div className="border-b bg-amber-50 px-4 py-2 text-sm">
+              Click to add vertices.{" "}
+              <button className="font-medium text-primary underline" onClick={finishPolygon}>
+                Close polygon ({drawingVertices.length} points)
+              </button>
+            </div>
+          )}
+          <div className="min-h-0 flex-1">
+            <DesignCanvas imageUrl={imageUrl} onCanvasClick={handleCanvasClick} />
+          </div>
+          <ValidationDrawer />
+          <MaterialsPanel items={materials} totals={materialTotals} />
+        </div>
+        <InspectorPanel
+          onUploadImage={handleUploadImage}
+          onAutoPlace={handleAutoPlace}
+          onValidate={handleValidate}
+          onScaleCalibrate={handleScaleCalibrate}
+        />
+      </div>
+    </div>
+  );
+}

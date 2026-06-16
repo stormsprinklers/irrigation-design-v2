@@ -1,0 +1,110 @@
+[
+  {
+    "id": "cat_spray_1804",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "1804 Spray Body",
+    "specs": { "popUpHeight": 4, "inlet": "1/2\"" }
+  },
+  {
+    "id": "cat_nozzle_12h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-Series 12' Half Circle",
+    "specs": { "radiusFeet": 12, "arc": 180 },
+    "nozzleChart": {
+      "pressurePsi": [20, 30, 40, 50],
+      "gpm": [0.85, 1.04, 1.20, 1.34],
+      "radiusFeet": [10, 11, 12, 12.5],
+      "precipInPerHr": [1.2, 1.4, 1.5, 1.6]
+    }
+  },
+  {
+    "id": "cat_nozzle_15q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-Series 15' Quarter Circle",
+    "specs": { "radiusFeet": 15, "arc": 90 },
+    "nozzleChart": {
+      "pressurePsi": [20, 30, 40, 50],
+      "gpm": [0.95, 1.15, 1.32, 1.48],
+      "radiusFeet": [13, 14, 15, 15.5],
+      "precipInPerHr": [1.1, 1.3, 1.45, 1.55]
+    }
+  },
+  {
+    "id": "cat_pgp",
+    "category": "ROTOR",
+    "manufacturer": "Rain Bird",
+    "model": "PGP Ultra",
+    "specs": { "radiusFeetMin": 18, "radiusFeetMax": 45 },
+    "nozzleChart": {
+      "pressurePsi": [30, 40, 50, 60],
+      "gpm": [2.1, 2.5, 2.9, 3.2],
+      "radiusFeet": [30, 35, 40, 42],
+      "precipInPerHr": [0.4, 0.45, 0.5, 0.52]
+    }
+  },
+  {
+    "id": "cat_mp1000",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP1000-90",
+    "specs": { "radiusFeet": 12, "arc": 90 },
+    "nozzleChart": {
+      "pressurePsi": [30, 40, 50],
+      "gpm": [0.22, 0.25, 0.28],
+      "radiusFeet": [10, 11, 12],
+      "precipInPerHr": [0.35, 0.38, 0.4]
+    }
+  },
+  {
+    "id": "cat_drip_line",
+    "category": "DRIP",
+    "manufacturer": "Rain Bird",
+    "model": "XFS Dripline 0.6 GPH",
+    "specs": { "spacingInches": 12, "gphPerEmitter": 0.6 }
+  },
+  {
+    "id": "cat_valve_pgv",
+    "category": "VALVE",
+    "manufacturer": "Rain Bird",
+    "model": "PGV 1\" Valve",
+    "specs": { "sizeInches": 1, "flowGpmMax": 40 }
+  },
+  {
+    "id": "cat_pipe_1pvc",
+    "category": "PIPE",
+    "manufacturer": "Generic",
+    "model": "1\" Schedule 40 PVC",
+    "specs": { "diameterInches": 1, "material": "PVC", "cCoefficient": 150 }
+  },
+  {
+    "id": "cat_pipe_075pvc",
+    "category": "PIPE",
+    "manufacturer": "Generic",
+    "model": "3/4\" Schedule 40 PVC",
+    "specs": { "diameterInches": 0.75, "material": "PVC", "cCoefficient": 150 }
+  },
+  {
+    "id": "cat_fitting_elbow",
+    "category": "FITTING",
+    "manufacturer": "Generic",
+    "model": "90° Elbow 1\"",
+    "specs": { "type": "elbow", "sizeInches": 1 }
+  },
+  {
+    "id": "cat_fitting_tee",
+    "category": "FITTING",
+    "manufacturer": "Generic",
+    "model": "Tee 1\"",
+    "specs": { "type": "tee", "sizeInches": 1 }
+  },
+  {
+    "id": "cat_controller",
+    "category": "CONTROLLER",
+    "manufacturer": "Rain Bird",
+    "model": "ESP-ME3 8 Station",
+    "specs": { "stations": 8, "wifi": true }
+  }
+]
