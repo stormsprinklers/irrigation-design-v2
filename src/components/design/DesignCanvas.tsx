@@ -134,6 +134,12 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     }
   }, [isDrawingPolygon]);
 
+  useEffect(() => {
+    isPanningRef.current = false;
+    lastPanPointRef.current = null;
+    panMovedRef.current = false;
+  }, [activeTool]);
+
   function isDimmed(zoneId?: string) {
     return activeZoneId !== null && zoneId !== activeZoneId;
   }
@@ -187,18 +193,14 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
   }
 
   function handlePanPointerMove(e: React.PointerEvent<HTMLDivElement>) {
-    if (activeTool === "pan" && isPanningRef.current && lastPanPointRef.current) {
-      const dx = e.clientX - lastPanPointRef.current.x;
-      const dy = e.clientY - lastPanPointRef.current.y;
-      if (dx !== 0 || dy !== 0) panMovedRef.current = true;
-      lastPanPointRef.current = { x: e.clientX, y: e.clientY };
-      const { canvasZoom: zoom, stagePosition: pos } = useDesignStore.getState();
-      setCanvasView(zoom, { x: pos.x + dx, y: pos.y + dy });
-      return;
-    }
+    if (activeTool !== "pan" || !isPanningRef.current || !lastPanPointRef.current) return;
 
-    if (!isDrawingPolygon || drawingVertices.length === 0) return;
-    setPreviewPoint(getPointerPosition());
+    const dx = e.clientX - lastPanPointRef.current.x;
+    const dy = e.clientY - lastPanPointRef.current.y;
+    if (dx !== 0 || dy !== 0) panMovedRef.current = true;
+    lastPanPointRef.current = { x: e.clientX, y: e.clientY };
+    const { canvasZoom: zoom, stagePosition: pos } = useDesignStore.getState();
+    setCanvasView(zoom, { x: pos.x + dx, y: pos.y + dy });
   }
 
   function handlePanPointerUp(e: React.PointerEvent<HTMLDivElement>) {
@@ -208,13 +210,27 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
       if (e.currentTarget.hasPointerCapture(e.pointerId)) {
         e.currentTarget.releasePointerCapture(e.pointerId);
       }
+      window.setTimeout(() => {
+        panMovedRef.current = false;
+      }, 0);
     }
   }
 
-  function handleStageClick(e: Konva.KonvaEventObject<MouseEvent>) {
+  function handleCanvasPlacementClick(e: Konva.KonvaEventObject<MouseEvent>) {
     if (activeTool === "pan" || panMovedRef.current) return;
-    const stage = e.target.getStage();
-    if (!stage || e.target !== stage) return;
+
+    if (isDrawingPolygon && e.target.getClassName() === "Circle") {
+      return;
+    }
+
+    const isPlacementTool =
+      isDrawingPolygon ||
+      activeTool === "scale" ||
+      activeTool === "head" ||
+      activeTool === "pipe";
+
+    if (!isPlacementTool) return;
+
     const pos = getPointerPosition();
     if (!pos) return;
     onCanvasClick(pos);
@@ -242,6 +258,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
   const stageWidth = Math.max(viewportSize.width, 1);
   const stageHeight = Math.max(viewportSize.height, 1);
   const isPanTool = activeTool === "pan";
+  const passThroughPointer = isPanTool || isDrawingPolygon;
 
   return (
     <div
@@ -261,17 +278,16 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
       onPointerMove={handlePanPointerMove}
       onPointerUp={handlePanPointerUp}
       onPointerCancel={handlePanPointerUp}
-      onPointerLeave={() => {
-        isPanningRef.current = false;
-        lastPanPointRef.current = null;
-        setPreviewPoint(null);
-      }}
     >
       <Stage
         ref={stageRef}
         width={stageWidth}
         height={stageHeight}
-        onClick={handleStageClick}
+        onMouseMove={() => {
+          if (!isDrawingPolygon || drawingVertices.length === 0) return;
+          setPreviewPoint(getPointerPosition());
+        }}
+        onMouseLeave={() => setPreviewPoint(null)}
         onWheel={handleWheel}
       >
         <Layer
@@ -280,6 +296,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
           y={stagePosition.y}
           scaleX={canvasZoom}
           scaleY={canvasZoom}
+          onClick={handleCanvasPlacementClick}
         >
           {bgImage && (
             <KonvaImage image={bgImage} width={width} height={height} listening={false} />
@@ -300,7 +317,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               zone={zone}
               opacity={isDimmed() ? 0.2 : 0.6}
               selected={selectedId === zone.id}
-              listening={!isPanTool}
+              listening={!passThroughPointer}
               onSelect={() => setSelected(zone.id, "exclusion")}
             />
           ))}
@@ -312,7 +329,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               fill={HYDROZONE_COLORS[zone.hydrozoneType] ?? "rgba(34,197,94,0.25)"}
               opacity={isDimmed(zone.zoneId) ? 0.2 : 0.7}
               selected={selectedId === zone.id}
-              listening={!isPanTool}
+              listening={!passThroughPointer}
               onSelect={() => setSelected(zone.id, "hydrozone")}
             />
           ))}
@@ -324,7 +341,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               stroke={isDimmed(pipe.zoneId) ? "#94a3b8" : "#1e40af"}
               strokeWidth={Math.max(2, pipe.diameterInches * 2)}
               opacity={isDimmed(pipe.zoneId) ? 0.2 : 0.9}
-              listening={!isPanTool}
+              listening={!passThroughPointer}
               onClick={() => setSelected(pipe.id, "pipe")}
             />
           ))}
@@ -342,7 +359,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
             const radiusPx = head.radiusFeet * ppf;
 
             return (
-              <Group key={head.id} listening={!isPanTool}>
+              <Group key={head.id} listening={!passThroughPointer}>
                 {showArc && (
                   <Arc
                     x={head.position.x}
@@ -377,7 +394,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               radius={8}
               fill="#dc2626"
               opacity={isDimmed(valve.zoneId) ? 0.2 : 1}
-              listening={!isPanTool}
+              listening={!passThroughPointer}
               onClick={() => setSelected(valve.id, "valve")}
             />
           ))}
@@ -390,7 +407,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               fill="#7c3aed"
               stroke="#fff"
               strokeWidth={2}
-              listening={!isPanTool}
+              listening={!passThroughPointer}
             />
           )}
 
@@ -489,7 +506,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               y={scalePointA.y}
               radius={5}
               fill="#ea580c"
-              listening={!isPanTool}
+              listening={!passThroughPointer}
             />
           )}
           {scalePointB && (
@@ -498,7 +515,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               y={scalePointB.y}
               radius={5}
               fill="#ea580c"
-              listening={!isPanTool}
+              listening={!passThroughPointer}
             />
           )}
           {scalePointA && scalePointB && (
@@ -506,7 +523,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               points={[scalePointA.x, scalePointA.y, scalePointB.x, scalePointB.y]}
               stroke="#ea580c"
               strokeWidth={2}
-              listening={!isPanTool}
+              listening={!passThroughPointer}
             />
           )}
         </Layer>
