@@ -1,5 +1,10 @@
 import type { CatalogItemData, HeadFamily } from "@/lib/domain/types";
 import { calculateHeadGpm } from "@/lib/domain/hydraulics";
+import {
+  getBodyCategory,
+  getCompatibleBodyCategories,
+  resolveDefaultHeadSettings,
+} from "@/lib/catalog/adjustability";
 
 export function isHeadBody(item: CatalogItemData): boolean {
   return (
@@ -44,10 +49,12 @@ export function nozzleCompatibleWithHead(
   const headFamily = getHeadFamily(head);
   if (!headFamily) return false;
   const compatible = getCompatibleHeadFamilies(nozzle);
-  if (compatible.length > 0) {
-    return compatible.includes(headFamily);
-  }
-  return false;
+  if (compatible.length === 0 || !compatible.includes(headFamily)) return false;
+
+  const bodyCategory = getBodyCategory(head);
+  if (!bodyCategory) return false;
+  const allowedBodies = getCompatibleBodyCategories(nozzle);
+  return allowedBodies.includes(bodyCategory);
 }
 
 export function getNozzlesForHead(
@@ -86,12 +93,12 @@ export function getDefaultNozzleForHead(
     return compatible.find((n) => n.model.includes("3.0")) ?? compatible[0];
   }
   if (family?.startsWith("hunter_pro_spray")) {
-    return compatible.find((n) => n.id.includes("mp3500")) ?? compatible[0];
+    return compatible.find((n) => n.id === "noz_hunter_mp3000_90") ?? compatible[0];
   }
   if (family?.startsWith("rainbird_1800")) {
     return (
-      compatible.find((n) => n.id.includes("rvan14") && n.id.includes("arc360")) ??
-      compatible.find((n) => n.id.includes("rvan")) ??
+      compatible.find((n) => n.id === "noz_rb_r_van14") ??
+      compatible.find((n) => n.id.includes("rvan14")) ??
       compatible[0]
     );
   }
@@ -119,7 +126,7 @@ export function resolveHeadAssembly(
   catalog: CatalogItemData[],
   preference: HeadFamily,
   pressurePsi = 45
-): { headBodyId: string; nozzleId: string; radiusFeet: number; gpm: number; precipInPerHr?: number } | null {
+): { headBodyId: string; nozzleId: string; radiusFeet: number; gpm: number; precipInPerHr?: number; arcDegrees: number; rotationDegrees: number } | null {
   const headPreferenceMap: Record<HeadFamily, string> = {
     SPRAY: "head_rb_1804",
     ROTOR: "head_hunter_pgp_ultra_4",
@@ -131,15 +138,14 @@ export function resolveHeadAssembly(
   if (!head) return null;
   const nozzle = getDefaultNozzleForHead(catalog, headBodyId);
   if (!nozzle) return null;
-  const hydraulics = calculateHeadGpm(nozzle, pressurePsi);
-  const radiusFeet =
-    hydraulics.radiusFeet ??
-    (typeof nozzle.specs.radiusFeet === "number" ? nozzle.specs.radiusFeet : 12);
+  const settings = resolveDefaultHeadSettings(nozzle, pressurePsi);
   return {
     headBodyId,
     nozzleId: nozzle.id,
-    radiusFeet,
-    gpm: hydraulics.gpm,
-    precipInPerHr: hydraulics.precipInPerHr,
+    radiusFeet: settings.radiusFeet,
+    gpm: settings.gpm ?? calculateHeadGpm(nozzle, pressurePsi).gpm,
+    precipInPerHr: settings.precipInPerHr,
+    arcDegrees: settings.arcDegrees,
+    rotationDegrees: settings.rotationDegrees,
   };
 }

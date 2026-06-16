@@ -29,6 +29,8 @@ type DesignState = {
   isDirty: boolean;
   isSaving: boolean;
   lastSavedAt: Date | null;
+  canvasZoom: number;
+  stagePosition: Point;
 
   init: (projectId: string, versionId: string, versionKind: string, doc: DesignDocument) => void;
   setDocument: (doc: DesignDocument) => void;
@@ -43,6 +45,11 @@ type DesignState = {
   markDirty: () => void;
   markSaved: () => void;
   setSaving: (saving: boolean) => void;
+  setCanvasView: (zoom: number, position: Point) => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
+  resetCanvasView: () => void;
+  clearCanvasDesign: () => void;
 };
 
 export const useDesignStore = create<DesignState>((set) => ({
@@ -61,6 +68,8 @@ export const useDesignStore = create<DesignState>((set) => ({
   isDirty: false,
   isSaving: false,
   lastSavedAt: null,
+  canvasZoom: 1,
+  stagePosition: { x: 0, y: 0 },
 
   init: (projectId, versionId, versionKind, doc) =>
     set({
@@ -72,6 +81,8 @@ export const useDesignStore = create<DesignState>((set) => ({
       drawingVertices: [],
       scalePointA: null,
       scalePointB: null,
+      canvasZoom: 1,
+      stagePosition: { x: 0, y: 0 },
     }),
   setDocument: (doc) => set({ document: doc, isDirty: true }),
   setTool: (tool) => set({ activeTool: tool, drawingVertices: [], scalePointA: null, scalePointB: null }),
@@ -86,4 +97,30 @@ export const useDesignStore = create<DesignState>((set) => ({
   markDirty: () => set({ isDirty: true }),
   markSaved: () => set({ isDirty: false, isSaving: false, lastSavedAt: new Date() }),
   setSaving: (saving) => set({ isSaving: saving }),
+  setCanvasView: (zoom, position) => set({ canvasZoom: zoom, stagePosition: position }),
+  zoomIn: () =>
+    set((s) => ({ canvasZoom: Math.min(4, Math.round(s.canvasZoom * 1.2 * 100) / 100) })),
+  zoomOut: () =>
+    set((s) => ({ canvasZoom: Math.max(0.25, Math.round((s.canvasZoom / 1.2) * 100) / 100) })),
+  resetCanvasView: () => set({ canvasZoom: 1, stagePosition: { x: 0, y: 0 } }),
+  clearCanvasDesign: () =>
+    set((s) => ({
+      document: {
+        ...s.document,
+        hydrozones: [],
+        exclusionZones: [],
+        zones: [],
+        heads: [],
+        pipes: [],
+        valves: [],
+      },
+      selectedId: null,
+      selectedType: null,
+      activeZoneId: null,
+      drawingVertices: [],
+      scalePointA: null,
+      scalePointB: null,
+      validationIssues: [],
+      isDirty: true,
+    })),
 }));

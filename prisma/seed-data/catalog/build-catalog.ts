@@ -3,18 +3,20 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { HEAD_ITEMS } from "./heads";
 import { MANUFACTURER_NOZZLES } from "./nozzles-manufacturer";
+import { enrichNozzleItem } from "./adjustability";
+import {
+  consolidateSprayNozzles,
+  type ExtractedNozzleRaw,
+} from "./consolidate-spray-nozzles";
 import type { CatalogSeedItem, NozzleChart } from "./chart";
+import { rotorNozzleSpecs } from "./adjustability";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const generatedDir = path.join(__dirname, "generated");
 const extractedDir = path.join(__dirname, "extracted");
 
-const EXTRACTED_PDF_FILES = [
-  "rainbird-3500.json",
-  "rainbird-5000.json",
-  "rainbird-rvan.json",
-  "hunter-mp-rotator.json",
-] as const;
+const ROTOR_PDF_FILES = ["rainbird-3500.json", "rainbird-5000.json"] as const;
+const SPRAY_PDF_FILES = ["rainbird-rvan.json", "hunter-mp-rotator.json"] as const;
 
 const PDF_EXTRACTED_FAMILIES = new Set([
   "rainbird_3500",
@@ -99,36 +101,55 @@ function canonicalExtractedId(id: string): string {
   return id.replace(/r-van/gi, "r_van");
 }
 
-function normalizeExtractedNozzle(raw: ExtractedNozzleRaw): CatalogSeedItem {
+function normalizeRotorExtractedNozzle(raw: ExtractedNozzleRaw): CatalogSeedItem {
   const manufacturer = raw.nozzleFamily.startsWith("hunter") ? "Hunter" : "Rain Bird";
-  const category =
-    raw.nozzleFamily === "hunter_mp_rotator" || raw.nozzleFamily === "rainbird_rvan"
-      ? "MP_ROTATOR"
-      : "ROTOR";
+  const chartMax = raw.nozzleChart?.radiusFeet?.length
+    ? Math.max(...raw.nozzleChart.radiusFeet)
+    : undefined;
 
   return {
     id: canonicalExtractedId(raw.id),
-    category,
+    category: "ROTOR",
     manufacturer,
     model: raw.model,
     specs: {
-      itemRole: "nozzle",
-      nozzleFamily: raw.nozzleFamily,
-      compatibleHeadFamilies: raw.compatibleHeadFamilies,
-      ...raw.specs,
+      ...rotorNozzleSpecs({
+        nozzleFamily: raw.nozzleFamily,
+        compatibleHeadFamilies: raw.compatibleHeadFamilies,
+        ...raw.specs,
+      }),
+      ...(chartMax
+        ? {
+            radiusFeetMax: chartMax,
+            radiusFeetMin: Math.round(chartMax * 0.75 * 100) / 100,
+            arcDegreesMin: 40,
+            arcDegreesMax: 360,
+            arcDegreesDefault: 180,
+          }
+        : {}),
     },
     ...(raw.nozzleChart ? { nozzleChart: raw.nozzleChart } : {}),
   };
 }
 
-function loadExtractedPdfNozzles(): CatalogSeedItem[] {
+function loadRotorPdfNozzles(): CatalogSeedItem[] {
   if (!fs.existsSync(extractedDir)) return [];
-  return EXTRACTED_PDF_FILES.flatMap((file) => {
+  return ROTOR_PDF_FILES.flatMap((file) => {
     const filePath = path.join(extractedDir, file);
     if (!fs.existsSync(filePath)) return [];
     const raw = JSON.parse(fs.readFileSync(filePath, "utf8")) as ExtractedNozzleRaw[];
-    return raw.map(normalizeExtractedNozzle);
+    return raw.map(normalizeRotorExtractedNozzle);
   });
+}
+
+function loadConsolidatedSprayNozzles(): CatalogSeedItem[] {
+  if (!fs.existsSync(extractedDir)) return [];
+  const raw = SPRAY_PDF_FILES.flatMap((file) => {
+    const filePath = path.join(extractedDir, file);
+    if (!fs.existsSync(filePath)) return [];
+    return JSON.parse(fs.readFileSync(filePath, "utf8")) as ExtractedNozzleRaw[];
+  });
+  return consolidateSprayNozzles(raw);
 }
 
 function mergeManufacturerNozzles(
@@ -147,15 +168,19 @@ function mergeManufacturerNozzles(
 }
 
 function main() {
-  const hunterGenerated = loadJsonDir(generatedDir);
-  const extractedPdf = loadExtractedPdfNozzles();
-  const manufacturerNozzles = mergeManufacturerNozzles(MANUFACTURER_NOZZLES, extractedPdf);
+  const hunterGenerated = loadJsonDir(generatedDir).map(enrichNozzleItem);
+  const rotorPdf = loadRotorPdfNozzles();
+  const sprayPdf = loadConsolidatedSprayNozzles();
+  const extractedPdf = [...rotorPdf, ...sprayPdf];
+  const manufacturerNozzles = mergeManufacturerNozzles(MANUFACTURER_NOZZLES, extractedPdf).map(
+    enrichNozzleItem
+  );
   const all = [...HEAD_ITEMS, ...hunterGenerated, ...manufacturerNozzles, ...UTILITY_ITEMS];
 
   const outPath = path.join(__dirname, "../catalog-items.json");
   fs.writeFileSync(outPath, JSON.stringify(all, null, 2));
   console.log(
-    `Catalog built: ${all.length} items (${HEAD_ITEMS.length} heads, ${hunterGenerated.length} hunter chart nozzles, ${manufacturerNozzles.length} manufacturer nozzles incl. ${extractedPdf.length} from PDF extract)`
+    `Catalog built: ${all.length} items (${HEAD_ITEMS.length} heads, ${hunterGenerated.length} hunter chart nozzles, ${manufacturerNozzles.length} manufacturer nozzles incl. ${sprayPdf.length} spray + ${rotorPdf.length} rotor from PDF extract)`
   );
 }
 

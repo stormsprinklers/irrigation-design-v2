@@ -4,6 +4,7 @@ import {
   getDefaultNozzleForHead,
   resolveHeadAssembly,
 } from "@/lib/catalog/compat";
+import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
 import type {
   CatalogItemData,
   DesignDocument,
@@ -82,13 +83,15 @@ export function placeHeads(input: PlacementInput): PlacementResult {
         ? getDefaultNozzleForHead(catalog, fallbackHead.id)
         : catalog.find((c) => c.nozzleChart);
       if (!fallbackHead || !fallbackNozzle) return null;
-      const hydraulics = calculateHeadGpm(fallbackNozzle, 45);
+      const settings = resolveDefaultHeadSettings(fallbackNozzle, 45);
       return {
         headBodyId: fallbackHead.id,
         nozzleId: fallbackNozzle.id,
-        radiusFeet: hydraulics.radiusFeet ?? 12,
-        gpm: hydraulics.gpm,
-        precipInPerHr: hydraulics.precipInPerHr,
+        radiusFeet: settings.radiusFeet,
+        gpm: settings.gpm ?? calculateHeadGpm(fallbackNozzle, 45).gpm,
+        precipInPerHr: settings.precipInPerHr,
+        arcDegrees: settings.arcDegrees,
+        rotationDegrees: settings.rotationDegrees,
       };
     })();
 
@@ -107,7 +110,6 @@ export function placeHeads(input: PlacementInput): PlacementResult {
     };
   }
 
-  const sprayNozzle = catalog.find((c) => c.id === assembly.nozzleId)!;
   const radiusFeet = assembly.radiusFeet;
   const spacingFeet = radiusFeet * 0.5;
   const spacingPx = feetToPixels(spacingFeet, ppf);
@@ -133,9 +135,9 @@ export function placeHeads(input: PlacementInput): PlacementResult {
         position: point,
         headBodyId: assembly.headBodyId,
         catalogItemId: assembly.nozzleId,
-        arcDegrees: (sprayNozzle.specs.arcDegrees as number) ?? 360,
+        arcDegrees: assembly.arcDegrees,
         radiusFeet,
-        rotationDegrees: 0,
+        rotationDegrees: assembly.rotationDegrees,
         gpm: assembly.gpm,
         precipInPerHr: assembly.precipInPerHr,
         locked: false,

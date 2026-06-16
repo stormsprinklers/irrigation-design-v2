@@ -11,6 +11,10 @@
       "inlet": "3/4\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -32,6 +36,10 @@
       "inlet": "3/4\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -53,6 +61,10 @@
       "inlet": "3/4\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -74,6 +86,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -95,6 +111,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -116,6 +136,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -137,6 +161,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -158,6 +186,10 @@
       "inlet": "3/4\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -179,6 +211,10 @@
       "inlet": "3/4\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -200,6 +236,10 @@
       "inlet": "3/4\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 20,
       "pressurePsiMax": 100,
       "pressurePsiRecommended": [
@@ -221,6 +261,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 100,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "checkValve": false,
       "sam": false
     }
@@ -237,6 +282,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 100,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "checkValve": false,
       "sam": false
     }
@@ -253,6 +303,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 100,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "checkValve": false,
       "sam": false
     }
@@ -269,6 +324,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 100,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "prsPsi": 40,
       "checkValve": false,
       "sam": false
@@ -286,6 +346,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 100,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "prsPsi": 40,
       "checkValve": false,
       "sam": false
@@ -303,6 +368,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 70,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "sam": false
     }
   },
@@ -318,6 +388,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 70,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "sam": false
     }
   },
@@ -333,6 +408,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 70,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "sam": false
     }
   },
@@ -348,6 +428,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 70,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "sam": false
     }
   },
@@ -363,6 +448,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 70,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "prsPsi": 30,
       "sam": false
     }
@@ -379,6 +469,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 70,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "prsPsi": 30,
       "sam": false
     }
@@ -395,6 +490,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 70,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "sam": true,
       "sku": "A43905"
     }
@@ -411,6 +511,11 @@
       "inlet": "1/2\" NPT",
       "pressurePsiMin": 15,
       "pressurePsiMax": 70,
+      "acceptedNozzleCategories": [
+        "SPRAY",
+        "MP_ROTATOR"
+      ],
+      "rotationAdjustable": true,
       "sam": true
     }
   },
@@ -426,6 +531,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 25,
       "pressurePsiMax": 55,
       "sam": false
@@ -443,6 +552,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 25,
       "pressurePsiMax": 55,
       "sam": true
@@ -460,6 +573,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 25,
       "pressurePsiMax": 65,
       "sam": false
@@ -477,6 +594,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 25,
       "pressurePsiMax": 65,
       "sam": false
@@ -494,6 +615,10 @@
       "inlet": "1/2\" NPT",
       "arcDegreesMin": 40,
       "arcDegreesMax": 360,
+      "acceptedNozzleCategories": [
+        "ROTOR"
+      ],
+      "rotationAdjustable": true,
       "pressurePsiMin": 25,
       "pressurePsiMax": 65,
       "sam": true
@@ -511,7 +636,18 @@
         "hunter_pgj"
       ],
       "nozzleSize": 0.5,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 16,
+      "radiusFeetMin": 12,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -553,7 +689,18 @@
         "hunter_pgj"
       ],
       "nozzleSize": 0.75,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 17,
+      "radiusFeetMin": 12.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -595,7 +742,18 @@
         "hunter_pgj"
       ],
       "nozzleSize": 1,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 19,
+      "radiusFeetMin": 14.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -637,7 +795,18 @@
         "hunter_pgj"
       ],
       "nozzleSize": 1.5,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 22,
+      "radiusFeetMin": 16.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -679,7 +848,18 @@
         "hunter_pgj"
       ],
       "nozzleSize": 2,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 25,
+      "radiusFeetMin": 18.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -721,7 +901,18 @@
         "hunter_pgj"
       ],
       "nozzleSize": 2.5,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 28,
+      "radiusFeetMin": 21,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -763,7 +954,18 @@
         "hunter_pgj"
       ],
       "nozzleSize": 3,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 31,
+      "radiusFeetMin": 23.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -805,7 +1007,18 @@
         "hunter_pgj"
       ],
       "nozzleSize": 4,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 34,
+      "radiusFeetMin": 25.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -847,7 +1060,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 1,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 30,
+      "radiusFeetMin": 22.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -894,7 +1118,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 2,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 31,
+      "radiusFeetMin": 23.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -941,7 +1176,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 3,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 32,
+      "radiusFeetMin": 24,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -988,7 +1234,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 4,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 34,
+      "radiusFeetMin": 25.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1035,7 +1292,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 5,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 38,
+      "radiusFeetMin": 28.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1082,7 +1350,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 6,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 38,
+      "radiusFeetMin": 28.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1129,7 +1408,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 7,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 40,
+      "radiusFeetMin": 30,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1176,7 +1466,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 8,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 42,
+      "radiusFeetMin": 31.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1223,7 +1524,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 9,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 45,
+      "radiusFeetMin": 33.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1270,7 +1582,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 10,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 49,
+      "radiusFeetMin": 36.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1317,7 +1640,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 11,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 51,
+      "radiusFeetMin": 38.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1364,7 +1698,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 12,
-      "color": "Red"
+      "color": "Red",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 52,
+      "radiusFeetMin": 39,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1411,7 +1756,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 1.5,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 32,
+      "radiusFeetMin": 24,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1463,7 +1819,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 2,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 34,
+      "radiusFeetMin": 25.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1515,7 +1882,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 2.5,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 35,
+      "radiusFeetMin": 26.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1567,7 +1945,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 3,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 39,
+      "radiusFeetMin": 29.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1619,7 +2008,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 4,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 41,
+      "radiusFeetMin": 30.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1671,7 +2071,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 5,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 42,
+      "radiusFeetMin": 31.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1723,7 +2134,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 6,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 44,
+      "radiusFeetMin": 33,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1775,7 +2197,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 8,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 46,
+      "radiusFeetMin": 34.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1827,7 +2260,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 4,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 28,
+      "radiusFeetMin": 21,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1874,7 +2318,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 5,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 30,
+      "radiusFeetMin": 22.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1921,7 +2376,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 6,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 35,
+      "radiusFeetMin": 26.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1968,7 +2434,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 7,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 37,
+      "radiusFeetMin": 27.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2015,7 +2492,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 8,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 38,
+      "radiusFeetMin": 28.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2062,7 +2550,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 9,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 42,
+      "radiusFeetMin": 31.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2109,7 +2608,18 @@
         "hunter_pgp_adj"
       ],
       "nozzleSize": 10,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 44,
+      "radiusFeetMin": 33,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2157,7 +2667,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 1.5,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 32,
+      "radiusFeetMin": 24,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2210,7 +2731,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 2,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 34,
+      "radiusFeetMin": 25.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2263,7 +2795,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 2.5,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 35,
+      "radiusFeetMin": 26.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2316,7 +2859,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 3,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 39,
+      "radiusFeetMin": 29.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2369,7 +2923,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 4,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 41,
+      "radiusFeetMin": 30.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2422,7 +2987,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 5,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 42,
+      "radiusFeetMin": 31.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2475,7 +3051,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 6,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 44,
+      "radiusFeetMin": 33,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2528,7 +3115,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 8,
-      "color": "Blue"
+      "color": "Blue",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 46,
+      "radiusFeetMin": 34.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2581,7 +3179,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 2,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 30,
+      "radiusFeetMin": 22.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2629,7 +3238,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 2.5,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 35,
+      "radiusFeetMin": 26.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2677,7 +3297,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 3.5,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 37,
+      "radiusFeetMin": 27.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2725,7 +3356,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 4.5,
-      "color": "LA"
+      "color": "LA",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 37,
+      "radiusFeetMin": 27.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2773,7 +3415,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 10,
-      "color": "HF"
+      "color": "HF",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 47,
+      "radiusFeetMin": 35.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2821,7 +3474,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 13,
-      "color": "HF"
+      "color": "HF",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 47,
+      "radiusFeetMin": 35.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2869,7 +3533,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 6,
-      "color": "HF"
+      "color": "HF",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 39,
+      "radiusFeetMin": 29.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2917,7 +3592,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 8,
-      "color": "HF"
+      "color": "HF",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 41,
+      "radiusFeetMin": 30.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2965,7 +3651,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 0.5,
-      "color": "SR"
+      "color": "SR",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 19,
+      "radiusFeetMin": 14.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3013,7 +3710,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 1,
-      "color": "SR"
+      "color": "SR",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 19,
+      "radiusFeetMin": 14.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3061,7 +3769,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 2,
-      "color": "SR"
+      "color": "SR",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 19,
+      "radiusFeetMin": 14.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3109,7 +3828,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 0.75,
-      "color": "SR"
+      "color": "SR",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 26,
+      "radiusFeetMin": 19.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3157,7 +3887,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 1.5,
-      "color": "SR"
+      "color": "SR",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 26,
+      "radiusFeetMin": 19.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3205,7 +3946,18 @@
         "hunter_i20"
       ],
       "nozzleSize": 3,
-      "color": "SR"
+      "color": "SR",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 26,
+      "radiusFeetMin": 19.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3254,7 +4006,18 @@
       ],
       "arcDegrees": 90,
       "color": "MPR-25",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 23,
+      "radiusFeetMin": 17.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3308,7 +4071,18 @@
       ],
       "arcDegrees": 120,
       "color": "MPR-25",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 23,
+      "radiusFeetMin": 17.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3362,7 +4136,18 @@
       ],
       "arcDegrees": 180,
       "color": "MPR-25",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 23,
+      "radiusFeetMin": 17.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3416,7 +4201,18 @@
       ],
       "arcDegrees": 360,
       "color": "MPR-25",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 23,
+      "radiusFeetMin": 17.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3470,7 +4266,18 @@
       ],
       "arcDegrees": 90,
       "color": "MPR-30",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 29,
+      "radiusFeetMin": 21.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3524,7 +4331,18 @@
       ],
       "arcDegrees": 120,
       "color": "MPR-30",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 29,
+      "radiusFeetMin": 21.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3578,7 +4396,18 @@
       ],
       "arcDegrees": 180,
       "color": "MPR-30",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 29,
+      "radiusFeetMin": 21.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3632,7 +4461,18 @@
       ],
       "arcDegrees": 360,
       "color": "MPR-30",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 29,
+      "radiusFeetMin": 21.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3686,7 +4526,18 @@
       ],
       "arcDegrees": 90,
       "color": "MPR-35",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 32,
+      "radiusFeetMin": 24,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3740,7 +4591,18 @@
       ],
       "arcDegrees": 120,
       "color": "MPR-35",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 32,
+      "radiusFeetMin": 24,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3794,7 +4656,18 @@
       ],
       "arcDegrees": 180,
       "color": "MPR-35",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 32,
+      "radiusFeetMin": 24,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3848,7 +4721,18 @@
       ],
       "arcDegrees": 360,
       "color": "MPR-35",
-      "mpr": true
+      "mpr": true,
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 32,
+      "radiusFeetMin": 24,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3894,13 +4778,24 @@
     "manufacturer": "Rain Bird",
     "model": "3500 Nozzle 0.75",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_3500",
       "compatibleHeadFamilies": [
         "rainbird_3500"
       ],
       "nozzleSize": 0.75,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 18,
+      "radiusFeetMin": 13.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3941,13 +4836,24 @@
     "manufacturer": "Rain Bird",
     "model": "3500 Nozzle 1.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_3500",
       "compatibleHeadFamilies": [
         "rainbird_3500"
       ],
       "nozzleSize": 1,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 22,
+      "radiusFeetMin": 16.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3988,13 +4894,24 @@
     "manufacturer": "Rain Bird",
     "model": "3500 Nozzle 1.5",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_3500",
       "compatibleHeadFamilies": [
         "rainbird_3500"
       ],
       "nozzleSize": 1.5,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 24,
+      "radiusFeetMin": 18,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4035,13 +4952,24 @@
     "manufacturer": "Rain Bird",
     "model": "3500 Nozzle 2.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_3500",
       "compatibleHeadFamilies": [
         "rainbird_3500"
       ],
       "nozzleSize": 2,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 28,
+      "radiusFeetMin": 21,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4082,13 +5010,24 @@
     "manufacturer": "Rain Bird",
     "model": "3500 Nozzle 3.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_3500",
       "compatibleHeadFamilies": [
         "rainbird_3500"
       ],
       "nozzleSize": 3,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 32,
+      "radiusFeetMin": 24,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4129,13 +5068,24 @@
     "manufacturer": "Rain Bird",
     "model": "3500 Nozzle 4.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_3500",
       "compatibleHeadFamilies": [
         "rainbird_3500"
       ],
       "nozzleSize": 4,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 35,
+      "radiusFeetMin": 26.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4176,14 +5126,25 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 1.0 LA",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 1,
       "trajectoryDeg": 25,
-      "lowAngle": true
+      "lowAngle": true,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 29,
+      "radiusFeetMin": 21.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4229,13 +5190,24 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 1.5",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 1.5,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 35,
+      "radiusFeetMin": 26.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4281,14 +5253,25 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 1.5 LA",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 1.5,
       "trajectoryDeg": 25,
-      "lowAngle": true
+      "lowAngle": true,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 31,
+      "radiusFeetMin": 23.25,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4334,13 +5317,24 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 2.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 2,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 37,
+      "radiusFeetMin": 27.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4386,14 +5380,25 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 2.0 LA",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 2,
       "trajectoryDeg": 25,
-      "lowAngle": true
+      "lowAngle": true,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 33,
+      "radiusFeetMin": 24.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4439,13 +5444,24 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 2.5",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 2.5,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 37,
+      "radiusFeetMin": 27.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4491,13 +5507,24 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 3.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 3,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 40,
+      "radiusFeetMin": 30,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4543,14 +5570,25 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 3.0 LA",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 3,
       "trajectoryDeg": 25,
-      "lowAngle": true
+      "lowAngle": true,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 36,
+      "radiusFeetMin": 27,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4596,13 +5634,24 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 4.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 4,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 42,
+      "radiusFeetMin": 31.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4648,13 +5697,24 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 5.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 5,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 45,
+      "radiusFeetMin": 33.75,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4700,13 +5760,24 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 6.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 6,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 48,
+      "radiusFeetMin": 36,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4752,13 +5823,24 @@
     "manufacturer": "Rain Bird",
     "model": "5000 Nozzle 8.0",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "rainbird_5000",
       "compatibleHeadFamilies": [
         "rainbird_5000"
       ],
       "nozzleSize": 8,
-      "trajectoryDeg": 25
+      "trajectoryDeg": 25,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "ROTOR_BODY"
+      ],
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "radiusFeetMax": 50,
+      "radiusFeetMin": 37.5,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4799,2944 +5881,31 @@
     }
   },
   {
-    "id": "noz_rb_r_van14_arc270",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN14 270°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN14",
-      "radiusRangeFt": "8-14",
-      "arcDegrees": 270
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        13,
-        13,
-        14,
-        14,
-        15,
-        15
-      ],
-      "gpm": [
-        0.84,
-        0.87,
-        0.92,
-        0.94,
-        1.11,
-        1.17
-      ],
-      "precipInPerHr": [
-        0.64,
-        0.66,
-        0.6,
-        0.62,
-        0.63,
-        0.67
-      ],
-      "precipTriInPerHr": [
-        0.76,
-        0.74,
-        0.71,
-        0.7,
-        0.73,
-        0.77
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van14_arc210",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN14 210°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN14",
-      "radiusRangeFt": "8-14",
-      "arcDegrees": 210
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        13,
-        13,
-        14,
-        14,
-        15,
-        15
-      ],
-      "gpm": [
-        0.65,
-        0.68,
-        0.72,
-        0.73,
-        0.86,
-        0.91
-      ],
-      "precipInPerHr": [
-        0.64,
-        0.66,
-        0.6,
-        0.62,
-        0.63,
-        0.67
-      ],
-      "precipTriInPerHr": [
-        0.76,
-        0.74,
-        0.71,
-        0.7,
-        0.73,
-        0.77
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van14_arc180",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN14 180°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN14",
-      "radiusRangeFt": "8-14",
-      "arcDegrees": 180
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        13,
-        13,
-        14,
-        14,
-        15,
-        15
-      ],
-      "gpm": [
-        0.56,
-        0.58,
-        0.61,
-        0.63,
-        0.74,
-        0.78
-      ],
-      "precipInPerHr": [
-        0.64,
-        0.66,
-        0.6,
-        0.62,
-        0.63,
-        0.67
-      ],
-      "precipTriInPerHr": [
-        0.76,
-        0.74,
-        0.71,
-        0.7,
-        0.73,
-        0.77
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van14_arc90",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN14 90°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN14",
-      "radiusRangeFt": "8-14",
-      "arcDegrees": 90
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        13,
-        13,
-        14,
-        14,
-        15,
-        15
-      ],
-      "gpm": [
-        0.28,
-        0.29,
-        0.31,
-        0.32,
-        0.37,
-        0.39
-      ],
-      "precipInPerHr": [
-        0.64,
-        0.66,
-        0.62,
-        0.61,
-        0.63,
-        0.67
-      ],
-      "precipTriInPerHr": [
-        0.76,
-        0.74,
-        0.71,
-        0.7,
-        0.73,
-        0.77
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van14-360",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN14-360",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN14-360",
-      "radiusRangeFt": "8-14",
-      "arcDegrees": 360
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        13,
-        13,
-        14,
-        14,
-        15,
-        15
-      ],
-      "gpm": [
-        1.1,
-        1.12,
-        1.22,
-        1.27,
-        1.41,
-        1.45
-      ],
-      "precipInPerHr": [
-        0.63,
-        0.64,
-        0.6,
-        0.62,
-        0.6,
-        0.62
-      ],
-      "precipTriInPerHr": [
-        0.72,
-        0.74,
-        0.69,
-        0.72,
-        0.7,
-        0.72
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van18_arc270",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN18 270°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN18",
-      "radiusRangeFt": "13-18",
-      "arcDegrees": 270
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        16,
-        16,
-        17,
-        17,
-        18,
-        18
-      ],
-      "gpm": [
-        1.26,
-        1.35,
-        1.42,
-        1.51,
-        1.57,
-        1.62
-      ],
-      "precipInPerHr": [
-        0.65,
-        0.64,
-        0.63,
-        0.64,
-        0.6,
-        0.6
-      ],
-      "precipTriInPerHr": [
-        0.75,
-        0.74,
-        0.73,
-        0.73,
-        0.69,
-        0.69
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van18_arc210",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN18 210°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN18",
-      "radiusRangeFt": "13-18",
-      "arcDegrees": 210
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        16,
-        16,
-        17,
-        17,
-        18,
-        18
-      ],
-      "gpm": [
-        0.98,
-        1.05,
-        1.1,
-        1.17,
-        1.22,
-        1.26
-      ],
-      "precipInPerHr": [
-        0.63,
-        0.68,
-        0.63,
-        0.64,
-        0.62,
-        0.64
-      ],
-      "precipTriInPerHr": [
-        0.73,
-        0.78,
-        0.73,
-        0.77,
-        0.72,
-        0.74
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van18_arc180",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN18 180°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN18",
-      "radiusRangeFt": "13-18",
-      "arcDegrees": 180
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        16,
-        16,
-        17,
-        17,
-        18,
-        18
-      ],
-      "gpm": [
-        0.85,
-        0.91,
-        0.98,
-        1.01,
-        1.07,
-        1.09
-      ],
-      "precipInPerHr": [
-        0.65,
-        0.64,
-        0.63,
-        0.64,
-        0.6,
-        0.6
-      ],
-      "precipTriInPerHr": [
-        0.75,
-        0.74,
-        0.73,
-        0.73,
-        0.69,
-        0.69
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van18_arc90",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN18 90°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN18",
-      "radiusRangeFt": "13-18",
-      "arcDegrees": 90
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        16,
-        16,
-        17,
-        17,
-        18,
-        18
-      ],
-      "gpm": [
-        0.42,
-        0.47,
-        0.5,
-        0.5,
-        0.54,
-        0.58
-      ],
-      "precipInPerHr": [
-        0.65,
-        0.64,
-        0.63,
-        0.64,
-        0.6,
-        0.6
-      ],
-      "precipTriInPerHr": [
-        0.75,
-        0.74,
-        0.73,
-        0.73,
-        0.69,
-        0.69
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van18-360",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN18-360",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN18-360",
-      "radiusRangeFt": "13-18",
-      "arcDegrees": 360
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        16,
-        16,
-        17,
-        17,
-        18,
-        18
-      ],
-      "gpm": [
-        1.65,
-        1.67,
-        1.8,
-        1.85,
-        2.05,
-        2.11
-      ],
-      "precipInPerHr": [
-        0.62,
-        0.63,
-        0.6,
-        0.62,
-        0.61,
-        0.63
-      ],
-      "precipTriInPerHr": [
-        0.72,
-        0.73,
-        0.69,
-        0.71,
-        0.7,
-        0.72
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van24_arc270",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN24 270°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN24",
-      "radiusRangeFt": "17-24",
-      "arcDegrees": 270
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        19,
-        20,
-        22,
-        23,
-        24,
-        24
-      ],
-      "gpm": [
-        1.8,
-        1.95,
-        2.31,
-        2.52,
-        2.82,
-        2.88
-      ],
-      "precipInPerHr": [
-        0.64,
-        0.63,
-        0.61,
-        0.61,
-        0.63,
-        0.64
-      ],
-      "precipTriInPerHr": [
-        0.74,
-        0.72,
-        0.71,
-        0.71,
-        0.73,
-        0.74
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van24_arc210",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN24 210°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN24",
-      "radiusRangeFt": "17-24",
-      "arcDegrees": 210
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        19,
-        20,
-        22,
-        23,
-        24,
-        24
-      ],
-      "gpm": [
-        1.4,
-        1.52,
-        1.8,
-        1.96,
-        2.19,
-        2.24
-      ],
-      "precipInPerHr": [
-        0.64,
-        0.63,
-        0.61,
-        0.61,
-        0.63,
-        0.64
-      ],
-      "precipTriInPerHr": [
-        0.74,
-        0.72,
-        0.71,
-        0.71,
-        0.73,
-        0.74
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van24_arc180",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN24 180°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN24",
-      "radiusRangeFt": "17-24",
-      "arcDegrees": 180
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        19,
-        20,
-        22,
-        23,
-        24,
-        24
-      ],
-      "gpm": [
-        1.2,
-        1.3,
-        1.54,
-        1.68,
-        1.88,
-        1.92
-      ],
-      "precipInPerHr": [
-        0.64,
-        0.63,
-        0.61,
-        0.61,
-        0.63,
-        0.64
-      ],
-      "precipTriInPerHr": [
-        0.74,
-        0.72,
-        0.71,
-        0.71,
-        0.73,
-        0.74
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van24_arc90",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN24 90°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN24",
-      "radiusRangeFt": "17-24",
-      "arcDegrees": 90
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        19,
-        20,
-        22,
-        23,
-        24,
-        24
-      ],
-      "gpm": [
-        0.6,
-        0.65,
-        0.77,
-        0.84,
-        0.94,
-        0.96
-      ],
-      "precipInPerHr": [
-        0.64,
-        0.63,
-        0.61,
-        0.61,
-        0.63,
-        0.64
-      ],
-      "precipTriInPerHr": [
-        0.74,
-        0.72,
-        0.71,
-        0.71,
-        0.73,
-        0.74
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van24-360",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN24-360",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN24-360",
-      "radiusRangeFt": "17-24",
-      "arcDegrees": 360
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        19,
-        20,
-        22,
-        23,
-        24,
-        24
-      ],
-      "gpm": [
-        2.35,
-        2.52,
-        3.13,
-        3.48,
-        3.61,
-        3.74
-      ],
-      "precipInPerHr": [
-        0.63,
-        0.61,
-        0.62,
-        0.63,
-        0.6,
-        0.62
-      ],
-      "precipTriInPerHr": [
-        0.72,
-        0.7,
-        0.72,
-        0.73,
-        0.7,
-        0.72
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van-lcs",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN-LCS",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN-LCS",
-      "stripPattern": "left_corner",
-      "patternSize": "4’x14’"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        4,
-        5,
-        5,
-        5,
-        5,
-        6
-      ],
-      "gpm": [
-        0.18,
-        0.22,
-        0.23,
-        0.24,
-        0.25,
-        0.28
-      ],
-      "precipInPerHr": [
-        0.62,
-        0.56,
-        0.59,
-        0.62,
-        0.64,
-        0.56
-      ],
-      "precipTriInPerHr": [
-        0.62,
-        0.56,
-        0.59,
-        0.62,
-        0.64,
-        0.56
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van-rcs",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN-RCS",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN-RCS",
-      "stripPattern": "right_corner",
-      "patternSize": "4’x14’"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        4,
-        5,
-        5,
-        5,
-        5,
-        6
-      ],
-      "gpm": [
-        0.18,
-        0.22,
-        0.23,
-        0.24,
-        0.25,
-        0.28
-      ],
-      "precipInPerHr": [
-        0.62,
-        0.56,
-        0.59,
-        0.62,
-        0.64,
-        0.56
-      ],
-      "precipTriInPerHr": [
-        0.62,
-        0.56,
-        0.59,
-        0.62,
-        0.64,
-        0.56
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_rb_r_van-sst",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Rain Bird",
-    "model": "R-VAN-SST",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "rainbird_rvan",
-      "compatibleHeadFamilies": [
-        "rainbird_1800",
-        "rainbird_1800_prs",
-        "rainbird_1800_sam"
-      ],
-      "rvanModel": "R-VAN-SST",
-      "stripPattern": "side",
-      "patternSize": "4’x28’"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        35,
-        40,
-        45,
-        50,
-        55
-      ],
-      "radiusFeet": [
-        4,
-        5,
-        5,
-        5,
-        5,
-        6
-      ],
-      "gpm": [
-        0.36,
-        0.44,
-        0.46,
-        0.48,
-        0.5,
-        0.56
-      ],
-      "precipInPerHr": [
-        0.62,
-        0.56,
-        0.59,
-        0.62,
-        0.64,
-        0.56
-      ],
-      "precipTriInPerHr": [
-        0.62,
-        0.56,
-        0.59,
-        0.62,
-        0.64,
-        0.56
-      ],
-      "recommendedPressurePsi": 45
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc90_min",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 90° (min radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 90,
-      "radiusSetting": "min"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        6
-      ],
-      "gpm": [
-        0.13
-      ],
-      "precipInPerHr": [
-        0
-      ],
-      "precipTriInPerHr": [
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc90_mid",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 90° (mid radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 90,
-      "radiusSetting": "mid"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        8
-      ],
-      "gpm": [
-        0.17
-      ],
-      "precipInPerHr": [
-        0.9
-      ],
-      "precipTriInPerHr": [
-        1.04
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc90_max",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 90° (max radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 90,
-      "radiusSetting": "max"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        14
-      ],
-      "gpm": [
-        0.42
-      ],
-      "precipInPerHr": [
-        0.83
-      ],
-      "precipTriInPerHr": [
-        0.95
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc40_min",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 40° (min radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 40,
-      "radiusSetting": "min"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        8,
-        8,
-        8,
-        8
-      ],
-      "radiusFeet": [
-        0.16,
-        0.32,
-        0.37,
-        0.56
-      ],
-      "gpm": [
-        10,
-        10,
-        10,
-        10
-      ],
-      "precipInPerHr": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "precipTriInPerHr": [
-        0,
-        0,
-        0,
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc40_mid",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 40° (mid radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 40,
-      "radiusSetting": "mid"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        8,
-        8,
-        8,
-        8
-      ],
-      "radiusFeet": [
-        0.23,
-        0.42,
-        0.43,
-        0.78
-      ],
-      "gpm": [
-        13.8,
-        25.2,
-        29.4,
-        46.8
-      ],
-      "precipInPerHr": [
-        0.96,
-        0.93,
-        0.91,
-        0.91
-      ],
-      "precipTriInPerHr": [
-        15,
-        15,
-        15,
-        15
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc40_max",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 40° (max radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 40,
-      "radiusSetting": "max"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        8,
-        8,
-        8,
-        8
-      ],
-      "radiusFeet": [
-        0.49,
-        0.93,
-        1.1,
-        1.87
-      ],
-      "gpm": [
-        0.84,
-        0.8,
-        0.81,
-        0.8
-      ],
-      "precipInPerHr": [
-        0.97,
-        0.92,
-        0.93,
-        0.92
-      ],
-      "precipTriInPerHr": [
-        null,
-        null,
-        null,
-        null
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc50_min",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 50° (min radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 50,
-      "radiusSetting": "min"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        9,
-        9,
-        9,
-        9
-      ],
-      "radiusFeet": [
-        0.19,
-        0.38,
-        0.44,
-        0.63
-      ],
-      "gpm": [
-        11,
-        11,
-        11,
-        11
-      ],
-      "precipInPerHr": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "precipTriInPerHr": [
-        0,
-        0,
-        0,
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc50_mid",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 50° (mid radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 50,
-      "radiusSetting": "mid"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        9,
-        9,
-        9,
-        9
-      ],
-      "radiusFeet": [
-        0.27,
-        0.48,
-        0.49,
-        0.88
-      ],
-      "gpm": [
-        16.2,
-        28.8,
-        33.6,
-        52.8
-      ],
-      "precipInPerHr": [
-        0.92,
-        0.88,
-        0.85,
-        0.85
-      ],
-      "precipTriInPerHr": [
-        16,
-        16,
-        16,
-        16
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc50_max",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 50° (max radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 50,
-      "radiusSetting": "max"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        9,
-        9,
-        9,
-        9
-      ],
-      "radiusFeet": [
-        0.55,
-        1.06,
-        1.24,
-        2.13
-      ],
-      "gpm": [
-        0.83,
-        0.8,
-        0.8,
-        0.8
-      ],
-      "precipInPerHr": [
-        0.96,
-        0.92,
-        0.92,
-        0.92
-      ],
-      "precipTriInPerHr": [
-        null,
-        null,
-        null,
-        null
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc180_min",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 180° (min radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 180,
-      "radiusSetting": "min"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        6
-      ],
-      "gpm": [
-        0.26
-      ],
-      "precipInPerHr": [
-        0
-      ],
-      "precipTriInPerHr": [
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc180_mid",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 180° (mid radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 180,
-      "radiusSetting": "mid"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        8
-      ],
-      "gpm": [
-        0.33
-      ],
-      "precipInPerHr": [
-        0.88
-      ],
-      "precipTriInPerHr": [
-        1.02
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc180_max",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 180° (max radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 180,
-      "radiusSetting": "max"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        13
-      ],
-      "gpm": [
-        0.75
-      ],
-      "precipInPerHr": [
-        0.85
-      ],
-      "precipTriInPerHr": [
-        0.99
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc210_min",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 210° (min radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 210,
-      "radiusSetting": "min"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        6
-      ],
-      "gpm": [
-        0.3
-      ],
-      "precipInPerHr": [
-        0
-      ],
-      "precipTriInPerHr": [
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc210_mid",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 210° (mid radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 210,
-      "radiusSetting": "mid"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        8
-      ],
-      "gpm": [
-        0.35
-      ],
-      "precipInPerHr": [
-        0.8
-      ],
-      "precipTriInPerHr": [
-        0.93
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc210_max",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 210° (max radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 210,
-      "radiusSetting": "max"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        13
-      ],
-      "gpm": [
-        0.88
-      ],
-      "precipInPerHr": [
-        0.86
-      ],
-      "precipTriInPerHr": [
-        0.99
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc270_max",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 270° (max radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 270,
-      "radiusSetting": "max"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        13
-      ],
-      "gpm": [
-        1.14
-      ],
-      "precipInPerHr": [
-        0.87
-      ],
-      "precipTriInPerHr": [
-        1
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc360_min",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 360° (min radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 360,
-      "radiusSetting": "min"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        6
-      ],
-      "gpm": [
-        0.47
-      ],
-      "precipInPerHr": [
-        0
-      ],
-      "precipTriInPerHr": [
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc360_mid",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 360° (mid radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 360,
-      "radiusSetting": "mid"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        8
-      ],
-      "gpm": [
-        0.66
-      ],
-      "precipInPerHr": [
-        0.89
-      ],
-      "precipTriInPerHr": [
-        1.03
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp800sr_arc360_max",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-800SR 360° (max radius)",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-800SR",
-      "arcDegrees": 360,
-      "radiusSetting": "max"
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        13
-      ],
-      "gpm": [
-        1.52
-      ],
-      "precipInPerHr": [
-        0.87
-      ],
-      "precipTriInPerHr": [
-        1
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp1000_arc90",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-1000 90°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-1000",
-      "arcDegrees": 90
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        30
-      ],
-      "radiusFeet": [
-        6,
-        12
-      ],
-      "gpm": [
-        0.13,
-        0.17
-      ],
-      "precipInPerHr": [
-        0.17,
-        0.45
-      ],
-      "precipTriInPerHr": [
-        9.6,
-        0.52
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp2000_arc90",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-2000 90°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-2000",
-      "arcDegrees": 90
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        30
-      ],
-      "radiusFeet": [
-        0.9,
-        18
-      ],
-      "gpm": [
-        1.04,
-        0.38
-      ],
-      "precipInPerHr": [
-        14,
-        0.45
-      ],
-      "precipTriInPerHr": [
-        0.42,
-        0.52
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp1000_arc40",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-1000 40°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-1000",
-      "arcDegrees": 40
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        8,
-        8,
-        8,
-        8,
-        14,
-        14,
-        14,
-        14,
-        14
-      ],
-      "radiusFeet": [
-        0.16,
-        0.32,
-        0.37,
-        0.56,
-        0.21,
-        0.42,
-        0.49,
-        0.63,
-        0.84
-      ],
-      "gpm": [
-        10,
-        10,
-        10,
-        10,
-        12.6,
-        25.2,
-        29.4,
-        37.8,
-        50.4
-      ],
-      "precipInPerHr": [
-        13.8,
-        25.2,
-        29.4,
-        46.8,
-        0.48,
-        0.48,
-        0.48,
-        0.48,
-        0.48
-      ],
-      "precipTriInPerHr": [
-        0.83,
-        0.81,
-        0.81,
-        0.79,
-        20,
-        19,
-        19,
-        19,
-        19
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp2000_arc40",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-2000 40°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-2000",
-      "arcDegrees": 40
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        8,
-        8,
-        8,
-        8
-      ],
-      "radiusFeet": [
-        0.96,
-        0.93,
-        0.91,
-        0.91
-      ],
-      "gpm": [
-        15,
-        15,
-        15,
-        15
-      ],
-      "precipInPerHr": [
-        0.49,
-        0.93,
-        1.1,
-        1.87
-      ],
-      "precipTriInPerHr": [
-        0.84,
-        0.8,
-        0.81,
-        0.8
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp1000_arc50",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-1000 50°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-1000",
-      "arcDegrees": 50
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        9,
-        9,
-        9,
-        9,
-        15,
-        15,
-        15,
-        15,
-        15
-      ],
-      "radiusFeet": [
-        0.19,
-        0.38,
-        0.44,
-        0.63,
-        0.25,
-        0.5,
-        0.57,
-        0.72,
-        0.98
-      ],
-      "gpm": [
-        11,
-        11,
-        11,
-        11,
-        15,
-        30,
-        34.2,
-        43.2,
-        58.8
-      ],
-      "precipInPerHr": [
-        16.2,
-        28.8,
-        33.6,
-        52.8,
-        0.49,
-        0.49,
-        0.48,
-        0.47,
-        0.48
-      ],
-      "precipTriInPerHr": [
-        0.79,
-        0.76,
-        0.73,
-        0.73,
-        21,
-        21,
-        21,
-        21,
-        21
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp2000_arc50",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-2000 50°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-2000",
-      "arcDegrees": 50
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        9,
-        9,
-        9,
-        9
-      ],
-      "radiusFeet": [
-        0.92,
-        0.88,
-        0.85,
-        0.85
-      ],
-      "gpm": [
-        16,
-        16,
-        16,
-        16
-      ],
-      "precipInPerHr": [
-        0.55,
-        1.06,
-        1.24,
-        2.13
-      ],
-      "precipTriInPerHr": [
-        0.83,
-        0.8,
-        0.8,
-        0.8
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp1000_arc180",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-1000 180°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-1000",
-      "arcDegrees": 180
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        30
-      ],
-      "radiusFeet": [
-        6,
-        12
-      ],
-      "gpm": [
-        0.26,
-        0.34
-      ],
-      "precipInPerHr": [
-        0.33,
-        0.45
-      ],
-      "precipTriInPerHr": [
-        19.2,
-        0.52
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp2000_arc180",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-2000 180°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-2000",
-      "arcDegrees": 180
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        30
-      ],
-      "radiusFeet": [
-        0.88,
-        17
-      ],
-      "gpm": [
-        1.02,
-        0.64
-      ],
-      "precipInPerHr": [
-        13,
-        0.43
-      ],
-      "precipTriInPerHr": [
-        0.75,
-        0.49
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp1000_arc210",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-1000 210°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-1000",
-      "arcDegrees": 210
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        30
-      ],
-      "radiusFeet": [
-        6,
-        12
-      ],
-      "gpm": [
-        0.3,
-        0.4
-      ],
-      "precipInPerHr": [
-        0.35,
-        0.46
-      ],
-      "precipTriInPerHr": [
-        22.2,
-        0.53
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp2000_arc210",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-2000 210°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-2000",
-      "arcDegrees": 210
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        30
-      ],
-      "radiusFeet": [
-        0.8,
-        17
-      ],
-      "gpm": [
-        0.93,
-        0.75
-      ],
-      "precipInPerHr": [
-        13,
-        0.43
-      ],
-      "precipTriInPerHr": [
-        0.88,
-        0.49
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp1000_arc360",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-1000 360°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-1000",
-      "arcDegrees": 360
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        30
-      ],
-      "radiusFeet": [
-        6,
-        12
-      ],
-      "gpm": [
-        0.47,
-        0.69
-      ],
-      "precipInPerHr": [
-        0.66,
-        0.46
-      ],
-      "precipTriInPerHr": [
-        37.8,
-        0.53
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp2000_arc360",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-2000 360°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-2000",
-      "arcDegrees": 360
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        30
-      ],
-      "radiusFeet": [
-        0.89,
-        17
-      ],
-      "gpm": [
-        1.03,
-        1.28
-      ],
-      "precipInPerHr": [
-        13,
-        0.43
-      ],
-      "precipTriInPerHr": [
-        1.52,
-        0.49
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp1000_arc270",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-1000 270°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-1000",
-      "arcDegrees": 270
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        12
-      ],
-      "gpm": [
-        0.48
-      ],
-      "precipInPerHr": [
-        0.43
-      ],
-      "precipTriInPerHr": [
-        0.49
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp2000_arc270",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-2000 270°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-2000",
-      "arcDegrees": 270
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        17
-      ],
-      "gpm": [
-        0.95
-      ],
-      "precipInPerHr": [
-        0.42
-      ],
-      "precipTriInPerHr": [
-        0.49
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp3000_arc90",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-3000 90°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-3000",
-      "arcDegrees": 90
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        27
-      ],
-      "gpm": [
-        0.76
-      ],
-      "precipInPerHr": [
-        0.4
-      ],
-      "precipTriInPerHr": [
-        0.46
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp3000_arc180",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-3000 180°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-3000",
-      "arcDegrees": 180
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        27
-      ],
-      "gpm": [
-        1.58
-      ],
-      "precipInPerHr": [
-        0.42
-      ],
-      "precipTriInPerHr": [
-        0.48
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp3000_arc210",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-3000 210°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-3000",
-      "arcDegrees": 210
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        27
-      ],
-      "gpm": [
-        1.84
-      ],
-      "precipInPerHr": [
-        0.42
-      ],
-      "precipTriInPerHr": [
-        0.48
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp3000_arc270",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-3000 270°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-3000",
-      "arcDegrees": 270
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        27
-      ],
-      "gpm": [
-        2.37
-      ],
-      "precipInPerHr": [
-        0.42
-      ],
-      "precipTriInPerHr": [
-        0.48
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp3000_arc360",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-3000 360°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-3000",
-      "arcDegrees": 360
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        27
-      ],
-      "gpm": [
-        3.15
-      ],
-      "precipInPerHr": [
-        0.42
-      ],
-      "precipTriInPerHr": [
-        0.48
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp_corner_arc45",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP Corner 45°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP Corner",
-      "arcDegrees": 45
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        12
-      ],
-      "gpm": [
-        0.17
-      ],
-      "precipInPerHr": [
-        0
-      ],
-      "precipTriInPerHr": [
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp_corner_arc40",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP Corner 40°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP Corner",
-      "arcDegrees": 40
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        14,
-        14,
-        14
-      ],
-      "radiusFeet": [
-        0.19,
-        0.39,
-        0.45
-      ],
-      "gpm": [
-        11.4,
-        23.4,
-        27
-      ],
-      "precipInPerHr": [
-        0,
-        0,
-        0
-      ],
-      "precipTriInPerHr": [
-        0,
-        0,
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp_corner_arc50",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP Corner 50°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP Corner",
-      "arcDegrees": 50
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        14,
-        15,
-        15
-      ],
-      "radiusFeet": [
-        0.22,
-        0.43,
-        0.51
-      ],
-      "gpm": [
-        13.2,
-        25.8,
-        30.6
-      ],
-      "precipInPerHr": [
-        0,
-        0,
-        0
-      ],
-      "precipTriInPerHr": [
-        0,
-        0,
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp_corner_arc90",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP Corner 90°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP Corner",
-      "arcDegrees": 90
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        12
-      ],
-      "gpm": [
-        0.34
-      ],
-      "precipInPerHr": [
-        0
-      ],
-      "precipTriInPerHr": [
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp_corner_arc105",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP Corner 105°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP Corner",
-      "arcDegrees": 105
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30
-      ],
-      "radiusFeet": [
-        12
-      ],
-      "gpm": [
-        0.39
-      ],
-      "precipInPerHr": [
-        0
-      ],
-      "precipTriInPerHr": [
-        0
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp3500_arc90",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-3500 90°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-3500",
-      "arcDegrees": 90
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        40,
-        50
-      ],
-      "radiusFeet": [
-        34,
-        35,
-        35
-      ],
-      "gpm": [
-        1.13,
-        1.28,
-        1.43
-      ],
-      "precipInPerHr": [
-        0.38,
-        0.4,
-        0.45
-      ],
-      "precipTriInPerHr": [
-        0.43,
-        0.46,
-        0.52
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp3500_arc180",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-3500 180°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-3500",
-      "arcDegrees": 180
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        40,
-        50
-      ],
-      "radiusFeet": [
-        34,
-        35,
-        35
-      ],
-      "gpm": [
-        2.24,
-        2.86,
-        3.21
-      ],
-      "precipInPerHr": [
-        0.37,
-        0.45,
-        0.5
-      ],
-      "precipTriInPerHr": [
-        0.43,
-        0.52,
-        0.58
-      ]
-    }
-  },
-  {
-    "id": "noz_hunter_mp3500_arc210",
-    "category": "MP_ROTATOR",
-    "manufacturer": "Hunter",
-    "model": "MP-3500 210°",
-    "specs": {
-      "itemRole": "nozzle",
-      "nozzleFamily": "hunter_mp_rotator",
-      "compatibleHeadFamilies": [
-        "hunter_pro_spray",
-        "hunter_pro_spray_prs40"
-      ],
-      "mpModel": "MP-3500",
-      "arcDegrees": 210
-    },
-    "nozzleChart": {
-      "pressurePsi": [
-        30,
-        40,
-        50
-      ],
-      "radiusFeet": [
-        34,
-        35,
-        35
-      ],
-      "gpm": [
-        2.84,
-        3.29,
-        3.76
-      ],
-      "precipInPerHr": [
-        0.41,
-        0.44,
-        0.51
-      ],
-      "precipTriInPerHr": [
-        0.47,
-        0.51,
-        0.59
-      ]
-    }
-  },
-  {
     "id": "noz_hunter_mp_lcs_515",
     "category": "MP_ROTATOR",
     "manufacturer": "Hunter",
     "model": "MP-LCS-515",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "hunter_mp_rotator",
       "compatibleHeadFamilies": [
         "hunter_pro_spray",
         "hunter_pro_spray_prs40"
       ],
+      "stripPattern": "left_corner",
       "mpModel": "MP-LCS-515",
-      "stripPattern": "left_corner"
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 4,
+      "radiusFeetMax": 6,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -7802,14 +5971,26 @@
     "manufacturer": "Hunter",
     "model": "MP-RCS-515",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "hunter_mp_rotator",
       "compatibleHeadFamilies": [
         "hunter_pro_spray",
         "hunter_pro_spray_prs40"
       ],
+      "stripPattern": "right_corner",
       "mpModel": "MP-RCS-515",
-      "stripPattern": "right_corner"
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 4,
+      "radiusFeetMax": 6,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -7875,14 +6056,26 @@
     "manufacturer": "Hunter",
     "model": "MP-SS-530",
     "specs": {
-      "itemRole": "nozzle",
       "nozzleFamily": "hunter_mp_rotator",
       "compatibleHeadFamilies": [
         "hunter_pro_spray",
         "hunter_pro_spray_prs40"
       ],
+      "stripPattern": "side",
       "mpModel": "MP-SS-530",
-      "stripPattern": "side"
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 4,
+      "radiusFeetMax": 6,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -7940,6 +6133,1346 @@
         0,
         0
       ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp_corner",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP Corner",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP Corner",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 45,
+      "arcDegreesMax": 45,
+      "arcDegreesDefault": 45,
+      "radiusFeetMin": 5,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        12
+      ],
+      "gpm": [
+        0.17
+      ],
+      "precipInPerHr": [
+        0
+      ],
+      "precipTriInPerHr": [
+        0
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP800SR",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 210,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 6,
+      "radiusFeetMax": 12,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "90_210"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        0.75
+      ],
+      "precipInPerHr": [
+        0.85
+      ],
+      "precipTriInPerHr": [
+        0.99
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp800sr_360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP800SR",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-800SR",
+      "chartReferenceArcDegrees": 360,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 6,
+      "radiusFeetMax": 12,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false,
+      "mpArcBand": "360"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        13
+      ],
+      "gpm": [
+        1.52
+      ],
+      "precipInPerHr": [
+        0.87
+      ],
+      "precipTriInPerHr": [
+        1
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP1000-90",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 210,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 8,
+      "radiusFeetMax": 15,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "90_210"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.26,
+        0.34
+      ],
+      "precipInPerHr": [
+        0.33,
+        0.45
+      ],
+      "precipTriInPerHr": [
+        19.2,
+        0.52
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP2000-90",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 210,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 13,
+      "radiusFeetMax": 21,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "90_210"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.88,
+        17
+      ],
+      "gpm": [
+        1.02,
+        0.64
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP1000-210",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "chartReferenceArcDegrees": 210,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 210,
+      "arcDegreesMax": 270,
+      "arcDegreesDefault": 210,
+      "radiusFeetMin": 8,
+      "radiusFeetMax": 15,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "210_270"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.3,
+        0.4
+      ],
+      "precipInPerHr": [
+        0.35,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        22.2,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP2000-210",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "chartReferenceArcDegrees": 210,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 210,
+      "arcDegreesMax": 270,
+      "arcDegreesDefault": 210,
+      "radiusFeetMin": 13,
+      "radiusFeetMax": 21,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "210_270"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.8,
+        17
+      ],
+      "gpm": [
+        0.93,
+        0.75
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        0.88,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp1000_360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP1000-360",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-1000",
+      "chartReferenceArcDegrees": 360,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 8,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false,
+      "mpArcBand": "360"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        12
+      ],
+      "gpm": [
+        0.47,
+        0.69
+      ],
+      "precipInPerHr": [
+        0.66,
+        0.46
+      ],
+      "precipTriInPerHr": [
+        37.8,
+        0.53
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp2000_360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP2000-360",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-2000",
+      "chartReferenceArcDegrees": 360,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 13,
+      "radiusFeetMax": 21,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false,
+      "mpArcBand": "360"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        30
+      ],
+      "radiusFeet": [
+        0.89,
+        17
+      ],
+      "gpm": [
+        1.03,
+        1.28
+      ],
+      "precipInPerHr": [
+        13,
+        0.43
+      ],
+      "precipTriInPerHr": [
+        1.52,
+        0.49
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP3000-90",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3000",
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 210,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 22,
+      "radiusFeetMax": 30,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "90_210"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        1.58
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP3000-210",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3000",
+      "chartReferenceArcDegrees": 210,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 210,
+      "arcDegreesMax": 270,
+      "arcDegreesDefault": 210,
+      "radiusFeetMin": 22,
+      "radiusFeetMax": 30,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "210_270"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        1.84
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3000_360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP3000-360",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3000",
+      "chartReferenceArcDegrees": 360,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 22,
+      "radiusFeetMax": 30,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false,
+      "mpArcBand": "360"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30
+      ],
+      "radiusFeet": [
+        27
+      ],
+      "gpm": [
+        3.15
+      ],
+      "precipInPerHr": [
+        0.42
+      ],
+      "precipTriInPerHr": [
+        0.48
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3500_90",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP3500-90",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3500",
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 210,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 31,
+      "radiusFeetMax": 35,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "90_210"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        34,
+        35,
+        35
+      ],
+      "gpm": [
+        2.24,
+        2.86,
+        3.21
+      ],
+      "precipInPerHr": [
+        0.37,
+        0.45,
+        0.5
+      ],
+      "precipTriInPerHr": [
+        0.43,
+        0.52,
+        0.58
+      ]
+    }
+  },
+  {
+    "id": "noz_hunter_mp3500_210",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Hunter",
+    "model": "MP3500-210",
+    "specs": {
+      "nozzleFamily": "hunter_mp_rotator",
+      "compatibleHeadFamilies": [
+        "hunter_pro_spray",
+        "hunter_pro_spray_prs40"
+      ],
+      "mpModel": "MP-3500",
+      "chartReferenceArcDegrees": 210,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 210,
+      "arcDegreesMax": 270,
+      "arcDegreesDefault": 210,
+      "radiusFeetMin": 31,
+      "radiusFeetMax": 35,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": true,
+      "mpArcBand": "210_270"
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        34,
+        35,
+        35
+      ],
+      "gpm": [
+        2.84,
+        3.29,
+        3.76
+      ],
+      "precipInPerHr": [
+        0.41,
+        0.44,
+        0.51
+      ],
+      "precipTriInPerHr": [
+        0.47,
+        0.51,
+        0.59
+      ]
+    }
+  },
+  {
+    "id": "noz_rb_r_van14",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN14",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN14",
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 45,
+      "arcDegreesMax": 270,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 8,
+      "radiusFeetMax": 14,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        0.56,
+        0.58,
+        0.61,
+        0.63,
+        0.74,
+        0.78
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.66,
+        0.6,
+        0.62,
+        0.63,
+        0.67
+      ],
+      "precipTriInPerHr": [
+        0.76,
+        0.74,
+        0.71,
+        0.7,
+        0.73,
+        0.77
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van18",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN18",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN18",
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 45,
+      "arcDegreesMax": 270,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 13,
+      "radiusFeetMax": 18,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        0.85,
+        0.91,
+        0.98,
+        1.01,
+        1.07,
+        1.09
+      ],
+      "precipInPerHr": [
+        0.65,
+        0.64,
+        0.63,
+        0.64,
+        0.6,
+        0.6
+      ],
+      "precipTriInPerHr": [
+        0.75,
+        0.74,
+        0.73,
+        0.73,
+        0.69,
+        0.69
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van24",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN24",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN24",
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 45,
+      "arcDegreesMax": 270,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 17,
+      "radiusFeetMax": 24,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        1.2,
+        1.3,
+        1.54,
+        1.68,
+        1.88,
+        1.92
+      ],
+      "precipInPerHr": [
+        0.64,
+        0.63,
+        0.61,
+        0.61,
+        0.63,
+        0.64
+      ],
+      "precipTriInPerHr": [
+        0.74,
+        0.72,
+        0.71,
+        0.71,
+        0.73,
+        0.74
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van14_360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN14-360",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN14-360",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 8,
+      "radiusFeetMax": 14,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        13,
+        13,
+        14,
+        14,
+        15,
+        15
+      ],
+      "gpm": [
+        1.1,
+        1.12,
+        1.22,
+        1.27,
+        1.41,
+        1.45
+      ],
+      "precipInPerHr": [
+        0.63,
+        0.64,
+        0.6,
+        0.62,
+        0.6,
+        0.62
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.74,
+        0.69,
+        0.72,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van18_360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN18-360",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN18-360",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 13,
+      "radiusFeetMax": 18,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        16,
+        16,
+        17,
+        17,
+        18,
+        18
+      ],
+      "gpm": [
+        1.65,
+        1.67,
+        1.8,
+        1.85,
+        2.05,
+        2.11
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.63,
+        0.6,
+        0.62,
+        0.61,
+        0.63
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.73,
+        0.69,
+        0.71,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van24_360",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN24-360",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN24-360",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 17,
+      "radiusFeetMax": 24,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        19,
+        20,
+        22,
+        23,
+        24,
+        24
+      ],
+      "gpm": [
+        2.35,
+        2.52,
+        3.13,
+        3.48,
+        3.61,
+        3.74
+      ],
+      "precipInPerHr": [
+        0.63,
+        0.61,
+        0.62,
+        0.63,
+        0.6,
+        0.62
+      ],
+      "precipTriInPerHr": [
+        0.72,
+        0.7,
+        0.72,
+        0.73,
+        0.7,
+        0.72
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van_lcs",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN-LCS",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN-LCS",
+      "stripPattern": "left_corner",
+      "patternSize": "4’x14’",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 4,
+      "radiusFeetMax": 6,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.18,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.28
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van_rcs",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN-RCS",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN-RCS",
+      "stripPattern": "right_corner",
+      "patternSize": "4’x14’",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 4,
+      "radiusFeetMax": 6,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.18,
+        0.22,
+        0.23,
+        0.24,
+        0.25,
+        0.28
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_r_van_sst",
+    "category": "MP_ROTATOR",
+    "manufacturer": "Rain Bird",
+    "model": "R-VAN-SST",
+    "specs": {
+      "nozzleFamily": "rainbird_rvan",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "rvanModel": "R-VAN-SST",
+      "stripPattern": "side",
+      "patternSize": "4’x28’",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 4,
+      "radiusFeetMax": 6,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        35,
+        40,
+        45,
+        50,
+        55
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.36,
+        0.44,
+        0.46,
+        0.48,
+        0.5,
+        0.56
+      ],
+      "precipInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "precipTriInPerHr": [
+        0.62,
+        0.56,
+        0.59,
+        0.62,
+        0.64,
+        0.56
+      ],
+      "recommendedPressurePsi": 45
     }
   },
   {

@@ -53,6 +53,7 @@ type Props = {
 
 export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props) {
   const stageRef = useRef<Konva.Stage>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [previewPoint, setPreviewPoint] = useState<Point | null>(null);
   const {
     document,
@@ -62,8 +63,11 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     scalePointA,
     scalePointB,
     selectedId,
+    canvasZoom,
+    stagePosition,
     setSelected,
     setDocument,
+    setCanvasView,
   } = useDesignStore();
 
   const bgImage = useBackgroundImage(imageUrl);
@@ -93,7 +97,42 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     const stage = stageRef.current;
     if (!stage) return null;
     const pos = stage.getPointerPosition();
-    return pos ? { x: pos.x, y: pos.y } : null;
+    if (!pos) return null;
+    const transform = stage.getAbsoluteTransform().copy();
+    transform.invert();
+    return transform.point(pos);
+  }
+
+  function handleWheel(e: Konva.KonvaEventObject<WheelEvent>) {
+    e.evt.preventDefault();
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const oldScale = canvasZoom;
+    const pointer = stage.getPointerPosition();
+    if (!pointer) return;
+
+    const mousePointTo = {
+      x: (pointer.x - stagePosition.x) / oldScale,
+      y: (pointer.y - stagePosition.y) / oldScale,
+    };
+
+    const direction = e.evt.deltaY > 0 ? -1 : 1;
+    const scaleFactor = 1.08;
+    const newScale =
+      direction > 0
+        ? Math.min(4, oldScale * scaleFactor)
+        : Math.max(0.25, oldScale / scaleFactor);
+    const roundedScale = Math.round(newScale * 100) / 100;
+
+    setCanvasView(roundedScale, {
+      x: pointer.x - mousePointTo.x * roundedScale,
+      y: pointer.y - mousePointTo.y * roundedScale,
+    });
+  }
+
+  function handleStageDragEnd(e: Konva.KonvaEventObject<DragEvent>) {
+    setCanvasView(canvasZoom, { x: e.target.x(), y: e.target.y() });
   }
 
   function handleStageMouseMove() {
@@ -135,18 +174,25 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
       : null;
 
   return (
-    <div className="h-full w-full overflow-auto bg-muted/30">
-      <Stage
-        ref={stageRef}
-        width={width}
-        height={height}
-        onClick={handleStageClick}
-        onMouseMove={handleStageMouseMove}
-        onMouseLeave={handleStageMouseLeave}
-        draggable={activeTool === "pan"}
-        style={{ cursor: isDrawingPolygon ? "crosshair" : undefined }}
-        className="mx-auto shadow-sm"
-      >
+    <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-muted/30">
+      <div className="h-full w-full overflow-auto">
+        <Stage
+          ref={stageRef}
+          width={width}
+          height={height}
+          scaleX={canvasZoom}
+          scaleY={canvasZoom}
+          x={stagePosition.x}
+          y={stagePosition.y}
+          onClick={handleStageClick}
+          onMouseMove={handleStageMouseMove}
+          onMouseLeave={handleStageMouseLeave}
+          onWheel={handleWheel}
+          draggable={activeTool === "pan"}
+          onDragEnd={handleStageDragEnd}
+          style={{ cursor: isDrawingPolygon ? "crosshair" : activeTool === "pan" ? "grab" : undefined }}
+          className="mx-auto shadow-sm"
+        >
         <Layer>
           {bgImage && (
             <KonvaImage image={bgImage} width={width} height={height} listening={false} />
@@ -355,6 +401,10 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
           )}
         </Layer>
       </Stage>
+      </div>
+      <div className="pointer-events-none absolute bottom-3 right-3 rounded-md border bg-card/95 px-2 py-1 text-xs text-muted-foreground shadow-sm">
+        {Math.round(canvasZoom * 100)}%
+      </div>
     </div>
   );
 }

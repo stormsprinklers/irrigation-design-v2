@@ -204,7 +204,6 @@ export function DesignWorkspace({
           toast.error("No compatible head/nozzle in catalog");
           return;
         }
-        const nozzle = catalog.find((c) => c.id === assembly.nozzleId);
         const head = {
           id: generateId("head"),
           zoneId,
@@ -212,9 +211,9 @@ export function DesignWorkspace({
           position: point,
           headBodyId: assembly.headBodyId,
           catalogItemId: assembly.nozzleId,
-          arcDegrees: (nozzle?.specs.arcDegrees as number) ?? 360,
+          arcDegrees: assembly.arcDegrees,
           radiusFeet: assembly.radiusFeet,
-          rotationDegrees: 0,
+          rotationDegrees: assembly.rotationDegrees,
           gpm: assembly.gpm,
           precipInPerHr: assembly.precipInPerHr,
           locked: false,

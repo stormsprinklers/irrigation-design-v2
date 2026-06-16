@@ -7,12 +7,15 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { generateId } from "@/lib/utils";
 import type { CatalogItemData } from "@/lib/domain/types";
-import { calculateHeadGpm } from "@/lib/domain/hydraulics";
 import {
   getHeadBodies,
   getNozzlesForHead,
   nozzleCompatibleWithHead,
 } from "@/lib/catalog/compat";
+import {
+  getNozzleAdjustability,
+  resolveDefaultHeadSettings,
+} from "@/lib/catalog/adjustability";
 
 type Props = {
   catalog: CatalogItemData[];
@@ -258,22 +261,14 @@ export function InspectorPanel({
                       ? currentNozzle
                       : compatible[0];
                   const pressure = document.waterSource?.staticPressurePsi ?? 45;
-                  const hydraulics = nozzle ? calculateHeadGpm(nozzle, pressure) : null;
+                  const settings = nozzle ? resolveDefaultHeadSettings(nozzle, pressure) : null;
                   const heads = document.heads.map((h) =>
                     h.id === selectedHead.id
                       ? {
                           ...h,
                           headBodyId,
                           catalogItemId: nozzle?.id ?? h.catalogItemId,
-                          radiusFeet:
-                            hydraulics?.radiusFeet ??
-                            (typeof nozzle?.specs.radiusFeet === "number"
-                              ? nozzle.specs.radiusFeet
-                              : h.radiusFeet),
-                          gpm: hydraulics?.gpm ?? h.gpm,
-                          precipInPerHr: hydraulics?.precipInPerHr ?? h.precipInPerHr,
-                          arcDegrees:
-                            (nozzle?.specs.arcDegrees as number | undefined) ?? h.arcDegrees,
+                          ...(settings ?? {}),
                         }
                       : h
                   );
@@ -298,21 +293,13 @@ export function InspectorPanel({
                     const nozzle = catalog.find((c) => c.id === e.target.value);
                     if (!nozzle) return;
                     const pressure = document.waterSource?.staticPressurePsi ?? 45;
-                    const hydraulics = calculateHeadGpm(nozzle, pressure);
+                    const settings = resolveDefaultHeadSettings(nozzle, pressure);
                     const heads = document.heads.map((h) =>
                       h.id === selectedHead.id
                         ? {
                             ...h,
                             catalogItemId: nozzle.id,
-                            radiusFeet:
-                              hydraulics.radiusFeet ??
-                              (typeof nozzle.specs.radiusFeet === "number"
-                                ? nozzle.specs.radiusFeet
-                                : h.radiusFeet),
-                            gpm: hydraulics.gpm,
-                            precipInPerHr: hydraulics.precipInPerHr,
-                            arcDegrees:
-                              (nozzle.specs.arcDegrees as number | undefined) ?? h.arcDegrees,
+                            ...settings,
                           }
                         : h
                     );
@@ -325,6 +312,19 @@ export function InspectorPanel({
                     </option>
                   ))}
                 </select>
+                {(() => {
+                  const nozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
+                  if (!nozzle) return null;
+                  const adj = getNozzleAdjustability(nozzle);
+                  return (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Arc {adj.arcDegreesMin}°–{adj.arcDegreesMax}°
+                      {adj.arcAdjustable ? " (adj.)" : ""} · Radius {adj.radiusFeetMin}–
+                      {adj.radiusFeetMax} ft{adj.radiusAdjustable ? " (adj.)" : ""}
+                      {adj.fixedLeftEdge ? " · fixed left edge" : ""}
+                    </p>
+                  );
+                })()}
               </div>
             )}
             <label className="flex items-center gap-2 text-sm">
