@@ -5,6 +5,7 @@ import {
   resolveHeadAssembly,
 } from "@/lib/catalog/compat";
 import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
+import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
 import type {
   CatalogItemData,
   DesignDocument,
@@ -83,12 +84,12 @@ export function placeHeads(input: PlacementInput): PlacementResult {
         ? getDefaultNozzleForHead(catalog, fallbackHead.id)
         : catalog.find((c) => c.nozzleChart);
       if (!fallbackHead || !fallbackNozzle) return null;
-      const settings = resolveDefaultHeadSettings(fallbackNozzle, 45);
+      const settings = resolveDefaultHeadSettings(fallbackNozzle, DEFAULT_PRESSURE_PSI);
       return {
         headBodyId: fallbackHead.id,
         nozzleId: fallbackNozzle.id,
         radiusFeet: settings.radiusFeet,
-        gpm: settings.gpm ?? calculateHeadGpm(fallbackNozzle, 45).gpm,
+        gpm: settings.gpm ?? calculateHeadGpm(fallbackNozzle, DEFAULT_PRESSURE_PSI).gpm,
         precipInPerHr: settings.precipInPerHr,
         arcDegrees: settings.arcDegrees,
         rotationDegrees: settings.rotationDegrees,

@@ -48,6 +48,19 @@ export type WaterSourceConfig = {
   isSecondaryWater: boolean;
 };
 
+export const DEFAULT_WATER_SOURCE: WaterSourceConfig = {
+  staticPressurePsi: 65,
+  availableGpm: 10,
+  meterSizeInches: 0.75,
+  backflowType: "PVB",
+  poc: { x: 100, y: 100 },
+  mainlineMaterial: "PVC",
+  mainlineSizeInches: 1,
+  isSecondaryWater: false,
+};
+
+export const DEFAULT_PRESSURE_PSI = DEFAULT_WATER_SOURCE.staticPressurePsi;
+
 export type HydrozonePolygon = {
   id: string;
   name: string;

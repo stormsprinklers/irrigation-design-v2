@@ -31,6 +31,9 @@ type DesignState = {
   lastSavedAt: Date | null;
   canvasZoom: number;
   stagePosition: Point;
+  viewportSize: { width: number; height: number };
+  contentSize: { width: number; height: number };
+  canvasViewResetAt: number;
 
   init: (projectId: string, versionId: string, versionKind: string, doc: DesignDocument) => void;
   setDocument: (doc: DesignDocument) => void;
@@ -46,11 +49,44 @@ type DesignState = {
   markSaved: () => void;
   setSaving: (saving: boolean) => void;
   setCanvasView: (zoom: number, position: Point) => void;
+  setViewportSize: (width: number, height: number) => void;
+  setContentSize: (width: number, height: number) => void;
+  centerCanvasView: (zoom?: number) => void;
   zoomIn: () => void;
   zoomOut: () => void;
   resetCanvasView: () => void;
   clearCanvasDesign: () => void;
 };
+
+function centeredPosition(
+  viewport: { width: number; height: number },
+  content: { width: number; height: number },
+  zoom: number
+): Point {
+  return {
+    x: (viewport.width - content.width * zoom) / 2,
+    y: (viewport.height - content.height * zoom) / 2,
+  };
+}
+
+function zoomTowardViewportCenter(
+  state: DesignState,
+  newZoom: number
+): Pick<DesignState, "canvasZoom" | "stagePosition"> {
+  const centerX = state.viewportSize.width / 2;
+  const centerY = state.viewportSize.height / 2;
+  const mousePointTo = {
+    x: (centerX - state.stagePosition.x) / state.canvasZoom,
+    y: (centerY - state.stagePosition.y) / state.canvasZoom,
+  };
+  return {
+    canvasZoom: newZoom,
+    stagePosition: {
+      x: centerX - mousePointTo.x * newZoom,
+      y: centerY - mousePointTo.y * newZoom,
+    },
+  };
+}
 
 export const useDesignStore = create<DesignState>((set) => ({
   projectId: null,
@@ -70,19 +106,34 @@ export const useDesignStore = create<DesignState>((set) => ({
   lastSavedAt: null,
   canvasZoom: 1,
   stagePosition: { x: 0, y: 0 },
+  viewportSize: { width: 0, height: 0 },
+  contentSize: { width: 1200, height: 800 },
+  canvasViewResetAt: 0,
 
   init: (projectId, versionId, versionKind, doc) =>
-    set({
-      projectId,
-      versionId,
-      versionKind,
-      document: doc,
-      isDirty: false,
-      drawingVertices: [],
-      scalePointA: null,
-      scalePointB: null,
-      canvasZoom: 1,
-      stagePosition: { x: 0, y: 0 },
+    set((s) => {
+      const content = {
+        width: doc.propertyImage?.width ?? 1200,
+        height: doc.propertyImage?.height ?? 800,
+      };
+      const zoom = 1;
+      return {
+        projectId,
+        versionId,
+        versionKind,
+        document: doc,
+        isDirty: false,
+        drawingVertices: [],
+        scalePointA: null,
+        scalePointB: null,
+        canvasZoom: zoom,
+        contentSize: content,
+        canvasViewResetAt: s.canvasViewResetAt + 1,
+        stagePosition:
+          s.viewportSize.width > 0
+            ? centeredPosition(s.viewportSize, content, zoom)
+            : { x: 0, y: 0 },
+      };
     }),
   setDocument: (doc) => set({ document: doc, isDirty: true }),
   setTool: (tool) => set({ activeTool: tool, drawingVertices: [], scalePointA: null, scalePointB: null }),
@@ -98,11 +149,40 @@ export const useDesignStore = create<DesignState>((set) => ({
   markSaved: () => set({ isDirty: false, isSaving: false, lastSavedAt: new Date() }),
   setSaving: (saving) => set({ isSaving: saving }),
   setCanvasView: (zoom, position) => set({ canvasZoom: zoom, stagePosition: position }),
+  setViewportSize: (width, height) => set({ viewportSize: { width, height } }),
+  setContentSize: (width, height) => set({ contentSize: { width, height } }),
+  centerCanvasView: (zoom) =>
+    set((s) => {
+      const nextZoom = zoom ?? s.canvasZoom;
+      if (s.viewportSize.width <= 0) return { canvasZoom: nextZoom };
+      return {
+        canvasZoom: nextZoom,
+        stagePosition: centeredPosition(s.viewportSize, s.contentSize, nextZoom),
+      };
+    }),
   zoomIn: () =>
-    set((s) => ({ canvasZoom: Math.min(4, Math.round(s.canvasZoom * 1.2 * 100) / 100) })),
+    set((s) => {
+      const newZoom = Math.min(4, Math.round(s.canvasZoom * 1.2 * 100) / 100);
+      return s.viewportSize.width > 0
+        ? zoomTowardViewportCenter(s, newZoom)
+        : { canvasZoom: newZoom };
+    }),
   zoomOut: () =>
-    set((s) => ({ canvasZoom: Math.max(0.25, Math.round((s.canvasZoom / 1.2) * 100) / 100) })),
-  resetCanvasView: () => set({ canvasZoom: 1, stagePosition: { x: 0, y: 0 } }),
+    set((s) => {
+      const newZoom = Math.max(0.25, Math.round((s.canvasZoom / 1.2) * 100) / 100);
+      return s.viewportSize.width > 0
+        ? zoomTowardViewportCenter(s, newZoom)
+        : { canvasZoom: newZoom };
+    }),
+  resetCanvasView: () =>
+    set((s) => ({
+      canvasZoom: 1,
+      canvasViewResetAt: s.canvasViewResetAt + 1,
+      stagePosition:
+        s.viewportSize.width > 0
+          ? centeredPosition(s.viewportSize, s.contentSize, 1)
+          : { x: 0, y: 0 },
+    })),
   clearCanvasDesign: () =>
     set((s) => ({
       document: {

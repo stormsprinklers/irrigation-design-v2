@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { generateId } from "@/lib/utils";
 import type { CatalogItemData } from "@/lib/domain/types";
+import { DEFAULT_PRESSURE_PSI, DEFAULT_WATER_SOURCE } from "@/lib/domain/types";
 import {
   getHeadBodies,
   getNozzlesForHead,
@@ -51,14 +52,7 @@ export function InspectorPanel({
     setDocument({
       ...document,
       waterSource: {
-        staticPressurePsi: 50,
-        availableGpm: 12,
-        meterSizeInches: 1,
-        backflowType: "PVB",
-        poc: { x: 100, y: 100 },
-        mainlineMaterial: "PVC",
-        mainlineSizeInches: 1,
-        isSecondaryWater: false,
+        ...DEFAULT_WATER_SOURCE,
         ...document.waterSource,
         [field]: value,
       },
@@ -124,7 +118,7 @@ export function InspectorPanel({
               <Label className="text-xs">Static PSI</Label>
               <Input
                 type="number"
-                value={document.waterSource?.staticPressurePsi ?? ""}
+                value={document.waterSource?.staticPressurePsi ?? DEFAULT_WATER_SOURCE.staticPressurePsi}
                 onChange={(e) => updateWaterSource("staticPressurePsi", Number(e.target.value))}
               />
             </div>
@@ -132,7 +126,7 @@ export function InspectorPanel({
               <Label className="text-xs">Available GPM</Label>
               <Input
                 type="number"
-                value={document.waterSource?.availableGpm ?? ""}
+                value={document.waterSource?.availableGpm ?? DEFAULT_WATER_SOURCE.availableGpm}
                 onChange={(e) => updateWaterSource("availableGpm", Number(e.target.value))}
               />
             </div>
@@ -141,7 +135,7 @@ export function InspectorPanel({
               <Input
                 type="number"
                 step="0.25"
-                value={document.waterSource?.meterSizeInches ?? ""}
+                value={document.waterSource?.meterSizeInches ?? DEFAULT_WATER_SOURCE.meterSizeInches}
                 onChange={(e) => updateWaterSource("meterSizeInches", Number(e.target.value))}
               />
             </div>
@@ -150,14 +144,14 @@ export function InspectorPanel({
               <Input
                 type="number"
                 step="0.25"
-                value={document.waterSource?.mainlineSizeInches ?? ""}
+                value={document.waterSource?.mainlineSizeInches ?? DEFAULT_WATER_SOURCE.mainlineSizeInches}
                 onChange={(e) => updateWaterSource("mainlineSizeInches", Number(e.target.value))}
               />
             </div>
           </div>
           <Input
             placeholder="Backflow type"
-            value={document.waterSource?.backflowType ?? ""}
+            value={document.waterSource?.backflowType ?? DEFAULT_WATER_SOURCE.backflowType}
             onChange={(e) => updateWaterSource("backflowType", e.target.value)}
           />
         </section>
@@ -260,7 +254,7 @@ export function InspectorPanel({
                     )
                       ? currentNozzle
                       : compatible[0];
-                  const pressure = document.waterSource?.staticPressurePsi ?? 45;
+                  const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
                   const settings = nozzle ? resolveDefaultHeadSettings(nozzle, pressure) : null;
                   const heads = document.heads.map((h) =>
                     h.id === selectedHead.id
@@ -292,7 +286,7 @@ export function InspectorPanel({
                   onChange={(e) => {
                     const nozzle = catalog.find((c) => c.id === e.target.value);
                     if (!nozzle) return;
-                    const pressure = document.waterSource?.staticPressurePsi ?? 45;
+                    const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
                     const settings = resolveDefaultHeadSettings(nozzle, pressure);
                     const heads = document.heads.map((h) =>
                       h.id === selectedHead.id

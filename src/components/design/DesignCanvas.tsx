@@ -53,7 +53,9 @@ type Props = {
 
 export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props) {
   const stageRef = useRef<Konva.Stage>(null);
+  const layerRef = useRef<Konva.Layer>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const lastResetRef = useRef(0);
   const [previewPoint, setPreviewPoint] = useState<Point | null>(null);
   const {
     document,
@@ -65,14 +67,52 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     selectedId,
     canvasZoom,
     stagePosition,
+    viewportSize,
+    canvasViewResetAt,
     setSelected,
     setDocument,
     setCanvasView,
+    setViewportSize,
+    setContentSize,
+    centerCanvasView,
   } = useDesignStore();
 
   const bgImage = useBackgroundImage(imageUrl);
   const width = document.propertyImage?.width ?? 1200;
   const height = document.propertyImage?.height ?? 800;
+
+  useEffect(() => {
+    setContentSize(width, height);
+  }, [width, height, setContentSize]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const updateViewport = () => {
+      setViewportSize(el.clientWidth, el.clientHeight);
+    };
+
+    updateViewport();
+    const observer = new ResizeObserver(updateViewport);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [setViewportSize]);
+
+  useEffect(() => {
+    if (viewportSize.width <= 0 || viewportSize.height <= 0) return;
+
+    const store = useDesignStore.getState();
+    if (canvasViewResetAt !== lastResetRef.current) {
+      lastResetRef.current = canvasViewResetAt;
+      centerCanvasView();
+      return;
+    }
+
+    if (store.stagePosition.x === 0 && store.stagePosition.y === 0) {
+      centerCanvasView();
+    }
+  }, [viewportSize.width, viewportSize.height, canvasViewResetAt, centerCanvasView]);
 
   const isDrawingPolygon = activeTool === "hydrozone" || activeTool === "exclusion";
   const drawStyle = isDrawingPolygon ? POLYGON_DRAW_STYLES[activeTool] : null;
@@ -95,10 +135,11 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
 
   function getPointerPosition(): Point | null {
     const stage = stageRef.current;
-    if (!stage) return null;
+    const layer = layerRef.current;
+    if (!stage || !layer) return null;
     const pos = stage.getPointerPosition();
     if (!pos) return null;
-    const transform = stage.getAbsoluteTransform().copy();
+    const transform = layer.getAbsoluteTransform().copy();
     transform.invert();
     return transform.point(pos);
   }
@@ -131,7 +172,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     });
   }
 
-  function handleStageDragEnd(e: Konva.KonvaEventObject<DragEvent>) {
+  function handleLayerDragEnd(e: Konva.KonvaEventObject<DragEvent>) {
     setCanvasView(canvasZoom, { x: e.target.x(), y: e.target.y() });
   }
 
@@ -148,7 +189,9 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
   }
 
   function handleStageClick(e: Konva.KonvaEventObject<MouseEvent>) {
-    if (e.target !== e.target.getStage()) return;
+    if (activeTool === "pan") return;
+    const stage = e.target.getStage();
+    if (!stage || e.target !== stage) return;
     const pos = getPointerPosition();
     if (!pos) return;
     onCanvasClick(pos);
@@ -173,27 +216,36 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
       ? [...drawingVertices, previewPoint]
       : null;
 
+  const stageWidth = Math.max(viewportSize.width, 1);
+  const stageHeight = Math.max(viewportSize.height, 1);
+
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-muted/30">
-      <div className="h-full w-full overflow-auto">
-        <Stage
-          ref={stageRef}
-          width={width}
-          height={height}
-          scaleX={canvasZoom}
-          scaleY={canvasZoom}
+      <Stage
+        ref={stageRef}
+        width={stageWidth}
+        height={stageHeight}
+        onClick={handleStageClick}
+        onMouseMove={handleStageMouseMove}
+        onMouseLeave={handleStageMouseLeave}
+        onWheel={handleWheel}
+        style={{
+          cursor: isDrawingPolygon
+            ? "crosshair"
+            : activeTool === "pan"
+              ? "grab"
+              : undefined,
+        }}
+      >
+        <Layer
+          ref={layerRef}
           x={stagePosition.x}
           y={stagePosition.y}
-          onClick={handleStageClick}
-          onMouseMove={handleStageMouseMove}
-          onMouseLeave={handleStageMouseLeave}
-          onWheel={handleWheel}
+          scaleX={canvasZoom}
+          scaleY={canvasZoom}
           draggable={activeTool === "pan"}
-          onDragEnd={handleStageDragEnd}
-          style={{ cursor: isDrawingPolygon ? "crosshair" : activeTool === "pan" ? "grab" : undefined }}
-          className="mx-auto shadow-sm"
+          onDragEnd={handleLayerDragEnd}
         >
-        <Layer>
           {bgImage && (
             <KonvaImage image={bgImage} width={width} height={height} listening={false} />
           )}
@@ -401,7 +453,6 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
           )}
         </Layer>
       </Stage>
-      </div>
       <div className="pointer-events-none absolute bottom-3 right-3 rounded-md border bg-card/95 px-2 py-1 text-xs text-muted-foreground shadow-sm">
         {Math.round(canvasZoom * 100)}%
       </div>

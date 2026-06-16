@@ -14,6 +14,7 @@ import type {
   WaterSourceConfig,
   ZoneHydraulics,
 } from "../types";
+import { DEFAULT_PRESSURE_PSI } from "../types";
 
 export function calculateZoneHydraulics(
   zone: IrrigationZone,
@@ -26,7 +27,7 @@ export function calculateZoneHydraulics(
   const zoneHeads = heads.filter((h) => h.zoneId === zone.id);
   const zonePipes = pipes.filter((p) => p.zoneId === zone.id);
   const catalogMap = new Map(catalog.map((c) => [c.id, c]));
-  const pressure = waterSource?.staticPressurePsi ?? 50;
+  const pressure = waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
 
   let totalGpm = 0;
   let minPressure = pressure;

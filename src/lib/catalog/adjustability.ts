@@ -1,4 +1,5 @@
 import type { CatalogItemData, SprinklerHead } from "@/lib/domain/types";
+import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
 import { calculateHeadGpm } from "@/lib/domain/hydraulics";
 
 export type BodyCategory = "SPRAY_BODY" | "ROTOR_BODY";
@@ -95,7 +96,7 @@ export function getHeadBodyAdjustability(head: CatalogItemData): HeadBodyAdjusta
 
 export function resolveDefaultHeadSettings(
   nozzle: CatalogItemData,
-  pressurePsi = 45
+  pressurePsi = DEFAULT_PRESSURE_PSI
 ): Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees" | "gpm" | "precipInPerHr"> {
   const adj = getNozzleAdjustability(nozzle);
   const hydraulics = calculateHeadGpm(nozzle, pressurePsi);

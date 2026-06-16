@@ -17,6 +17,7 @@ import { validateDesign } from "@/lib/domain/validation";
 import { buildMaterialList, calculateMaterialTotal } from "@/lib/domain/materials";
 import { generateId, distanceBetweenPoints, POLYGON_CLOSE_RADIUS } from "@/lib/utils";
 import type { CatalogItemData, DesignDocument, Point, PricingProfileData } from "@/lib/domain/types";
+import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
 import type { DesignVersion, Project } from "@prisma/client";
 import { DesignTour, TourHelpButton } from "./tour/DesignTour";
 import type { TourStatus } from "@/lib/actions/tour";
@@ -198,7 +199,7 @@ export function DesignWorkspace({
         const assembly = resolveHeadAssembly(
           catalog,
           hydrozone?.headPreference ?? "SPRAY",
-          document.waterSource?.staticPressurePsi ?? 45
+          document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI
         );
         if (!assembly) {
           toast.error("No compatible head/nozzle in catalog");

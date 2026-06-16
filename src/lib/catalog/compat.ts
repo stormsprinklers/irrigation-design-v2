@@ -1,4 +1,5 @@
 import type { CatalogItemData, HeadFamily } from "@/lib/domain/types";
+import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
 import { calculateHeadGpm } from "@/lib/domain/hydraulics";
 import {
   getBodyCategory,
@@ -125,7 +126,7 @@ export function catalogCategoryLabel(category: string): string {
 export function resolveHeadAssembly(
   catalog: CatalogItemData[],
   preference: HeadFamily,
-  pressurePsi = 45
+  pressurePsi = DEFAULT_PRESSURE_PSI
 ): { headBodyId: string; nozzleId: string; radiusFeet: number; gpm: number; precipInPerHr?: number; arcDegrees: number; rotationDegrees: number } | null {
   const headPreferenceMap: Record<HeadFamily, string> = {
     SPRAY: "head_rb_1804",
