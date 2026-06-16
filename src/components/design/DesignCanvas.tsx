@@ -56,6 +56,10 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
   const layerRef = useRef<Konva.Layer>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const lastResetRef = useRef(0);
+  const hasInitialCenteredRef = useRef(false);
+  const isPanningRef = useRef(false);
+  const lastPanPointRef = useRef<Point | null>(null);
+  const panMovedRef = useRef(false);
   const [previewPoint, setPreviewPoint] = useState<Point | null>(null);
   const {
     document,
@@ -102,14 +106,15 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
   useEffect(() => {
     if (viewportSize.width <= 0 || viewportSize.height <= 0) return;
 
-    const store = useDesignStore.getState();
     if (canvasViewResetAt !== lastResetRef.current) {
       lastResetRef.current = canvasViewResetAt;
+      hasInitialCenteredRef.current = true;
       centerCanvasView();
       return;
     }
 
-    if (store.stagePosition.x === 0 && store.stagePosition.y === 0) {
+    if (!hasInitialCenteredRef.current) {
+      hasInitialCenteredRef.current = true;
       centerCanvasView();
     }
   }, [viewportSize.width, viewportSize.height, canvasViewResetAt, centerCanvasView]);
@@ -172,25 +177,42 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     });
   }
 
-  function handleLayerDragMove(e: Konva.KonvaEventObject<DragEvent>) {
-    setCanvasView(canvasZoom, { x: e.target.x(), y: e.target.y() });
+  function handlePanPointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    if (activeTool !== "pan") return;
+    isPanningRef.current = true;
+    panMovedRef.current = false;
+    lastPanPointRef.current = { x: e.clientX, y: e.clientY };
+    e.currentTarget.setPointerCapture(e.pointerId);
+    e.preventDefault();
   }
 
-  function handleLayerDragEnd(e: Konva.KonvaEventObject<DragEvent>) {
-    setCanvasView(canvasZoom, { x: e.target.x(), y: e.target.y() });
-  }
+  function handlePanPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (activeTool === "pan" && isPanningRef.current && lastPanPointRef.current) {
+      const dx = e.clientX - lastPanPointRef.current.x;
+      const dy = e.clientY - lastPanPointRef.current.y;
+      if (dx !== 0 || dy !== 0) panMovedRef.current = true;
+      lastPanPointRef.current = { x: e.clientX, y: e.clientY };
+      const { canvasZoom: zoom, stagePosition: pos } = useDesignStore.getState();
+      setCanvasView(zoom, { x: pos.x + dx, y: pos.y + dy });
+      return;
+    }
 
-  function handleStageMouseMove() {
     if (!isDrawingPolygon || drawingVertices.length === 0) return;
     setPreviewPoint(getPointerPosition());
   }
 
-  function handleStageMouseLeave() {
-    setPreviewPoint(null);
+  function handlePanPointerUp(e: React.PointerEvent<HTMLDivElement>) {
+    if (isPanningRef.current) {
+      isPanningRef.current = false;
+      lastPanPointRef.current = null;
+      if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
+    }
   }
 
   function handleStageClick(e: Konva.KonvaEventObject<MouseEvent>) {
-    if (activeTool === "pan") return;
+    if (activeTool === "pan" || panMovedRef.current) return;
     const stage = e.target.getStage();
     if (!stage || e.target !== stage) return;
     const pos = getPointerPosition();
@@ -222,22 +244,35 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
   const isPanTool = activeTool === "pan";
 
   return (
-    <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-muted/30">
+    <div
+      ref={containerRef}
+      className="relative h-full w-full overflow-hidden bg-muted/30"
+      style={{
+        cursor: isDrawingPolygon
+          ? "crosshair"
+          : isPanTool
+            ? isPanningRef.current
+              ? "grabbing"
+              : "grab"
+            : undefined,
+        touchAction: isPanTool ? "none" : undefined,
+      }}
+      onPointerDownCapture={handlePanPointerDown}
+      onPointerMove={handlePanPointerMove}
+      onPointerUp={handlePanPointerUp}
+      onPointerCancel={handlePanPointerUp}
+      onPointerLeave={() => {
+        isPanningRef.current = false;
+        lastPanPointRef.current = null;
+        setPreviewPoint(null);
+      }}
+    >
       <Stage
         ref={stageRef}
         width={stageWidth}
         height={stageHeight}
         onClick={handleStageClick}
-        onMouseMove={handleStageMouseMove}
-        onMouseLeave={handleStageMouseLeave}
         onWheel={handleWheel}
-        style={{
-          cursor: isDrawingPolygon
-            ? "crosshair"
-            : isPanTool
-              ? "grab"
-              : undefined,
-        }}
       >
         <Layer
           ref={layerRef}
@@ -245,9 +280,6 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
           y={stagePosition.y}
           scaleX={canvasZoom}
           scaleY={canvasZoom}
-          draggable={isPanTool}
-          onDragMove={handleLayerDragMove}
-          onDragEnd={handleLayerDragEnd}
         >
           {bgImage && (
             <KonvaImage image={bgImage} width={width} height={height} listening={false} />
@@ -451,13 +483,30 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
             </>
           )}
 
-          {scalePointA && <Circle x={scalePointA.x} y={scalePointA.y} radius={5} fill="#ea580c" />}
-          {scalePointB && <Circle x={scalePointB.x} y={scalePointB.y} radius={5} fill="#ea580c" />}
+          {scalePointA && (
+            <Circle
+              x={scalePointA.x}
+              y={scalePointA.y}
+              radius={5}
+              fill="#ea580c"
+              listening={!isPanTool}
+            />
+          )}
+          {scalePointB && (
+            <Circle
+              x={scalePointB.x}
+              y={scalePointB.y}
+              radius={5}
+              fill="#ea580c"
+              listening={!isPanTool}
+            />
+          )}
           {scalePointA && scalePointB && (
             <Line
               points={[scalePointA.x, scalePointA.y, scalePointB.x, scalePointB.y]}
               stroke="#ea580c"
               strokeWidth={2}
+              listening={!isPanTool}
             />
           )}
         </Layer>
