@@ -14,11 +14,11 @@ function normalizeDeg(deg: number): number {
 }
 
 /** Canvas convention: rotationDegrees is arc center bearing; Konva uses rotation - arc/2 for start. */
-function wedgeStartDeg(head: WedgeHead): number {
+export function wedgeStartDeg(head: WedgeHead): number {
   return normalizeDeg(head.rotationDegrees - head.arcDegrees / 2);
 }
 
-function wedgeEndDeg(head: WedgeHead): number {
+export function wedgeEndDeg(head: WedgeHead): number {
   return normalizeDeg(wedgeStartDeg(head) + head.arcDegrees);
 }
 
@@ -146,5 +146,120 @@ export function overlapCountAtPoint(
 }
 
 export function dedupeDistancePx(radiusFeet: number, ppf: number): number {
-  return feetToPixels(radiusFeet * 0.3, ppf);
+  return feetToPixels(radiusFeet * 0.25, ppf);
+}
+
+export type WedgeLimits = {
+  arcDegreesMin: number;
+  arcDegreesMax: number;
+  radiusFeetMin: number;
+  radiusFeetMax: number;
+  fixedLeftEdge: boolean;
+};
+
+export function arcFromEdgeBearings(b1: number, b2: number): number {
+  let diff = Math.abs(normalizeDeg(b1) - normalizeDeg(b2));
+  if (diff > 180) diff = 360 - diff;
+  return diff;
+}
+
+export function rotationFromEdgeBearings(
+  b1: number,
+  b2: number,
+  arcDegrees: number,
+  fixedLeftEdge: boolean
+): number {
+  const n1 = normalizeDeg(b1);
+  const n2 = normalizeDeg(b2);
+
+  if (fixedLeftEdge) {
+    const forwardSpan = normalizeDeg(n2 - n1);
+    const backwardSpan = normalizeDeg(n1 - n2);
+    const start =
+      Math.abs(forwardSpan - arcDegrees) <= Math.abs(backwardSpan - arcDegrees)
+        ? n1
+        : n2;
+    return normalizeDeg(start + arcDegrees / 2);
+  }
+
+  let mid = (n1 + n2) / 2;
+  if (Math.abs(n1 - n2) > 180) mid = normalizeDeg(mid + 180);
+  return mid;
+}
+
+function wedgeScoreClear(head: WedgeHead, exclusions: ExclusionZone[], ppf: number): number {
+  if (wedgeHitsExclusion(head, exclusions, ppf)) return -1;
+  return head.arcDegrees * head.radiusFeet;
+}
+
+export function optimizeWedge(
+  head: WedgeHead,
+  targetEdgeBearings: [number, number],
+  exclusions: ExclusionZone[],
+  ppf: number,
+  limits: WedgeLimits
+): {
+  radiusFeet: number;
+  rotationDegrees: number;
+  arcDegrees: number;
+  hitExclusion: boolean;
+} {
+  let arcDegrees = Math.min(
+    limits.arcDegreesMax,
+    Math.max(limits.arcDegreesMin, head.arcDegrees)
+  );
+  if (arcDegrees < 1) {
+    arcDegrees = Math.min(
+      limits.arcDegreesMax,
+      Math.max(limits.arcDegreesMin, arcFromEdgeBearings(targetEdgeBearings[0], targetEdgeBearings[1]))
+    );
+  }
+
+  const rotationDegrees = rotationFromEdgeBearings(
+    targetEdgeBearings[0],
+    targetEdgeBearings[1],
+    arcDegrees,
+    limits.fixedLeftEdge
+  );
+
+  let radiusFeet = Math.min(limits.radiusFeetMax, Math.max(limits.radiusFeetMin, head.radiusFeet));
+  let best: WedgeHead = { ...head, arcDegrees, rotationDegrees, radiusFeet };
+  let bestScore = wedgeScoreClear(best, exclusions, ppf);
+
+  while (radiusFeet >= limits.radiusFeetMin) {
+    const candidate = { ...head, arcDegrees, rotationDegrees, radiusFeet };
+    const score = wedgeScoreClear(candidate, exclusions, ppf);
+    if (score >= 0) {
+      return { radiusFeet, rotationDegrees, arcDegrees, hitExclusion: false };
+    }
+    if (score > bestScore) {
+      best = candidate;
+      bestScore = score;
+    }
+    radiusFeet -= 0.5;
+  }
+
+  const baseRot = rotationDegrees;
+  for (let delta = -30; delta <= 30; delta += 5) {
+    if (delta === 0) continue;
+    const rot = normalizeDeg(baseRot + delta);
+    for (let r = head.radiusFeet; r >= limits.radiusFeetMin; r -= 0.5) {
+      const candidate = { ...head, arcDegrees, rotationDegrees: rot, radiusFeet: r };
+      const score = wedgeScoreClear(candidate, exclusions, ppf);
+      if (score >= 0) {
+        return { radiusFeet: r, rotationDegrees: rot, arcDegrees, hitExclusion: false };
+      }
+      if (score > bestScore) {
+        best = candidate;
+        bestScore = score;
+      }
+    }
+  }
+
+  return {
+    radiusFeet: best.radiusFeet,
+    rotationDegrees: best.rotationDegrees,
+    arcDegrees: best.arcDegrees,
+    hitExclusion: wedgeHitsExclusion(best, exclusions, ppf),
+  };
 }

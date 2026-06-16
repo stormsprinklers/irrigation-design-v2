@@ -107,7 +107,7 @@ export function analyzePolygon(vertices: Point[], ppf: number): PolygonAnalysis 
     const prev = vertices[(i - 1 + n) % n];
     const curr = vertices[i];
     const next = vertices[(i + 1) % n];
-    edgeLengthsFt.push(pixelsToFeet(distance(prev, curr), ppf));
+    edgeLengthsFt.push(pixelsToFeet(distance(curr, next), ppf));
     interiorAnglesDeg.push(interiorAngleAtVertex(prev, curr, next, ccw));
   }
 
@@ -138,6 +138,36 @@ export function pointAlongEdge(a: Point, b: Point, t: number): Point {
 export function edgeBearingDeg(a: Point, b: Point): number {
   const rad = Math.atan2(b.y - a.y, b.x - a.x);
   return normalizeAngleDeg((rad * 180) / Math.PI);
+}
+
+export function bearingDeg(from: Point, to: Point): number {
+  return edgeBearingDeg(from, to);
+}
+
+export function angleDiffDeg(a: number, b: number): number {
+  let d = Math.abs(normalizeAngleDeg(a) - normalizeAngleDeg(b));
+  if (d > 180) d = 360 - d;
+  return d;
+}
+
+export function midpointBearingDeg(b1: number, b2: number): number {
+  const n1 = normalizeAngleDeg(b1);
+  const n2 = normalizeAngleDeg(b2);
+  let mid = (n1 + n2) / 2;
+  if (Math.abs(n1 - n2) > 180) mid = normalizeAngleDeg(mid + 180);
+  return mid;
+}
+
+export function distanceFt(a: Point, b: Point, ppf: number): number {
+  return pixelsToFeet(distance(a, b), ppf);
+}
+
+export function projectPointOnEdge(a: Point, b: Point, p: Point): number {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const lenSq = dx * dx + dy * dy;
+  if (lenSq < 1e-9) return 0;
+  return ((p.x - a.x) * dx + (p.y - a.y) * dy) / lenSq;
 }
 
 export function bisectorBearingDeg(prev: Point, vertex: Point, next: Point): number {

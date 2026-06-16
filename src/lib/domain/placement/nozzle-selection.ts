@@ -3,6 +3,7 @@ import { getNozzleAdjustability } from "@/lib/catalog/adjustability";
 import { calculateNozzleHydraulics } from "../hydraulics";
 import type { CatalogItemData, HeadFamily } from "../types";
 import type { PolygonAnalysis } from "./geometry";
+import { resolveHydrozoneSpacing } from "./edge-spacing";
 
 export type NozzleAssembly = {
   headBodyId: string;
@@ -103,14 +104,7 @@ export function refineSpacingRadius(
   analysis: PolygonAnalysis,
   assembly: NozzleAssembly
 ): number {
-  const lengths = analysis.edgeLengthsFt;
-  const spacings: number[] = [];
-  for (const L of lengths) {
-    if (L <= 0) continue;
-    const n = Math.max(1, Math.round(L / assembly.radiusFeet));
-    spacings.push(L / n);
-  }
-  if (spacings.length === 0) return assembly.radiusFeet;
-  spacings.sort((a, b) => a - b);
-  return spacings[Math.floor(spacings.length / 2)];
+  const adj = getNozzleAdjustability(assembly.nozzle);
+  const { radiusFeet } = resolveHydrozoneSpacing(analysis, adj, assembly.radiusFeet);
+  return radiusFeet;
 }

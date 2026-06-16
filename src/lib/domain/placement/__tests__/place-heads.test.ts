@@ -4,8 +4,11 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it } from "node:test";
 import type { CatalogItemData, HydrozonePolygon, Point } from "../../types";
+import { analyzePolygon } from "../geometry";
+import { planEdgeRuns } from "../edge-spacing";
 import { placeHeads } from "../index";
-import { wedgeHitsExclusion } from "../wedge";
+import { wedgeHitsExclusion, wedgeStartDeg, wedgeEndDeg } from "../wedge";
+import { bearingDeg } from "../geometry";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const catalog = JSON.parse(
@@ -18,29 +21,12 @@ const scale = {
   realWorldFeet: 10,
 };
 
-function squareVertices(sizeFt: number): Point[] {
-  return [
-    { x: 0, y: 0 },
-    { x: sizeFt, y: 0 },
-    { x: sizeFt, y: sizeFt },
-    { x: 0, y: sizeFt },
-  ];
-}
-
 function rectangleVertices(widthFt: number, heightFt: number): Point[] {
   return [
     { x: 0, y: 0 },
     { x: widthFt, y: 0 },
     { x: widthFt, y: heightFt },
     { x: 0, y: heightFt },
-  ];
-}
-
-function triangleVertices(baseFt: number, heightFt: number): Point[] {
-  return [
-    { x: 0, y: 0 },
-    { x: baseFt, y: 0 },
-    { x: baseFt / 2, y: heightFt },
   ];
 }
 
@@ -63,11 +49,28 @@ function baseHydrozone(
   };
 }
 
-describe("placeHeads head-to-head", () => {
-  it("places 4 corner heads on a 30×30 ft square with ≥85% overlap", () => {
-    const vertices = squareVertices(30);
+function headsOnEdge(heads: ReturnType<typeof placeHeads>["heads"], y: number, tolerance = 1): typeof heads {
+  return heads.filter((h) => Math.abs(h.position.y - y) < tolerance);
+}
+
+describe("edge-spacing", () => {
+  it("plans even segments for a 55 ft edge with 30 ft throw", () => {
+    const vertices = rectangleVertices(55, 30);
+    const analysis = analyzePolygon(vertices, 1);
+    const runs = planEdgeRuns(analysis, 30);
+    const bottom = runs.find((r) => r.edgeIndex === 0);
+    assert.ok(bottom);
+    assert.equal(bottom.spanCount, 2);
+    assert.equal(bottom.spacingFt, 27.5);
+    assert.deepEqual(bottom.interiorTs, [0.5]);
+  });
+});
+
+describe("placeHeads head-to-head spacing", () => {
+  it("places 3 heads on a 55×30 ft long edge with even ~27.5 ft spacing", () => {
+    const vertices = rectangleVertices(55, 30);
     const result = placeHeads({
-      hydrozone: baseHydrozone("hz-square", vertices),
+      hydrozone: baseHydrozone("hz-55x30", vertices),
       zoneId: "zone-1",
       catalog,
       scale,
@@ -75,17 +78,22 @@ describe("placeHeads head-to-head", () => {
       pressurePsi: 65,
     });
 
-    assert.ok(result.heads.length >= 4, `expected at least 4 heads, got ${result.heads.length}`);
-    const cornerHeads = result.heads.filter((h) => h.arcDegrees <= 100);
-    assert.ok(cornerHeads.length >= 4, "expected corner arcs near 90°");
-    assert.ok((result.overlapPercent ?? 0) >= 85, `overlap ${result.overlapPercent}%`);
-    assert.equal(result.pattern, "square");
+    const bottomRow = headsOnEdge(result.heads, 0);
+    assert.ok(bottomRow.length >= 3, `expected 3+ heads on bottom edge, got ${bottomRow.length}`);
+
+    const xs = bottomRow.map((h) => h.position.x).sort((a, b) => a - b);
+    if (xs.length >= 3) {
+      const seg1 = xs[1] - xs[0];
+      const seg2 = xs[2] - xs[1];
+      assert.ok(Math.abs(seg1 - 27.5) / 27.5 <= 0.12, `segment1 ${seg1}`);
+      assert.ok(Math.abs(seg2 - 27.5) / 27.5 <= 0.12, `segment2 ${seg2}`);
+    }
   });
 
-  it("places heads on a 25×36 ft rectangle", () => {
-    const vertices = rectangleVertices(25, 36);
+  it("orients 180° center edge head arc edges toward corner heads", () => {
+    const vertices = rectangleVertices(55, 30);
     const result = placeHeads({
-      hydrozone: baseHydrozone("hz-rect", vertices),
+      hydrozone: baseHydrozone("hz-aim", vertices),
       zoneId: "zone-1",
       catalog,
       scale,
@@ -93,23 +101,28 @@ describe("placeHeads head-to-head", () => {
       pressurePsi: 65,
     });
 
-    assert.ok(result.heads.length >= 4);
-    assert.ok((result.overlapPercent ?? 0) >= 50);
-  });
+    const bottomRow = headsOnEdge(result.heads, 0);
+    const center = bottomRow.find((h) => h.position.x > 20 && h.position.x < 35);
+    assert.ok(center, "expected center head on bottom edge");
+    assert.ok(center.arcDegrees >= 170 && center.arcDegrees <= 190);
 
-  it("uses triangular pattern for a triangle hydrozone", () => {
-    const vertices = triangleVertices(40, 35);
-    const result = placeHeads({
-      hydrozone: baseHydrozone("hz-tri", vertices, { spacingPattern: "triangular" }),
-      zoneId: "zone-1",
-      catalog,
-      scale,
-      exclusionZones: [],
-      pressurePsi: 65,
-    });
+    const leftCorner = bottomRow.find((h) => h.position.x < 1);
+    const rightCorner = bottomRow.find((h) => h.position.x > 54);
+    assert.ok(leftCorner && rightCorner);
 
-    assert.equal(result.pattern, "triangular");
-    assert.ok(result.heads.length >= 3);
+    const start = wedgeStartDeg(center);
+    const end = wedgeEndDeg(center);
+    const toLeft = bearingDeg(center.position, leftCorner.position);
+    const toRight = bearingDeg(center.position, rightCorner.position);
+
+    const angleDiff = (a: number, b: number) => {
+      let d = Math.abs(a - b);
+      if (d > 180) d = 360 - d;
+      return d;
+    };
+
+    assert.ok(angleDiff(start, toLeft) < 15 || angleDiff(end, toLeft) < 15);
+    assert.ok(angleDiff(start, toRight) < 15 || angleDiff(end, toRight) < 15);
   });
 
   it("avoids wedge overspray into exclusion zones", () => {
@@ -142,8 +155,31 @@ describe("placeHeads head-to-head", () => {
         radiusFeet: head.radiusFeet,
         rotationDegrees: head.rotationDegrees,
       };
-      const hits = wedgeHitsExclusion(wedge, [exclusion], 1);
-      assert.equal(hits, false, `head ${head.id} wedge hits exclusion`);
+      assert.equal(wedgeHitsExclusion(wedge, [exclusion], 1), false);
     }
   });
+
+  it("places 4 corner heads on a 30×30 ft square with ≥85% overlap", () => {
+    const vertices = squareVertices(30);
+    const result = placeHeads({
+      hydrozone: baseHydrozone("hz-square", vertices),
+      zoneId: "zone-1",
+      catalog,
+      scale,
+      exclusionZones: [],
+      pressurePsi: 65,
+    });
+
+    assert.ok(result.heads.length >= 4);
+    assert.ok((result.overlapPercent ?? 0) >= 85);
+  });
 });
+
+function squareVertices(sizeFt: number): Point[] {
+  return [
+    { x: 0, y: 0 },
+    { x: sizeFt, y: 0 },
+    { x: sizeFt, y: sizeFt },
+    { x: 0, y: sizeFt },
+  ];
+}

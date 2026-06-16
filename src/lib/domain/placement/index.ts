@@ -1,3 +1,4 @@
+import { getNozzleAdjustability } from "@/lib/catalog/adjustability";
 import { pixelsPerFoot } from "../hydraulics";
 import { DEFAULT_PRESSURE_PSI } from "../types";
 import type {
@@ -8,15 +9,18 @@ import type {
   PlacementResult,
   ValidationIssue,
 } from "../types";
-import { evaluateCoverage } from "./coverage";
-import { analyzePolygon, detectSpacingPattern } from "./geometry";
 import {
-  refineSpacingRadius,
-  selectNozzleAssembly,
-} from "./nozzle-selection";
+  assignArcsAndRotations,
+  buildPlacementGraph,
+  finalizeHeadHydraulics,
+} from "./assign-arcs";
+import { evaluateCoverage } from "./coverage";
+import { resolveHydrozoneSpacing } from "./edge-spacing";
+import { analyzePolygon, detectSpacingPattern } from "./geometry";
+import { selectNozzleAssembly } from "./nozzle-selection";
 import { placeCornerHeads } from "./place-corners";
 import { placeEdgeHeads } from "./place-edges";
-import { placeInteriorHeads } from "./place-interior";
+import { interiorGridOrigin, placeInteriorHeads } from "./place-interior";
 
 type PlacementInput = {
   hydrozone: HydrozonePolygon;
@@ -93,31 +97,53 @@ export function placeHeads(input: PlacementInput): PlacementResult {
     };
   }
 
-  const radiusFeet = refineSpacingRadius(analysis, assembly);
+  const adj = getNozzleAdjustability(assembly.nozzle);
+  const { radiusFeet, runs: edgeRuns } = resolveHydrozoneSpacing(
+    analysis,
+    adj,
+    assembly.radiusFeet
+  );
+
+  const spacingFt = radiusFeet;
   const shared = {
     zoneId,
     hydrozoneId: hydrozone.id,
     vertices: hydrozone.vertices,
     analysis,
-    assembly,
+    assembly: { ...assembly, radiusFeet },
     radiusFeet,
-    pressurePsi,
     pattern,
     exclusions: exclusionZones,
     ppf,
   };
 
-  const cornerHeads = placeCornerHeads(shared);
-  const edgeHeads = placeEdgeHeads({
-    ...shared,
-    existingHeads: cornerHeads,
-  });
-  const interiorHeads = placeInteriorHeads({
-    ...shared,
-    existingHeads: [...cornerHeads, ...edgeHeads],
+  const cornerHeads = placeCornerHeads({
+    zoneId,
+    hydrozoneId: hydrozone.id,
+    vertices: hydrozone.vertices,
+    analysis,
+    assembly: shared.assembly,
+    radiusFeet,
   });
 
-  const heads = [...cornerHeads, ...edgeHeads, ...interiorHeads];
+  const edgeHeads = placeEdgeHeads({
+    zoneId,
+    hydrozoneId: hydrozone.id,
+    edgeRuns,
+    assembly: shared.assembly,
+    radiusFeet,
+  });
+
+  const perimeterHeads = [...cornerHeads, ...edgeHeads];
+  const gridOrigin = interiorGridOrigin(hydrozone.vertices, analysis.orientationDeg);
+
+  const interiorHeads = placeInteriorHeads({
+    ...shared,
+    existingHeads: perimeterHeads,
+    gridOrigin,
+  });
+
+  let heads = [...perimeterHeads, ...interiorHeads];
 
   if (heads.length === 0) {
     warnings.push({
@@ -128,6 +154,31 @@ export function placeHeads(input: PlacementInput): PlacementResult {
       suggestedAction: "Check exclusions or hydrozone shape",
     });
     return { heads, coveragePercent: 0, warnings };
+  }
+
+  const graph = buildPlacementGraph(heads, hydrozone.vertices, edgeRuns, ppf);
+  const { heads: orientedHeads, oversprayHeadIds } = assignArcsAndRotations(
+    heads,
+    graph,
+    hydrozone.vertices,
+    edgeRuns,
+    analysis,
+    spacingFt,
+    ppf,
+    adj,
+    exclusionZones
+  );
+
+  heads = finalizeHeadHydraulics(orientedHeads, assembly.nozzle, pressurePsi, pattern);
+
+  for (const headId of oversprayHeadIds) {
+    warnings.push({
+      code: "OVERSPRAY_EXCLUSION",
+      severity: "warning",
+      message: `Head could not fully avoid exclusion zone after radius/rotation adjustment`,
+      entityIds: [headId],
+      suggestedAction: "Reposition manually or adjust exclusion boundary",
+    });
   }
 
   const { coverage, warnings: coverageWarnings } = evaluateCoverage(
