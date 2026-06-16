@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { registerAction } from "@/lib/actions/auth";
+import { registerAction, loginAction } from "@/lib/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,21 +19,41 @@ export function RegisterForm() {
     setError(null);
     const form = new FormData(e.currentTarget);
 
-    const result = await registerAction({
-      organizationName: String(form.get("organizationName")),
-      name: String(form.get("name")),
-      email: String(form.get("email")),
-      password: String(form.get("password")),
-    });
+    const email = String(form.get("email"));
+    const password = String(form.get("password"));
 
-    if (!result.success) {
-      setError(result.error);
+    try {
+      const result = await registerAction({
+        organizationName: String(form.get("organizationName")),
+        name: String(form.get("name")),
+        email,
+        password,
+      });
+
+      if (!result.success) {
+        setError(result.error);
+        return;
+      }
+
+      const loginResult = await loginAction(email, password);
+      if (
+        loginResult &&
+        typeof loginResult === "object" &&
+        "error" in loginResult &&
+        loginResult.error
+      ) {
+        setError("Account created. Please sign in with your new credentials.");
+        router.push("/login");
+        return;
+      }
+
+      router.push("/projects");
+      router.refresh();
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    router.push("/projects");
-    router.refresh();
   }
 
   return (
