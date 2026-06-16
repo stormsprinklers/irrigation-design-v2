@@ -172,15 +172,16 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
     });
   }
 
+  function handleLayerDragMove(e: Konva.KonvaEventObject<DragEvent>) {
+    setCanvasView(canvasZoom, { x: e.target.x(), y: e.target.y() });
+  }
+
   function handleLayerDragEnd(e: Konva.KonvaEventObject<DragEvent>) {
     setCanvasView(canvasZoom, { x: e.target.x(), y: e.target.y() });
   }
 
   function handleStageMouseMove() {
-    if (!isDrawingPolygon || drawingVertices.length === 0) {
-      setPreviewPoint(null);
-      return;
-    }
+    if (!isDrawingPolygon || drawingVertices.length === 0) return;
     setPreviewPoint(getPointerPosition());
   }
 
@@ -218,6 +219,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
 
   const stageWidth = Math.max(viewportSize.width, 1);
   const stageHeight = Math.max(viewportSize.height, 1);
+  const isPanTool = activeTool === "pan";
 
   return (
     <div ref={containerRef} className="relative h-full w-full overflow-hidden bg-muted/30">
@@ -232,7 +234,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
         style={{
           cursor: isDrawingPolygon
             ? "crosshair"
-            : activeTool === "pan"
+            : isPanTool
               ? "grab"
               : undefined,
         }}
@@ -243,7 +245,8 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
           y={stagePosition.y}
           scaleX={canvasZoom}
           scaleY={canvasZoom}
-          draggable={activeTool === "pan"}
+          draggable={isPanTool}
+          onDragMove={handleLayerDragMove}
           onDragEnd={handleLayerDragEnd}
         >
           {bgImage && (
@@ -255,6 +258,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               closed
               fill="#f8fafc"
               stroke="#e2e8f0"
+              listening={false}
             />
           )}
 
@@ -264,6 +268,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               zone={zone}
               opacity={isDimmed() ? 0.2 : 0.6}
               selected={selectedId === zone.id}
+              listening={!isPanTool}
               onSelect={() => setSelected(zone.id, "exclusion")}
             />
           ))}
@@ -275,6 +280,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               fill={HYDROZONE_COLORS[zone.hydrozoneType] ?? "rgba(34,197,94,0.25)"}
               opacity={isDimmed(zone.zoneId) ? 0.2 : 0.7}
               selected={selectedId === zone.id}
+              listening={!isPanTool}
               onSelect={() => setSelected(zone.id, "hydrozone")}
             />
           ))}
@@ -286,6 +292,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               stroke={isDimmed(pipe.zoneId) ? "#94a3b8" : "#1e40af"}
               strokeWidth={Math.max(2, pipe.diameterInches * 2)}
               opacity={isDimmed(pipe.zoneId) ? 0.2 : 0.9}
+              listening={!isPanTool}
               onClick={() => setSelected(pipe.id, "pipe")}
             />
           ))}
@@ -303,7 +310,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
             const radiusPx = head.radiusFeet * ppf;
 
             return (
-              <Group key={head.id}>
+              <Group key={head.id} listening={!isPanTool}>
                 {showArc && (
                   <Arc
                     x={head.position.x}
@@ -338,6 +345,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               radius={8}
               fill="#dc2626"
               opacity={isDimmed(valve.zoneId) ? 0.2 : 1}
+              listening={!isPanTool}
               onClick={() => setSelected(valve.id, "valve")}
             />
           ))}
@@ -350,6 +358,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick, onClosePolygon }: Props)
               fill="#7c3aed"
               stroke="#fff"
               strokeWidth={2}
+              listening={!isPanTool}
             />
           )}
 
@@ -465,12 +474,14 @@ function HydrozoneShape({
   fill,
   opacity,
   selected,
+  listening = true,
   onSelect,
 }: {
   zone: HydrozonePolygon;
   fill: string;
   opacity: number;
   selected: boolean;
+  listening?: boolean;
   onSelect: () => void;
 }) {
   return (
@@ -481,7 +492,8 @@ function HydrozoneShape({
       stroke={selected ? "#16a34a" : "#22c55e"}
       strokeWidth={selected ? 3 : 1}
       opacity={opacity}
-      onClick={onSelect}
+      listening={listening}
+      onClick={listening ? onSelect : undefined}
     />
   );
 }
@@ -490,11 +502,13 @@ function ExclusionShape({
   zone,
   opacity,
   selected,
+  listening = true,
   onSelect,
 }: {
   zone: ExclusionZone;
   opacity: number;
   selected: boolean;
+  listening?: boolean;
   onSelect: () => void;
 }) {
   return (
@@ -506,7 +520,8 @@ function ExclusionShape({
       strokeWidth={selected ? 3 : 1}
       dash={[8, 4]}
       opacity={opacity}
-      onClick={onSelect}
+      listening={listening}
+      onClick={listening ? onSelect : undefined}
     />
   );
 }
