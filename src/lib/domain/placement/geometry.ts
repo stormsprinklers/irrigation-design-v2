@@ -144,10 +144,8 @@ export function bearingDeg(from: Point, to: Point): number {
   return edgeBearingDeg(from, to);
 }
 
-export function angleDiffDeg(a: number, b: number): number {
-  let d = Math.abs(normalizeAngleDeg(a) - normalizeAngleDeg(b));
-  if (d > 180) d = 360 - d;
-  return d;
+export function isReflexVertex(interiorAngleDeg: number): boolean {
+  return interiorAngleDeg > 180;
 }
 
 export function midpointBearingDeg(b1: number, b2: number): number {

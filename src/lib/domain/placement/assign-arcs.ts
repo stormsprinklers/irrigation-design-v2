@@ -8,6 +8,7 @@ import {
   bisectorBearingDeg,
   distanceFt,
   edgeBearingDeg,
+  isReflexVertex,
   perpendicularInwardBearing,
   projectPointOnEdge,
   type PolygonAnalysis,
@@ -80,12 +81,19 @@ function inwardBearingForHead(
   if (role === "corner") {
     const vi = vertices.findIndex((v) => headKey(v) === headKey(head.position));
     if (vi < 0) return undefined;
+    const interiorAngle = analysis.interiorAnglesDeg[vi];
+    const toCentroid = bearingDeg(head.position, analysis.centroid);
+    if (isReflexVertex(interiorAngle)) return toCentroid;
+
     const n = vertices.length;
-    return bisectorBearingDeg(
+    const bisector = bisectorBearingDeg(
       vertices[(vi - 1 + n) % n],
       vertices[vi],
       vertices[(vi + 1) % n]
     );
+    let diff = Math.abs(bisector - toCentroid);
+    if (diff > 180) diff = 360 - diff;
+    return diff > 90 ? toCentroid : bisector;
   }
 
   return undefined;
@@ -254,6 +262,9 @@ function targetArcForRole(
   adj: NozzleAdjustability
 ): number {
   if (role === "corner" && cornerInteriorAngle !== undefined) {
+    if (isReflexVertex(cornerInteriorAngle)) {
+      return Math.min(cornerInteriorAngle, adj.arcDegreesMax);
+    }
     let arc = Math.min(cornerInteriorAngle, adj.arcDegreesMax);
     arc = Math.max(arc, adj.arcDegreesMin);
     if (Math.abs(cornerInteriorAngle - 90) < 15) arc = Math.min(90, adj.arcDegreesMax);

@@ -232,6 +232,79 @@ describe("placeHeads head-to-head spacing", () => {
     assert.ok(result.heads.length >= 4);
     assert.ok((result.overlapPercent ?? 0) >= 85);
   });
+
+  it("orients reflex notch corner heads toward lawn interior", () => {
+    const ppf = 100 / 55;
+    const vertices = notchVerticesCw(ppf);
+    const pixelScale = {
+      pointA: { x: 0, y: 0 },
+      pointB: { x: 100, y: 0 },
+      realWorldFeet: 55,
+    };
+    const centroid = polygonCentroid(vertices);
+    const result = placeHeads({
+      hydrozone: baseHydrozone("hz-notch", vertices),
+      zoneId: "zone-1",
+      catalog,
+      scale: pixelScale,
+      exclusionZones: [],
+      pressurePsi: 65,
+    });
+
+    const notchCorners = result.heads.filter((h) => {
+      const nd = 8 * ppf;
+      return Math.abs(h.position.y - nd) < 2;
+    });
+    assert.ok(notchCorners.length >= 2, "expected heads at notch inner corners");
+
+    for (const head of notchCorners) {
+      assert.ok(
+        head.arcDegrees >= 180,
+        `reflex corner should have wide arc, got ${head.arcDegrees}°`
+      );
+      const toCentroid = bearingDeg(head.position, centroid);
+      assert.ok(
+        angleDiff(head.rotationDegrees, toCentroid) < 45,
+        `notch corner should spray toward interior, rot=${head.rotationDegrees.toFixed(0)} centroid=${toCentroid.toFixed(0)}`
+      );
+    }
+  });
+
+  it("does not place edge heads too close to corner vertices", () => {
+    const ppf = 100 / 55;
+    const vertices = notchVerticesCw(ppf);
+    const pixelScale = {
+      pointA: { x: 0, y: 0 },
+      pointB: { x: 100, y: 0 },
+      realWorldFeet: 55,
+    };
+    const vertexKeys = new Set(
+      vertices.map((v) => `${Math.round(v.x * 1000)}:${Math.round(v.y * 1000)}`)
+    );
+    const result = placeHeads({
+      hydrozone: baseHydrozone("hz-dedupe", vertices),
+      zoneId: "zone-1",
+      catalog,
+      scale: pixelScale,
+      exclusionZones: [],
+      pressurePsi: 65,
+    });
+
+    const minSepPx = (result.radiusFeet ?? 20) * ppf * 0.45;
+    const edgeHeads = result.heads.filter(
+      (h) => !vertexKeys.has(`${Math.round(h.position.x * 1000)}:${Math.round(h.position.y * 1000)}`)
+    );
+
+    for (const edgeHead of edgeHeads) {
+      for (const vertex of vertices) {
+        const d = Math.hypot(edgeHead.position.x - vertex.x, edgeHead.position.y - vertex.y);
+        assert.ok(
+          d >= minSepPx,
+          `edge head at (${edgeHead.position.x.toFixed(1)},${edgeHead.position.y.toFixed(1)}) is ${d.toFixed(1)}px from a corner`
+        );
+      }
+    }
+  });
 });
 
 function squareVertices(sizeFt: number): Point[] {
@@ -240,5 +313,23 @@ function squareVertices(sizeFt: number): Point[] {
     { x: sizeFt, y: 0 },
     { x: sizeFt, y: sizeFt },
     { x: 0, y: sizeFt },
+  ];
+}
+
+function notchVerticesCw(ppf: number): Point[] {
+  const w = 55 * ppf;
+  const h = 30 * ppf;
+  const nw = 12 * ppf;
+  const nd = 8 * ppf;
+  const nx = (w - nw) / 2;
+  return [
+    { x: 0, y: 0 },
+    { x: 0, y: h },
+    { x: w, y: h },
+    { x: w, y: 0 },
+    { x: nx + nw, y: 0 },
+    { x: nx + nw, y: nd },
+    { x: nx, y: nd },
+    { x: nx, y: 0 },
   ];
 }

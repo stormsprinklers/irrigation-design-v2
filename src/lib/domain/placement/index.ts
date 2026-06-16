@@ -1,5 +1,5 @@
 import { getNozzleAdjustability } from "@/lib/catalog/adjustability";
-import { pixelsPerFoot } from "../hydraulics";
+import { feetToPixels, pixelsPerFoot } from "../hydraulics";
 import { DEFAULT_PRESSURE_PSI } from "../types";
 import type {
   CatalogItemData,
@@ -7,6 +7,8 @@ import type {
   ExclusionZone,
   HydrozonePolygon,
   PlacementResult,
+  Point,
+  SprinklerHead,
   ValidationIssue,
 } from "../types";
 import {
@@ -32,6 +34,35 @@ type PlacementInput = {
 };
 
 export { pointInPolygon } from "./geometry";
+
+function headPositionKey(p: Point): string {
+  return `${Math.round(p.x * 1000)}:${Math.round(p.y * 1000)}`;
+}
+
+function dedupeNearbyHeads(
+  cornerHeads: SprinklerHead[],
+  edgeHeads: SprinklerHead[],
+  vertices: Point[],
+  ppf: number,
+  radiusFeet: number
+): SprinklerHead[] {
+  const minDistPx = feetToPixels(radiusFeet * 0.45, ppf);
+  const vertexKeys = new Set(vertices.map((v) => headPositionKey(v)));
+
+  const keptEdge: SprinklerHead[] = [];
+  for (const head of edgeHeads) {
+    if (vertexKeys.has(headPositionKey(head.position))) continue;
+
+    const tooClose = [...cornerHeads, ...keptEdge].some(
+      (existing) =>
+        Math.hypot(existing.position.x - head.position.x, existing.position.y - head.position.y) <
+        minDistPx
+    );
+    if (!tooClose) keptEdge.push(head);
+  }
+
+  return [...cornerHeads, ...keptEdge];
+}
 
 export function placeHeads(input: PlacementInput): PlacementResult {
   const { hydrozone, zoneId, catalog, scale, exclusionZones } = input;
@@ -132,9 +163,16 @@ export function placeHeads(input: PlacementInput): PlacementResult {
     edgeRuns,
     assembly: shared.assembly,
     radiusFeet,
+    ppf,
   });
 
-  const perimeterHeads = [...cornerHeads, ...edgeHeads];
+  const perimeterHeads = dedupeNearbyHeads(
+    cornerHeads,
+    edgeHeads,
+    hydrozone.vertices,
+    ppf,
+    radiusFeet
+  );
   const gridOrigin = interiorGridOrigin(hydrozone.vertices, analysis.orientationDeg);
 
   const interiorHeads = placeInteriorHeads({

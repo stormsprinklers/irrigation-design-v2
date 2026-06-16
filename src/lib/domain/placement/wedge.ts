@@ -176,12 +176,14 @@ export function rotationFromEdgeBearings(
   if (inwardBearingDeg !== undefined) {
     const rotA = normalizeDeg(n1 + arcDegrees / 2);
     const rotB = normalizeDeg(n2 + arcDegrees / 2);
+    const rotC = normalizeDeg(inwardBearingDeg);
     const toInward = (rot: number) => {
       let d = Math.abs(normalizeDeg(rot) - normalizeDeg(inwardBearingDeg));
       if (d > 180) d = 360 - d;
       return d;
     };
-    return toInward(rotA) <= toInward(rotB) ? rotA : rotB;
+    const candidates = [rotA, rotB, rotC];
+    return candidates.reduce((best, rot) => (toInward(rot) < toInward(best) ? rot : best));
   }
 
   if (fixedLeftEdge) {
@@ -199,9 +201,20 @@ export function rotationFromEdgeBearings(
   return mid;
 }
 
-function wedgeScoreClear(head: WedgeHead, exclusions: ExclusionZone[], ppf: number): number {
+function wedgeScoreClear(
+  head: WedgeHead,
+  exclusions: ExclusionZone[],
+  ppf: number,
+  inwardBearingDeg?: number
+): number {
   if (wedgeHitsExclusion(head, exclusions, ppf)) return -1;
-  return head.arcDegrees * head.radiusFeet;
+  let score = head.arcDegrees * head.radiusFeet;
+  if (inwardBearingDeg !== undefined) {
+    let diff = Math.abs(normalizeDeg(head.rotationDegrees) - normalizeDeg(inwardBearingDeg));
+    if (diff > 180) diff = 360 - diff;
+    score -= diff * head.radiusFeet;
+  }
+  return score;
 }
 
 export function optimizeWedge(
@@ -238,11 +251,11 @@ export function optimizeWedge(
 
   let radiusFeet = Math.min(limits.radiusFeetMax, Math.max(limits.radiusFeetMin, head.radiusFeet));
   let best: WedgeHead = { ...head, arcDegrees, rotationDegrees, radiusFeet };
-  let bestScore = wedgeScoreClear(best, exclusions, ppf);
+  let bestScore = wedgeScoreClear(best, exclusions, ppf, inwardBearingDeg);
 
   while (radiusFeet >= limits.radiusFeetMin) {
     const candidate = { ...head, arcDegrees, rotationDegrees, radiusFeet };
-    const score = wedgeScoreClear(candidate, exclusions, ppf);
+    const score = wedgeScoreClear(candidate, exclusions, ppf, inwardBearingDeg);
     if (score >= 0) {
       return { radiusFeet, rotationDegrees, arcDegrees, hitExclusion: false };
     }
@@ -259,7 +272,7 @@ export function optimizeWedge(
     const rot = normalizeDeg(baseRot + delta);
     for (let r = head.radiusFeet; r >= limits.radiusFeetMin; r -= 0.5) {
       const candidate = { ...head, arcDegrees, rotationDegrees: rot, radiusFeet: r };
-      const score = wedgeScoreClear(candidate, exclusions, ppf);
+      const score = wedgeScoreClear(candidate, exclusions, ppf, inwardBearingDeg);
       if (score >= 0) {
         return { radiusFeet: r, rotationDegrees: rot, arcDegrees, hitExclusion: false };
       }
