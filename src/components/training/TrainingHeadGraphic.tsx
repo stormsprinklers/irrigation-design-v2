@@ -64,9 +64,11 @@ export function TrainingHeadGraphic({
   const rotDeg = head.rotationDegrees;
   const handleDist = Math.min(Math.max(radiusPx * 0.35, 18), 48);
   const handlePos = polarPx(rotDeg, handleDist);
-  const arcBtnDist = Math.min(Math.max(radiusPx * 0.55, 22), 56);
-  const minusPos = polarPx(head.wedgeStartDeg, arcBtnDist);
-  const plusPos = polarPx(head.wedgeEndDeg, arcBtnDist);
+  const headMarkerRadius = selected ? 8 : 6;
+  const arcBtnGap = 18;
+  const arcControlX = headMarkerRadius + 12;
+  const minusPos = { x: arcControlX, y: 0 };
+  const plusPos = { x: arcControlX + arcBtnGap, y: 0 };
 
   const arcStep = 5;
   const stripSpec =
@@ -202,7 +204,13 @@ export function TrainingHeadGraphic({
                 label="−"
                 disabled={head.arcDegrees <= adjustability.arcDegreesMin}
                 onPress={() => adjustArc(-arcStep)}
-                onRepeatEnd={onInteractionEnd}
+                onPressStart={() => {
+                  groupRef.current?.draggable(false);
+                }}
+                onPressEnd={() => {
+                  groupRef.current?.draggable(true);
+                  onInteractionEnd();
+                }}
               />
               <ArcAdjustButton
                 x={plusPos.x}
@@ -210,7 +218,13 @@ export function TrainingHeadGraphic({
                 label="+"
                 disabled={head.arcDegrees >= adjustability.arcDegreesMax}
                 onPress={() => adjustArc(arcStep)}
-                onRepeatEnd={onInteractionEnd}
+                onPressStart={() => {
+                  groupRef.current?.draggable(false);
+                }}
+                onPressEnd={() => {
+                  groupRef.current?.draggable(true);
+                  onInteractionEnd();
+                }}
               />
             </>
           )}
@@ -226,7 +240,8 @@ function ArcAdjustButton({
   label,
   disabled,
   onPress,
-  onRepeatEnd,
+  onPressStart,
+  onPressEnd,
 }: {
   x: number;
   y: number;
@@ -234,65 +249,82 @@ function ArcAdjustButton({
   disabled: boolean;
   /** Return false when the arc cannot change further in this direction. */
   onPress: () => boolean;
-  onRepeatEnd?: () => void;
+  onPressStart?: () => void;
+  onPressEnd?: () => void;
 }) {
   const size = 16;
-  const activeRef = useRef(false);
+  const hitPad = 6;
+  const pressingRef = useRef(false);
   const timersRef = useRef<{ delay?: ReturnType<typeof setTimeout>; interval?: ReturnType<typeof setInterval> }>(
     {}
   );
+  const onPressRef = useRef(onPress);
+  const onPressEndRef = useRef(onPressEnd);
+  const disabledRef = useRef(disabled);
+  onPressRef.current = onPress;
+  onPressEndRef.current = onPressEnd;
+  disabledRef.current = disabled;
 
-  const stopRepeat = useCallback(() => {
+  const endPress = useCallback(() => {
     const timers = timersRef.current;
     if (timers.delay) clearTimeout(timers.delay);
     if (timers.interval) clearInterval(timers.interval);
     timersRef.current = {};
-    window.removeEventListener("mouseup", stopRepeat);
-    window.removeEventListener("touchend", stopRepeat);
-    window.removeEventListener("touchcancel", stopRepeat);
-    if (activeRef.current) {
-      activeRef.current = false;
-      onRepeatEnd?.();
+    window.removeEventListener("pointerup", endPress);
+    window.removeEventListener("pointercancel", endPress);
+    window.removeEventListener("mouseup", endPress);
+    window.removeEventListener("touchend", endPress);
+    window.removeEventListener("touchcancel", endPress);
+    if (pressingRef.current) {
+      pressingRef.current = false;
+      onPressEndRef.current?.();
     }
-  }, [onRepeatEnd]);
+  }, []);
 
   const tick = useCallback(() => {
-    if (disabled) {
-      stopRepeat();
+    if (disabledRef.current) {
+      endPress();
       return;
     }
-    if (!onPress()) stopRepeat();
-  }, [disabled, onPress, stopRepeat]);
+    if (!onPressRef.current()) endPress();
+  }, [endPress]);
 
-  const startRepeat = useCallback(
-    (e: Konva.KonvaEventObject<unknown>) => {
+  const beginPress = useCallback(
+    (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
       e.cancelBubble = true;
-      if (disabled) return;
-      stopRepeat();
-      activeRef.current = true;
+      if (disabledRef.current) return;
+      endPress();
+      pressingRef.current = true;
+      onPressStart?.();
       tick();
-      window.addEventListener("mouseup", stopRepeat);
-      window.addEventListener("touchend", stopRepeat);
-      window.addEventListener("touchcancel", stopRepeat);
+      window.addEventListener("pointerup", endPress);
+      window.addEventListener("pointercancel", endPress);
+      window.addEventListener("mouseup", endPress);
+      window.addEventListener("touchend", endPress);
+      window.addEventListener("touchcancel", endPress);
       timersRef.current.delay = setTimeout(() => {
-        timersRef.current.interval = setInterval(tick, 70);
-      }, 350);
+        timersRef.current.interval = setInterval(tick, 75);
+      }, 300);
     },
-    [disabled, stopRepeat, tick]
+    [endPress, onPressStart, tick]
   );
 
-  useEffect(() => () => stopRepeat(), [stopRepeat]);
-
-  useEffect(() => {
-    if (disabled) stopRepeat();
-  }, [disabled, stopRepeat]);
+  useEffect(() => () => endPress(), [endPress]);
 
   return (
     <Group
       x={x}
       y={y}
-      onMouseDown={startRepeat}
-      onTouchStart={startRepeat}
+      onMouseDown={beginPress}
+      onTouchStart={beginPress}
+      onMouseUp={(e) => {
+        e.cancelBubble = true;
+        endPress();
+      }}
+      onTouchEnd={(e) => {
+        e.cancelBubble = true;
+        endPress();
+      }}
       onClick={(e) => {
         e.cancelBubble = true;
       }}
@@ -301,10 +333,16 @@ function ArcAdjustButton({
       }}
     >
       <Circle
+        radius={size / 2 + hitPad}
+        fill="rgba(0,0,0,0.001)"
+        listening
+      />
+      <Circle
         radius={size / 2}
         fill={disabled ? "#e2e8f0" : "#ffffff"}
         stroke={disabled ? "#cbd5e1" : "#2563eb"}
         strokeWidth={1.5}
+        listening={false}
       />
       <Text
         text={label}
