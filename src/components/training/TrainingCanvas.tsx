@@ -12,11 +12,11 @@ import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
 import { getNozzlesForHead, getHeadBodies } from "@/lib/catalog/compat";
 import type { TrainingHeadSnapshot } from "@/lib/domain/training/types";
 import { wedgeStartDeg, wedgeEndDeg } from "@/lib/domain/placement/wedge";
+import { trainingStageSizePx } from "@/lib/domain/training/stage-layout";
 import { TrainingHeadGraphic } from "./TrainingHeadGraphic";
 import { PolygonSideLabels } from "./PolygonSideLabels";
 
 const PX = TRAINING_DISPLAY_PX_PER_FT;
-const STAGE_OFFSET = 40;
 
 export function TrainingCanvas() {
   const polygon = useTrainingStore((s) => s.polygon);
@@ -62,8 +62,21 @@ export function TrainingCanvas() {
 
   const widthFt = polygon?.metadata.widthFt ?? 0;
   const heightFt = polygon?.metadata.heightFt ?? 0;
-  const contentW = widthFt * PX + STAGE_OFFSET * 2;
-  const contentH = heightFt * PX + STAGE_OFFSET * 2;
+
+  const headsForBounds =
+    viewMode === "compare"
+      ? [...baselineHeads, ...correctedHeads]
+      : viewMode === "baseline"
+        ? baselineHeads
+        : correctedHeads;
+
+  const stageLayout = polygon
+    ? trainingStageSizePx(widthFt, heightFt, headsForBounds, PX)
+    : { paddingPx: 40, widthPx: 800, heightPx: 600 };
+
+  const stagePadding = stageLayout.paddingPx;
+  const contentW = stageLayout.widthPx;
+  const contentH = stageLayout.heightPx;
   const wrapperW = Math.max(contentW, size.width);
   const wrapperH = Math.max(contentH, size.height);
 
@@ -75,7 +88,7 @@ export function TrainingCanvas() {
       el.scrollLeft = Math.max(0, (el.scrollWidth - el.clientWidth) / 2);
       el.scrollTop = Math.max(0, (el.scrollHeight - el.clientHeight) / 2);
     });
-  }, [polygon, wrapperW, wrapperH, size.width, size.height]);
+  }, [polygon, wrapperW, wrapperH, size.width, size.height, stagePadding]);
 
   if (!polygon) {
     return (
@@ -126,7 +139,7 @@ export function TrainingCanvas() {
     if (tool !== "add") return;
     const pos = stage.getPointerPosition?.();
     if (!pos) return;
-    const feet = { x: (pos.x - STAGE_OFFSET) / PX, y: (pos.y - STAGE_OFFSET) / PX };
+    const feet = { x: (pos.x - stagePadding) / PX, y: (pos.y - stagePadding) / PX };
     const body = getHeadBodies(catalog)[0];
     if (!body) return;
     const nozzle = getNozzlesForHead(catalog, body.id)[0];
@@ -173,8 +186,8 @@ export function TrainingCanvas() {
           {heatCells.map((cell, i) => (
             <Rect
               key={`h-${i}`}
-              x={cell.x + STAGE_OFFSET}
-              y={cell.y + STAGE_OFFSET}
+              x={cell.x + stagePadding}
+              y={cell.y + stagePadding}
               width={cell.width}
               height={cell.height}
               fill={`rgba(${cell.color.r},${cell.color.g},${cell.color.b},${cell.color.a})`}
@@ -185,8 +198,8 @@ export function TrainingCanvas() {
             samplePts.map((p, i) => (
               <Rect
                 key={`s-${i}`}
-                x={p.x * PX + STAGE_OFFSET - 2}
-                y={p.y * PX + STAGE_OFFSET - 2}
+                x={p.x * PX + stagePadding - 2}
+                y={p.y * PX + stagePadding - 2}
                 width={4}
                 height={4}
                 fill="rgba(100,100,100,0.4)"
@@ -197,8 +210,8 @@ export function TrainingCanvas() {
             <Line
               key={zone.id}
               points={zone.vertices.flatMap((v) => [
-                v.x * PX + STAGE_OFFSET,
-                v.y * PX + STAGE_OFFSET,
+                v.x * PX + stagePadding,
+                v.y * PX + stagePadding,
               ])}
               closed
               fill="rgba(239, 68, 68, 0.2)"
@@ -209,7 +222,7 @@ export function TrainingCanvas() {
             />
           ))}
           <Line
-            points={flatVertices.map((v) => v + STAGE_OFFSET)}
+            points={flatVertices.map((v) => v + stagePadding)}
             closed
             stroke="#16a34a"
             strokeWidth={2}
@@ -219,7 +232,7 @@ export function TrainingCanvas() {
           <PolygonSideLabels
             verticesFt={polygon.verticesFt}
             pxPerFt={PX}
-            stageOffset={STAGE_OFFSET}
+            stageOffset={stagePadding}
           />
           {ghostHeads.map((head) => {
             const nozzle = catalog.find((c) => c.id === head.catalogItemId);
@@ -227,7 +240,7 @@ export function TrainingCanvas() {
               <TrainingHeadGraphic
                 key={`ghost-${head.id}`}
                 head={head}
-                stageOffset={STAGE_OFFSET}
+                stageOffset={stagePadding}
                 ghost
                 showArc={showArcs}
                 editable={false}
@@ -249,7 +262,7 @@ export function TrainingCanvas() {
               <TrainingHeadGraphic
                 key={head.id}
                 head={head}
-                stageOffset={STAGE_OFFSET}
+                stageOffset={stagePadding}
                 ghost={false}
                 showArc={showArcs}
                 editable={editable}

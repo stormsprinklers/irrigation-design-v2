@@ -12,6 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it } from "node:test";
 import { generateTrainingPolygon, buildCanonicalTrainingPolygon } from "../polygon-generator";
+import { computeTrainingStagePaddingPx, trainingStageSizePx } from "../stage-layout";
 import { applyOrganicEdges, circularLawn } from "../organic-edges";
 import { runPlacementOnPolygon } from "../placement-adapter";
 import { evaluateDesign } from "../../simulation/scoring";
@@ -169,6 +170,38 @@ describe("polygon-generator", () => {
     const a = generateTrainingPolygon({ seed: 4242, shapeClass: "rectangle" });
     const b = generateTrainingPolygon({ seed: 4242, shapeClass: "rectangle" });
     assert.deepEqual(a.exclusionZonesFt, b.exclusionZonesFt);
+  });
+});
+
+describe("stage-layout", () => {
+  it("reserves enough padding for corner head spray arcs", () => {
+    const heads = [
+      {
+        id: "h1",
+        positionFt: { x: 0, y: 0 },
+        radiusFeet: 30,
+        arcDegrees: 90,
+        rotationDegrees: 0,
+        wedgeStartDeg: 0,
+        wedgeEndDeg: 90,
+        catalogItemId: "x",
+      },
+      {
+        id: "h2",
+        positionFt: { x: 45, y: 30 },
+        radiusFeet: 30,
+        arcDegrees: 90,
+        rotationDegrees: 180,
+        wedgeStartDeg: 180,
+        wedgeEndDeg: 270,
+        catalogItemId: "x",
+      },
+    ];
+    const pad = computeTrainingStagePaddingPx(45, 30, heads, 10);
+    assert.ok(pad >= 30 * 10, "padding must cover 30 ft throw radius");
+    const size = trainingStageSizePx(45, 30, heads, 10);
+    assert.equal(size.widthPx, 45 * 10 + pad * 2);
+    assert.equal(size.heightPx, 30 * 10 + pad * 2);
   });
 });
 
