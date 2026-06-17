@@ -121,7 +121,6 @@ export function TrainingHeadGraphic({
 
   function stopDragScroll(e: Konva.KonvaEventObject<unknown>) {
     stopBubble(e);
-    (e.evt as Event).preventDefault?.();
     onInteractionStart?.();
   }
 
@@ -142,7 +141,6 @@ export function TrainingHeadGraphic({
       onDragStart={stopDragScroll}
       onDragMove={(e) => {
         stopBubble(e);
-        (e.evt as Event).preventDefault?.();
         onMove(feetFromGroup(e.target as Konva.Group), { deferScores: true });
       }}
       onDragEnd={(e) => {

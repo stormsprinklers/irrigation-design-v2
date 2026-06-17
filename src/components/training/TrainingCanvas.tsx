@@ -43,7 +43,6 @@ export function TrainingCanvas() {
   const lastCenteredSeedRef = useRef<number | null>(null);
   const computedLayoutRef = useRef({ paddingPx: 40, widthPx: 800, heightPx: 600 });
   const frozenLayoutRef = useRef<ReturnType<typeof trainingStageSizePx> | null>(null);
-  const [scrollLocked, setScrollLocked] = useState(false);
   const [frozenLayout, setFrozenLayout] = useState<ReturnType<typeof trainingStageSizePx> | null>(
     null
   );
@@ -52,7 +51,6 @@ export function TrainingCanvas() {
   const lockCanvasScroll = useCallback(() => {
     scrollLockCountRef.current += 1;
     if (scrollLockCountRef.current === 1) {
-      setScrollLocked(true);
       frozenLayoutRef.current = computedLayoutRef.current;
       setFrozenLayout(computedLayoutRef.current);
     }
@@ -63,7 +61,6 @@ export function TrainingCanvas() {
     if (scrollLockCountRef.current === 0) {
       const el = containerRef.current;
       const prevPad = frozenLayoutRef.current?.paddingPx ?? computedLayoutRef.current.paddingPx;
-      setScrollLocked(false);
       frozenLayoutRef.current = null;
       setFrozenLayout(null);
       if (el) {
@@ -79,18 +76,41 @@ export function TrainingCanvas() {
   }, []);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el || !scrollLocked) return;
+    const onPointerUp = () => {
+      requestAnimationFrame(() => {
+        if (scrollLockCountRef.current > 0) {
+          scrollLockCountRef.current = 0;
+          frozenLayoutRef.current = null;
+          setFrozenLayout(null);
+        }
+      });
+    };
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
+    return () => {
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, []);
 
-    const blockScroll = (e: Event) => {
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      if (scrollLockCountRef.current > 0) return;
+      const canScrollX = el.scrollWidth > el.clientWidth;
+      const canScrollY = el.scrollHeight > el.clientHeight;
+      if (!canScrollX && !canScrollY) return;
+
+      if (canScrollX) el.scrollLeft += e.deltaX;
+      if (canScrollY) el.scrollTop += e.deltaY;
       e.preventDefault();
     };
 
-    el.addEventListener("wheel", blockScroll, { passive: false });
-    return () => {
-      el.removeEventListener("wheel", blockScroll);
-    };
-  }, [scrollLocked]);
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [polygon?.metadata.seed]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -229,13 +249,8 @@ export function TrainingCanvas() {
   return (
     <div
       ref={containerRef}
-      className={`scroll-surface h-full w-full overflow-auto bg-muted/30 ${
-        scrollLocked ? "touch-none" : ""
-      }`}
-      style={{
-        overscrollBehavior: "none",
-        touchAction: scrollLocked ? "none" : "auto",
-      }}
+      className="scroll-surface h-full w-full overflow-auto bg-muted/30"
+      style={{ overscrollBehavior: "contain" }}
     >
       <div
         className="flex items-center justify-center"
