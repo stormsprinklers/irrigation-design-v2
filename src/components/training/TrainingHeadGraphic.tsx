@@ -32,6 +32,7 @@ type Props = {
   onSelect: () => void;
   onMove: (positionFt: { x: number; y: number }, opts?: { deferScores?: boolean }) => void;
   onPatch: (patch: Partial<TrainingHeadSnapshot>, opts?: { deferScores?: boolean }) => void;
+  onInteractionStart?: () => void;
   onInteractionEnd: () => void;
 };
 
@@ -49,6 +50,7 @@ export function TrainingHeadGraphic({
   onSelect,
   onMove,
   onPatch,
+  onInteractionStart,
   onInteractionEnd,
 }: Props) {
   const groupRef = useRef<Konva.Group>(null);
@@ -117,6 +119,14 @@ export function TrainingHeadGraphic({
     return delta > 0 ? next < adj.arcDegreesMax : next > adj.arcDegreesMin;
   }
 
+  function stopDragScroll(e: Konva.KonvaEventObject<unknown>) {
+    stopBubble(e);
+    if ("preventDefault" in e.evt && typeof e.evt.preventDefault === "function") {
+      e.evt.preventDefault();
+    }
+    onInteractionStart?.();
+  }
+
   return (
     <Group
       ref={groupRef}
@@ -131,7 +141,7 @@ export function TrainingHeadGraphic({
         stopBubble(e);
         onSelect();
       }}
-      onDragStart={stopBubble}
+      onDragStart={stopDragScroll}
       onDragMove={(e) => {
         stopBubble(e);
         onMove(feetFromGroup(e.target as Konva.Group), { deferScores: true });
@@ -178,7 +188,7 @@ export function TrainingHeadGraphic({
             onMouseDown={stopBubble}
             onTouchStart={stopBubble}
             onDragStart={(e) => {
-              stopBubble(e);
+              stopDragScroll(e);
               rotatingRef.current = true;
               groupRef.current?.draggable(false);
             }}
@@ -214,6 +224,7 @@ export function TrainingHeadGraphic({
                 disabled={head.arcDegrees <= adjustability.arcDegreesMin}
                 onPress={() => adjustArc(-arcStep)}
                 onPressStart={() => {
+                  onInteractionStart?.();
                   groupRef.current?.draggable(false);
                 }}
                 onPressEnd={() => {
@@ -228,6 +239,7 @@ export function TrainingHeadGraphic({
                 disabled={head.arcDegrees >= adjustability.arcDegreesMax}
                 onPress={() => adjustArc(arcStep)}
                 onPressStart={() => {
+                  onInteractionStart?.();
                   groupRef.current?.draggable(false);
                 }}
                 onPressEnd={() => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { Layer, Line, Rect, Stage } from "react-konva";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTrainingStore } from "@/lib/stores/training-store";
 import { TRAINING_DISPLAY_PX_PER_FT } from "@/lib/domain/training/types";
 import { gridColorCells } from "@/lib/domain/simulation/heatmap";
@@ -39,7 +39,23 @@ export function TrainingCanvas() {
 
   const stageRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollLockCountRef = useRef(0);
+  const [scrollLocked, setScrollLocked] = useState(false);
   const [size, setSize] = useState({ width: 800, height: 600 });
+
+  const lockCanvasScroll = useCallback(() => {
+    scrollLockCountRef.current += 1;
+    if (scrollLockCountRef.current === 1) {
+      setScrollLocked(true);
+    }
+  }, []);
+
+  const unlockCanvasScroll = useCallback(() => {
+    scrollLockCountRef.current = Math.max(0, scrollLockCountRef.current - 1);
+    if (scrollLockCountRef.current === 0) {
+      setScrollLocked(false);
+    }
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -170,7 +186,13 @@ export function TrainingCanvas() {
   }
 
   return (
-    <div ref={containerRef} className="scroll-surface h-full w-full overflow-auto bg-muted/30">
+    <div
+      ref={containerRef}
+      className={`scroll-surface h-full w-full bg-muted/30 ${
+        scrollLocked ? "touch-none overflow-hidden" : "overflow-auto"
+      }`}
+      style={scrollLocked ? { overscrollBehavior: "none" } : { overscrollBehavior: "contain" }}
+    >
       <div
         className="flex items-center justify-center"
         style={{ width: wrapperW, height: wrapperH, minWidth: wrapperW, minHeight: wrapperH }}
@@ -274,7 +296,11 @@ export function TrainingCanvas() {
                 onSelect={() => setSelectedHeadId(head.id)}
                 onMove={(positionFt, opts) => moveCorrectedHead(head.id, positionFt, opts)}
                 onPatch={(patch, opts) => updateCorrectedHead(head.id, patch, opts)}
-                onInteractionEnd={() => recomputeScores()}
+                onInteractionStart={lockCanvasScroll}
+                onInteractionEnd={() => {
+                  unlockCanvasScroll();
+                  recomputeScores();
+                }}
               />
             );
           })}
