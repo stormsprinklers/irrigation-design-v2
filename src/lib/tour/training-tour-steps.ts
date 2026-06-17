@@ -21,7 +21,7 @@ export const TRAINING_TOUR_STEPS: TrainingTourStep[] = [
     id: "generate",
     target: "training-tour-generate",
     title: "Generate examples",
-    body: "Pick a shape class or leave Random, then click Generate. Reset to algorithm restores the placement output; Clear heads wipes your corrected layout so you can start fresh on the same lawn.",
+    body: "Pick a shape class or leave Random, then click Generate for a new lawn. Clear heads wipes your corrected layout so you can start fresh on the same lawn.",
     placement: "bottom",
   },
   {

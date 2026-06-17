@@ -161,6 +161,64 @@ export function pointAlongEdge(a: Point, b: Point, t: number): Point {
   };
 }
 
+/** Edge lengths for vertices already expressed in feet. */
+export function polygonEdgeLengthsFt(vertices: Point[]): number[] {
+  const lengths: number[] = [];
+  for (let i = 0; i < vertices.length; i++) {
+    const a = vertices[i]!;
+    const b = vertices[(i + 1) % vertices.length]!;
+    lengths.push(Math.hypot(b.x - a.x, b.y - a.y));
+  }
+  return lengths;
+}
+
+export function roundLengthFt(lengthFt: number): number {
+  return Math.round(lengthFt * 10) / 10;
+}
+
+export function formatSideLengthFt(lengthFt: number): string {
+  const rounded = roundLengthFt(lengthFt);
+  return Number.isInteger(rounded) ? `${rounded} ft` : `${rounded.toFixed(1)} ft`;
+}
+
+export type PolygonEdgeLabel = {
+  midpointFt: Point;
+  lengthFt: number;
+  lengthLabel: string;
+  rotationDeg: number;
+};
+
+export function polygonEdgeLabels(vertices: Point[], offsetFt = 2): PolygonEdgeLabel[] {
+  if (vertices.length < 2) return [];
+
+  const centroid = polygonCentroid(vertices);
+  const labels: PolygonEdgeLabel[] = [];
+
+  for (let i = 0; i < vertices.length; i++) {
+    const a = vertices[i]!;
+    const b = vertices[(i + 1) % vertices.length]!;
+    const lengthFt = Math.hypot(b.x - a.x, b.y - a.y);
+    const mid = pointAlongEdge(a, b, 0.5);
+    const inward = perpendicularInwardBearing(a, b, centroid);
+    const outwardRad = ((inward + 180) * Math.PI) / 180;
+    const midpointFt = {
+      x: mid.x + Math.cos(outwardRad) * offsetFt,
+      y: mid.y + Math.sin(outwardRad) * offsetFt,
+    };
+    let rotationDeg = edgeBearingDeg(a, b);
+    if (rotationDeg > 90 || rotationDeg < -90) rotationDeg += 180;
+
+    labels.push({
+      midpointFt,
+      lengthFt: roundLengthFt(lengthFt),
+      lengthLabel: formatSideLengthFt(lengthFt),
+      rotationDeg,
+    });
+  }
+
+  return labels;
+}
+
 export function edgeBearingDeg(a: Point, b: Point): number {
   const rad = Math.atan2(b.y - a.y, b.x - a.x);
   return normalizeAngleDeg((rad * 180) / Math.PI);

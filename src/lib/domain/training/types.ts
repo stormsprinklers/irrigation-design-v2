@@ -40,6 +40,8 @@ export type TrainingPolygonMetadata = {
   heightFt: number;
   areaSqFt: number;
   vertexCount: number;
+  /** Rounded edge lengths in feet, one per polygon side. */
+  sideLengthsFt: number[];
   hasExclusions: boolean;
   /** World rotation applied after shape construction (degrees, seeded). */
   rotationDeg: number;

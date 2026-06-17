@@ -37,7 +37,6 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
   const toggleHeatmap = useTrainingStore((s) => s.toggleHeatmap);
   const toggleSampleGrid = useTrainingStore((s) => s.toggleSampleGrid);
   const toggleArcs = useTrainingStore((s) => s.toggleArcs);
-  const resetToBaseline = useTrainingStore((s) => s.resetToBaseline);
   const clearCorrectedHeads = useTrainingStore((s) => s.clearCorrectedHeads);
   const polygon = useTrainingStore((s) => s.polygon);
   const correctedHeads = useTrainingStore((s) => s.correctedHeads);
@@ -58,12 +57,6 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
         </NativeSelect>
         <Button size="sm" onClick={() => generateExample()}>
           Generate
-        </Button>
-        <Button size="sm" variant="outline" onClick={() => generateExample()} disabled={!polygon}>
-          Next example
-        </Button>
-        <Button size="sm" variant="outline" onClick={resetToBaseline} disabled={!polygon}>
-          Reset to algorithm
         </Button>
         <Button
           size="sm"

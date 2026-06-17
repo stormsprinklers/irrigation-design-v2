@@ -1,4 +1,4 @@
-import { pointInPolygon, polygonBounds } from "../placement/geometry";
+import { pointInPolygon, polygonBounds, polygonEdgeLengthsFt, roundLengthFt } from "../placement/geometry";
 import type { Point } from "../types";
 import type {
   GeneratedTrainingPolygon,
@@ -173,6 +173,7 @@ function metadataFor(
     heightFt: Math.round((b.maxY - b.minY) * 10) / 10,
     areaSqFt: Math.round(polygonArea(vertices) * 10) / 10,
     vertexCount: vertices.length,
+    sideLengthsFt: polygonEdgeLengthsFt(vertices).map(roundLengthFt),
     hasExclusions: false,
     rotationDeg: Math.round(rotationDeg * 10) / 10,
   };

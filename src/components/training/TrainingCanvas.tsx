@@ -13,6 +13,7 @@ import { getNozzlesForHead, getHeadBodies } from "@/lib/catalog/compat";
 import type { TrainingHeadSnapshot } from "@/lib/domain/training/types";
 import { wedgeStartDeg, wedgeEndDeg } from "@/lib/domain/placement/wedge";
 import { TrainingHeadGraphic } from "./TrainingHeadGraphic";
+import { PolygonSideLabels } from "./PolygonSideLabels";
 
 const PX = TRAINING_DISPLAY_PX_PER_FT;
 const STAGE_OFFSET = 40;
@@ -199,6 +200,11 @@ export function TrainingCanvas() {
             strokeWidth={2}
             fill="rgba(34,197,94,0.08)"
             listening={false}
+          />
+          <PolygonSideLabels
+            verticesFt={polygon.verticesFt}
+            pxPerFt={PX}
+            stageOffset={STAGE_OFFSET}
           />
           {ghostHeads.map((head) => {
             const nozzle = catalog.find((c) => c.id === head.catalogItemId);

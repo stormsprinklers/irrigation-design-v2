@@ -63,6 +63,7 @@ export const trainingExamplePayloadSchema = z.object({
     heightFt: z.number(),
     areaSqFt: z.number(),
     vertexCount: z.number().int(),
+    sideLengthsFt: z.array(z.number()).optional(),
     hasExclusions: z.boolean(),
     rotationDeg: z.number().optional(),
   }),

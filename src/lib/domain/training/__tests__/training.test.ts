@@ -36,6 +36,15 @@ describe("polygon-generator", () => {
     assert.ok(pointInPolygon(mid, verticesFt));
   });
 
+  it("includes rounded side lengths for each edge", () => {
+    const { verticesFt, metadata } = generateTrainingPolygon({ seed: 42, shapeClass: "rectangle" });
+    assert.equal(metadata.sideLengthsFt.length, verticesFt.length);
+    for (const len of metadata.sideLengthsFt) {
+      assert.ok(len > 0);
+      assert.equal(len, Math.round(len * 10) / 10);
+    }
+  });
+
   it("is reproducible with the same seed", () => {
     const a = generateTrainingPolygon({ seed: 999, shapeClass: "concave" });
     const b = generateTrainingPolygon({ seed: 999, shapeClass: "concave" });
