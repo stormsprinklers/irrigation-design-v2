@@ -18,7 +18,6 @@ import { TrainingStatsPanel } from "./TrainingStatsPanel";
 import { ExampleListDrawer } from "./ExampleListDrawer";
 import { TrainingTour, TrainingTourHelpButton } from "./tour/TrainingTour";
 import type { TourStatus } from "@/lib/actions/tour";
-import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import {
   Sheet,
   SheetContent,
@@ -50,7 +49,6 @@ type Props = {
 };
 
 export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: Props) {
-  const isMobile = useIsMobile();
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const generateExample = useTrainingStore((s) => s.generateExample);
   const buildApprovalPayload = useTrainingStore((s) => s.buildApprovalPayload);
@@ -138,20 +136,18 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
         onApprove={handleApprove}
         onExport={handleExport}
         approving={approving}
-        compact={isMobile}
       />
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
         <div className="min-h-0 min-w-0 flex-1" data-tour="training-tour-canvas">
           <TrainingCanvas />
         </div>
-        {!isMobile && (
-          <aside className="flex w-80 shrink-0 flex-col border-l bg-card">{sidePanel}</aside>
-        )}
+        <aside className="hidden w-80 shrink-0 flex-col border-l bg-card lg:flex">
+          {sidePanel}
+        </aside>
       </div>
 
-      {isMobile && (
-        <>
-          <div className="safe-bottom flex shrink-0 border-t bg-card">
+      <div className="relative z-10 shrink-0 border-t bg-card lg:hidden">
+        <div className="safe-bottom flex">
             {(
               [
                 { id: "edit" as const, label: "Edit", icon: Pencil },
@@ -172,9 +168,9 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
                 {label}
               </Button>
             ))}
-          </div>
+        </div>
 
-          <Sheet open={mobileTab === "edit"} onOpenChange={(open) => !open && setMobileTab(null)}>
+        <Sheet open={mobileTab === "edit"} onOpenChange={(open) => !open && setMobileTab(null)}>
             <SheetContent side="bottom" className="max-h-[85dvh] p-0">
               <SheetHeader className="border-b">
                 <SheetTitle>Head editor</SheetTitle>
@@ -207,10 +203,9 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
               <div className="overflow-y-auto">
                 <ExampleListDrawer />
               </div>
-            </SheetContent>
-          </Sheet>
-        </>
-      )}
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
   );
 }

@@ -40,6 +40,7 @@ export function TrainingCanvas() {
   const stageRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollLockCountRef = useRef(0);
+  const lastCenteredSeedRef = useRef<number | null>(null);
   const [scrollLocked, setScrollLocked] = useState(false);
   const [size, setSize] = useState({ width: 800, height: 600 });
 
@@ -98,13 +99,17 @@ export function TrainingCanvas() {
 
   useEffect(() => {
     if (!polygon) return;
+    const seed = polygon.metadata.seed;
+    if (lastCenteredSeedRef.current === seed) return;
+    lastCenteredSeedRef.current = seed;
+
     const el = containerRef.current;
     if (!el) return;
     requestAnimationFrame(() => {
       el.scrollLeft = Math.max(0, (el.scrollWidth - el.clientWidth) / 2);
       el.scrollTop = Math.max(0, (el.scrollHeight - el.clientHeight) / 2);
     });
-  }, [polygon, wrapperW, wrapperH, size.width, size.height, stagePadding]);
+  }, [polygon?.metadata.seed]);
 
   if (!polygon) {
     return (
