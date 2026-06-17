@@ -4,13 +4,16 @@ import { fileURLToPath } from "url";
 import { HEAD_ITEMS } from "./heads";
 import { MANUFACTURER_NOZZLES } from "./nozzles-manufacturer";
 import { RAINBIRD_SPRAY_NOZZLES } from "./rainbird-spray-nozzles";
-import { enrichNozzleItem } from "./adjustability";
+import {
+  enrichNozzleItem,
+  rotorMinRadius,
+  rotorNozzleSpecs,
+} from "./adjustability";
 import {
   consolidateSprayNozzles,
   type ExtractedNozzleRaw,
 } from "./consolidate-spray-nozzles";
 import type { CatalogSeedItem, NozzleChart } from "./chart";
-import { rotorNozzleSpecs } from "./adjustability";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const generatedDir = path.join(__dirname, "generated");
@@ -26,15 +29,6 @@ const PDF_EXTRACTED_FAMILIES = new Set([
   "rainbird_rvan",
   "hunter_mp_rotator",
 ]);
-
-type ExtractedNozzleRaw = {
-  id: string;
-  model: string;
-  nozzleFamily: string;
-  compatibleHeadFamilies: string[];
-  specs: Record<string, unknown>;
-  nozzleChart?: NozzleChart;
-};
 
 const UTILITY_ITEMS: CatalogSeedItem[] = [
   {
@@ -122,7 +116,7 @@ function normalizeRotorExtractedNozzle(raw: ExtractedNozzleRaw): CatalogSeedItem
       ...(chartMax
         ? {
             radiusFeetMax: chartMax,
-            radiusFeetMin: Math.round(chartMax * 0.75 * 100) / 100,
+            radiusFeetMin: rotorMinRadius(chartMax),
             arcDegreesMin: 40,
             arcDegreesMax: 360,
             arcDegreesDefault: 180,

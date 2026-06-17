@@ -47,4 +47,27 @@ describe("rotor nozzle adjustability", () => {
     );
     assert.equal(adj.arcAdjustable, false);
   });
+
+  it("treats rotor radius as adjustable down to 50% of max throw", () => {
+    const adj = getNozzleAdjustability(
+      rotorNozzle({
+        radiusAdjustable: false,
+        radiusFeetMin: 12,
+        radiusFeetMax: 16,
+      })
+    );
+    assert.equal(adj.radiusAdjustable, true);
+    assert.equal(adj.radiusFeetMin, 8);
+    assert.equal(adj.radiusFeetMax, 16);
+  });
+
+  it("does not mark fixed-radius rotors as radius adjustable", () => {
+    const adj = getNozzleAdjustability(
+      rotorNozzle({
+        radiusFeetMin: 20,
+        radiusFeetMax: 20,
+      })
+    );
+    assert.equal(adj.radiusAdjustable, false);
+  });
 });

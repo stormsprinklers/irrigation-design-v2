@@ -35,6 +35,11 @@ export function defaultMinRadius(maxRadius: number): number {
   return Math.round(maxRadius * 0.75 * 100) / 100;
 }
 
+/** Rotor nozzles: factory adjustment typically ~50%–100% of chart throw. */
+export function rotorMinRadius(maxRadius: number): number {
+  return Math.round(maxRadius * 0.5 * 100) / 100;
+}
+
 export function sprayNozzleSpecs(
   base: Record<string, unknown>,
   opts: {
@@ -75,7 +80,7 @@ export function rotorNozzleSpecs(base: Record<string, unknown>): Record<string, 
     arcDegreesMax: 360,
     arcDegreesDefault: 180,
     arcAdjustable: true,
-    radiusAdjustable: false,
+    radiusAdjustable: true,
     rotationAdjustable: true,
   };
 }
@@ -112,7 +117,7 @@ export function enrichNozzleItem(item: CatalogSeedItem): CatalogSeedItem {
         ...(chartMax
           ? {
               radiusFeetMax: chartMax,
-              radiusFeetMin: defaultMinRadius(chartMax),
+              radiusFeetMin: rotorMinRadius(chartMax),
               arcDegreesMin: 40,
               arcDegreesMax: 360,
               arcDegreesDefault: 180,

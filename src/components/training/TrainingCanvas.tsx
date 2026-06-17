@@ -59,9 +59,29 @@ export function TrainingCanvas() {
     return () => observer.disconnect();
   }, [polygon?.metadata.seed]);
 
+  const widthFt = polygon?.metadata.widthFt ?? 0;
+  const heightFt = polygon?.metadata.heightFt ?? 0;
+  const contentW = widthFt * PX + STAGE_OFFSET * 2;
+  const contentH = heightFt * PX + STAGE_OFFSET * 2;
+  const wrapperW = Math.max(contentW, size.width);
+  const wrapperH = Math.max(contentH, size.height);
+
+  useEffect(() => {
+    if (!polygon) return;
+    const el = containerRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollLeft = Math.max(0, (el.scrollWidth - el.clientWidth) / 2);
+      el.scrollTop = Math.max(0, (el.scrollHeight - el.clientHeight) / 2);
+    });
+  }, [polygon, wrapperW, wrapperH, size.width, size.height]);
+
   if (!polygon) {
     return (
-      <div className="flex h-full items-center justify-center text-muted-foreground">
+      <div
+        ref={containerRef}
+        className="flex h-full items-center justify-center text-muted-foreground"
+      >
         Click Generate to create a training example
       </div>
     );
@@ -84,11 +104,6 @@ export function TrainingCanvas() {
     : [];
 
   const flatVertices = polygon.verticesFt.flatMap((v) => [v.x * PX, v.y * PX]);
-
-  const widthFt = polygon.metadata.widthFt;
-  const heightFt = polygon.metadata.heightFt;
-  const stageW = Math.max(widthFt * PX + 80, size.width);
-  const stageH = Math.max(heightFt * PX + 80, size.height);
 
   function handleStageClick(e: {
     target: {
@@ -141,15 +156,19 @@ export function TrainingCanvas() {
   }
 
   return (
-    <div ref={containerRef} className="h-full w-full overflow-auto bg-muted/30">
-      <Stage
-        ref={stageRef}
-        width={stageW}
-        height={stageH}
-        onClick={handleStageClick}
-        onTap={handleStageClick}
+    <div ref={containerRef} className="scroll-surface h-full w-full overflow-auto bg-muted/30">
+      <div
+        className="flex items-center justify-center"
+        style={{ width: wrapperW, height: wrapperH, minWidth: wrapperW, minHeight: wrapperH }}
       >
-        <Layer>
+        <Stage
+          ref={stageRef}
+          width={contentW}
+          height={contentH}
+          onClick={handleStageClick}
+          onTap={handleStageClick}
+        >
+          <Layer>
           {heatCells.map((cell, i) => (
             <Rect
               key={`h-${i}`}
@@ -225,8 +244,9 @@ export function TrainingCanvas() {
               />
             );
           })}
-        </Layer>
-      </Stage>
+          </Layer>
+        </Stage>
+      </div>
     </div>
   );
 }

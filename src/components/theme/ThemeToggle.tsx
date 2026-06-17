@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Monitor, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,6 @@ type Props = {
 const MODES = [
   { value: "light", label: "Light", icon: Sun },
   { value: "dark", label: "Dark", icon: Moon },
-  { value: "system", label: "System", icon: Monitor },
 ] as const;
 
 export function ThemeToggle({ compact = false, className }: Props) {
@@ -28,7 +27,7 @@ export function ThemeToggle({ compact = false, className }: Props) {
     return compact ? (
       <div className={cn("h-9 w-9", className)} aria-hidden />
     ) : (
-      <div className={cn("h-9 w-[7.5rem]", className)} aria-hidden />
+      <div className={cn("h-9 w-[5.5rem]", className)} aria-hidden />
     );
   }
 
@@ -48,17 +47,19 @@ export function ThemeToggle({ compact = false, className }: Props) {
     );
   }
 
+  const activeTheme = theme === "dark" ? "dark" : "light";
+
   return (
     <div className={cn("flex items-center gap-1 rounded-md border bg-background p-1", className)}>
       {MODES.map(({ value, label, icon: Icon }) => (
         <Button
           key={value}
           type="button"
-          variant={theme === value ? "secondary" : "ghost"}
+          variant={activeTheme === value ? "secondary" : "ghost"}
           size="sm"
           className="h-7 flex-1 px-2"
           aria-label={`${label} theme`}
-          aria-pressed={theme === value}
+          aria-pressed={activeTheme === value}
           onClick={() => setTheme(value)}
         >
           <Icon className="h-3.5 w-3.5" />

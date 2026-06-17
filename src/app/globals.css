@@ -24,6 +24,7 @@
 }
 
 :root {
+  color-scheme: light;
   --radius: 0.5rem;
   --background: oklch(0.99 0.005 155);
   --foreground: oklch(0.18 0.02 155);
@@ -69,6 +70,34 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+  }
+  select,
+  option {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+@layer utilities {
+  .scroll-surface {
+    scrollbar-gutter: stable;
+    scrollbar-color: color-mix(in oklch, var(--muted-foreground) 45%, transparent) transparent;
+  }
+
+  .scroll-surface::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scroll-surface::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklch, var(--muted-foreground) 45%, transparent);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  .scroll-surface::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in oklch, var(--muted-foreground) 65%, transparent);
   }
 }
 

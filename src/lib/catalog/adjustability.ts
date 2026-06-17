@@ -43,6 +43,11 @@ function bool(value: unknown, fallback: boolean): boolean {
   return typeof value === "boolean" ? value : fallback;
 }
 
+/** Rotor throw adjustment: ~50%–100% of chart max radius. */
+export function rotorMinRadiusFeet(radiusMax: number): number {
+  return Math.round(radiusMax * 0.5 * 100) / 100;
+}
+
 export function getBodyCategory(item: CatalogItemData): BodyCategory | undefined {
   if (item.category === "SPRAY_BODY") return "SPRAY_BODY";
   if (item.category === "ROTOR_BODY") return "ROTOR_BODY";
@@ -68,7 +73,14 @@ export function getNozzleAdjustability(nozzle: CatalogItemData): NozzleAdjustabi
     ? Math.max(...nozzle.nozzleChart.radiusFeet)
     : 12;
   const radiusMax = num(nozzle.specs.radiusFeetMax, chartMax);
-  const radiusMin = num(nozzle.specs.radiusFeetMin, Math.round(radiusMax * 0.75 * 100) / 100);
+  const isRotor = getCompatibleBodyCategories(nozzle).includes("ROTOR_BODY");
+  const catalogRadiusMin = num(nozzle.specs.radiusFeetMin, radiusMax);
+  const fixedRotorRadius = isRotor && catalogRadiusMin === radiusMax;
+  const radiusMin = isRotor
+    ? fixedRotorRadius
+      ? catalogRadiusMin
+      : rotorMinRadiusFeet(radiusMax)
+    : num(nozzle.specs.radiusFeetMin, Math.round(radiusMax * 0.75 * 100) / 100);
 
   const mpBand =
     nozzle.category === "MP_ROTATOR" ? inferMpArcBand(nozzle) : undefined;
@@ -89,8 +101,6 @@ export function getNozzleAdjustability(nozzle: CatalogItemData): NozzleAdjustabi
     typeof nozzle.specs.arcDegreesMax === "number" &&
     nozzle.specs.arcDegreesMin !== nozzle.specs.arcDegreesMax;
 
-  const isRotor = getCompatibleBodyCategories(nozzle).includes("ROTOR_BODY");
-
   const arcAdjustable = bandSpec
     ? mpBand !== "360"
     : isRotor && arcMax > arcMin
@@ -105,7 +115,9 @@ export function getNozzleAdjustability(nozzle: CatalogItemData): NozzleAdjustabi
     radiusFeetMin: radiusMin,
     radiusFeetMax: radiusMax,
     arcAdjustable,
-    radiusAdjustable: bool(nozzle.specs.radiusAdjustable, radiusMin !== radiusMax),
+    radiusAdjustable: isRotor
+      ? !fixedRotorRadius && radiusMax > radiusMin
+      : bool(nozzle.specs.radiusAdjustable, radiusMin !== radiusMax),
     rotationAdjustable: bool(nozzle.specs.rotationAdjustable, true),
     fixedLeftEdge: bandSpec
       ? bandSpec.fixedLeftEdge

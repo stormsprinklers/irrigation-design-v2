@@ -17,6 +17,7 @@ import {
 } from "@/lib/catalog/compat";
 import { getNozzleAdjustability } from "@/lib/catalog/adjustability";
 import { cn } from "@/lib/utils";
+import { NativeSelect } from "@/components/ui/native-select";
 
 type Props = {
   catalog: CatalogItemData[];
@@ -48,7 +49,7 @@ function SegmentedControl<T extends string>({
             "flex-1 rounded-md border px-2 py-1.5 text-xs font-medium transition-colors",
             value === opt.id
               ? "border-primary bg-primary/10 text-primary"
-              : "hover:bg-accent text-muted-foreground hover:text-foreground"
+              : "border-input bg-background text-muted-foreground hover:bg-accent hover:text-foreground"
           )}
           onClick={() => onChange(opt.id)}
         >
@@ -116,8 +117,7 @@ export function HeadCatalogPickers({
             value={bodyGroup}
             onChange={setBodyGroup}
           />
-          <select
-            className="w-full rounded-md border px-2 py-1.5 text-sm"
+          <NativeSelect
             value={bodySelectValue}
             onChange={(e) => {
               if (e.target.value) onBodyChange(e.target.value);
@@ -129,7 +129,7 @@ export function HeadCatalogPickers({
                 {body.manufacturer} {body.model}
               </option>
             ))}
-          </select>
+          </NativeSelect>
         </div>
       </div>
 
@@ -151,8 +151,7 @@ export function HeadCatalogPickers({
                 }}
               />
             )}
-            <select
-              className="w-full rounded-md border px-2 py-1.5 text-sm"
+            <NativeSelect
               value={nozzleSelectValue}
               onChange={(e) => {
                 if (e.target.value) onNozzleChange(e.target.value);
@@ -166,7 +165,7 @@ export function HeadCatalogPickers({
                   {nozzle.model}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
             {showNozzleDetails && selectedNozzle && (
               <p className="text-xs text-muted-foreground">
                 {(() => {

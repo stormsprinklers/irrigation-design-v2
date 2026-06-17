@@ -10,6 +10,7 @@ import {
 } from "@/lib/actions/design";
 import type { DesignVersion } from "@prisma/client";
 import { ShareMenu } from "./ShareMenu";
+import { NativeSelect } from "@/components/ui/native-select";
 
 type Props = {
   projectId: string;
@@ -38,8 +39,8 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
 
   return (
     <div className="flex items-center gap-2" data-tour="tour-versions">
-      <select
-        className="rounded-md border px-2 py-1 text-sm"
+      <NativeSelect
+        className="h-8 w-auto py-1"
         value={activeVersionId}
         onChange={(e) => handleRestore(e.target.value)}
       >
@@ -48,7 +49,7 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
             {v.label} ({v.kind})
           </option>
         ))}
-      </select>
+      </NativeSelect>
       <Input
         className="h-8 w-40"
         placeholder="Version label"

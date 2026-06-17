@@ -644,10 +644,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 16,
-      "radiusFeetMin": 12
+      "radiusFeetMin": 8
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -697,10 +697,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 17,
-      "radiusFeetMin": 12.75
+      "radiusFeetMin": 8.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -750,10 +750,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 19,
-      "radiusFeetMin": 14.25
+      "radiusFeetMin": 9.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -803,10 +803,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 22,
-      "radiusFeetMin": 16.5
+      "radiusFeetMin": 11
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -856,10 +856,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 25,
-      "radiusFeetMin": 18.75
+      "radiusFeetMin": 12.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -909,10 +909,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 28,
-      "radiusFeetMin": 21
+      "radiusFeetMin": 14
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -962,10 +962,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 31,
-      "radiusFeetMin": 23.25
+      "radiusFeetMin": 15.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1015,10 +1015,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 34,
-      "radiusFeetMin": 25.5
+      "radiusFeetMin": 17
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1068,10 +1068,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 30,
-      "radiusFeetMin": 22.5
+      "radiusFeetMin": 15
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1126,10 +1126,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 31,
-      "radiusFeetMin": 23.25
+      "radiusFeetMin": 15.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1184,10 +1184,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24
+      "radiusFeetMin": 16
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1242,10 +1242,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 34,
-      "radiusFeetMin": 25.5
+      "radiusFeetMin": 17
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1300,10 +1300,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 38,
-      "radiusFeetMin": 28.5
+      "radiusFeetMin": 19
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1358,10 +1358,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 38,
-      "radiusFeetMin": 28.5
+      "radiusFeetMin": 19
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1416,10 +1416,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 40,
-      "radiusFeetMin": 30
+      "radiusFeetMin": 20
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1474,10 +1474,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5
+      "radiusFeetMin": 21
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1532,10 +1532,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 45,
-      "radiusFeetMin": 33.75
+      "radiusFeetMin": 22.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1590,10 +1590,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 49,
-      "radiusFeetMin": 36.75
+      "radiusFeetMin": 24.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1648,10 +1648,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 51,
-      "radiusFeetMin": 38.25
+      "radiusFeetMin": 25.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1706,10 +1706,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 52,
-      "radiusFeetMin": 39
+      "radiusFeetMin": 26
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1764,10 +1764,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24
+      "radiusFeetMin": 16
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1827,10 +1827,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 34,
-      "radiusFeetMin": 25.5
+      "radiusFeetMin": 17
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1890,10 +1890,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25
+      "radiusFeetMin": 17.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1953,10 +1953,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 39,
-      "radiusFeetMin": 29.25
+      "radiusFeetMin": 19.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2016,10 +2016,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 41,
-      "radiusFeetMin": 30.75
+      "radiusFeetMin": 20.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2079,10 +2079,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5
+      "radiusFeetMin": 21
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2142,10 +2142,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 44,
-      "radiusFeetMin": 33
+      "radiusFeetMin": 22
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2205,10 +2205,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 46,
-      "radiusFeetMin": 34.5
+      "radiusFeetMin": 23
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2268,10 +2268,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 28,
-      "radiusFeetMin": 21
+      "radiusFeetMin": 14
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2326,10 +2326,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 30,
-      "radiusFeetMin": 22.5
+      "radiusFeetMin": 15
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2384,10 +2384,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25
+      "radiusFeetMin": 17.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2442,10 +2442,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75
+      "radiusFeetMin": 18.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2500,10 +2500,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 38,
-      "radiusFeetMin": 28.5
+      "radiusFeetMin": 19
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2558,10 +2558,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5
+      "radiusFeetMin": 21
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2616,10 +2616,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 44,
-      "radiusFeetMin": 33
+      "radiusFeetMin": 22
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2675,10 +2675,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24
+      "radiusFeetMin": 16
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2739,10 +2739,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 34,
-      "radiusFeetMin": 25.5
+      "radiusFeetMin": 17
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2803,10 +2803,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25
+      "radiusFeetMin": 17.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2867,10 +2867,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 39,
-      "radiusFeetMin": 29.25
+      "radiusFeetMin": 19.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2931,10 +2931,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 41,
-      "radiusFeetMin": 30.75
+      "radiusFeetMin": 20.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2995,10 +2995,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5
+      "radiusFeetMin": 21
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3059,10 +3059,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 44,
-      "radiusFeetMin": 33
+      "radiusFeetMin": 22
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3123,10 +3123,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 46,
-      "radiusFeetMin": 34.5
+      "radiusFeetMin": 23
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3187,10 +3187,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 30,
-      "radiusFeetMin": 22.5
+      "radiusFeetMin": 15
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3246,10 +3246,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25
+      "radiusFeetMin": 17.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3305,10 +3305,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75
+      "radiusFeetMin": 18.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3364,10 +3364,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75
+      "radiusFeetMin": 18.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3423,10 +3423,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 47,
-      "radiusFeetMin": 35.25
+      "radiusFeetMin": 23.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3482,10 +3482,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 47,
-      "radiusFeetMin": 35.25
+      "radiusFeetMin": 23.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3541,10 +3541,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 39,
-      "radiusFeetMin": 29.25
+      "radiusFeetMin": 19.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3600,10 +3600,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 41,
-      "radiusFeetMin": 30.75
+      "radiusFeetMin": 20.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3659,10 +3659,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 19,
-      "radiusFeetMin": 14.25
+      "radiusFeetMin": 9.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3718,10 +3718,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 19,
-      "radiusFeetMin": 14.25
+      "radiusFeetMin": 9.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3777,10 +3777,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 19,
-      "radiusFeetMin": 14.25
+      "radiusFeetMin": 9.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3836,10 +3836,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 26,
-      "radiusFeetMin": 19.5
+      "radiusFeetMin": 13
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3895,10 +3895,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 26,
-      "radiusFeetMin": 19.5
+      "radiusFeetMin": 13
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3954,10 +3954,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 26,
-      "radiusFeetMin": 19.5
+      "radiusFeetMin": 13
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4014,10 +4014,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 23,
-      "radiusFeetMin": 17.25
+      "radiusFeetMin": 11.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4079,10 +4079,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 23,
-      "radiusFeetMin": 17.25
+      "radiusFeetMin": 11.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4144,10 +4144,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 23,
-      "radiusFeetMin": 17.25
+      "radiusFeetMin": 11.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4209,10 +4209,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 23,
-      "radiusFeetMin": 17.25
+      "radiusFeetMin": 11.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4274,10 +4274,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75
+      "radiusFeetMin": 14.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4339,10 +4339,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75
+      "radiusFeetMin": 14.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4404,10 +4404,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75
+      "radiusFeetMin": 14.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4469,10 +4469,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75
+      "radiusFeetMin": 14.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4534,10 +4534,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24
+      "radiusFeetMin": 16
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4599,10 +4599,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24
+      "radiusFeetMin": 16
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4664,10 +4664,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24
+      "radiusFeetMin": 16
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4729,10 +4729,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24
+      "radiusFeetMin": 16
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4792,10 +4792,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 18,
-      "radiusFeetMin": 13.5
+      "radiusFeetMin": 9
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4850,10 +4850,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 22,
-      "radiusFeetMin": 16.5
+      "radiusFeetMin": 11
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4908,10 +4908,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 24,
-      "radiusFeetMin": 18
+      "radiusFeetMin": 12
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4966,10 +4966,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 28,
-      "radiusFeetMin": 21
+      "radiusFeetMin": 14
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5024,10 +5024,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24
+      "radiusFeetMin": 16
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5082,10 +5082,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25
+      "radiusFeetMin": 17.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5141,10 +5141,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75
+      "radiusFeetMin": 14.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5204,10 +5204,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25
+      "radiusFeetMin": 17.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5268,10 +5268,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 31,
-      "radiusFeetMin": 23.25
+      "radiusFeetMin": 15.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5331,10 +5331,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75
+      "radiusFeetMin": 18.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5395,10 +5395,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 33,
-      "radiusFeetMin": 24.75
+      "radiusFeetMin": 16.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5458,10 +5458,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75
+      "radiusFeetMin": 18.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5521,10 +5521,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 40,
-      "radiusFeetMin": 30
+      "radiusFeetMin": 20
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5585,10 +5585,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 36,
-      "radiusFeetMin": 27
+      "radiusFeetMin": 18
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5648,10 +5648,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5
+      "radiusFeetMin": 21
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5711,10 +5711,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 45,
-      "radiusFeetMin": 33.75
+      "radiusFeetMin": 22.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5774,10 +5774,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 48,
-      "radiusFeetMin": 36
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5837,10 +5837,10 @@
       "arcDegreesMax": 360,
       "arcDegreesDefault": 180,
       "arcAdjustable": true,
-      "radiusAdjustable": false,
+      "radiusAdjustable": true,
       "rotationAdjustable": true,
       "radiusFeetMax": 50,
-      "radiusFeetMin": 37.5
+      "radiusFeetMin": 25
     },
     "nozzleChart": {
       "pressurePsi": [

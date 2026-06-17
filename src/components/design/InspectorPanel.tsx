@@ -17,6 +17,7 @@ import {
 } from "@/lib/catalog/adjustability";
 import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
 import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
+import { NativeSelect } from "@/components/ui/native-select";
 
 type Props = {
   catalog: CatalogItemData[];
@@ -158,8 +159,7 @@ export function InspectorPanel({
 
         <section className="space-y-3" data-tour="tour-zone-isolation">
           <h3 className="text-sm font-medium">Zone isolation</h3>
-          <select
-            className="w-full rounded-md border px-2 py-1.5 text-sm"
+          <NativeSelect
             value={activeZoneId ?? ""}
             onChange={(e) => setActiveZoneId(e.target.value || null)}
           >
@@ -169,7 +169,7 @@ export function InspectorPanel({
                 {z.name}
               </option>
             ))}
-          </select>
+          </NativeSelect>
           {selectedZone && (
             <p className="text-xs text-muted-foreground">
               Showing {selectedZone.name} — heads, pipes, and hydraulics filtered
@@ -211,8 +211,8 @@ export function InspectorPanel({
             <h3 className="text-sm font-medium">Hydrozone: {selectedHydrozone.name}</h3>
             <div>
               <Label className="text-xs">Hydrozone type</Label>
-              <select
-                className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
+              <NativeSelect
+                className="mt-1"
                 value={selectedHydrozone.hydrozoneType}
                 onChange={(e) => {
                   const hydrozones = document.hydrozones.map((h) =>
@@ -228,12 +228,12 @@ export function InspectorPanel({
                     {t}
                   </option>
                 ))}
-              </select>
+              </NativeSelect>
             </div>
             <div>
               <Label className="text-xs">Head preference</Label>
-              <select
-                className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
+              <NativeSelect
+                className="mt-1"
                 value={selectedHydrozone.headPreference}
                 onChange={(e) => {
                   const hydrozones = document.hydrozones.map((h) =>
@@ -249,12 +249,12 @@ export function InspectorPanel({
                     {t.replace("_", " ")}
                   </option>
                 ))}
-              </select>
+              </NativeSelect>
             </div>
             <div>
               <Label className="text-xs">Spacing pattern</Label>
-              <select
-                className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
+              <NativeSelect
+                className="mt-1"
                 value={selectedHydrozone.spacingPattern ?? "auto"}
                 onChange={(e) => {
                   const value = e.target.value as "auto" | "square" | "triangular";
@@ -269,7 +269,7 @@ export function InspectorPanel({
                 <option value="auto">Auto-detect</option>
                 <option value="square">Square</option>
                 <option value="triangular">Triangular</option>
-              </select>
+              </NativeSelect>
             </div>
             <p className="text-xs text-muted-foreground">
               Auto-place uses head-to-head spacing with corners first, then edges and interior fill.
@@ -354,8 +354,7 @@ export function InspectorPanel({
               />
               Lock head
             </label>
-            <select
-              className="w-full rounded-md border px-2 py-1.5 text-sm"
+            <NativeSelect
               value={selectedHead.zoneId}
               onChange={(e) => {
                 const heads = document.heads.map((h) =>
@@ -369,7 +368,7 @@ export function InspectorPanel({
                   {z.name}
                 </option>
               ))}
-            </select>
+            </NativeSelect>
           </section>
         )}
 

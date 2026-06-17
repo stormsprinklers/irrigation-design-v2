@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { NativeSelect } from "@/components/ui/native-select";
 import { useTrainingStore } from "@/lib/stores/training-store";
 import {
   TRAINING_SHAPE_CLASSES,
@@ -42,8 +43,8 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
   return (
     <div className="flex flex-wrap items-center gap-2 border-b bg-card p-3">
       <div className="flex items-center gap-2" data-tour="training-tour-generate">
-        <select
-          className="rounded-md border px-2 py-1.5 text-sm"
+        <NativeSelect
+          className="w-auto"
           value={shapeFilter}
           onChange={(e) => setShapeFilter(e.target.value as TrainingShapeClass | "random")}
         >
@@ -52,7 +53,7 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
               {s.label}
             </option>
           ))}
-        </select>
+        </NativeSelect>
         <Button size="sm" onClick={() => generateExample()}>
           Generate
         </Button>
