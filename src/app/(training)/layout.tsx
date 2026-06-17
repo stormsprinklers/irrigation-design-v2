@@ -1,3 +1,21 @@
-export default function TrainingLayout({ children }: { children: React.ReactNode }) {
-  return <div className="flex h-dvh flex-col overflow-hidden">{children}</div>;
+import { auth, signOut } from "@/lib/auth";
+import { DashboardShell } from "@/components/layout/DashboardShell";
+
+export default async function TrainingLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth();
+
+  async function signOutAction() {
+    "use server";
+    await signOut({ redirectTo: "/" });
+  }
+
+  return (
+    <DashboardShell
+      userName={session?.user?.name}
+      signOutAction={signOutAction}
+      mainClassName="flex flex-col overflow-hidden"
+    >
+      {children}
+    </DashboardShell>
+  );
 }

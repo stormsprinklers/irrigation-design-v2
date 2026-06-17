@@ -118,7 +118,7 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
   );
 
   return (
-    <div className="flex h-dvh flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TrainingTour initialStatus={tourStatus} />
       <div className="safe-top shrink-0 border-b px-3 py-3 sm:px-4" data-tour="training-tour-header">
         <div className="flex items-start gap-3">

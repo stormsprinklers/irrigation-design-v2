@@ -12,11 +12,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 type Props = {
   userName?: string | null;
   signOutAction: () => Promise<void>;
   children: React.ReactNode;
+  /** Override main content area classes (default: scrollable page content). */
+  mainClassName?: string;
 };
 
 const navLinks = [
@@ -43,7 +46,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export function DashboardShell({ userName, signOutAction, children }: Props) {
+export function DashboardShell({ userName, signOutAction, children, mainClassName }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -104,7 +107,7 @@ export function DashboardShell({ userName, signOutAction, children }: Props) {
             </SheetContent>
           </Sheet>
         </header>
-        <main className="min-h-0 flex-1 overflow-auto">{children}</main>
+        <main className={cn("min-h-0 flex-1", mainClassName ?? "overflow-auto")}>{children}</main>
       </div>
     </div>
   );
