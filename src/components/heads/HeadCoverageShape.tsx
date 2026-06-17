@@ -47,12 +47,12 @@ function parseFillAlpha(fill: string): number {
 }
 
 /** Color stops for Konva radial/linear gradients matching the precip taper curve. */
-export function coverageGradientColorStops(fill: string): number[] {
+export function coverageGradientColorStops(fill: string): (string | number)[] {
   const { r, g, b } = parseFillRgb(fill);
   const peakAlpha = parseFillAlpha(fill);
   const edgeAlpha = Math.max(0.04, peakAlpha * 0.2);
   const ratios = [0, 0.2, 0.4, 0.6, 0.8, 1];
-  const stops: number[] = [];
+  const stops: (string | number)[] = [];
   for (const ratio of ratios) {
     const strength = DEFAULT_TAPER_V1_CURVE.strengthAtRatio(ratio);
     const alpha = edgeAlpha + (peakAlpha - edgeAlpha) * strength;

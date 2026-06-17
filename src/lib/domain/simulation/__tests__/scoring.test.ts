@@ -1,8 +1,11 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
+import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
 import {
   computeImprovementScore,
   estimateOversprayMetrics,
+  evaluateDesign,
   scoreUniformity,
 } from "../scoring";
 import type { ExclusionZone } from "../../types";
@@ -180,14 +183,11 @@ describe("estimateOversprayMetrics", () => {
 
 describe("evaluateDesign radial taper", () => {
   it("applies precip falloff for full-circle (360°) rotor arcs", () => {
-    const { readFileSync } = require("node:fs");
-    const { evaluateDesign } = require("../scoring");
-    const { resolveDefaultHeadSettings } = require("@/lib/catalog/adjustability");
-
     const catalog = JSON.parse(
       readFileSync("prisma/seed-data/catalog-items.json", "utf8")
-    );
-    const pgjNoz = catalog.find((c: { id: string }) => c.id === "noz_pgj_red_2_0");
+    ) as import("@/lib/domain/types").CatalogItemData[];
+    const pgjNoz = catalog.find((c) => c.id === "noz_pgj_red_2_0");
+    assert.ok(pgjNoz);
     const settings = resolveDefaultHeadSettings(pgjNoz, 65);
     const head: TrainingHeadSnapshot = {
       id: "h1",
@@ -208,7 +208,7 @@ describe("evaluateDesign radial taper", () => {
       { x: 0, y: 100 },
     ];
     const { precipValues } = evaluateDesign(lawn, [head]);
-    const covered = precipValues.filter((v: number) => v > 0);
+    const covered = precipValues.filter((v) => v > 0);
     assert.ok(covered.length > 0, "360° arc should cover interior samples");
     const min = Math.min(...covered);
     const max = Math.max(...covered);
