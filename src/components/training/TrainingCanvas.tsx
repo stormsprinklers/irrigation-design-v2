@@ -43,24 +43,19 @@ export function TrainingCanvas() {
   const lastCenteredSeedRef = useRef<number | null>(null);
   const computedLayoutRef = useRef({ paddingPx: 40, widthPx: 800, heightPx: 600 });
   const frozenLayoutRef = useRef<ReturnType<typeof trainingStageSizePx> | null>(null);
+  const scrollAnchorRef = useRef({ left: 0, top: 0 });
+  const [isInteracting, setIsInteracting] = useState(false);
   const [frozenLayout, setFrozenLayout] = useState<ReturnType<typeof trainingStageSizePx> | null>(
     null
   );
   const [size, setSize] = useState({ width: 800, height: 600 });
-
-  const lockCanvasScroll = useCallback(() => {
-    scrollLockCountRef.current += 1;
-    if (scrollLockCountRef.current === 1) {
-      frozenLayoutRef.current = computedLayoutRef.current;
-      setFrozenLayout(computedLayoutRef.current);
-    }
-  }, []);
 
   const unlockCanvasScroll = useCallback(() => {
     scrollLockCountRef.current = Math.max(0, scrollLockCountRef.current - 1);
     if (scrollLockCountRef.current === 0) {
       const el = containerRef.current;
       const prevPad = frozenLayoutRef.current?.paddingPx ?? computedLayoutRef.current.paddingPx;
+      setIsInteracting(false);
       frozenLayoutRef.current = null;
       setFrozenLayout(null);
       if (el) {
@@ -75,13 +70,28 @@ export function TrainingCanvas() {
     }
   }, []);
 
+  const lockCanvasScroll = useCallback(() => {
+    const el = containerRef.current;
+    if (scrollLockCountRef.current === 0 && el) {
+      scrollAnchorRef.current = { left: el.scrollLeft, top: el.scrollTop };
+      setIsInteracting(true);
+      frozenLayoutRef.current = computedLayoutRef.current;
+      setFrozenLayout(computedLayoutRef.current);
+    }
+    scrollLockCountRef.current += 1;
+  }, []);
+
+  const forceEndInteraction = useCallback(() => {
+    if (scrollLockCountRef.current === 0) return;
+    scrollLockCountRef.current = 1;
+    unlockCanvasScroll();
+  }, [unlockCanvasScroll]);
+
   useEffect(() => {
     const onPointerUp = () => {
       requestAnimationFrame(() => {
         if (scrollLockCountRef.current > 0) {
-          scrollLockCountRef.current = 0;
-          frozenLayoutRef.current = null;
-          setFrozenLayout(null);
+          forceEndInteraction();
         }
       });
     };
@@ -91,14 +101,34 @@ export function TrainingCanvas() {
       window.removeEventListener("pointerup", onPointerUp);
       window.removeEventListener("pointercancel", onPointerUp);
     };
-  }, []);
+  }, [forceEndInteraction]);
+
+  useEffect(() => {
+    if (!isInteracting) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const anchor = scrollAnchorRef.current;
+    const fixScroll = () => {
+      if (el.scrollLeft !== anchor.left || el.scrollTop !== anchor.top) {
+        el.scrollLeft = anchor.left;
+        el.scrollTop = anchor.top;
+      }
+    };
+
+    el.addEventListener("scroll", fixScroll, { passive: true });
+    return () => el.removeEventListener("scroll", fixScroll);
+  }, [isInteracting]);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     const onWheel = (e: WheelEvent) => {
-      if (scrollLockCountRef.current > 0) return;
+      if (scrollLockCountRef.current > 0) {
+        e.preventDefault();
+        return;
+      }
       const canScrollX = el.scrollWidth > el.clientWidth;
       const canScrollY = el.scrollHeight > el.clientHeight;
       if (!canScrollX && !canScrollY) return;
@@ -111,6 +141,19 @@ export function TrainingCanvas() {
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
   }, [polygon?.metadata.seed]);
+
+  useEffect(() => {
+    if (!isInteracting) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    const blockTouchScroll = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+
+    el.addEventListener("touchmove", blockTouchScroll, { passive: false });
+    return () => el.removeEventListener("touchmove", blockTouchScroll);
+  }, [isInteracting]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -249,8 +292,13 @@ export function TrainingCanvas() {
   return (
     <div
       ref={containerRef}
-      className="scroll-surface h-full w-full overflow-auto bg-muted/30"
-      style={{ overscrollBehavior: "contain" }}
+      className={`scroll-surface h-full w-full bg-muted/30 ${
+        isInteracting ? "overflow-hidden touch-none" : "overflow-auto"
+      }`}
+      style={{
+        overscrollBehavior: "contain",
+        touchAction: isInteracting ? "none" : "pan-x pan-y",
+      }}
     >
       <div
         className="flex items-center justify-center"

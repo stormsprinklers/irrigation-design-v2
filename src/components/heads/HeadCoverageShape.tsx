@@ -147,7 +147,9 @@ export function HeadCoverageShape(props: HeadCoverageProps) {
       {...(radialFalloff && gradientStops
         ? {
             fillRadialGradientStartPoint: { x: 0, y: 0 },
-            fillRadialGradientEndPoint: { x: outerRadius, y: 0 },
+            fillRadialGradientEndPoint: { x: 0, y: 0 },
+            fillRadialGradientStartRadius: 0,
+            fillRadialGradientEndRadius: outerRadius,
             fillRadialGradientColorStops: gradientStops,
           }
         : {})}
