@@ -10,7 +10,10 @@ const pushUrl = directUrl || databaseUrl;
 
 if (pushUrl) {
   console.log(`Running prisma db push (${directUrl ? "DIRECT_URL" : "DATABASE_URL"})...`);
-  run("npx prisma db push --skip-generate", { ...process.env, DATABASE_URL: pushUrl });
+  run("npx prisma db push --skip-generate --accept-data-loss", {
+    ...process.env,
+    DATABASE_URL: pushUrl,
+  });
   run("npm run db:seed");
 } else {
   console.warn("Skipping prisma db push and seed: DATABASE_URL is not set.");
