@@ -168,7 +168,7 @@ export function normalizeSceneToOrigin(
   };
 }
 
-/** Generate 0–3 exclusion polygons that share an edge with the lawn (no interior overlap). */
+/** Generate exclusion polygons attached to lawn edges (design / future use only — not used for AI training lawns). */
 export function generateAdjacentExclusions(
   lawnVertices: Point[],
   rng: () => number,

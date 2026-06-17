@@ -11,14 +11,17 @@ import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
 export function HeadEditorPanel() {
   const catalog = useTrainingStore((s) => s.catalog);
   const correctedHeads = useTrainingStore((s) => s.correctedHeads);
-  const selectedHeadId = useTrainingStore((s) => s.selectedHeadId);
+  const selectedHeadIds = useTrainingStore((s) => s.selectedHeadIds);
   const updateCorrectedHead = useTrainingStore((s) => s.updateCorrectedHead);
   const recomputeScores = useTrainingStore((s) => s.recomputeScores);
   const duplicateCorrectedHead = useTrainingStore((s) => s.duplicateCorrectedHead);
-  const deleteCorrectedHead = useTrainingStore((s) => s.deleteCorrectedHead);
+  const deleteSelectedHeads = useTrainingStore((s) => s.deleteSelectedHeads);
   const viewMode = useTrainingStore((s) => s.viewMode);
 
-  const head = correctedHeads.find((h) => h.id === selectedHeadId);
+  const head =
+    selectedHeadIds.length === 1
+      ? correctedHeads.find((h) => h.id === selectedHeadIds[0])
+      : undefined;
 
   if (viewMode === "baseline") {
     return (
@@ -28,10 +31,36 @@ export function HeadEditorPanel() {
     );
   }
 
+  if (selectedHeadIds.length === 0) {
+    return (
+      <div className="p-4 text-sm text-muted-foreground">
+        Select a head to edit, or use Add head and click on the lawn. Drag a box on the canvas or
+        Shift+click to select multiple heads. Ctrl+C / Ctrl+V to copy and paste.
+      </div>
+    );
+  }
+
+  if (selectedHeadIds.length > 1) {
+    return (
+      <div className="space-y-3 p-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-medium">{selectedHeadIds.length} heads selected</h3>
+          <Button size="sm" variant="destructive" onClick={() => deleteSelectedHeads()}>
+            Delete
+          </Button>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Press Delete or Backspace to remove the selection. Ctrl+C / Ctrl+V to copy and paste.
+          Select one head to edit radius, arc, and nozzle settings.
+        </p>
+      </div>
+    );
+  }
+
   if (!head) {
     return (
       <div className="p-4 text-sm text-muted-foreground">
-        Select a head to edit, or use Add head and click on the lawn.
+        Selected head is no longer on the layout.
       </div>
     );
   }
@@ -57,7 +86,7 @@ export function HeadEditorPanel() {
           <Button size="sm" variant="outline" onClick={() => duplicateCorrectedHead(head.id)}>
             Duplicate
           </Button>
-          <Button size="sm" variant="destructive" onClick={() => deleteCorrectedHead(head.id)}>
+          <Button size="sm" variant="destructive" onClick={() => deleteSelectedHeads()}>
             Delete
           </Button>
         </div>

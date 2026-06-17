@@ -18,31 +18,13 @@ import { runPlacementOnPolygon } from "../placement-adapter";
 import { evaluateDesign } from "../../simulation/scoring";
 import { precipValueAtPoint } from "../../simulation/sample-grid";
 import { DEFAULT_TAPER_V1_CURVE, LEGACY_BELL_V0_CURVE } from "../../simulation/radial-curve";
-import {
-  pointAlongEdge,
-  pointInPolygon,
-  polygonBounds,
-  polygonCentroid,
-  projectPointOnEdge,
-} from "../../placement/geometry";
-import type { CatalogItemData, Point } from "../../types";
+import { pointInPolygon } from "../../placement/geometry";
+import type { CatalogItemData } from "../../types";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const catalog = JSON.parse(
   readFileSync(join(__dirname, "../../../../../prisma/seed-data/catalog-items.json"), "utf8")
 ) as CatalogItemData[];
-
-function onLawnBoundary(point: Point, lawn: Point[], eps = 0.08): boolean {
-  for (let i = 0; i < lawn.length; i++) {
-    const a = lawn[i]!;
-    const b = lawn[(i + 1) % lawn.length]!;
-    const t = projectPointOnEdge(a, b, point);
-    if (t < -0.02 || t > 1.02) continue;
-    const proj = pointAlongEdge(a, b, Math.max(0, Math.min(1, t)));
-    if (Math.hypot(point.x - proj.x, point.y - proj.y) <= eps) return true;
-  }
-  return false;
-}
 
 describe("polygon-generator", () => {
   it("generates valid CCW polygons with minimum area", () => {
@@ -128,42 +110,12 @@ describe("polygon-generator", () => {
     assert.notDeepEqual(a.verticesFt, b.verticesFt);
   });
 
-  it("may attach exclusion zones that share borders without overlapping the lawn", () => {
-    let withExcl = 0;
-    let withoutExcl = 0;
+  it("does not generate exclusion zones on synthetic lawns", () => {
     for (let seed = 0; seed < 200; seed++) {
       const poly = generateTrainingPolygon({ seed, shapeClass: "back_yard" });
-      if (poly.exclusionZonesFt.length > 0) {
-        withExcl++;
-        assert.equal(poly.metadata.hasExclusions, true);
-        for (const zone of poly.exclusionZonesFt) {
-          const mid = polygonCentroid(zone.vertices);
-          assert.ok(
-            !pointInPolygon(mid, poly.verticesFt) || onLawnBoundary(mid, poly.verticesFt),
-            "exclusion interior must not overlap lawn"
-          );
-          for (const v of zone.vertices) {
-            assert.ok(
-              !pointInPolygon(v, poly.verticesFt) || onLawnBoundary(v, poly.verticesFt),
-              "exclusion vertices must not lie inside lawn"
-            );
-          }
-          const boundaryVerts = zone.vertices.filter((v) => onLawnBoundary(v, poly.verticesFt));
-          assert.ok(boundaryVerts.length >= 2, "exclusion must share a border with lawn");
-        }
-        const lawnBounds = polygonBounds(poly.verticesFt);
-        const sceneBounds = polygonBounds([
-          ...poly.verticesFt,
-          ...poly.exclusionZonesFt.flatMap((z) => z.vertices),
-        ]);
-        assert.ok(sceneBounds.maxX - sceneBounds.minX >= lawnBounds.maxX - lawnBounds.minX);
-      } else {
-        withoutExcl++;
-        assert.equal(poly.metadata.hasExclusions, false);
-      }
+      assert.equal(poly.exclusionZonesFt.length, 0);
+      assert.equal(poly.metadata.hasExclusions, false);
     }
-    assert.ok(withExcl > 0, "expected some seeds with exclusions");
-    assert.ok(withoutExcl > 0, "expected some seeds without exclusions");
   });
 
   it("includes exclusions in reproducible output for the same seed", () => {

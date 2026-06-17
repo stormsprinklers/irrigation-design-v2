@@ -13,11 +13,8 @@ import {
   circularLawn,
 } from "./organic-edges";
 import {
-  generateAdjacentExclusions,
   normalizeSceneToOrigin,
-  sceneBoundsFt,
 } from "./exclusion-generator";
-import type { ExclusionZone } from "../types";
 
 export type PolygonGeneratorOptions = {
   seed?: number;
@@ -176,11 +173,9 @@ function metadataFor(
   vertices: Point[],
   shapeClass: TrainingShapeClass,
   seed: number,
-  rotationDeg: number,
-  exclusions: ExclusionZone[]
+  rotationDeg: number
 ): TrainingPolygonMetadata {
-  const b =
-    exclusions.length > 0 ? sceneBoundsFt(vertices, exclusions) : polygonBounds(vertices);
+  const b = polygonBounds(vertices);
   return {
     shapeClass,
     seed,
@@ -189,7 +184,7 @@ function metadataFor(
     areaSqFt: Math.round(polygonArea(vertices) * 10) / 10,
     vertexCount: vertices.length,
     sideLengthsFt: polygonEdgeLengthsFt(vertices).map(roundLengthFt),
-    hasExclusions: exclusions.length > 0,
+    hasExclusions: false,
     rotationDeg: Math.round(rotationDeg * 10) / 10,
   };
 }
@@ -445,39 +440,35 @@ function finalizePolygon(
   shapeClass: TrainingShapeClass,
   seed: number,
   rotationDeg: number,
-  rng: () => number
+  _rng: () => number
 ): GeneratedTrainingPolygon {
   const rotated = applyRotationAndNormalize(vertices, rotationDeg);
   if (!isSimpleEnough(rotated)) {
     const fallback = rectangle(45, 30);
     const fallbackRot = applyRotationAndNormalize(fallback, rotationDeg);
-    const exclusionZonesFt = generateAdjacentExclusions(fallbackRot, rng, seed);
-    const normalized = normalizeSceneToOrigin(fallbackRot, exclusionZonesFt);
+    const normalized = normalizeSceneToOrigin(fallbackRot, []);
     return {
       verticesFt: normalized.lawnVertices,
       metadata: metadataFor(
         normalized.lawnVertices,
         "rectangle",
         seed,
-        rotationDeg,
-        normalized.exclusions
+        rotationDeg
       ),
-      exclusionZonesFt: normalized.exclusions,
+      exclusionZonesFt: [],
     };
   }
 
-  const exclusionZonesFt = generateAdjacentExclusions(rotated, rng, seed);
-  const normalized = normalizeSceneToOrigin(rotated, exclusionZonesFt);
+  const normalized = normalizeSceneToOrigin(rotated, []);
   return {
     verticesFt: normalized.lawnVertices,
     metadata: metadataFor(
       normalized.lawnVertices,
       shapeClass,
       seed,
-      rotationDeg,
-      normalized.exclusions
+      rotationDeg
     ),
-    exclusionZonesFt: normalized.exclusions,
+    exclusionZonesFt: [],
   };
 }
 

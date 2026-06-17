@@ -37,17 +37,21 @@ type TrainingState = {
   baselineGrid: PrecipGrid | null;
   correctedGrid: PrecipGrid | null;
   improvementScore: number;
-  selectedHeadId: string | null;
+  selectedHeadIds: string[];
   viewMode: TrainingViewMode;
   tool: TrainingTool;
   showHeatmap: boolean;
   showSampleGrid: boolean;
   showArcs: boolean;
   shapeFilter: TrainingShapeClass | "random";
+  copiedHeads: TrainingHeadSnapshot[] | null;
+  pasteGeneration: number;
 
   initCatalog: (catalog: CatalogItemData[]) => void;
   generateExample: (seed?: number) => void;
-  setSelectedHeadId: (id: string | null) => void;
+  selectHead: (id: string, opts?: { additive?: boolean }) => void;
+  setSelectedHeadIds: (ids: string[]) => void;
+  clearSelection: () => void;
   setViewMode: (mode: TrainingViewMode) => void;
   setTool: (tool: TrainingTool) => void;
   toggleHeatmap: () => void;
@@ -66,7 +70,10 @@ type TrainingState = {
   ) => void;
   addCorrectedHead: (head: TrainingHeadSnapshot) => void;
   duplicateCorrectedHead: (id: string) => void;
-  deleteCorrectedHead: (id: string) => void;
+  deleteCorrectedHeads: (ids: string[]) => void;
+  deleteSelectedHeads: () => void;
+  copySelectedHeads: () => void;
+  pasteCopiedHeads: () => void;
   clearCorrectedHeads: () => void;
   recomputeScores: () => void;
   buildApprovalPayload: () => import("@/lib/domain/training/types").TrainingExampleApprovalInput | null;
@@ -74,6 +81,23 @@ type TrainingState = {
 
 function cloneHeads(heads: TrainingHeadSnapshot[]): TrainingHeadSnapshot[] {
   return heads.map((h) => ({ ...h, positionFt: { ...h.positionFt } }));
+}
+
+const PASTE_OFFSET_FT = 2;
+
+function cloneHeadWithOffset(
+  source: TrainingHeadSnapshot,
+  offsetFt: number
+): TrainingHeadSnapshot {
+  const head: TrainingHeadSnapshot = {
+    ...source,
+    id: generateId("head"),
+    positionFt: {
+      x: source.positionFt.x + offsetFt,
+      y: source.positionFt.y + offsetFt,
+    },
+  };
+  return { ...head, ...wedgeBoundsForHead(head) };
 }
 
 function recompute(
@@ -144,13 +168,15 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   baselineGrid: null,
   correctedGrid: null,
   improvementScore: 0,
-  selectedHeadId: null,
+  selectedHeadIds: [],
   viewMode: "corrected",
   tool: "select",
   showHeatmap: true,
   showSampleGrid: false,
   showArcs: true,
   shapeFilter: "random",
+  copiedHeads: null,
+  pasteGeneration: 0,
 
   initCatalog: (catalog) => set({ catalog }),
 
@@ -172,13 +198,26 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
       baselineHeads: baseline,
       correctedHeads: corrected,
       placementContext: placed.placementContext,
-      selectedHeadId: null,
+      selectedHeadIds: [],
       viewMode: "corrected",
       ...scores,
     });
   },
 
-  setSelectedHeadId: (id) => set({ selectedHeadId: id }),
+  selectHead: (id, opts) => {
+    const { selectedHeadIds } = get();
+    if (opts?.additive) {
+      const next = selectedHeadIds.includes(id)
+        ? selectedHeadIds.filter((x) => x !== id)
+        : [...selectedHeadIds, id];
+      set({ selectedHeadIds: next });
+      return;
+    }
+    set({ selectedHeadIds: [id] });
+  },
+
+  setSelectedHeadIds: (ids) => set({ selectedHeadIds: ids }),
+  clearSelection: () => set({ selectedHeadIds: [] }),
   setViewMode: (mode) => set({ viewMode: mode }),
   setTool: (tool) => set({ tool }),
   toggleHeatmap: () => set((s) => ({ showHeatmap: !s.showHeatmap })),
@@ -209,7 +248,7 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     if (!polygon) return;
     const corrected = [...correctedHeads, head];
     const scores = recompute(polygon, baselineHeads, corrected);
-    set({ correctedHeads: corrected, selectedHeadId: head.id, ...scores });
+    set({ correctedHeads: corrected, selectedHeadIds: [head.id], ...scores });
   },
 
   duplicateCorrectedHead: (id) => {
@@ -218,32 +257,55 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     const source = correctedHeads.find((h) => h.id === id);
     if (!source) return;
 
-    const duplicate: TrainingHeadSnapshot = {
-      ...source,
-      id: generateId("head"),
-      positionFt: {
-        x: source.positionFt.x + 2,
-        y: source.positionFt.y + 2,
-      },
-    };
-    const wedges = wedgeBoundsForHead(duplicate);
-    const withWedges = { ...duplicate, ...wedges };
-
+    const withWedges = cloneHeadWithOffset(source, PASTE_OFFSET_FT);
     const corrected = [...correctedHeads, withWedges];
     const scores = recompute(polygon, baselineHeads, corrected);
-    set({ correctedHeads: corrected, selectedHeadId: withWedges.id, ...scores });
+    set({ correctedHeads: corrected, selectedHeadIds: [withWedges.id], ...scores });
   },
 
-  deleteCorrectedHead: (id) => {
-    const { polygon, baselineHeads, correctedHeads, selectedHeadId } = get();
-    if (!polygon) return;
-    const corrected = correctedHeads.filter((h) => h.id !== id);
+  copySelectedHeads: () => {
+    const { correctedHeads, selectedHeadIds } = get();
+    if (selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    const heads = cloneHeads(correctedHeads.filter((h) => idSet.has(h.id)));
+    if (heads.length === 0) return;
+    set({ copiedHeads: heads, pasteGeneration: 0 });
+  },
+
+  pasteCopiedHeads: () => {
+    const { polygon, baselineHeads, correctedHeads, copiedHeads, pasteGeneration, viewMode } =
+      get();
+    if (!polygon || viewMode === "baseline" || !copiedHeads?.length) return;
+
+    const generation = pasteGeneration + 1;
+    const offsetFt = PASTE_OFFSET_FT * generation;
+    const pasted = copiedHeads.map((source) => cloneHeadWithOffset(source, offsetFt));
+    const corrected = [...correctedHeads, ...pasted];
     const scores = recompute(polygon, baselineHeads, corrected);
     set({
       correctedHeads: corrected,
-      selectedHeadId: selectedHeadId === id ? null : selectedHeadId,
+      selectedHeadIds: pasted.map((h) => h.id),
+      pasteGeneration: generation,
       ...scores,
     });
+  },
+
+  deleteCorrectedHeads: (ids) => {
+    const { polygon, baselineHeads, correctedHeads, selectedHeadIds } = get();
+    if (!polygon || ids.length === 0) return;
+    const idSet = new Set(ids);
+    const corrected = correctedHeads.filter((h) => !idSet.has(h.id));
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({
+      correctedHeads: corrected,
+      selectedHeadIds: selectedHeadIds.filter((id) => !idSet.has(id)),
+      ...scores,
+    });
+  },
+
+  deleteSelectedHeads: () => {
+    const { selectedHeadIds } = get();
+    get().deleteCorrectedHeads(selectedHeadIds);
   },
 
   clearCorrectedHeads: () => {
@@ -253,7 +315,7 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     const scores = recompute(polygon, baselineHeads, corrected);
     set({
       correctedHeads: corrected,
-      selectedHeadId: null,
+      selectedHeadIds: [],
       viewMode: "corrected",
       ...scores,
     });

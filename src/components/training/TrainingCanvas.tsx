@@ -11,6 +11,7 @@ import { getNozzleAdjustability, resolveDefaultHeadSettings } from "@/lib/catalo
 import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
 import { getNozzlesForHead, getHeadBodies } from "@/lib/catalog/compat";
 import type { TrainingHeadSnapshot } from "@/lib/domain/training/types";
+import type Konva from "konva";
 import { wedgeStartDeg, wedgeEndDeg } from "@/lib/domain/placement/wedge";
 import { trainingStageSizePx } from "@/lib/domain/training/stage-layout";
 import { TrainingHeadGraphic } from "./TrainingHeadGraphic";
@@ -57,6 +58,49 @@ function layoutsEqual(a: StageLayout, b: StageLayout): boolean {
   return a.paddingPx === b.paddingPx && a.widthPx === b.widthPx && a.heightPx === b.heightPx;
 }
 
+const MARQUEE_MIN_PX = 4;
+
+type MarqueeState = {
+  startX: number;
+  startY: number;
+  currentX: number;
+  currentY: number;
+};
+
+function isAdditivePointerEvent(e: MouseEvent | TouchEvent): boolean {
+  if ("shiftKey" in e) {
+    return e.shiftKey || e.metaKey || e.ctrlKey;
+  }
+  return false;
+}
+
+function headsInMarquee(
+  heads: TrainingHeadSnapshot[],
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  stagePadding: number,
+  pxPerFt: number
+): string[] {
+  const left = Math.min(x1, x2);
+  const right = Math.max(x1, x2);
+  const top = Math.min(y1, y2);
+  const bottom = Math.max(y1, y2);
+  return heads
+    .filter((head) => {
+      const cx = head.positionFt.x * pxPerFt + stagePadding;
+      const cy = head.positionFt.y * pxPerFt + stagePadding;
+      return cx >= left && cx <= right && cy >= top && cy <= bottom;
+    })
+    .map((head) => head.id);
+}
+
+function isEmptyStageTarget(target: Konva.Node): boolean {
+  const stage = target.getStage();
+  return target === stage || target.getClassName() === "Layer";
+}
+
 export function TrainingCanvas() {
   const polygon = useTrainingStore((s) => s.polygon);
   const baselineHeads = useTrainingStore((s) => s.baselineHeads);
@@ -65,12 +109,14 @@ export function TrainingCanvas() {
   const showHeatmap = useTrainingStore((s) => s.showHeatmap);
   const showSampleGrid = useTrainingStore((s) => s.showSampleGrid);
   const showArcs = useTrainingStore((s) => s.showArcs);
-  const selectedHeadId = useTrainingStore((s) => s.selectedHeadId);
+  const selectedHeadIds = useTrainingStore((s) => s.selectedHeadIds);
   const tool = useTrainingStore((s) => s.tool);
   const correctedGrid = useTrainingStore((s) => s.correctedGrid);
   const baselineGrid = useTrainingStore((s) => s.baselineGrid);
   const catalog = useTrainingStore((s) => s.catalog);
-  const setSelectedHeadId = useTrainingStore((s) => s.setSelectedHeadId);
+  const selectHead = useTrainingStore((s) => s.selectHead);
+  const setSelectedHeadIds = useTrainingStore((s) => s.setSelectedHeadIds);
+  const clearSelection = useTrainingStore((s) => s.clearSelection);
   const moveCorrectedHead = useTrainingStore((s) => s.moveCorrectedHead);
   const updateCorrectedHead = useTrainingStore((s) => s.updateCorrectedHead);
   const recomputeScores = useTrainingStore((s) => s.recomputeScores);
@@ -90,6 +136,8 @@ export function TrainingCanvas() {
     null
   );
   const [size, setSize] = useState({ width: 800, height: 600 });
+  const [marquee, setMarquee] = useState<MarqueeState | null>(null);
+  const marqueeUsedRef = useRef(false);
 
   const unlockCanvasScroll = useCallback(() => {
     scrollLockCountRef.current = Math.max(0, scrollLockCountRef.current - 1);
@@ -298,6 +346,68 @@ export function TrainingCanvas() {
 
   const flatVertices = polygon.verticesFt.flatMap((v) => [v.x * PX, v.y * PX]);
 
+  function finishMarqueeSelection(
+    startX: number,
+    startY: number,
+    currentX: number,
+    currentY: number,
+    additive: boolean
+  ) {
+    const width = Math.abs(currentX - startX);
+    const height = Math.abs(currentY - startY);
+    if (width < MARQUEE_MIN_PX && height < MARQUEE_MIN_PX) return;
+
+    marqueeUsedRef.current = true;
+    const ids = headsInMarquee(
+      correctedHeads,
+      startX,
+      startY,
+      currentX,
+      currentY,
+      stagePadding,
+      PX
+    );
+    if (additive) {
+      const merged = new Set([...selectedHeadIds, ...ids]);
+      setSelectedHeadIds([...merged]);
+    } else {
+      setSelectedHeadIds(ids);
+    }
+  }
+
+  function handleStageMouseDown(e: Konva.KonvaEventObject<MouseEvent>) {
+    if (tool !== "select" || viewMode === "baseline") return;
+    if (!isEmptyStageTarget(e.target)) return;
+    const stage = e.target.getStage();
+    const pos = stage?.getPointerPosition();
+    if (!pos) return;
+    marqueeUsedRef.current = false;
+    setMarquee({ startX: pos.x, startY: pos.y, currentX: pos.x, currentY: pos.y });
+  }
+
+  function handleStageMouseMove(e: Konva.KonvaEventObject<MouseEvent>) {
+    if (!marquee) return;
+    const stage = e.target.getStage();
+    const pos = stage?.getPointerPosition();
+    if (!pos) return;
+    setMarquee((current) =>
+      current ? { ...current, currentX: pos.x, currentY: pos.y } : null
+    );
+  }
+
+  function handleStageMouseUp(e: Konva.KonvaEventObject<MouseEvent>) {
+    if (!marquee) return;
+    const { startX, startY, currentX, currentY } = marquee;
+    setMarquee(null);
+    finishMarqueeSelection(
+      startX,
+      startY,
+      currentX,
+      currentY,
+      isAdditivePointerEvent(e.evt)
+    );
+  }
+
   function handleStageClick(e: {
     target: {
       getStage?: () => { getPointerPosition?: () => { x: number; y: number } | null } | null;
@@ -311,7 +421,10 @@ export function TrainingCanvas() {
     if (!clickedEmpty) return;
 
     if (tool === "select") {
-      setSelectedHeadId(null);
+      if (!marqueeUsedRef.current) {
+        clearSelection();
+      }
+      marqueeUsedRef.current = false;
       return;
     }
 
@@ -367,6 +480,9 @@ export function TrainingCanvas() {
           ref={stageRef}
           width={contentW}
           height={contentH}
+          onMouseDown={handleStageMouseDown}
+          onMouseMove={handleStageMouseMove}
+          onMouseUp={handleStageMouseUp}
           onClick={handleStageClick}
           onTap={handleStageClick}
         >
@@ -433,6 +549,7 @@ export function TrainingCanvas() {
                 showArc={showArcs}
                 editable={false}
                 selected={false}
+                showAdjustHandles={false}
                 adjustability={nozzle ? getNozzleAdjustability(nozzle) : null}
                 stripPattern={head.stripPattern}
                 patternWidthFt={head.patternWidthFt}
@@ -454,12 +571,17 @@ export function TrainingCanvas() {
                 ghost={false}
                 showArc={showArcs}
                 editable={editable}
-                selected={selectedHeadId === head.id}
+                selected={selectedHeadIds.includes(head.id)}
+                showAdjustHandles={
+                  editable && selectedHeadIds.length === 1 && selectedHeadIds[0] === head.id
+                }
                 adjustability={nozzle ? getNozzleAdjustability(nozzle) : null}
                 stripPattern={head.stripPattern}
                 patternWidthFt={head.patternWidthFt}
                 patternLengthFt={head.patternLengthFt}
-                onSelect={() => setSelectedHeadId(head.id)}
+                onSelect={(e) => {
+                  selectHead(head.id, { additive: isAdditivePointerEvent(e.evt) });
+                }}
                 onMove={(positionFt, opts) => moveCorrectedHead(head.id, positionFt, opts)}
                 onPatch={(patch, opts) => updateCorrectedHead(head.id, patch, opts)}
                 onInteractionStart={lockCanvasScroll}
@@ -470,6 +592,19 @@ export function TrainingCanvas() {
               />
             );
           })}
+          {marquee && (
+            <Rect
+              x={Math.min(marquee.startX, marquee.currentX)}
+              y={Math.min(marquee.startY, marquee.currentY)}
+              width={Math.abs(marquee.currentX - marquee.startX)}
+              height={Math.abs(marquee.currentY - marquee.startY)}
+              fill="rgba(37, 99, 235, 0.12)"
+              stroke="#2563eb"
+              strokeWidth={1}
+              dash={[4, 4]}
+              listening={false}
+            />
+          )}
           </Layer>
         </Stage>
       </div>

@@ -70,6 +70,51 @@ export function TrainingWorkspace({
     }
   }, [catalog]);
 
+  useEffect(() => {
+    function isEditableTarget(target: EventTarget | null): boolean {
+      if (!(target instanceof HTMLElement)) return false;
+      const tag = target.tagName;
+      return (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        target.isContentEditable
+      );
+    }
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (isEditableTarget(e.target)) return;
+
+      const store = useTrainingStore.getState();
+      const mod = e.ctrlKey || e.metaKey;
+
+      if (mod && e.key.toLowerCase() === "c") {
+        if (store.viewMode === "baseline" || store.selectedHeadIds.length === 0) return;
+        e.preventDefault();
+        store.copySelectedHeads();
+        return;
+      }
+
+      if (mod && e.key.toLowerCase() === "v") {
+        if (store.viewMode === "baseline" || !store.copiedHeads?.length) return;
+        e.preventDefault();
+        store.pasteCopiedHeads();
+        return;
+      }
+
+      if (e.key !== "Delete" && e.key !== "Backspace") return;
+
+      const { selectedHeadIds, viewMode, deleteSelectedHeads } = store;
+      if (viewMode === "baseline" || selectedHeadIds.length === 0) return;
+
+      e.preventDefault();
+      deleteSelectedHeads();
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   async function handleApprove() {
     const payload = buildApprovalPayload();
     if (!payload) {

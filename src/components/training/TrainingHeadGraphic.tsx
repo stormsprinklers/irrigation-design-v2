@@ -25,11 +25,12 @@ type Props = {
   showArc: boolean;
   editable: boolean;
   selected: boolean;
+  showAdjustHandles: boolean;
   adjustability: NozzleAdjustability | null;
   stripPattern?: TrainingHeadSnapshot["stripPattern"];
   patternWidthFt?: number;
   patternLengthFt?: number;
-  onSelect: () => void;
+  onSelect: (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => void;
   onMove: (positionFt: { x: number; y: number }, opts?: { deferScores?: boolean }) => void;
   onPatch: (patch: Partial<TrainingHeadSnapshot>, opts?: { deferScores?: boolean }) => void;
   onInteractionStart?: () => void;
@@ -43,6 +44,7 @@ export function TrainingHeadGraphic({
   showArc,
   editable,
   selected,
+  showAdjustHandles,
   adjustability,
   stripPattern,
   patternWidthFt,
@@ -132,11 +134,11 @@ export function TrainingHeadGraphic({
       draggable={editable && !ghost}
       onClick={(e) => {
         stopBubble(e);
-        onSelect();
+        onSelect(e);
       }}
       onTap={(e) => {
         stopBubble(e);
-        onSelect();
+        onSelect(e);
       }}
       onDragStart={stopDragScroll}
       onDragMove={(e) => {
@@ -172,7 +174,7 @@ export function TrainingHeadGraphic({
         hitStrokeWidth={editable ? 12 : 0}
       />
 
-      {editable && selected && !ghost && (
+      {editable && showAdjustHandles && !ghost && (
         <>
           <Circle
             x={handlePos.x}
