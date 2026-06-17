@@ -66,9 +66,18 @@ export function TrainingHeadGraphic({
   const handlePos = polarPx(rotDeg, handleDist);
   const headMarkerRadius = selected ? 8 : 6;
   const arcBtnGap = 18;
-  const arcControlX = headMarkerRadius + 12;
-  const minusPos = { x: arcControlX, y: 0 };
-  const plusPos = { x: arcControlX + arcBtnGap, y: 0 };
+  const arcClusterDist = Math.max(headMarkerRadius + 16, 22);
+  const arcClusterAngle = rotDeg + 180;
+  const arcClusterCenter = polarPx(arcClusterAngle, arcClusterDist);
+  const arcTangent = polarPx(arcClusterAngle + 90, arcBtnGap / 2);
+  const minusPos = {
+    x: arcClusterCenter.x - arcTangent.x,
+    y: arcClusterCenter.y - arcTangent.y,
+  };
+  const plusPos = {
+    x: arcClusterCenter.x + arcTangent.x,
+    y: arcClusterCenter.y + arcTangent.y,
+  };
 
   const arcStep = 5;
   const stripSpec =
