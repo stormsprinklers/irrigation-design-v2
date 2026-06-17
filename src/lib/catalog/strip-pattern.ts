@@ -88,8 +88,17 @@ export function stripPatternVertices(
         at(len / 2, halfW),
         at(len / 2, -halfW),
       ];
+    case "side": {
+      const halfLen = len / 2;
+      const depth = spec.patternWidthFt;
+      return [
+        at(0, -halfLen),
+        at(0, halfLen),
+        at(depth, halfLen),
+        at(depth, -halfLen),
+      ];
+    }
     case "end":
-    case "side":
     default:
       return [
         at(0, -halfW),
@@ -131,8 +140,13 @@ function inStripBounds(local: StripLocalCoords, spec: StripNozzleSpec): boolean 
       return local.forwardFt >= 0 && local.forwardFt <= len && local.lateralFt >= 0 && local.lateralFt <= spec.patternWidthFt;
     case "center":
       return Math.abs(local.forwardFt) <= len / 2 && Math.abs(local.lateralFt) <= halfW;
-    case "end":
     case "side":
+      return (
+        local.forwardFt >= 0 &&
+        local.forwardFt <= spec.patternWidthFt &&
+        Math.abs(local.lateralFt) <= len / 2
+      );
+    case "end":
     default:
       return local.forwardFt >= 0 && local.forwardFt <= len && Math.abs(local.lateralFt) <= halfW;
   }
@@ -176,6 +190,10 @@ export function stripCoverageRatio(
     case "center":
       forwardRatio = (Math.abs(local.forwardFt) + halfW) / (len / 2 + halfW);
       lateralRatio = Math.abs(local.lateralFt) / halfW;
+      break;
+    case "side":
+      forwardRatio = local.forwardFt / spec.patternWidthFt;
+      lateralRatio = Math.abs(local.lateralFt) / (len / 2);
       break;
     default:
       forwardRatio = local.forwardFt / len;

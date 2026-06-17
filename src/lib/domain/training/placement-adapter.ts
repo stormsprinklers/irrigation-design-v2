@@ -80,7 +80,7 @@ export function runPlacementOnPolygon(
     slopePercent: 0,
     soilType: "LOAM",
     waterPriority: 3,
-    headPreference: "MP_ROTATOR",
+    headPreference: "ROTOR",
   };
 
   const result = placeHeads({
@@ -97,7 +97,7 @@ export function runPlacementOnPolygon(
   return {
     heads: result.heads.map((h) => toSnapshot(h, catalog)),
     placementContext: {
-      headPreference: "MP_ROTATOR",
+      headPreference: "ROTOR",
       pressurePsi,
       pattern: result.pattern,
       nozzleModel: result.nozzleModel,

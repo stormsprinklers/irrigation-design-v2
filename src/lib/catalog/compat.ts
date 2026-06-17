@@ -225,8 +225,8 @@ export function resolveHeadAssembly(
 ): { headBodyId: string; nozzleId: string; radiusFeet: number; gpm: number; precipInPerHr?: number; arcDegrees: number; rotationDegrees: number } | null {
   const headPreferenceMap: Record<HeadFamily, string> = {
     SPRAY: "head_rb_1804",
-    ROTOR: "head_hunter_pgp_ultra_4",
-    MP_ROTATOR: "head_hunter_pros_prs40_04",
+    ROTOR: "head_hunter_pgp_adj_4",
+    MP_ROTATOR: "head_hunter_pgp_adj_4",
     DRIP: "head_rb_1804",
   };
   const headBodyId = headPreferenceMap[preference];

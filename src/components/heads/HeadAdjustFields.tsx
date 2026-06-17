@@ -58,7 +58,7 @@ export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange, onAdjust
     <div className="space-y-3">
       {strip && (
         <p className="text-xs text-muted-foreground">
-          Strip pattern {strip.patternWidthFt} ft wide × {strip.patternLengthFt} ft throw (
+          Strip pattern {strip.patternLengthFt} ft along edge × {strip.patternWidthFt} ft throw (
           {strip.stripPattern.replace("_", " ")}). Rotate to aim the long axis.
         </p>
       )}

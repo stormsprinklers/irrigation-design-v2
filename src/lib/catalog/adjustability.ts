@@ -145,7 +145,7 @@ export function resolveDefaultHeadSettings(
     const hydraulics = calculateNozzleHydraulics(nozzle, pressurePsi, 180);
     return {
       arcDegrees: 180,
-      radiusFeet: strip.patternLengthFt,
+      radiusFeet: strip.patternWidthFt,
       rotationDegrees: 0,
       gpm: hydraulics.gpm,
       precipInPerHr: hydraulics.precipInPerHr,

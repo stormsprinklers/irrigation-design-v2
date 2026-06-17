@@ -7,6 +7,7 @@ import type { CatalogItemData, HydrozonePolygon, Point } from "../../types";
 import { analyzePolygon } from "../geometry";
 import { planEdgeRuns } from "../edge-spacing";
 import { placeHeads } from "../index";
+import { PGP_ADJ_HEAD_BODY_ID } from "../pgp-adj-placement";
 import { wedgeHitsExclusion, wedgeStartDeg, wedgeEndDeg, isPointInWedge } from "../wedge";
 import { bearingDeg, polygonCentroid } from "../geometry";
 
@@ -44,7 +45,7 @@ function baseHydrozone(
     slopePercent: 0,
     soilType: "LOAM",
     waterPriority: 3,
-    headPreference: "MP_ROTATOR",
+    headPreference: "ROTOR",
     ...overrides,
   };
 }
@@ -82,10 +83,33 @@ describe("edge-spacing", () => {
 });
 
 describe("placeHeads head-to-head spacing", () => {
-  it("places 3 heads on a 55×30 ft long edge with even ~27.5 ft spacing", () => {
+  it("uses PGP-ADJ rotors with arc-based blue nozzles", () => {
     const vertices = rectangleVertices(55, 30);
     const result = placeHeads({
-      hydrozone: baseHydrozone("hz-55x30", vertices),
+      hydrozone: baseHydrozone("hz-pgp", vertices),
+      zoneId: "zone-1",
+      catalog,
+      scale,
+      exclusionZones: [],
+      pressurePsi: 65,
+    });
+
+    assert.ok(result.heads.length >= 4);
+    assert.ok(result.heads.every((h) => h.headBodyId === PGP_ADJ_HEAD_BODY_ID));
+    const corner = result.heads.find((h) => h.arcDegrees <= 100);
+    const edge = result.heads.find((h) => h.arcDegrees >= 170 && h.arcDegrees <= 190);
+    if (corner) {
+      assert.equal(corner.catalogItemId, "noz_pgp_adj_blue_1_5");
+    }
+    if (edge) {
+      assert.equal(edge.catalogItemId, "noz_pgp_adj_blue_3_0");
+    }
+  });
+
+  it("places 3 heads on a 70×30 ft long edge with even ~35 ft spacing", () => {
+    const vertices = rectangleVertices(70, 30);
+    const result = placeHeads({
+      hydrozone: baseHydrozone("hz-70x30", vertices),
       zoneId: "zone-1",
       catalog,
       scale,
@@ -100,13 +124,13 @@ describe("placeHeads head-to-head spacing", () => {
     if (xs.length >= 3) {
       const seg1 = xs[1] - xs[0];
       const seg2 = xs[2] - xs[1];
-      assert.ok(Math.abs(seg1 - 27.5) / 27.5 <= 0.12, `segment1 ${seg1}`);
-      assert.ok(Math.abs(seg2 - 27.5) / 27.5 <= 0.12, `segment2 ${seg2}`);
+      assert.ok(Math.abs(seg1 - 35) / 35 <= 0.12, `segment1 ${seg1}`);
+      assert.ok(Math.abs(seg2 - 35) / 35 <= 0.12, `segment2 ${seg2}`);
     }
   });
 
   it("orients 180° center edge head arc edges toward corner heads", () => {
-    const vertices = rectangleVertices(55, 30);
+    const vertices = rectangleVertices(70, 30);
     const result = placeHeads({
       hydrozone: baseHydrozone("hz-aim", vertices),
       zoneId: "zone-1",
@@ -117,12 +141,12 @@ describe("placeHeads head-to-head spacing", () => {
     });
 
     const bottomRow = headsOnEdge(result.heads, 0);
-    const center = bottomRow.find((h) => h.position.x > 20 && h.position.x < 35);
+    const center = bottomRow.find((h) => h.position.x > 25 && h.position.x < 45);
     assert.ok(center, "expected center head on bottom edge");
     assert.ok(center.arcDegrees >= 170 && center.arcDegrees <= 190);
 
     const leftCorner = bottomRow.find((h) => h.position.x < 1);
-    const rightCorner = bottomRow.find((h) => h.position.x > 54);
+    const rightCorner = bottomRow.find((h) => h.position.x > 69);
     assert.ok(leftCorner && rightCorner);
 
     const start = wedgeStartDeg(center);
@@ -135,8 +159,8 @@ describe("placeHeads head-to-head spacing", () => {
   });
 
   it("orients top and bottom edge center heads 180° inward with pixel scale", () => {
-    const ppf = 100 / 55;
-    const w = 55 * ppf;
+    const ppf = 100 / 70;
+    const w = 70 * ppf;
     const h = 30 * ppf;
     const vertices = [
       { x: 0, y: 0 },
@@ -147,7 +171,7 @@ describe("placeHeads head-to-head spacing", () => {
     const pixelScale = {
       pointA: { x: 0, y: 0 },
       pointB: { x: 100, y: 0 },
-      realWorldFeet: 55,
+      realWorldFeet: 70,
     };
     const result = placeHeads({
       hydrozone: baseHydrozone("hz-pixel", vertices),

@@ -20,6 +20,10 @@ import { evaluateCoverage } from "./coverage";
 import { resolveHydrozoneSpacing } from "./edge-spacing";
 import { analyzePolygon, detectSpacingPattern } from "./geometry";
 import { selectNozzleAssembly } from "./nozzle-selection";
+import {
+  assignPgpAdjNozzlesToHeads,
+  isPgpAdjAssembly,
+} from "./pgp-adj-placement";
 import { placeCornerHeads } from "./place-corners";
 import { placeEdgeHeads } from "./place-edges";
 import { interiorGridOrigin, placeInteriorHeads } from "./place-interior";
@@ -207,7 +211,9 @@ export function placeHeads(input: PlacementInput): PlacementResult {
     exclusionZones
   );
 
-  heads = finalizeHeadHydraulics(orientedHeads, assembly.nozzle, pressurePsi, pattern);
+  heads = isPgpAdjAssembly(assembly)
+    ? assignPgpAdjNozzlesToHeads(catalog, orientedHeads, pressurePsi, pattern)
+    : finalizeHeadHydraulics(orientedHeads, assembly.nozzle, pressurePsi, pattern);
 
   for (const headId of oversprayHeadIds) {
     warnings.push({

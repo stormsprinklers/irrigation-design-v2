@@ -4,6 +4,7 @@ import { calculateNozzleHydraulics } from "../hydraulics";
 import type { CatalogItemData, HeadFamily } from "../types";
 import type { PolygonAnalysis } from "./geometry";
 import { resolveHydrozoneSpacing } from "./edge-spacing";
+import { selectPgpAdjAssembly } from "./pgp-adj-placement";
 
 export type NozzleAssembly = {
   headBodyId: string;
@@ -19,8 +20,8 @@ export type NozzleAssembly = {
 
 const HEAD_PREFERENCE_BODIES: Record<HeadFamily, string[]> = {
   SPRAY: ["head_rb_1804", "head_rb_1806", "head_hunter_pros_04", "head_hunter_pros_prs40_04"],
-  ROTOR: ["head_hunter_pgp_ultra_4", "head_rb_3504", "head_rb_5004"],
-  MP_ROTATOR: ["head_hunter_pros_prs40_04", "head_hunter_pros_04"],
+  ROTOR: ["head_hunter_pgp_adj_4"],
+  MP_ROTATOR: ["head_hunter_pgp_adj_4"],
   DRIP: ["head_rb_1804"],
 };
 
@@ -58,6 +59,10 @@ export function selectNozzleAssembly(
   pressurePsi: number
 ): NozzleAssembly | null {
   if (preference === "DRIP") return null;
+
+  if (preference === "ROTOR" || preference === "MP_ROTATOR") {
+    return selectPgpAdjAssembly(catalog, analysis, pressurePsi);
+  }
 
   const targetSpacing = computeTargetSpacingFt(analysis);
   const headBodies = candidateHeadBodies(catalog, preference);
