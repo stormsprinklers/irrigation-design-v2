@@ -7,6 +7,14 @@ import {
   sprayNozzleSpecs,
   type MpArcBand,
 } from "./adjustability";
+import {
+  RVAN_STRIP_ROWS,
+  STRIP_MODEL_DIMENSIONS,
+  buildStripNozzleChart,
+  parsePatternSizeFt,
+  stripLengthRange,
+  type StripChartRow,
+} from "./strip-nozzle-helpers";
 
 export type ExtractedNozzleRaw = {
   id: string;
@@ -62,7 +70,30 @@ function consolidateMpRotators(raw: ExtractedNozzleRaw[]): CatalogSeedItem[] {
   const stripItems = mpItems.filter((r) => r.specs.stripPattern);
   for (const strip of stripItems) {
     const arc = (strip.specs.arcDegrees as number) ?? 180;
-    const chartRadii = strip.nozzleChart?.radiusFeet ?? [5, 15];
+    const mpModel = strip.specs.mpModel as string | undefined;
+    const dims =
+      (mpModel && STRIP_MODEL_DIMENSIONS[mpModel]) ??
+      (typeof strip.specs.patternSize === "string"
+        ? parsePatternSizeFt(strip.specs.patternSize)
+        : null);
+    const rows: StripChartRow[] | undefined = dims
+      ? (strip.nozzleChart?.pressurePsi ?? [30, 40, 50]).slice(0, 3).map((psi, i) => [
+          psi,
+          dims.widthFt,
+          dims.lengthFt,
+          strip.nozzleChart?.gpm?.[i] ?? 0.2,
+          strip.nozzleChart?.precipInPerHr?.[i] ?? 0.6,
+          strip.nozzleChart?.precipTriInPerHr?.[i] ?? 0.6,
+        ])
+      : undefined;
+    const chart = rows ? buildStripNozzleChart(rows, 45) : strip.nozzleChart;
+    const lengthRange = rows
+      ? stripLengthRange(rows)
+      : {
+          min: dims?.lengthFt ?? 15,
+          max: dims?.lengthFt ?? 15,
+        };
+
     items.push({
       id: strip.id,
       category: "MP_ROTATOR",
@@ -74,18 +105,25 @@ function consolidateMpRotators(raw: ExtractedNozzleRaw[]): CatalogSeedItem[] {
           compatibleHeadFamilies: strip.compatibleHeadFamilies,
           stripPattern: strip.specs.stripPattern,
           mpModel: strip.specs.mpModel,
+          ...(dims
+            ? {
+                patternWidthFt: dims.widthFt,
+                patternLengthFt: dims.lengthFt,
+                patternSize: `${dims.widthFt}' x ${dims.lengthFt}'`,
+              }
+            : {}),
         },
         {
           arcMin: arc,
           arcMax: arc,
           arcDefault: arc,
-          radiusMin: chartRadii[0] ?? 5,
-          radiusMax: chartRadii[chartRadii.length - 1] ?? 15,
+          radiusMin: lengthRange.min,
+          radiusMax: lengthRange.max,
           arcAdjustable: false,
           radiusAdjustable: false,
         }
       ),
-      nozzleChart: strip.nozzleChart,
+      nozzleChart: chart,
     });
     seen.add(strip.id);
   }
@@ -232,12 +270,18 @@ function consolidateRvan(raw: ExtractedNozzleRaw[]): CatalogSeedItem[] {
     if (!source) continue;
     const slug = model.toLowerCase().replace(/-/g, "_");
     const isStrip = Boolean(source.specs.stripPattern);
-    const radius = RVAN_RADIUS_FT[model] ?? {
-      min: source.nozzleChart?.radiusFeet?.[0] ?? 5,
-      max:
-        source.nozzleChart?.radiusFeet?.[source.nozzleChart.radiusFeet.length - 1] ?? 15,
-    };
+    const stripRows = isStrip ? RVAN_STRIP_ROWS[model] : undefined;
+    const stripDims = isStrip ? STRIP_MODEL_DIMENSIONS[model] : undefined;
+    const radius = isStrip && stripRows
+      ? stripLengthRange(stripRows)
+      : RVAN_RADIUS_FT[model] ?? {
+          min: source.nozzleChart?.radiusFeet?.[0] ?? 5,
+          max:
+            source.nozzleChart?.radiusFeet?.[source.nozzleChart.radiusFeet.length - 1] ?? 15,
+        };
     const arc = isStrip ? 180 : 360;
+    const nozzleChart =
+      isStrip && stripRows ? buildStripNozzleChart(stripRows, 45) : source.nozzleChart;
 
     items.push({
       id: `noz_rb_${slug}`,
@@ -249,10 +293,12 @@ function consolidateRvan(raw: ExtractedNozzleRaw[]): CatalogSeedItem[] {
           nozzleFamily: "rainbird_rvan",
           compatibleHeadFamilies: source.compatibleHeadFamilies,
           rvanModel: model,
-          ...(isStrip
+          ...(isStrip && stripDims
             ? {
                 stripPattern: source.specs.stripPattern,
-                patternSize: source.specs.patternSize,
+                patternWidthFt: stripDims.widthFt,
+                patternLengthFt: stripDims.lengthFt,
+                patternSize: `${stripDims.widthFt}' x ${stripDims.lengthFt}'`,
               }
             : {}),
         },
@@ -266,7 +312,7 @@ function consolidateRvan(raw: ExtractedNozzleRaw[]): CatalogSeedItem[] {
           radiusAdjustable: !isStrip,
         }
       ),
-      nozzleChart: source.nozzleChart,
+      nozzleChart,
     });
   }
 

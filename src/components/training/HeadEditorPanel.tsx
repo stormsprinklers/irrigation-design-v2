@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { useTrainingStore } from "@/lib/stores/training-store";
 import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
-import { getNozzlesForHead, getHeadBodies } from "@/lib/catalog/compat";
+import { getNozzlesForHead } from "@/lib/catalog/compat";
 import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
+import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
 
 export function HeadEditorPanel() {
   const catalog = useTrainingStore((s) => s.catalog);
@@ -50,64 +50,41 @@ export function HeadEditorPanel() {
       <p className="text-xs text-muted-foreground">
         {head.nozzleModel ?? head.catalogItemId} · GPM {head.gpm?.toFixed(2) ?? "—"}
       </p>
-      <div>
-        <Label className="text-xs">Spray body</Label>
-        <select
-          className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
-          value={head.headBodyId ?? ""}
-          onChange={(e) => {
-            const bodyId = e.target.value;
-            const noz = getNozzlesForHead(catalog, bodyId)[0];
-            if (!noz) return;
-            const settings = resolveDefaultHeadSettings(noz, 65);
-            patch({
-              headBodyId: bodyId,
-              catalogItemId: noz.id,
-              nozzleModel: noz.model,
-              arcDegrees: settings.arcDegrees,
-              radiusFeet: settings.radiusFeet,
-              rotationDegrees: settings.rotationDegrees,
-              gpm: settings.gpm,
-              precipInPerHr: settings.precipInPerHr,
-            });
-          }}
-        >
-          {getHeadBodies(catalog).map((b) => (
-            <option key={b.id} value={b.id}>
-              {b.manufacturer} {b.model}
-            </option>
-          ))}
-        </select>
-      </div>
-      {head.headBodyId && (
-        <div>
-          <Label className="text-xs">Nozzle</Label>
-          <select
-            className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
-            value={head.catalogItemId}
-            onChange={(e) => {
-              const noz = catalog.find((c) => c.id === e.target.value);
-              if (!noz) return;
-              const settings = resolveDefaultHeadSettings(noz, 65);
-              patch({
-                catalogItemId: noz.id,
-                nozzleModel: noz.model,
-                arcDegrees: settings.arcDegrees,
-                radiusFeet: settings.radiusFeet,
-                rotationDegrees: settings.rotationDegrees,
-                gpm: settings.gpm,
-                precipInPerHr: settings.precipInPerHr,
-              });
-            }}
-          >
-            {getNozzlesForHead(catalog, head.headBodyId).map((n) => (
-              <option key={n.id} value={n.id}>
-                {n.model}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+      <HeadCatalogPickers
+        catalog={catalog}
+        headBodyId={head.headBodyId}
+        catalogItemId={head.catalogItemId}
+        bodyLabel="Spray body"
+        onBodyChange={(bodyId) => {
+          const noz = getNozzlesForHead(catalog, bodyId)[0];
+          if (!noz) return;
+          const settings = resolveDefaultHeadSettings(noz, 65);
+          patch({
+            headBodyId: bodyId,
+            catalogItemId: noz.id,
+            nozzleModel: noz.model,
+            arcDegrees: settings.arcDegrees,
+            radiusFeet: settings.radiusFeet,
+            rotationDegrees: settings.rotationDegrees,
+            gpm: settings.gpm,
+            precipInPerHr: settings.precipInPerHr,
+          });
+        }}
+        onNozzleChange={(catalogItemId) => {
+          const noz = catalog.find((c) => c.id === catalogItemId);
+          if (!noz) return;
+          const settings = resolveDefaultHeadSettings(noz, 65);
+          patch({
+            catalogItemId: noz.id,
+            nozzleModel: noz.model,
+            arcDegrees: settings.arcDegrees,
+            radiusFeet: settings.radiusFeet,
+            rotationDegrees: settings.rotationDegrees,
+            gpm: settings.gpm,
+            precipInPerHr: settings.precipInPerHr,
+          });
+        }}
+      />
       {nozzle && (
         <HeadAdjustFields
           head={head}

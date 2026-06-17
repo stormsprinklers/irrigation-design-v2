@@ -9,15 +9,14 @@ import { generateId } from "@/lib/utils";
 import type { CatalogItemData } from "@/lib/domain/types";
 import { DEFAULT_PRESSURE_PSI, DEFAULT_WATER_SOURCE } from "@/lib/domain/types";
 import {
-  getHeadBodies,
   getNozzlesForHead,
   nozzleCompatibleWithHead,
 } from "@/lib/catalog/compat";
 import {
-  getNozzleAdjustability,
   resolveDefaultHeadSettings,
 } from "@/lib/catalog/adjustability";
 import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
+import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
 
 type Props = {
   catalog: CatalogItemData[];
@@ -284,91 +283,46 @@ export function InspectorPanel({
             <p className="text-xs text-muted-foreground">
               GPM: {selectedHead.gpm?.toFixed(2) ?? "—"} · Radius: {selectedHead.radiusFeet} ft
             </p>
-            <div>
-              <Label className="text-xs">Sprinkler body</Label>
-              <select
-                className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
-                value={selectedHead.headBodyId ?? ""}
-                onChange={(e) => {
-                  const headBodyId = e.target.value;
-                  const compatible = getNozzlesForHead(catalog, headBodyId);
-                  const currentNozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
-                  const nozzle =
-                    currentNozzle &&
-                    catalog.find((c) => c.id === headBodyId) &&
-                    nozzleCompatibleWithHead(
-                      currentNozzle,
-                      catalog.find((c) => c.id === headBodyId)!
-                    )
-                      ? currentNozzle
-                      : compatible[0];
-                  const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
-                  const settings = nozzle ? resolveDefaultHeadSettings(nozzle, pressure) : null;
-                  const heads = document.heads.map((h) =>
-                    h.id === selectedHead.id
-                      ? {
-                          ...h,
-                          headBodyId,
-                          catalogItemId: nozzle?.id ?? h.catalogItemId,
-                          ...(settings ?? {}),
-                        }
-                      : h
-                  );
-                  setDocument({ ...document, heads });
-                }}
-              >
-                <option value="">— Select body —</option>
-                {getHeadBodies(catalog).map((body) => (
-                  <option key={body.id} value={body.id}>
-                    {body.manufacturer} {body.model}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {selectedHead.headBodyId && (
-              <div>
-                <Label className="text-xs">Nozzle</Label>
-                <select
-                  className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
-                  value={selectedHead.catalogItemId}
-                  onChange={(e) => {
-                    const nozzle = catalog.find((c) => c.id === e.target.value);
-                    if (!nozzle) return;
-                    const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
-                    const settings = resolveDefaultHeadSettings(nozzle, pressure);
-                    const heads = document.heads.map((h) =>
-                      h.id === selectedHead.id
-                        ? {
-                            ...h,
-                            catalogItemId: nozzle.id,
-                            ...settings,
-                          }
-                        : h
-                    );
-                    setDocument({ ...document, heads });
-                  }}
-                >
-                  {getNozzlesForHead(catalog, selectedHead.headBodyId).map((nozzle) => (
-                    <option key={nozzle.id} value={nozzle.id}>
-                      {nozzle.model}
-                    </option>
-                  ))}
-                </select>
-                {(() => {
-                  const nozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
-                  if (!nozzle) return null;
-                  const adj = getNozzleAdjustability(nozzle);
-                  return (
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Arc {adj.arcDegreesMin}°–{adj.arcDegreesMax}°
-                      {adj.arcAdjustable ? " (adj.)" : ""} · Radius {adj.radiusFeetMin}–
-                      {adj.radiusFeetMax} ft{adj.radiusAdjustable ? " (adj.)" : ""}
-                      {adj.fixedLeftEdge ? " · fixed left edge" : ""}
-                    </p>
-                  );
-                })()}
-              </div>
-            )}
+            <HeadCatalogPickers
+              catalog={catalog}
+              headBodyId={selectedHead.headBodyId}
+              catalogItemId={selectedHead.catalogItemId}
+              showNozzleDetails
+              onBodyChange={(headBodyId) => {
+                const compatible = getNozzlesForHead(catalog, headBodyId);
+                const currentNozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
+                const headBody = catalog.find((c) => c.id === headBodyId);
+                const nozzle =
+                  currentNozzle && headBody && nozzleCompatibleWithHead(currentNozzle, headBody)
+                    ? currentNozzle
+                    : compatible[0];
+                const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
+                const settings = nozzle ? resolveDefaultHeadSettings(nozzle, pressure) : null;
+                const heads = document.heads.map((h) =>
+                  h.id === selectedHead.id
+                    ? {
+                        ...h,
+                        headBodyId,
+                        catalogItemId: nozzle?.id ?? h.catalogItemId,
+                        ...(settings ?? {}),
+                      }
+                    : h
+                );
+                setDocument({ ...document, heads });
+              }}
+              onNozzleChange={(catalogItemId) => {
+                const nozzle = catalog.find((c) => c.id === catalogItemId);
+                if (!nozzle) return;
+                const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
+                const settings = resolveDefaultHeadSettings(nozzle, pressure);
+                const heads = document.heads.map((h) =>
+                  h.id === selectedHead.id
+                    ? { ...h, catalogItemId: nozzle.id, ...settings }
+                    : h
+                );
+                setDocument({ ...document, heads });
+              }}
+            />
             {selectedHead.headBodyId && selectedHead.catalogItemId && (() => {
               const nozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
               if (!nozzle) return null;

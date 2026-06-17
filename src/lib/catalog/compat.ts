@@ -75,6 +75,61 @@ export function getHeadBodies(catalog: CatalogItemData[]): CatalogItemData[] {
   return catalog.filter(isHeadBody);
 }
 
+export type BodyPickerGroup = "spray" | "rotor";
+export type NozzlePickerGroup = "fixed" | "rotary" | "van";
+
+export const BODY_PICKER_GROUPS: { id: BodyPickerGroup; label: string }[] = [
+  { id: "spray", label: "Spray" },
+  { id: "rotor", label: "Rotor" },
+];
+
+export const NOZZLE_PICKER_GROUPS: { id: NozzlePickerGroup; label: string }[] = [
+  { id: "fixed", label: "Fixed" },
+  { id: "rotary", label: "Rotary" },
+  { id: "van", label: "VAN" },
+];
+
+export function getBodyPickerGroup(body: CatalogItemData): BodyPickerGroup {
+  return body.category === "ROTOR_BODY" ? "rotor" : "spray";
+}
+
+export function filterHeadBodiesByGroup(
+  bodies: CatalogItemData[],
+  group: BodyPickerGroup
+): CatalogItemData[] {
+  return bodies.filter((b) => getBodyPickerGroup(b) === group);
+}
+
+export function getNozzlePickerGroup(nozzle: CatalogItemData): NozzlePickerGroup {
+  const family =
+    typeof nozzle.specs.nozzleFamily === "string" ? nozzle.specs.nozzleFamily : "";
+
+  if (
+    nozzle.category === "MP_ROTATOR" ||
+    family === "hunter_mp_rotator" ||
+    family === "rainbird_rvan"
+  ) {
+    return "rotary";
+  }
+
+  if (
+    family === "rainbird_he_van" ||
+    family === "rainbird_van" ||
+    (nozzle.category === "SPRAY" && nozzle.specs.arcAdjustable === true)
+  ) {
+    return "van";
+  }
+
+  return "fixed";
+}
+
+export function filterNozzlesByGroup(
+  nozzles: CatalogItemData[],
+  group: NozzlePickerGroup
+): CatalogItemData[] {
+  return nozzles.filter((n) => getNozzlePickerGroup(n) === group);
+}
+
 export function getDefaultNozzleForHead(
   catalog: CatalogItemData[],
   headBodyId: string

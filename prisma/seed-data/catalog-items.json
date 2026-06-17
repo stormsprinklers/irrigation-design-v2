@@ -5893,6 +5893,9 @@
       ],
       "stripPattern": "left_corner",
       "mpModel": "MP-LCS-515",
+      "patternWidthFt": 5,
+      "patternLengthFt": 15,
+      "patternSize": "5' x 15'",
       "itemRole": "nozzle",
       "compatibleBodyCategories": [
         "SPRAY_BODY"
@@ -5900,8 +5903,8 @@
       "arcDegreesMin": 180,
       "arcDegreesMax": 180,
       "arcDegreesDefault": 180,
-      "radiusFeetMin": 4,
-      "radiusFeetMax": 6,
+      "radiusFeetMin": 15,
+      "radiusFeetMax": 15,
       "arcAdjustable": false,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
@@ -5911,43 +5914,19 @@
       "pressurePsi": [
         30,
         40,
-        50,
-        30,
-        40,
-        50,
-        30,
-        40,
         50
       ],
       "radiusFeet": [
-        4,
-        5,
-        6,
-        4,
-        5,
-        6,
-        4,
-        5,
-        6
+        15,
+        15,
+        15
       ],
       "gpm": [
         0.19,
         0.22,
-        0.25,
-        0.19,
-        0.22,
-        0.25,
-        0.38,
-        0.44,
-        0.49
+        0.25
       ],
       "precipInPerHr": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
@@ -5955,14 +5934,9 @@
       "precipTriInPerHr": [
         0,
         0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0
-      ]
+      ],
+      "recommendedPressurePsi": 45
     }
   },
   {
@@ -5978,6 +5952,9 @@
       ],
       "stripPattern": "right_corner",
       "mpModel": "MP-RCS-515",
+      "patternWidthFt": 5,
+      "patternLengthFt": 15,
+      "patternSize": "5' x 15'",
       "itemRole": "nozzle",
       "compatibleBodyCategories": [
         "SPRAY_BODY"
@@ -5985,8 +5962,8 @@
       "arcDegreesMin": 180,
       "arcDegreesMax": 180,
       "arcDegreesDefault": 180,
-      "radiusFeetMin": 4,
-      "radiusFeetMax": 6,
+      "radiusFeetMin": 15,
+      "radiusFeetMax": 15,
       "arcAdjustable": false,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
@@ -5996,43 +5973,19 @@
       "pressurePsi": [
         30,
         40,
-        50,
-        30,
-        40,
-        50,
-        30,
-        40,
         50
       ],
       "radiusFeet": [
-        4,
-        5,
-        6,
-        4,
-        5,
-        6,
-        4,
-        5,
-        6
+        15,
+        15,
+        15
       ],
       "gpm": [
         0.19,
         0.22,
-        0.25,
-        0.19,
-        0.22,
-        0.25,
-        0.38,
-        0.44,
-        0.49
+        0.25
       ],
       "precipInPerHr": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
@@ -6040,14 +5993,9 @@
       "precipTriInPerHr": [
         0,
         0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0
-      ]
+      ],
+      "recommendedPressurePsi": 45
     }
   },
   {
@@ -6063,6 +6011,9 @@
       ],
       "stripPattern": "side",
       "mpModel": "MP-SS-530",
+      "patternWidthFt": 5,
+      "patternLengthFt": 30,
+      "patternSize": "5' x 30'",
       "itemRole": "nozzle",
       "compatibleBodyCategories": [
         "SPRAY_BODY"
@@ -6070,8 +6021,8 @@
       "arcDegreesMin": 180,
       "arcDegreesMax": 180,
       "arcDegreesDefault": 180,
-      "radiusFeetMin": 4,
-      "radiusFeetMax": 6,
+      "radiusFeetMin": 30,
+      "radiusFeetMax": 30,
       "arcAdjustable": false,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
@@ -6081,43 +6032,19 @@
       "pressurePsi": [
         30,
         40,
-        50,
-        30,
-        40,
-        50,
-        30,
-        40,
         50
       ],
       "radiusFeet": [
-        4,
-        5,
-        6,
-        4,
-        5,
-        6,
-        4,
-        5,
-        6
+        30,
+        30,
+        30
       ],
       "gpm": [
         0.19,
         0.22,
-        0.25,
-        0.19,
-        0.22,
-        0.25,
-        0.38,
-        0.44,
-        0.49
+        0.25
       ],
       "precipInPerHr": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0,
         0,
         0
@@ -6125,14 +6052,9 @@
       "precipTriInPerHr": [
         0,
         0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
         0
-      ]
+      ],
+      "recommendedPressurePsi": 45
     }
   },
   {
@@ -7270,7 +7192,9 @@
       ],
       "rvanModel": "R-VAN-LCS",
       "stripPattern": "left_corner",
-      "patternSize": "4’x14’",
+      "patternWidthFt": 5,
+      "patternLengthFt": 15,
+      "patternSize": "5' x 15'",
       "itemRole": "nozzle",
       "compatibleBodyCategories": [
         "SPRAY_BODY"
@@ -7278,8 +7202,8 @@
       "arcDegreesMin": 180,
       "arcDegreesMax": 180,
       "arcDegreesDefault": 180,
-      "radiusFeetMin": 4,
-      "radiusFeetMax": 6,
+      "radiusFeetMin": 14,
+      "radiusFeetMax": 16,
       "arcAdjustable": false,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
@@ -7295,12 +7219,12 @@
         55
       ],
       "radiusFeet": [
-        4,
-        5,
-        5,
-        5,
-        5,
-        6
+        14,
+        15,
+        15,
+        15,
+        15,
+        16
       ],
       "gpm": [
         0.18,
@@ -7343,7 +7267,9 @@
       ],
       "rvanModel": "R-VAN-RCS",
       "stripPattern": "right_corner",
-      "patternSize": "4’x14’",
+      "patternWidthFt": 5,
+      "patternLengthFt": 15,
+      "patternSize": "5' x 15'",
       "itemRole": "nozzle",
       "compatibleBodyCategories": [
         "SPRAY_BODY"
@@ -7351,8 +7277,8 @@
       "arcDegreesMin": 180,
       "arcDegreesMax": 180,
       "arcDegreesDefault": 180,
-      "radiusFeetMin": 4,
-      "radiusFeetMax": 6,
+      "radiusFeetMin": 14,
+      "radiusFeetMax": 16,
       "arcAdjustable": false,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
@@ -7368,12 +7294,12 @@
         55
       ],
       "radiusFeet": [
-        4,
-        5,
-        5,
-        5,
-        5,
-        6
+        14,
+        15,
+        15,
+        15,
+        15,
+        16
       ],
       "gpm": [
         0.18,
@@ -7416,7 +7342,9 @@
       ],
       "rvanModel": "R-VAN-SST",
       "stripPattern": "side",
-      "patternSize": "4’x28’",
+      "patternWidthFt": 5,
+      "patternLengthFt": 30,
+      "patternSize": "5' x 30'",
       "itemRole": "nozzle",
       "compatibleBodyCategories": [
         "SPRAY_BODY"
@@ -7424,8 +7352,8 @@
       "arcDegreesMin": 180,
       "arcDegreesMax": 180,
       "arcDegreesDefault": 180,
-      "radiusFeetMin": 4,
-      "radiusFeetMax": 6,
+      "radiusFeetMin": 28,
+      "radiusFeetMax": 32,
       "arcAdjustable": false,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
@@ -7441,12 +7369,12 @@
         55
       ],
       "radiusFeet": [
-        4,
-        5,
-        5,
-        5,
-        5,
-        6
+        28,
+        30,
+        30,
+        30,
+        30,
+        32
       ],
       "gpm": [
         0.36,
@@ -7473,6 +7401,2998 @@
         0.56
       ],
       "recommendedPressurePsi": 45
+    }
+  },
+  {
+    "id": "noz_rb_he_van_08",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "HE-VAN-08",
+    "specs": {
+      "nozzleFamily": "rainbird_he_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 6,
+      "radiusFeetMax": 8,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "gpm": [
+        0.41,
+        0.48,
+        0.53,
+        0.59
+      ],
+      "precipInPerHr": [
+        3.19,
+        2.56,
+        2.1,
+        1.76
+      ],
+      "precipTriInPerHr": [
+        3.68,
+        2.95,
+        2.42,
+        2.03
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_he_van_10",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "HE-VAN-10",
+    "specs": {
+      "nozzleFamily": "rainbird_he_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 8,
+      "radiusFeetMax": 10,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "gpm": [
+        0.63,
+        0.73,
+        0.81,
+        0.89
+      ],
+      "precipInPerHr": [
+        2.48,
+        2.19,
+        1.94,
+        1.72
+      ],
+      "precipTriInPerHr": [
+        2.86,
+        2.53,
+        2.24,
+        1.98
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_he_van_12",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "HE-VAN-12",
+    "specs": {
+      "nozzleFamily": "rainbird_he_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 9,
+      "radiusFeetMax": 12,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "gpm": [
+        0.84,
+        0.97,
+        1.08,
+        1.18
+      ],
+      "precipInPerHr": [
+        1.99,
+        1.86,
+        1.72,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.3,
+        2.15,
+        1.99,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_he_van_15",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "HE-VAN-15",
+    "specs": {
+      "nozzleFamily": "rainbird_he_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 12,
+      "radiusFeetMax": 15,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        1.31,
+        1.51,
+        1.69,
+        1.85
+      ],
+      "precipInPerHr": [
+        2.08,
+        2.02,
+        1.66,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.4,
+        2.33,
+        1.92,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_5q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "5Q",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 3,
+      "radiusFeetMax": 5,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "gpm": [
+        0.07,
+        0.08,
+        0.09,
+        0.1
+      ],
+      "precipInPerHr": [
+        3,
+        1.93,
+        2.17,
+        1.54
+      ],
+      "precipTriInPerHr": [
+        3.46,
+        2.22,
+        2.5,
+        1.78
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_5h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "5H",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 3,
+      "radiusFeetMax": 5,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "gpm": [
+        0.14,
+        0.16,
+        0.18,
+        0.2
+      ],
+      "precipInPerHr": [
+        3,
+        1.93,
+        2.17,
+        1.54
+      ],
+      "precipTriInPerHr": [
+        3.46,
+        2.22,
+        2.5,
+        1.78
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_5f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "5F",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 3,
+      "radiusFeetMax": 5,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        3,
+        4,
+        4,
+        5
+      ],
+      "gpm": [
+        0.29,
+        0.33,
+        0.37,
+        0.41
+      ],
+      "precipInPerHr": [
+        3.1,
+        1.99,
+        2.23,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        3.58,
+        2.29,
+        2.57,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_8q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "8Q",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 5,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "gpm": [
+        0.18,
+        0.21,
+        0.24,
+        0.26
+      ],
+      "precipInPerHr": [
+        2.77,
+        2.25,
+        1.89,
+        1.56
+      ],
+      "precipTriInPerHr": [
+        3.2,
+        2.59,
+        2.18,
+        1.81
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_8h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "8H",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 5,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "gpm": [
+        0.37,
+        0.42,
+        0.47,
+        0.52
+      ],
+      "precipInPerHr": [
+        2.85,
+        2.25,
+        1.85,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        3.29,
+        2.59,
+        2.13,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_8f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "8F",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 5,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "gpm": [
+        0.74,
+        0.86,
+        0.96,
+        1.05
+      ],
+      "precipInPerHr": [
+        2.85,
+        2.3,
+        1.89,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        3.29,
+        2.66,
+        2.18,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_10q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "10Q",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 7,
+      "radiusFeetMax": 10,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "gpm": [
+        0.29,
+        0.33,
+        0.37,
+        0.41
+      ],
+      "precipInPerHr": [
+        2.28,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.63,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_10h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "10H",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 7,
+      "radiusFeetMax": 10,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "gpm": [
+        0.58,
+        0.67,
+        0.75,
+        0.82
+      ],
+      "precipInPerHr": [
+        2.28,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.63,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_10f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "10F",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 7,
+      "radiusFeetMax": 10,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "gpm": [
+        1.16,
+        1.34,
+        1.5,
+        1.64
+      ],
+      "precipInPerHr": [
+        2.28,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.63,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_12q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "12Q",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 9,
+      "radiusFeetMax": 12,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "gpm": [
+        0.45,
+        0.53,
+        0.6,
+        0.65
+      ],
+      "precipInPerHr": [
+        2.14,
+        2.02,
+        1.91,
+        1.74
+      ],
+      "precipTriInPerHr": [
+        2.47,
+        2.34,
+        2.21,
+        2.01
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_12h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "12H",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 9,
+      "radiusFeetMax": 12,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "gpm": [
+        0.9,
+        1.05,
+        1.2,
+        1.3
+      ],
+      "precipInPerHr": [
+        2.14,
+        2.02,
+        1.91,
+        1.74
+      ],
+      "precipTriInPerHr": [
+        2.47,
+        2.34,
+        2.21,
+        2.01
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_12f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "12F",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 9,
+      "radiusFeetMax": 12,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "gpm": [
+        1.8,
+        2.1,
+        2.4,
+        2.6
+      ],
+      "precipInPerHr": [
+        2.14,
+        2.02,
+        1.91,
+        1.74
+      ],
+      "precipTriInPerHr": [
+        2.47,
+        2.34,
+        2.21,
+        2.01
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_15q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15Q",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        0.65,
+        0.75,
+        0.82,
+        0.92
+      ],
+      "precipInPerHr": [
+        2.07,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.39,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_15h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15H",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        1.3,
+        1.5,
+        1.65,
+        1.85
+      ],
+      "precipInPerHr": [
+        2.07,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.39,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_15f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15F",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        2.6,
+        3,
+        3.3,
+        3.7
+      ],
+      "precipInPerHr": [
+        2.07,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.39,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_8h_flt",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "8H-FLT",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 6,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        7,
+        7,
+        8
+      ],
+      "gpm": [
+        0.56,
+        0.65,
+        0.72,
+        0.79
+      ],
+      "precipInPerHr": [
+        3.36,
+        2.91,
+        2.6,
+        2.38
+      ],
+      "precipTriInPerHr": [
+        3.88,
+        3.36,
+        3.01,
+        2.75
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_mpr_8q_flt",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "8Q-FLT",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 6,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        7,
+        7,
+        8
+      ],
+      "gpm": [
+        0.28,
+        0.32,
+        0.36,
+        0.39
+      ],
+      "precipInPerHr": [
+        3.32,
+        2.87,
+        2.57,
+        2.35
+      ],
+      "precipTriInPerHr": [
+        3.83,
+        3.32,
+        2.97,
+        2.71
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_8q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-8Q",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 5,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "gpm": [
+        0.18,
+        0.21,
+        0.24,
+        0.26
+      ],
+      "precipInPerHr": [
+        2.77,
+        2.25,
+        1.89,
+        1.56
+      ],
+      "precipTriInPerHr": [
+        3.2,
+        2.59,
+        2.18,
+        1.81
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_8h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-8H",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 5,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "gpm": [
+        0.37,
+        0.42,
+        0.47,
+        0.52
+      ],
+      "precipInPerHr": [
+        2.85,
+        2.25,
+        1.85,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        3.29,
+        2.59,
+        2.13,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_8f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-8F",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 5,
+      "radiusFeetMax": 8,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "gpm": [
+        0.74,
+        0.86,
+        0.96,
+        1.05
+      ],
+      "precipInPerHr": [
+        2.85,
+        2.3,
+        1.89,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        3.29,
+        2.66,
+        2.18,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_10q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-10Q",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 7,
+      "radiusFeetMax": 10,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "gpm": [
+        0.29,
+        0.33,
+        0.37,
+        0.41
+      ],
+      "precipInPerHr": [
+        2.28,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.63,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_10h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-10H",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 7,
+      "radiusFeetMax": 10,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "gpm": [
+        0.58,
+        0.67,
+        0.75,
+        0.82
+      ],
+      "precipInPerHr": [
+        2.28,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.63,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_10f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-10F",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 7,
+      "radiusFeetMax": 10,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "gpm": [
+        1.16,
+        1.34,
+        1.5,
+        1.64
+      ],
+      "precipInPerHr": [
+        2.28,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.63,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_12q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-12Q",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 9,
+      "radiusFeetMax": 12,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "gpm": [
+        0.45,
+        0.53,
+        0.6,
+        0.65
+      ],
+      "precipInPerHr": [
+        2.14,
+        2.02,
+        1.91,
+        1.74
+      ],
+      "precipTriInPerHr": [
+        2.47,
+        2.34,
+        2.21,
+        2.01
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_12h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-12H",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 9,
+      "radiusFeetMax": 12,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "gpm": [
+        0.9,
+        1.05,
+        1.2,
+        1.3
+      ],
+      "precipInPerHr": [
+        2.14,
+        2.02,
+        1.91,
+        1.74
+      ],
+      "precipTriInPerHr": [
+        2.47,
+        2.34,
+        2.21,
+        2.01
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_12f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-12F",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 9,
+      "radiusFeetMax": 12,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "gpm": [
+        1.8,
+        2.1,
+        2.4,
+        2.6
+      ],
+      "precipInPerHr": [
+        2.14,
+        2.02,
+        1.91,
+        1.74
+      ],
+      "precipTriInPerHr": [
+        2.47,
+        2.34,
+        2.21,
+        2.01
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_15q",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-15Q",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        0.65,
+        0.75,
+        0.82,
+        0.92
+      ],
+      "precipInPerHr": [
+        2.07,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.39,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_15h",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-15H",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        1.3,
+        1.5,
+        1.65,
+        1.85
+      ],
+      "precipInPerHr": [
+        2.07,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.39,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_u_15f",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "U-15F",
+    "specs": {
+      "nozzleFamily": "rainbird_u_series",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        2.6,
+        3,
+        3.3,
+        3.7
+      ],
+      "precipInPerHr": [
+        2.07,
+        2.01,
+        1.62,
+        1.58
+      ],
+      "precipTriInPerHr": [
+        2.39,
+        2.32,
+        1.87,
+        1.83
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_van_4",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "4-VAN",
+    "specs": {
+      "nozzleFamily": "rainbird_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 3,
+      "radiusFeetMax": 4,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        3,
+        3,
+        4,
+        4
+      ],
+      "gpm": [
+        0.32,
+        0.37,
+        0.41,
+        0.45
+      ],
+      "precipInPerHr": [
+        6.84,
+        7.91,
+        4.93,
+        5.41
+      ],
+      "precipTriInPerHr": [
+        7.9,
+        9.13,
+        5.69,
+        6.25
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_van_6",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "6-VAN",
+    "specs": {
+      "nozzleFamily": "rainbird_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 4,
+      "radiusFeetMax": 6,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        4,
+        5,
+        5,
+        6
+      ],
+      "gpm": [
+        0.42,
+        0.49,
+        0.55,
+        0.6
+      ],
+      "precipInPerHr": [
+        5.05,
+        3.77,
+        4.24,
+        3.21
+      ],
+      "precipTriInPerHr": [
+        5.83,
+        4.35,
+        4.9,
+        3.71
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_van_8",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "8-VAN",
+    "specs": {
+      "nozzleFamily": "rainbird_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 6,
+      "radiusFeetMax": 8,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        6,
+        7,
+        7,
+        8
+      ],
+      "gpm": [
+        0.56,
+        0.65,
+        0.72,
+        0.79
+      ],
+      "precipInPerHr": [
+        3.36,
+        2.91,
+        2.6,
+        2.38
+      ],
+      "precipTriInPerHr": [
+        3.88,
+        3.36,
+        3.01,
+        2.75
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_van_10",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "10-VAN",
+    "specs": {
+      "nozzleFamily": "rainbird_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 7,
+      "radiusFeetMax": 10,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "gpm": [
+        0.97,
+        1.12,
+        1.25,
+        1.37
+      ],
+      "precipInPerHr": [
+        3.8,
+        3.36,
+        2.96,
+        2.64
+      ],
+      "precipTriInPerHr": [
+        4.39,
+        3.88,
+        3.42,
+        3.05
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_van_12",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "12-VAN",
+    "specs": {
+      "nozzleFamily": "rainbird_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 9,
+      "radiusFeetMax": 12,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "gpm": [
+        1.35,
+        1.57,
+        1.77,
+        1.95
+      ],
+      "precipInPerHr": [
+        2.67,
+        2.4,
+        2.17,
+        2.01
+      ],
+      "precipTriInPerHr": [
+        3.08,
+        2.77,
+        2.5,
+        2.32
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_van_15",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15-VAN",
+    "specs": {
+      "nozzleFamily": "rainbird_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        1.75,
+        2.03,
+        2.28,
+        2.5
+      ],
+      "precipInPerHr": [
+        2.31,
+        2.13,
+        1.72,
+        1.6
+      ],
+      "precipTriInPerHr": [
+        2.67,
+        2.46,
+        1.99,
+        1.85
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_van_18",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "18-VAN",
+    "specs": {
+      "nozzleFamily": "rainbird_van",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "chartReferenceArcDegrees": 180,
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 0,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 14,
+      "radiusFeetMax": 18,
+      "arcAdjustable": true,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        14,
+        15,
+        16,
+        18
+      ],
+      "gpm": [
+        2.15,
+        2.48,
+        2.78,
+        3.05
+      ],
+      "precipInPerHr": [
+        1.76,
+        1.67,
+        1.55,
+        1.52
+      ],
+      "precipTriInPerHr": [
+        2.03,
+        1.93,
+        1.79,
+        1.75
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_15est",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15EST",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr_strip",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "stripPattern": "end",
+      "patternWidthFt": 4,
+      "patternLengthFt": 15,
+      "patternSize": "4' x 15'",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 13,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        13,
+        14,
+        14,
+        15
+      ],
+      "gpm": [
+        0.45,
+        0.5,
+        0.56,
+        0.61
+      ],
+      "precipInPerHr": [
+        2,
+        1.9,
+        2.1,
+        2
+      ],
+      "precipTriInPerHr": [
+        2.3,
+        2.2,
+        2.4,
+        2.3
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_15cst",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15CST",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr_strip",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "stripPattern": "center",
+      "patternWidthFt": 4,
+      "patternLengthFt": 30,
+      "patternSize": "4' x 30'",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 26,
+      "radiusFeetMax": 30,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        26,
+        28,
+        28,
+        30
+      ],
+      "gpm": [
+        0.89,
+        1,
+        1.11,
+        1.21
+      ],
+      "precipInPerHr": [
+        1.9,
+        1.9,
+        2.1,
+        1.9
+      ],
+      "precipTriInPerHr": [
+        2.2,
+        2.2,
+        2.4,
+        2.2
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_15rcs",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15RCS",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr_strip",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "stripPattern": "right_corner",
+      "patternWidthFt": 4,
+      "patternLengthFt": 15,
+      "patternSize": "4' x 15'",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        0.35,
+        0.4,
+        0.45,
+        0.49
+      ],
+      "precipInPerHr": [
+        2,
+        1.9,
+        2,
+        1.9
+      ],
+      "precipTriInPerHr": [
+        2.3,
+        2.2,
+        2.3,
+        2.2
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_15lcs",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15LCS",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr_strip",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "stripPattern": "left_corner",
+      "patternWidthFt": 4,
+      "patternLengthFt": 15,
+      "patternSize": "4' x 15'",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 11,
+      "radiusFeetMax": 15,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        11,
+        12,
+        14,
+        15
+      ],
+      "gpm": [
+        0.35,
+        0.4,
+        0.45,
+        0.49
+      ],
+      "precipInPerHr": [
+        2,
+        1.9,
+        2,
+        1.9
+      ],
+      "precipTriInPerHr": [
+        2.3,
+        2.2,
+        2.3,
+        2.2
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_15sst",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "15SST",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr_strip",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "stripPattern": "side",
+      "patternWidthFt": 4,
+      "patternLengthFt": 30,
+      "patternSize": "4' x 30'",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 26,
+      "radiusFeetMax": 30,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        26,
+        28,
+        28,
+        30
+      ],
+      "gpm": [
+        0.89,
+        1,
+        1.11,
+        1.21
+      ],
+      "precipInPerHr": [
+        1.9,
+        1.9,
+        2.1,
+        1.9
+      ],
+      "precipTriInPerHr": [
+        2.2,
+        2.2,
+        2.4,
+        2.2
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_9sst",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "9SST",
+    "specs": {
+      "nozzleFamily": "rainbird_mpr_strip",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "stripPattern": "side",
+      "patternWidthFt": 9,
+      "patternLengthFt": 18,
+      "patternSize": "9' x 18'",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 15,
+      "radiusFeetMax": 18,
+      "arcAdjustable": false,
+      "radiusAdjustable": false,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        15,
+        20,
+        25,
+        30
+      ],
+      "radiusFeet": [
+        15,
+        16,
+        18,
+        18
+      ],
+      "gpm": [
+        1.34,
+        1.47,
+        1.6,
+        1.73
+      ],
+      "precipInPerHr": [
+        2,
+        1.9,
+        2,
+        1.9
+      ],
+      "precipTriInPerHr": [
+        2.3,
+        2.2,
+        2.3,
+        2.2
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_sq_qtr",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "SQ-QTR",
+    "specs": {
+      "nozzleFamily": "rainbird_sq",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "Q",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 90,
+      "arcDegreesMax": 90,
+      "arcDegreesDefault": 90,
+      "radiusFeetMin": 2.5,
+      "radiusFeetMax": 4,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        2.5,
+        3,
+        4
+      ],
+      "gpm": [
+        0.1,
+        0.12,
+        0.14
+      ],
+      "precipInPerHr": [
+        3,
+        2.8,
+        2.5
+      ],
+      "precipTriInPerHr": [
+        3.5,
+        3.2,
+        2.9
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_sq_hlf",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "SQ-HLF",
+    "specs": {
+      "nozzleFamily": "rainbird_sq",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "H",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 180,
+      "arcDegreesMax": 180,
+      "arcDegreesDefault": 180,
+      "radiusFeetMin": 2.5,
+      "radiusFeetMax": 4,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        2.5,
+        3,
+        4
+      ],
+      "gpm": [
+        0.2,
+        0.24,
+        0.28
+      ],
+      "precipInPerHr": [
+        3,
+        2.8,
+        2.5
+      ],
+      "precipTriInPerHr": [
+        3.5,
+        3.2,
+        2.9
+      ],
+      "recommendedPressurePsi": 30
+    }
+  },
+  {
+    "id": "noz_rb_sq_ful",
+    "category": "SPRAY",
+    "manufacturer": "Rain Bird",
+    "model": "SQ-FUL",
+    "specs": {
+      "nozzleFamily": "rainbird_sq",
+      "compatibleHeadFamilies": [
+        "rainbird_1800",
+        "rainbird_1800_prs",
+        "rainbird_1800_sam"
+      ],
+      "sprayPattern": "F",
+      "itemRole": "nozzle",
+      "compatibleBodyCategories": [
+        "SPRAY_BODY"
+      ],
+      "arcDegreesMin": 360,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 360,
+      "radiusFeetMin": 2.5,
+      "radiusFeetMax": 4,
+      "arcAdjustable": false,
+      "radiusAdjustable": true,
+      "rotationAdjustable": true,
+      "fixedLeftEdge": false
+    },
+    "nozzleChart": {
+      "pressurePsi": [
+        30,
+        40,
+        50
+      ],
+      "radiusFeet": [
+        2.5,
+        3,
+        4
+      ],
+      "gpm": [
+        0.4,
+        0.48,
+        0.56
+      ],
+      "precipInPerHr": [
+        3,
+        2.8,
+        2.5
+      ],
+      "precipTriInPerHr": [
+        3.5,
+        3.2,
+        2.9
+      ],
+      "recommendedPressurePsi": 30
     }
   },
   {

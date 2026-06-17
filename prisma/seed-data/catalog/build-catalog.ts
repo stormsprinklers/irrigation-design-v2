@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { HEAD_ITEMS } from "./heads";
 import { MANUFACTURER_NOZZLES } from "./nozzles-manufacturer";
+import { RAINBIRD_SPRAY_NOZZLES } from "./rainbird-spray-nozzles";
 import { enrichNozzleItem } from "./adjustability";
 import {
   consolidateSprayNozzles,
@@ -175,12 +176,13 @@ function main() {
   const manufacturerNozzles = mergeManufacturerNozzles(MANUFACTURER_NOZZLES, extractedPdf).map(
     enrichNozzleItem
   );
-  const all = [...HEAD_ITEMS, ...hunterGenerated, ...manufacturerNozzles, ...UTILITY_ITEMS];
+  const rainbirdSpray = RAINBIRD_SPRAY_NOZZLES.map(enrichNozzleItem);
+  const all = [...HEAD_ITEMS, ...hunterGenerated, ...manufacturerNozzles, ...rainbirdSpray, ...UTILITY_ITEMS];
 
   const outPath = path.join(__dirname, "../catalog-items.json");
   fs.writeFileSync(outPath, JSON.stringify(all, null, 2));
   console.log(
-    `Catalog built: ${all.length} items (${HEAD_ITEMS.length} heads, ${hunterGenerated.length} hunter chart nozzles, ${manufacturerNozzles.length} manufacturer nozzles incl. ${sprayPdf.length} spray + ${rotorPdf.length} rotor from PDF extract)`
+    `Catalog built: ${all.length} items (${HEAD_ITEMS.length} heads, ${hunterGenerated.length} hunter chart nozzles, ${manufacturerNozzles.length} manufacturer nozzles incl. ${sprayPdf.length} spray + ${rotorPdf.length} rotor from PDF extract, ${rainbirdSpray.length} rainbird spray)`
   );
 }
 
