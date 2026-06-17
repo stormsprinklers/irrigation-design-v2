@@ -1,15 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import type { CatalogItemData } from "@/lib/domain/types";
 import { useTrainingStore } from "@/lib/stores/training-store";
 import { approveTrainingExample, exportTrainingExamplesJsonl } from "@/lib/actions/training";
 import { TrainingToolbar } from "./TrainingToolbar";
-import { TrainingCanvas } from "./TrainingCanvas";
 import { HeadEditorPanel } from "./HeadEditorPanel";
 import { ScoreComparisonPanel } from "./ScoreComparisonPanel";
 import { ExampleListDrawer } from "./ExampleListDrawer";
+
+const TrainingCanvas = dynamic(
+  () => import("./TrainingCanvas").then((m) => m.TrainingCanvas),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-full items-center justify-center text-muted-foreground">
+        Loading canvas…
+      </div>
+    ),
+  }
+);
 
 type Props = {
   catalog: CatalogItemData[];
@@ -23,7 +35,12 @@ export function TrainingWorkspace({ catalog }: Props) {
   useEffect(() => {
     const store = useTrainingStore.getState();
     store.initCatalog(catalog);
-    store.generateExample();
+    try {
+      store.generateExample();
+    } catch (e) {
+      console.error("Failed to generate training example", e);
+      toast.error(e instanceof Error ? e.message : "Failed to generate example");
+    }
   }, [catalog]);
 
   async function handleApprove() {

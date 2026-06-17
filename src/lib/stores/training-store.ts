@@ -98,6 +98,9 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
 
   generateExample: (seed) => {
     const { catalog, shapeFilter } = get();
+    if (catalog.length === 0) {
+      throw new Error("Catalog is empty — run db:seed or add catalog items.");
+    }
     const poly = generateTrainingPolygon({
       seed,
       shapeClass: shapeFilter === "random" ? undefined : shapeFilter,

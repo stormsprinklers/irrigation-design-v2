@@ -1,7 +1,7 @@
 "use client";
 
 import { Layer, Line, Rect, Stage, Circle, Arc, Group } from "react-konva";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTrainingStore } from "@/lib/stores/training-store";
 import { TRAINING_DISPLAY_PX_PER_FT } from "@/lib/domain/training/types";
 import { gridColorCells } from "@/lib/domain/simulation/heatmap";
@@ -36,7 +36,27 @@ export function TrainingCanvas() {
   const addCorrectedHead = useTrainingStore((s) => s.addCorrectedHead);
 
   const stageRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ width: 800, height: 600 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const updateSize = () => {
+      setSize((prev) => {
+        const width = el.clientWidth;
+        const height = el.clientHeight;
+        if (prev.width === width && prev.height === height) return prev;
+        return { width, height };
+      });
+    };
+
+    updateSize();
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [polygon?.metadata.seed]);
 
   if (!polygon) {
     return (
@@ -103,9 +123,10 @@ export function TrainingCanvas() {
   }
 
   return (
-    <div className="h-full w-full overflow-auto bg-muted/30" ref={(el) => {
-      if (el) setSize({ width: el.clientWidth, height: el.clientHeight });
-    }}>
+    <div
+      ref={containerRef}
+      className="h-full w-full overflow-auto bg-muted/30"
+    >
       <Stage
         ref={stageRef}
         width={stageW}
