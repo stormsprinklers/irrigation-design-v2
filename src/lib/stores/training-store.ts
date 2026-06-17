@@ -5,6 +5,7 @@ import type { CatalogItemData } from "@/lib/domain/types";
 import { generateTrainingPolygon } from "@/lib/domain/training/polygon-generator";
 import { runPlacementOnPolygon } from "@/lib/domain/training/placement-adapter";
 import { evaluateDesign, computeImprovementScore } from "@/lib/domain/simulation/scoring";
+import { CURRENT_DISTRIBUTION_CURVE_VERSION } from "@/lib/domain/simulation/radial-curve";
 import { computeEditDiff } from "@/lib/domain/training/edit-diff";
 import { generateId } from "@/lib/utils";
 import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
@@ -79,8 +80,12 @@ function recompute(
   baseline: TrainingHeadSnapshot[],
   corrected: TrainingHeadSnapshot[]
 ) {
-  const baselineEval = evaluateDesign(polygon.verticesFt, baseline);
-  const correctedEval = evaluateDesign(polygon.verticesFt, corrected);
+  const evalOpts = {
+    exclusionZones: polygon.exclusionZonesFt,
+    distributionCurveVersion: CURRENT_DISTRIBUTION_CURVE_VERSION,
+  };
+  const baselineEval = evaluateDesign(polygon.verticesFt, baseline, 1.5, evalOpts);
+  const correctedEval = evaluateDesign(polygon.verticesFt, corrected, 1.5, evalOpts);
   return {
     baselineScores: baselineEval.scores,
     correctedScores: correctedEval.scores,
@@ -291,6 +296,9 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
       approvedPrecipGrid: correctedGrid,
       editLog,
       improvementScore,
+      distributionCurveVersion: CURRENT_DISTRIBUTION_CURVE_VERSION,
+      validForTraining: true,
+      needsRescore: false,
     };
   },
 }));

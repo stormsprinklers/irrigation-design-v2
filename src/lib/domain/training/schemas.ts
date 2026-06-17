@@ -41,6 +41,7 @@ export const uniformityScoresSchema = z.object({
   wetSpotCount: z.number().int(),
   headToHeadViolations: z.number().int(),
   oversprayEstimatePercent: z.number(),
+  exclusionOversprayPercent: z.number().optional().default(0),
   headCount: z.number().int(),
   sampleCount: z.number().int(),
 });
@@ -83,6 +84,9 @@ export const trainingExamplePayloadSchema = z.object({
   approvedPrecipGrid: precipGridSchema,
   editLog: z.any().optional(),
   improvementScore: z.number(),
+  distributionCurveVersion: z.string().optional(),
+  validForTraining: z.boolean().optional(),
+  needsRescore: z.boolean().optional(),
 });
 
 export const trainingExampleApprovalInputSchema = trainingExamplePayloadSchema.omit({
@@ -96,4 +100,5 @@ export const approveTrainingExampleSchema = z.object({
 export const exportTrainingExamplesSchema = z.object({
   status: z.enum(["APPROVED", "IN_PROGRESS", "DISCARDED"]).optional(),
   limit: z.number().int().min(1).max(5000).optional(),
+  validForTrainingOnly: z.boolean().optional(),
 });

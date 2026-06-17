@@ -59,7 +59,7 @@ function ScoreTable({
         </thead>
         <tbody>
           <MetricRow label="Coverage %" baseline={baseline.coveragePercent} corrected={corrected.coveragePercent} />
-          <MetricRow label="DU_LQ" baseline={baseline.duLq} corrected={corrected.duLq} format={(v) => v.toFixed(3)} />
+          <MetricRow label="Uniformity" baseline={baseline.duLq} corrected={corrected.duLq} format={(v) => v.toFixed(3)} />
           <MetricRow label="Avg precip" baseline={baseline.avgPrecip} corrected={corrected.avgPrecip} format={(v) => v.toFixed(2)} />
           <MetricRow label="Min precip" baseline={baseline.minPrecip} corrected={corrected.minPrecip} format={(v) => v.toFixed(2)} />
           <MetricRow label="Max precip" baseline={baseline.maxPrecip} corrected={corrected.maxPrecip} format={(v) => v.toFixed(2)} />
@@ -74,6 +74,12 @@ function ScoreTable({
             label="Overspray est. %"
             baseline={baseline.oversprayEstimatePercent}
             corrected={corrected.oversprayEstimatePercent}
+            lowerIsBetter
+          />
+          <MetricRow
+            label="Exclusion overspray %"
+            baseline={baseline.exclusionOversprayPercent}
+            corrected={corrected.exclusionOversprayPercent}
             lowerIsBetter
           />
           <MetricRow label="Head count" baseline={baseline.headCount} corrected={corrected.headCount} />

@@ -2,8 +2,10 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
   computeImprovementScore,
+  estimateOversprayMetrics,
   scoreUniformity,
 } from "../scoring";
+import type { ExclusionZone } from "../../types";
 import type { TrainingHeadSnapshot, UniformityScores } from "../../training/types";
 
 const emptyHeads: TrainingHeadSnapshot[] = [];
@@ -19,6 +21,7 @@ function baseScores(overrides: Partial<UniformityScores> = {}): UniformityScores
     wetSpotCount: 0,
     headToHeadViolations: 2,
     oversprayEstimatePercent: 10,
+    exclusionOversprayPercent: 0,
     headCount: 6,
     sampleCount: 100,
     ...overrides,
@@ -78,6 +81,18 @@ describe("computeImprovementScore", () => {
     const withoutFixes = computeImprovementScore(original, baseScores());
     assert.ok(withFixes > withoutFixes);
   });
+
+  it("penalizes exclusion overspray much more than regular overspray", () => {
+    const original = baseScores({ oversprayEstimatePercent: 5, exclusionOversprayPercent: 5 });
+    const fixedRegular = baseScores({ oversprayEstimatePercent: 0, exclusionOversprayPercent: 5 });
+    const fixedExclusion = baseScores({ oversprayEstimatePercent: 5, exclusionOversprayPercent: 0 });
+
+    const regularFix = computeImprovementScore(original, fixedRegular);
+    const exclusionFix = computeImprovementScore(original, fixedExclusion);
+
+    assert.ok(exclusionFix > regularFix);
+    assert.ok(exclusionFix >= regularFix * 10);
+  });
 });
 
 describe("scoreUniformity dry spots near edge", () => {
@@ -120,5 +135,45 @@ describe("scoreUniformity dry spots near edge", () => {
       drySpotEdgeMarginFt: 2,
     });
     assert.equal(scores.drySpotCount, 1);
+  });
+});
+
+describe("estimateOversprayMetrics", () => {
+  it("counts exclusion overspray separately from regular overspray", () => {
+    const lawn = [
+      { x: 0, y: 0 },
+      { x: 30, y: 0 },
+      { x: 30, y: 30 },
+      { x: 0, y: 30 },
+    ];
+    const exclusions: ExclusionZone[] = [
+      {
+        id: "ex-1",
+        name: "Building",
+        exclusionType: "BUILDING",
+        vertices: [
+          { x: 28, y: 10 },
+          { x: 35, y: 10 },
+          { x: 35, y: 20 },
+          { x: 28, y: 20 },
+        ],
+      },
+    ];
+    const heads: TrainingHeadSnapshot[] = [
+      {
+        id: "h1",
+        positionFt: { x: 28, y: 15 },
+        radiusFeet: 6,
+        arcDegrees: 90,
+        rotationDegrees: 0,
+        wedgeStartDeg: 315,
+        wedgeEndDeg: 45,
+        catalogItemId: "test",
+      },
+    ];
+
+    const metrics = estimateOversprayMetrics(lawn, heads, exclusions);
+    assert.ok(metrics.exclusionOversprayPercent > 0);
+    assert.ok(metrics.exclusionOversprayPercent >= metrics.oversprayEstimatePercent);
   });
 });

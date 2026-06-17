@@ -1,7 +1,7 @@
 import { isPointInHeadCoverage, headStripSpec, type HeadCoverageInput } from "../placement/head-coverage";
 import { stripCoverageRatio } from "@/lib/catalog/strip-pattern";
 import type { Point } from "../types";
-import { DEFAULT_RADIAL_CURVE, type DistributionCurve } from "./radial-curve";
+import { getDistributionCurve, type DistributionCurve } from "./radial-curve";
 import { buildPrecipGrid, samplePointsInPolygonFeet } from "./sample-grid";
 import type { PrecipGrid, TrainingHeadSnapshot } from "../training/types";
 import { TRAINING_PPF } from "../training/placement-adapter";
@@ -9,6 +9,7 @@ import { TRAINING_PPF } from "../training/placement-adapter";
 export type SimulateOptions = {
   stepFt?: number;
   curve?: DistributionCurve;
+  distributionCurveVersion?: string;
 };
 
 function baseRate(head: TrainingHeadSnapshot): number {
@@ -20,7 +21,7 @@ function baseRate(head: TrainingHeadSnapshot): number {
 export function precipAtPoint(
   point: Point,
   heads: TrainingHeadSnapshot[],
-  curve: DistributionCurve = DEFAULT_RADIAL_CURVE
+  curve: DistributionCurve = getDistributionCurve()
 ): number {
   let total = 0;
   for (const snap of heads) {
@@ -57,7 +58,7 @@ export function simulatePrecipitation(
   options: SimulateOptions = {}
 ): { grid: PrecipGrid; samplePoints: Point[]; values: number[] } {
   const stepFt = options.stepFt ?? 1.5;
-  const curve = options.curve ?? DEFAULT_RADIAL_CURVE;
+  const curve = options.curve ?? getDistributionCurve(options.distributionCurveVersion);
   const samplePoints = samplePointsInPolygonFeet(vertices, stepFt);
   const values = samplePoints.map((p) => precipAtPoint(p, heads, curve));
   const grid = buildPrecipGrid(vertices, samplePoints, values, stepFt);

@@ -3,11 +3,11 @@ import { headStripSpec, isPointInHeadCoverage, type HeadCoverageInput } from "..
 import { stripPatternVertices } from "@/lib/catalog/strip-pattern";
 import type { PrecipGrid, TrainingHeadSnapshot, UniformityScores } from "../training/types";
 import { TRAINING_PPF } from "../training/placement-adapter";
-import type { Point } from "../types";
+import type { ExclusionZone, Point } from "../types";
 import { precipAtPoint } from "./precip-simulator";
 import { buildPrecipGrid, samplePointsInPolygonFeet } from "./sample-grid";
 import type { DistributionCurve } from "./radial-curve";
-import { DEFAULT_RADIAL_CURVE } from "./radial-curve";
+import { getDistributionCurve } from "./radial-curve";
 
 export type ScoringOptions = {
   dryThreshold?: number;
@@ -19,6 +19,10 @@ export type ScoringOptions = {
   polygonVertices?: Point[];
   /** Ignore dry spots within this distance of the polygon edge (feet). */
   drySpotEdgeMarginFt?: number;
+  /** Adjacent no-spray zones (buildings, hardscape, etc.). */
+  exclusionZones?: ExclusionZone[];
+  /** Versioned radial precip distribution (see radial-curve.ts). */
+  distributionCurveVersion?: string;
 };
 
 /** Dry = covered sample below this fraction of mean covered precip. */
@@ -38,9 +42,39 @@ function computeDuLq(values: number[]): number {
   return lowAvg / avg;
 }
 
-function estimateOversprayPercent(vertices: Point[], heads: TrainingHeadSnapshot[]): number {
-  let outsideHits = 0;
-  let checked = 0;
+function pointInAnyExclusion(p: Point, exclusions: ExclusionZone[]): boolean {
+  return exclusions.some((ex) => pointInPolygon(p, ex.vertices));
+}
+
+export type OversprayMetrics = {
+  /** Spray reaching outside the lawn but not into an exclusion zone. */
+  oversprayEstimatePercent: number;
+  /** Spray reaching into an exclusion zone — penalized heavily in improvement score. */
+  exclusionOversprayPercent: number;
+};
+
+function recordOverspraySample(
+  p: Point,
+  lawnVertices: Point[],
+  exclusions: ExclusionZone[],
+  tallies: { checked: number; outsideHits: number; exclusionHits: number }
+) {
+  tallies.checked++;
+  if (pointInPolygon(p, lawnVertices)) return;
+  if (exclusions.length > 0 && pointInAnyExclusion(p, exclusions)) {
+    tallies.exclusionHits++;
+  } else {
+    tallies.outsideHits++;
+  }
+}
+
+export function estimateOversprayMetrics(
+  vertices: Point[],
+  heads: TrainingHeadSnapshot[],
+  exclusions: ExclusionZone[] = []
+): OversprayMetrics {
+  const tallies = { checked: 0, outsideHits: 0, exclusionHits: 0 };
+
   for (const head of heads) {
     const coverageHead: HeadCoverageInput = {
       position: head.positionFt,
@@ -60,12 +94,15 @@ function estimateOversprayPercent(vertices: Point[], heads: TrainingHeadSnapshot
         const a = verts[i]!;
         const b = verts[(i + 1) % edgeCount]!;
         for (let t = 0; t <= 4; t++) {
-          const p = {
-            x: a.x + (b.x - a.x) * (t / 4),
-            y: a.y + (b.y - a.y) * (t / 4),
-          };
-          checked++;
-          if (!pointInPolygon(p, vertices)) outsideHits++;
+          recordOverspraySample(
+            {
+              x: a.x + (b.x - a.x) * (t / 4),
+              y: a.y + (b.y - a.y) * (t / 4),
+            },
+            vertices,
+            exclusions,
+            tallies
+          );
         }
       }
       continue;
@@ -80,12 +117,22 @@ function estimateOversprayPercent(vertices: Point[], heads: TrainingHeadSnapshot
         y: head.positionFt.y + Math.sin(angle) * head.radiusFeet,
       };
       if (!isPointInHeadCoverage(coverageHead, p, TRAINING_PPF)) continue;
-      checked++;
-      if (!pointInPolygon(p, vertices)) outsideHits++;
+      recordOverspraySample(p, vertices, exclusions, tallies);
     }
   }
-  if (checked === 0) return 0;
-  return Math.round((outsideHits / checked) * 100);
+
+  if (tallies.checked === 0) {
+    return { oversprayEstimatePercent: 0, exclusionOversprayPercent: 0 };
+  }
+
+  return {
+    oversprayEstimatePercent: Math.round((tallies.outsideHits / tallies.checked) * 100),
+    exclusionOversprayPercent: Math.round((tallies.exclusionHits / tallies.checked) * 100),
+  };
+}
+
+export function estimateOversprayPercent(vertices: Point[], heads: TrainingHeadSnapshot[]): number {
+  return estimateOversprayMetrics(vertices, heads).oversprayEstimatePercent;
 }
 
 export function scoreUniformity(
@@ -143,10 +190,15 @@ export function scoreUniformity(
     wetSpotCount,
     headToHeadViolations: 0,
     oversprayEstimatePercent: 0,
+    exclusionOversprayPercent: 0,
     headCount: heads.length,
     sampleCount,
   };
 }
+
+/** Per-point weight in improvement score — exclusion overspray is penalized ~13× regular overspray. */
+const OVERSPRAY_IMPROVEMENT_WEIGHT = 0.3;
+const EXCLUSION_OVERSPRAY_IMPROVEMENT_WEIGHT = 4;
 
 export function computeImprovementScore(
   original: UniformityScores,
@@ -157,7 +209,10 @@ export function computeImprovementScore(
       (approved.coveragePercent - original.coveragePercent) * 0.5 -
       (approved.drySpotCount - original.drySpotCount) * 2 -
       (approved.wetSpotCount - original.wetSpotCount) * 4 -
-      (approved.oversprayEstimatePercent - original.oversprayEstimatePercent) * 0.3 -
+      (approved.oversprayEstimatePercent - original.oversprayEstimatePercent) *
+        OVERSPRAY_IMPROVEMENT_WEIGHT -
+      (approved.exclusionOversprayPercent - original.exclusionOversprayPercent) *
+        EXCLUSION_OVERSPRAY_IMPROVEMENT_WEIGHT -
       Math.max(0, approved.headCount - original.headCount) * 3
   );
 }
@@ -173,7 +228,8 @@ export function evaluateDesign(
   samplePoints: Point[];
   precipValues: number[];
 } {
-  const curve = options.curve ?? DEFAULT_RADIAL_CURVE;
+  const curve =
+    options.curve ?? getDistributionCurve(options.distributionCurveVersion);
   const samplePoints = samplePointsInPolygonFeet(vertices, stepFt);
   const precipValues = samplePoints.map((p) => precipAtPoint(p, heads, curve));
   const scores = scoreUniformity(heads, precipValues, {
@@ -181,7 +237,13 @@ export function evaluateDesign(
     samplePoints,
     polygonVertices: vertices,
   });
-  scores.oversprayEstimatePercent = estimateOversprayPercent(vertices, heads);
+  const overspray = estimateOversprayMetrics(
+    vertices,
+    heads,
+    options.exclusionZones ?? []
+  );
+  scores.oversprayEstimatePercent = overspray.oversprayEstimatePercent;
+  scores.exclusionOversprayPercent = overspray.exclusionOversprayPercent;
   const grid = buildPrecipGrid(vertices, samplePoints, precipValues, stepFt);
   return { scores, grid, samplePoints, precipValues };
 }

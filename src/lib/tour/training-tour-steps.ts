@@ -64,7 +64,7 @@ export const TRAINING_TOUR_STEPS: TrainingTourStep[] = [
     id: "scores",
     target: "training-tour-scores",
     title: "Uniformity scores",
-    body: "DU_LQ, coverage, dry/wet spots, and overspray update live as you edit. Compare baseline vs corrected improvement.",
+    body: "Uniformity, coverage, dry/wet spots, overspray, and exclusion overspray update live as you edit. Compare baseline vs corrected improvement.",
     placement: "left",
     scrollIntoView: true,
   },

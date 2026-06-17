@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
  * Manual QA checklist (/training):
  * 1. Generate loads a synthetic polygon with baseline heads and heatmap.
  * 2. Select/move/add/delete heads; arc, radius, rotation sliders update coverage.
- * 3. Score panel shows baseline vs corrected DU_LQ and improvement score.
+ * 3. Score panel shows baseline vs corrected uniformity and improvement score.
  * 4. Approve saves to DB; Next/Generate loads a new example.
  * 5. Export downloads JSONL with full payload per approved row.
  */
@@ -17,7 +17,7 @@ import { applyOrganicEdges, circularLawn } from "../organic-edges";
 import { runPlacementOnPolygon } from "../placement-adapter";
 import { evaluateDesign } from "../../simulation/scoring";
 import { precipValueAtPoint } from "../../simulation/sample-grid";
-import { DEFAULT_RADIAL_CURVE } from "../../simulation/radial-curve";
+import { DEFAULT_TAPER_V1_CURVE, LEGACY_BELL_V0_CURVE } from "../../simulation/radial-curve";
 import {
   pointAlongEdge,
   pointInPolygon,
@@ -231,11 +231,19 @@ describe("training pipeline integration", () => {
 });
 
 describe("radial-curve", () => {
-  it("returns expected band strengths", () => {
-    assert.equal(DEFAULT_RADIAL_CURVE.strengthAtRatio(0.1), 0.45);
-    assert.equal(DEFAULT_RADIAL_CURVE.strengthAtRatio(0.35), 0.75);
-    assert.equal(DEFAULT_RADIAL_CURVE.strengthAtRatio(0.7), 1.0);
-    assert.equal(DEFAULT_RADIAL_CURVE.strengthAtRatio(0.95), 0.8);
-    assert.equal(DEFAULT_RADIAL_CURVE.strengthAtRatio(1.1), 0);
+  it("uses head-heavy taper for default_taper_v1", () => {
+    assert.equal(DEFAULT_TAPER_V1_CURVE.strengthAtRatio(0.1), 1.0);
+    assert.equal(DEFAULT_TAPER_V1_CURVE.strengthAtRatio(0.3), 0.85);
+    assert.equal(DEFAULT_TAPER_V1_CURVE.strengthAtRatio(0.5), 0.65);
+    assert.equal(DEFAULT_TAPER_V1_CURVE.strengthAtRatio(0.7), 0.45);
+    assert.equal(DEFAULT_TAPER_V1_CURVE.strengthAtRatio(0.95), 0.25);
+    assert.equal(DEFAULT_TAPER_V1_CURVE.strengthAtRatio(1.1), 0);
+  });
+
+  it("preserves legacy bell curve for rescoring old examples", () => {
+    assert.equal(LEGACY_BELL_V0_CURVE.strengthAtRatio(0.1), 0.45);
+    assert.equal(LEGACY_BELL_V0_CURVE.strengthAtRatio(0.35), 0.75);
+    assert.equal(LEGACY_BELL_V0_CURVE.strengthAtRatio(0.7), 1.0);
+    assert.equal(LEGACY_BELL_V0_CURVE.strengthAtRatio(0.95), 0.8);
   });
 });

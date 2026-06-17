@@ -75,7 +75,10 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
 
   async function handleExport() {
     try {
-      const jsonl = await exportTrainingExamplesJsonl({ status: "APPROVED" });
+      const jsonl = await exportTrainingExamplesJsonl({
+        status: "APPROVED",
+        validForTrainingOnly: true,
+      });
       const blob = new Blob([jsonl], { type: "application/x-ndjson" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");

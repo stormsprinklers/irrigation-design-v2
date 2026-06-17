@@ -31,6 +31,8 @@ export const TRAINING_SHAPE_CLASSES = Object.keys(
 export type TrainingExampleStats = {
   total: number;
   byShape: Record<TrainingShapeClass, number>;
+  needsRescore: number;
+  trainingReady: number;
 };
 
 export type TrainingPolygonMetadata = {
@@ -84,6 +86,8 @@ export type UniformityScores = {
   wetSpotCount: number;
   headToHeadViolations: number;
   oversprayEstimatePercent: number;
+  /** Spray landing in adjacent exclusion zones (buildings, hardscape, etc.). */
+  exclusionOversprayPercent: number;
   headCount: number;
   sampleCount: number;
 };
@@ -123,6 +127,12 @@ export type TrainingExamplePayload = {
   approvedPrecipGrid: PrecipGrid;
   editLog?: TrainingEditLog;
   improvementScore: number;
+  /** Radial precip distribution used for simulation scores. */
+  distributionCurveVersion?: string;
+  /** False when saved under a superseded distribution curve until re-scored. */
+  validForTraining?: boolean;
+  /** True when scores/grids should be recomputed with the current curve. */
+  needsRescore?: boolean;
 };
 
 /** Client-submitted payload before server stamps algorithmVersion. */
@@ -138,7 +148,8 @@ export const TRAINING_PPF = 1;
  * { id, organizationId, createdById, status, algorithmVersion, createdAt, approvedAt, payload }
  * payload fields: polygonVerticesFt, polygonMetadata, placementContext,
  * algorithmOutput, approvedOutput, originalScores, approvedScores,
- * originalPrecipGrid, approvedPrecipGrid, editLog, improvementScore
+ * originalPrecipGrid, approvedPrecipGrid, editLog, improvementScore,
+ * distributionCurveVersion, validForTraining, needsRescore
  */
 export const TRAINING_EXPORT_SCHEMA_VERSION = 1;
 
