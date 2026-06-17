@@ -19,12 +19,16 @@ import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
 import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
 import { NativeSelect } from "@/components/ui/native-select";
 
+import { cn } from "@/lib/utils";
+
 type Props = {
   catalog: CatalogItemData[];
   onUploadImage: (file: File) => void;
   onAutoPlace: (hydrozoneId: string) => void;
   onValidate: () => void;
   onScaleCalibrate: (feet: number) => void;
+  className?: string;
+  variant?: "sidebar" | "sheet";
 };
 
 export function InspectorPanel({
@@ -33,6 +37,8 @@ export function InspectorPanel({
   onAutoPlace,
   onValidate,
   onScaleCalibrate,
+  className,
+  variant = "sidebar",
 }: Props) {
   const {
     document,
@@ -61,7 +67,13 @@ export function InspectorPanel({
   }
 
   return (
-    <div className="flex h-full w-80 flex-col border-l bg-card">
+    <div
+      className={cn(
+        "flex h-full flex-col bg-card",
+        variant === "sidebar" && "w-80 border-l",
+        className
+      )}
+    >
       <div className="border-b p-4">
         <h2 className="font-semibold">Inspector</h2>
       </div>
@@ -114,7 +126,12 @@ export function InspectorPanel({
 
         <section className="space-y-3" data-tour="tour-water-source">
           <h3 className="text-sm font-medium">Water source</h3>
-          <div className="grid grid-cols-2 gap-2">
+          <div
+            className={cn(
+              "grid gap-2",
+              variant === "sheet" ? "grid-cols-1" : "grid-cols-2"
+            )}
+          >
             <div>
               <Label className="text-xs">Static PSI</Label>
               <Input

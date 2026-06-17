@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -24,6 +24,14 @@ import { DesignTour, TourHelpButton } from "./tour/DesignTour";
 import type { TourStatus } from "@/lib/actions/tour";
 import { Button } from "@/components/ui/button";
 import { blobProxyUrl } from "@/lib/blob/urls";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { ClipboardList, Package, Settings2 } from "lucide-react";
 
 const DesignCanvas = dynamic(() => import("./DesignCanvas").then((m) => m.DesignCanvas), {
   ssr: false,
@@ -48,6 +56,10 @@ export function DesignWorkspace({
   imageUrl,
   tourStatus,
 }: Props) {
+  const isMobile = useIsMobile();
+  const [inspectorOpen, setInspectorOpen] = useState(false);
+  const [materialsOpen, setMaterialsOpen] = useState(false);
+  const [validationOpen, setValidationOpen] = useState(false);
   const store = useDesignStore();
   const {
     init,
@@ -344,40 +356,50 @@ export function DesignWorkspace({
     toast.success("Property image uploaded");
   }
 
+  const inspectorProps = {
+    catalog,
+    onUploadImage: handleUploadImage,
+    onAutoPlace: handleAutoPlace,
+    onValidate: handleValidate,
+    onScaleCalibrate: handleScaleCalibrate,
+  };
+
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-dvh flex-col">
       <DesignTour initialStatus={tourStatus} />
-      <header className="flex items-center justify-between border-b bg-card px-4 py-2">
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/projects">← Projects</Link>
-          </Button>
-          <TourHelpButton />
-          <div>
-            <h1 className="font-semibold">{project.name}</h1>
-            <p className="text-xs text-muted-foreground">
-              {version.label}
-              {version.kind === "AS_BUILT" && (
-                <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-amber-800 dark:bg-amber-950 dark:text-amber-200">
-                  As-built
-                </span>
-              )}
-            </p>
+      <header className="safe-top shrink-0 border-b bg-card px-3 py-2 sm:px-4">
+        <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-4">
+            <Button variant="ghost" size="sm" asChild className="shrink-0">
+              <Link href="/projects">← Projects</Link>
+            </Button>
+            <TourHelpButton />
+            <div className="min-w-0">
+              <h1 className="truncate font-semibold">{project.name}</h1>
+              <p className="truncate text-xs text-muted-foreground">
+                {version.label}
+                {version.kind === "AS_BUILT" && (
+                  <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-amber-800 dark:bg-amber-950 dark:text-amber-200">
+                    As-built
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle compact />
-          <VersionSelector
-            projectId={project.id}
-            versions={versions}
-            activeVersionId={version.id}
-          />
+          <div className="flex flex-wrap items-center gap-2">
+            <ThemeToggle compact />
+            <VersionSelector
+              projectId={project.id}
+              versions={versions}
+              activeVersionId={version.id}
+            />
+          </div>
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1">
-        <DesignToolbar />
-        <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+        {!isMobile && <DesignToolbar />}
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           {(activeTool === "hydrozone" || activeTool === "exclusion") && drawingVertices.length > 0 && (
             <div className="border-b bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
               Click to place points.{" "}
@@ -393,17 +415,78 @@ export function DesignWorkspace({
               onCanvasClick={handleCanvasClick}
             />
           </div>
-          <ValidationDrawer />
-          <MaterialsPanel items={materials} totals={materialTotals} />
+          {!isMobile && (
+            <>
+              <ValidationDrawer />
+              <MaterialsPanel items={materials} totals={materialTotals} />
+            </>
+          )}
         </div>
-        <InspectorPanel
-          catalog={catalog}
-          onUploadImage={handleUploadImage}
-          onAutoPlace={handleAutoPlace}
-          onValidate={handleValidate}
-          onScaleCalibrate={handleScaleCalibrate}
-        />
+        {!isMobile && <InspectorPanel {...inspectorProps} />}
       </div>
+
+      {isMobile && (
+        <>
+          <div className="flex shrink-0 border-t bg-card">
+            <Button
+              variant="ghost"
+              className="h-11 flex-1 flex-col gap-0.5 rounded-none py-1 text-[10px]"
+              onClick={() => setInspectorOpen(true)}
+            >
+              <Settings2 className="h-4 w-4" />
+              Properties
+            </Button>
+            <Button
+              variant="ghost"
+              className="h-11 flex-1 flex-col gap-0.5 rounded-none py-1 text-[10px]"
+              onClick={() => setValidationOpen(true)}
+            >
+              <ClipboardList className="h-4 w-4" />
+              Issues
+            </Button>
+            <Button
+              variant="ghost"
+              className="h-11 flex-1 flex-col gap-0.5 rounded-none py-1 text-[10px]"
+              onClick={() => setMaterialsOpen(true)}
+            >
+              <Package className="h-4 w-4" />
+              Materials
+            </Button>
+          </div>
+          <DesignToolbar layout="dock" />
+        </>
+      )}
+
+      <Sheet open={inspectorOpen} onOpenChange={setInspectorOpen}>
+        <SheetContent side="right" className="w-full max-w-md p-0">
+          <SheetHeader className="sr-only">
+            <SheetTitle>Inspector</SheetTitle>
+          </SheetHeader>
+          <InspectorPanel {...inspectorProps} variant="sheet" className="h-full" />
+        </SheetContent>
+      </Sheet>
+
+      <Sheet open={validationOpen} onOpenChange={setValidationOpen}>
+        <SheetContent side="bottom" className="p-0">
+          <SheetHeader className="border-b">
+            <SheetTitle>Validation report</SheetTitle>
+          </SheetHeader>
+          <div className="max-h-[70dvh] overflow-y-auto">
+            <ValidationDrawer />
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <Sheet open={materialsOpen} onOpenChange={setMaterialsOpen}>
+        <SheetContent side="bottom" className="p-0">
+          <SheetHeader className="border-b">
+            <SheetTitle>Material estimate</SheetTitle>
+          </SheetHeader>
+          <div className="max-h-[70dvh] overflow-y-auto">
+            <MaterialsPanel items={materials} totals={materialTotals} />
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

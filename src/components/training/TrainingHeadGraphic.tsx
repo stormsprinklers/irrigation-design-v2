@@ -121,9 +121,7 @@ export function TrainingHeadGraphic({
 
   function stopDragScroll(e: Konva.KonvaEventObject<unknown>) {
     stopBubble(e);
-    if ("preventDefault" in e.evt && typeof e.evt.preventDefault === "function") {
-      e.evt.preventDefault();
-    }
+    (e.evt as Event).preventDefault?.();
     onInteractionStart?.();
   }
 

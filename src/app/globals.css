@@ -79,6 +79,14 @@
 }
 
 @layer utilities {
+  .safe-top {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+
+  .safe-bottom {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
   .scroll-surface {
     scrollbar-gutter: stable;
     scrollbar-color: color-mix(in oklch, var(--muted-foreground) 45%, transparent) transparent;

@@ -38,9 +38,12 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
   }
 
   return (
-    <div className="flex items-center gap-2" data-tour="tour-versions">
+    <div
+      className="flex flex-wrap items-center gap-2 lg:flex-nowrap"
+      data-tour="tour-versions"
+    >
       <NativeSelect
-        className="h-8 w-auto py-1"
+        className="h-9 w-full min-w-0 py-1 sm:h-8 sm:w-auto"
         value={activeVersionId}
         onChange={(e) => handleRestore(e.target.value)}
       >
@@ -51,7 +54,7 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
         ))}
       </NativeSelect>
       <Input
-        className="h-8 w-40"
+        className="h-9 w-full min-w-0 sm:h-8 sm:w-40"
         placeholder="Version label"
         value={label}
         onChange={(e) => setLabel(e.target.value)}

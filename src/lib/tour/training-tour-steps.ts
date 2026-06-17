@@ -86,3 +86,13 @@ export const TRAINING_TOUR_STEPS: TrainingTourStep[] = [
 ];
 
 export const TRAINING_TOUR_STEP_COUNT = TRAINING_TOUR_STEPS.length;
+
+export const MOBILE_HIDDEN_TRAINING_TOUR_TARGETS = new Set([
+  "training-tour-head-editor",
+  "training-tour-scores",
+  "training-tour-saved",
+]);
+
+export function isTrainingTourStepVisibleOnMobile(target: string): boolean {
+  return !MOBILE_HIDDEN_TRAINING_TOUR_TARGETS.has(target);
+}

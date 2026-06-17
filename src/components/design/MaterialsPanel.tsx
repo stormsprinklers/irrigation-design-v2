@@ -40,8 +40,8 @@ export function MaterialsPanel({ items, totals }: Props) {
       </div>
 
       {open && (
-        <div className="px-4 pb-4">
-          <table className="w-full text-xs">
+        <div className="overflow-x-auto px-4 pb-4">
+          <table className="w-full min-w-[280px] text-xs">
             <thead>
               <tr className="text-left text-muted-foreground">
                 <th>Item</th>

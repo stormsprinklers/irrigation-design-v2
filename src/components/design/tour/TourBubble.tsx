@@ -50,7 +50,7 @@ export function TourBubble({
       aria-modal="true"
       aria-labelledby="tour-bubble-title"
       className={cn(
-        "tour-bubble-enter fixed z-[70] w-[min(340px,calc(100vw-32px))] rounded-xl border bg-card p-5 shadow-xl",
+        "tour-bubble-enter fixed z-[70] w-[min(340px,calc(100vw-32px))] rounded-xl border bg-card p-5 shadow-xl safe-bottom",
         placement === "center" && "left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
       )}
       style={placement === "center" ? undefined : style}

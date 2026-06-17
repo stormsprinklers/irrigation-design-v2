@@ -17,13 +17,13 @@ export function ShareMenu({ projectId }: Props) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    function handlePointerDown(event: MouseEvent) {
+    function handlePointerDown(event: PointerEvent) {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setMenuOpen(false);
       }
     }
-    document.addEventListener("mousedown", handlePointerDown);
-    return () => document.removeEventListener("mousedown", handlePointerDown);
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, []);
 
   async function handleShare(view: "CUSTOMER" | "INSTALLER", label: string) {
@@ -56,7 +56,7 @@ export function ShareMenu({ projectId }: Props) {
       {menuOpen && (
         <div
           role="menu"
-          className="absolute right-0 top-full z-50 mt-1 min-w-[10rem] rounded-md border bg-card py-1 shadow-md"
+          className="absolute right-0 top-full z-50 mt-1 min-w-[10rem] max-w-[calc(100vw-2rem)] rounded-md border bg-card py-1 shadow-md"
         >
           <button
             type="button"
@@ -78,7 +78,7 @@ export function ShareMenu({ projectId }: Props) {
       )}
 
       {shareUrl && (
-        <div className="absolute right-0 top-full z-50 mt-1 w-80 rounded-md border bg-card p-3 shadow-md">
+        <div className="absolute right-0 top-full z-50 mt-1 w-[min(20rem,calc(100vw-2rem))] rounded-md border bg-card p-3 shadow-md">
           <p className="text-xs font-medium text-muted-foreground">
             {shareLabel} share link
           </p>

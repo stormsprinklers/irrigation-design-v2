@@ -32,9 +32,9 @@ export function InstallerSchematicView({
             {zone.name} — {zone.totalGpm} GPM · {zone.criticalPressurePsi} PSI at critical head
           </h2>
           <div className="mt-4 grid gap-6 lg:grid-cols-2">
-            <div>
+            <div className="overflow-x-auto">
               <h3 className="text-sm font-medium">Heads</h3>
-              <table className="mt-2 w-full text-sm">
+              <table className="mt-2 w-full min-w-[280px] text-sm">
                 <thead>
                   <tr className="text-left text-muted-foreground">
                     <th>Model</th>
@@ -55,9 +55,9 @@ export function InstallerSchematicView({
                 </tbody>
               </table>
             </div>
-            <div>
+            <div className="overflow-x-auto">
               <h3 className="text-sm font-medium">Pipe</h3>
-              <table className="mt-2 w-full text-sm">
+              <table className="mt-2 w-full min-w-[280px] text-sm">
                 <thead>
                   <tr className="text-left text-muted-foreground">
                     <th>Material</th>
@@ -84,7 +84,8 @@ export function InstallerSchematicView({
 
       <section className="mt-8">
         <h2 className="text-lg font-semibold">Material list</h2>
-        <table className="mt-4 w-full text-sm">
+        <div className="overflow-x-auto">
+          <table className="mt-4 w-full min-w-[280px] text-sm">
           <thead>
             <tr className="text-left text-muted-foreground">
               <th>Item</th>
@@ -104,6 +105,7 @@ export function InstallerSchematicView({
             ))}
           </tbody>
         </table>
+        </div>
         <p className="mt-4 text-right font-semibold">Total: ${schematic.totals.total.toFixed(2)}</p>
       </section>
 

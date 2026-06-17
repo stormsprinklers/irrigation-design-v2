@@ -5,11 +5,12 @@ import { createPortal } from "react-dom";
 import { TourSpotlight, type SpotlightRect } from "./TourSpotlight";
 import { TourBubble } from "./TourBubble";
 import { useTourStore } from "@/lib/stores/tour-store";
-import { DESIGN_TOUR_STEPS } from "@/lib/tour/design-tour-steps";
+import { DESIGN_TOUR_STEPS, isDesignTourStepVisibleOnMobile } from "@/lib/tour/design-tour-steps";
 import type { TourPlacement } from "@/lib/tour/design-tour-steps";
 import { completeTour } from "@/lib/actions/tour";
 import type { TourStatus } from "@/lib/actions/tour";
 import { CircleHelp } from "lucide-react";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 
 const BUBBLE_GAP = 16;
 const BUBBLE_WIDTH = 340;
@@ -78,7 +79,8 @@ type Props = {
 };
 
 export function DesignTour({ initialStatus }: Props) {
-  const { isActive, currentStep, startTour, next, prev, skip, endTour } = useTourStore();
+  const isMobile = useIsMobile();
+  const { isActive, currentStep, startTour, skip, endTour, goToStep } = useTourStore();
   const [mounted, setMounted] = useState(false);
   const [spotlightRect, setSpotlightRect] = useState<SpotlightRect | null>(null);
   const [bubbleStyle, setBubbleStyle] = useState<React.CSSProperties>({});
@@ -87,7 +89,29 @@ export function DesignTour({ initialStatus }: Props) {
   const hasAutoStarted = useRef(false);
 
   const step = DESIGN_TOUR_STEPS[currentStep];
-  const isLast = currentStep === DESIGN_TOUR_STEPS.length - 1;
+  const visibleSteps = isMobile
+    ? DESIGN_TOUR_STEPS.filter((s) => isDesignTourStepVisibleOnMobile(s.target))
+    : DESIGN_TOUR_STEPS;
+  const visibleStepIndex = step
+    ? visibleSteps.findIndex((s) => s.id === step.id)
+    : -1;
+  const isLast =
+    visibleStepIndex >= 0 ? visibleStepIndex === visibleSteps.length - 1 : false;
+
+  const advanceStep = useCallback(
+    (direction: 1 | -1) => {
+      let index = currentStep + direction;
+      while (index >= 0 && index < DESIGN_TOUR_STEPS.length) {
+        const candidate = DESIGN_TOUR_STEPS[index];
+        if (!isMobile || isDesignTourStepVisibleOnMobile(candidate.target)) {
+          goToStep(index);
+          return;
+        }
+        index += direction;
+      }
+    },
+    [currentStep, goToStep, isMobile]
+  );
 
   const updatePosition = useCallback(() => {
     if (!step) return;
@@ -218,13 +242,13 @@ export function DesignTour({ initialStatus }: Props) {
           key={step.id}
           title={step.title}
           body={step.body}
-          stepIndex={currentStep}
-          stepCount={DESIGN_TOUR_STEPS.length}
+          stepIndex={visibleStepIndex >= 0 ? visibleStepIndex : currentStep}
+          stepCount={visibleSteps.length}
           placement={effectivePlacement}
           style={bubbleStyle}
           isLast={isLast}
-          onBack={prev}
-          onNext={next}
+          onBack={() => advanceStep(-1)}
+          onNext={() => advanceStep(1)}
           onSkip={handleSkip}
           onFinish={handleFinish}
         />

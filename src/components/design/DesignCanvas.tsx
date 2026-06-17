@@ -8,6 +8,9 @@ import { distanceBetweenPoints, generateId, POLYGON_CLOSE_RADIUS } from "@/lib/u
 import type { HydrozonePolygon, ExclusionZone, Point, CatalogItemData } from "@/lib/domain/types";
 import { HeadCoverageShape } from "@/components/heads/HeadCoverageShape";
 import { useCanvasSurface } from "@/lib/hooks/use-canvas-theme";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
+import { Button } from "@/components/ui/button";
+import { ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 
 const HYDROZONE_COLORS: Record<string, string> = {
   TURF: "rgba(34, 197, 94, 0.25)",
@@ -54,6 +57,7 @@ type Props = {
 };
 
 export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
+  const isMobile = useIsMobile();
   const stageRef = useRef<Konva.Stage>(null);
   const layerRef = useRef<Konva.Layer>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -62,6 +66,13 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
   const isPanningRef = useRef(false);
   const lastPanPointRef = useRef<Point | null>(null);
   const panMovedRef = useRef(false);
+  const activePointersRef = useRef(new Map<number, Point>());
+  const pinchRef = useRef<{
+    initialDistance: number;
+    initialZoom: number;
+    initialPosition: Point;
+    center: Point;
+  } | null>(null);
   const [previewPoint, setPreviewPoint] = useState<Point | null>(null);
   const {
     document,
@@ -81,6 +92,9 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     setViewportSize,
     setContentSize,
     centerCanvasView,
+    zoomIn,
+    zoomOut,
+    resetCanvasView,
   } = useDesignStore();
   const canvasSurface = useCanvasSurface();
 
@@ -166,7 +180,57 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     activeTool === "head" ||
     activeTool === "pipe";
 
+  function pointerDistance(a: Point, b: Point) {
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  }
+
+  function pointerCenter(a: Point, b: Point): Point {
+    return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  }
+
+  function zoomAtScreenPoint(screenPoint: Point, newScale: number) {
+    const oldScale = canvasZoom;
+    const clampedScale = Math.round(Math.min(4, Math.max(0.25, newScale)) * 100) / 100;
+    const mousePointTo = {
+      x: (screenPoint.x - stagePosition.x) / oldScale,
+      y: (screenPoint.y - stagePosition.y) / oldScale,
+    };
+    setCanvasView(clampedScale, {
+      x: screenPoint.x - mousePointTo.x * clampedScale,
+      y: screenPoint.y - mousePointTo.y * clampedScale,
+    });
+  }
+
+  function updatePinchZoom() {
+    const pointers = [...activePointersRef.current.values()];
+    if (pointers.length !== 2 || !pinchRef.current || !containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const center = pointerCenter(pointers[0], pointers[1]);
+    const screenCenter = { x: center.x - rect.left, y: center.y - rect.top };
+    const distance = pointerDistance(pointers[0], pointers[1]);
+    const scaleFactor = distance / pinchRef.current.initialDistance;
+    zoomAtScreenPoint(screenCenter, pinchRef.current.initialZoom * scaleFactor);
+  }
+
   function handleContainerPointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (activePointersRef.current.size === 2) {
+      const pointers = [...activePointersRef.current.values()];
+      const distance = pointerDistance(pointers[0], pointers[1]);
+      const { canvasZoom: zoom, stagePosition: pos } = useDesignStore.getState();
+      pinchRef.current = {
+        initialDistance: distance,
+        initialZoom: zoom,
+        initialPosition: pos,
+        center: pointerCenter(pointers[0], pointers[1]),
+      };
+      isPanningRef.current = false;
+      e.preventDefault();
+      return;
+    }
+
     if (activeTool === "pan") {
       isPanningRef.current = true;
       panMovedRef.current = false;
@@ -184,6 +248,16 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
   }
 
   function handleContainerPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (activePointersRef.current.has(e.pointerId)) {
+      activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    }
+
+    if (activePointersRef.current.size === 2 && pinchRef.current) {
+      updatePinchZoom();
+      e.preventDefault();
+      return;
+    }
+
     if (activeTool === "pan" && isPanningRef.current && lastPanPointRef.current) {
       const dx = e.clientX - lastPanPointRef.current.x;
       const dy = e.clientY - lastPanPointRef.current.y;
@@ -229,6 +303,11 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
   }
 
   function handlePanPointerUp(e: React.PointerEvent<HTMLDivElement>) {
+    activePointersRef.current.delete(e.pointerId);
+    if (activePointersRef.current.size < 2) {
+      pinchRef.current = null;
+    }
+
     if (isPanningRef.current) {
       isPanningRef.current = false;
       lastPanPointRef.current = null;
@@ -257,6 +336,9 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
   const stageHeight = Math.max(viewportSize.height, 1);
   const isPanTool = activeTool === "pan";
   const passThroughPointer = activeTool !== "select";
+  const headRadius = isMobile ? 8 : 6;
+  const headHitStroke = isMobile ? 16 : 8;
+  const needsTouchActionNone = isPanTool || isPlacementTool || isMobile;
 
   return (
     <div
@@ -270,7 +352,7 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
               ? "grabbing"
               : "grab"
             : undefined,
-        touchAction: isPanTool ? "none" : undefined,
+        touchAction: needsTouchActionNone ? "none" : undefined,
       }}
       onPointerDown={handleContainerPointerDown}
       onPointerMove={handleContainerPointerMove}
@@ -349,6 +431,7 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
               opacity={isDimmed(pipe.zoneId) ? 0.2 : 0.9}
               listening={!passThroughPointer}
               onClick={() => setSelected(pipe.id, "pipe")}
+              onTap={() => setSelected(pipe.id, "pipe")}
             />
           ))}
 
@@ -380,12 +463,14 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
                 <Circle
                   x={head.position.x}
                   y={head.position.y}
-                  radius={6}
+                  radius={headRadius}
+                  hitStrokeWidth={headHitStroke}
                   fill={head.locked ? "#f59e0b" : selectedId === head.id ? "#2563eb" : "#1d4ed8"}
                   opacity={dimmed ? 0.2 : 1}
                   draggable={activeTool === "select" && !head.locked}
                   onDragEnd={(e) => handleHeadDrag(head.id, e.target.x(), e.target.y())}
                   onClick={() => setSelected(head.id, "head")}
+                  onTap={() => setSelected(head.id, "head")}
                 />
               </Group>
             );
@@ -401,6 +486,7 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
               opacity={isDimmed(valve.zoneId) ? 0.2 : 1}
               listening={!passThroughPointer}
               onClick={() => setSelected(valve.id, "valve")}
+              onTap={() => setSelected(valve.id, "valve")}
             />
           ))}
 
@@ -536,6 +622,40 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
       <div className="pointer-events-none absolute bottom-3 right-3 rounded-md border bg-card/95 px-2 py-1 text-xs text-muted-foreground shadow-sm">
         {Math.round(canvasZoom * 100)}%
       </div>
+      {isMobile && (
+        <div className="pointer-events-auto absolute bottom-3 left-3 flex gap-1">
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            className="h-11 w-11 bg-card/95 shadow-sm"
+            aria-label="Zoom out"
+            onClick={zoomOut}
+          >
+            <ZoomOut className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            className="h-11 w-11 bg-card/95 shadow-sm"
+            aria-label="Fit to view"
+            onClick={resetCanvasView}
+          >
+            <Maximize2 className="h-4 w-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            className="h-11 w-11 bg-card/95 shadow-sm"
+            aria-label="Zoom in"
+            onClick={zoomIn}
+          >
+            <ZoomIn className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
@@ -565,6 +685,7 @@ function HydrozoneShape({
       opacity={opacity}
       listening={listening}
       onClick={listening ? onSelect : undefined}
+      onTap={listening ? onSelect : undefined}
     />
   );
 }
@@ -593,6 +714,7 @@ function ExclusionShape({
       opacity={opacity}
       listening={listening}
       onClick={listening ? onSelect : undefined}
+      onTap={listening ? onSelect : undefined}
     />
   );
 }

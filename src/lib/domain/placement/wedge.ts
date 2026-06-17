@@ -33,9 +33,12 @@ function angleInWedge(angleDeg: number, startDeg: number, endDeg: number): boole
 export function isPointInWedge(head: WedgeHead, point: Point, ppf: number): boolean {
   const dx = point.x - head.position.x;
   const dy = point.y - head.position.y;
-  const distPx = Math.hypot(dx, dy);
-  const radiusPx = head.radiusFeet * ppf;
-  if (distPx > radiusPx + 0.5) return false;
+  const dist = Math.hypot(dx, dy);
+  const maxReach = head.radiusFeet * ppf;
+  if (dist > maxReach + 0.5) return false;
+
+  // Full-circle arcs collapse start/end to the same bearing — treat as omnidirectional.
+  if (head.arcDegrees >= 359.5) return true;
 
   const bearing = normalizeDeg((Math.atan2(dy, dx) * 180) / Math.PI);
   const start = wedgeStartDeg(head);

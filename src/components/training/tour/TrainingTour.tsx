@@ -7,11 +7,13 @@ import { TourBubble } from "@/components/design/tour/TourBubble";
 import { useTrainingTourStore } from "@/lib/stores/training-tour-store";
 import {
   TRAINING_TOUR_STEPS,
+  isTrainingTourStepVisibleOnMobile,
   type TourPlacement,
 } from "@/lib/tour/training-tour-steps";
 import { completeTrainingTour } from "@/lib/actions/tour";
 import type { TourStatus } from "@/lib/actions/tour";
 import { CircleHelp } from "lucide-react";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 
 const BUBBLE_GAP = 16;
 const BUBBLE_WIDTH = 340;
@@ -80,7 +82,8 @@ type Props = {
 };
 
 export function TrainingTour({ initialStatus }: Props) {
-  const { isActive, currentStep, startTour, next, prev, skip, endTour } = useTrainingTourStore();
+  const isMobile = useIsMobile();
+  const { isActive, currentStep, startTour, skip, endTour, goToStep } = useTrainingTourStore();
   const [mounted, setMounted] = useState(false);
   const [spotlightRect, setSpotlightRect] = useState<SpotlightRect | null>(null);
   const [bubbleStyle, setBubbleStyle] = useState<React.CSSProperties>({});
@@ -89,7 +92,29 @@ export function TrainingTour({ initialStatus }: Props) {
   const hasAutoStarted = useRef(false);
 
   const step = TRAINING_TOUR_STEPS[currentStep];
-  const isLast = currentStep === TRAINING_TOUR_STEPS.length - 1;
+  const visibleSteps = isMobile
+    ? TRAINING_TOUR_STEPS.filter((s) => isTrainingTourStepVisibleOnMobile(s.target))
+    : TRAINING_TOUR_STEPS;
+  const visibleStepIndex = step
+    ? visibleSteps.findIndex((s) => s.id === step.id)
+    : -1;
+  const isLast =
+    visibleStepIndex >= 0 ? visibleStepIndex === visibleSteps.length - 1 : false;
+
+  const advanceStep = useCallback(
+    (direction: 1 | -1) => {
+      let index = currentStep + direction;
+      while (index >= 0 && index < TRAINING_TOUR_STEPS.length) {
+        const candidate = TRAINING_TOUR_STEPS[index];
+        if (!isMobile || isTrainingTourStepVisibleOnMobile(candidate.target)) {
+          goToStep(index);
+          return;
+        }
+        index += direction;
+      }
+    },
+    [currentStep, goToStep, isMobile]
+  );
 
   const updatePosition = useCallback(() => {
     if (!step) return;
@@ -220,14 +245,14 @@ export function TrainingTour({ initialStatus }: Props) {
           key={step.id}
           title={step.title}
           body={step.body}
-          stepIndex={currentStep}
-          stepCount={TRAINING_TOUR_STEPS.length}
+          stepIndex={visibleStepIndex >= 0 ? visibleStepIndex : currentStep}
+          stepCount={visibleSteps.length}
           placement={effectivePlacement}
           style={bubbleStyle}
           isLast={isLast}
           finishLabel="Start training"
-          onBack={prev}
-          onNext={next}
+          onBack={() => advanceStep(-1)}
+          onNext={() => advanceStep(1)}
           onSkip={handleSkip}
           onFinish={handleFinish}
         />

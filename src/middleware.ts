@@ -11,6 +11,7 @@ export default auth((req) => {
   const isProtected =
     pathname.startsWith("/projects") ||
     pathname.startsWith("/settings") ||
+    pathname.startsWith("/training") ||
     pathname.includes("/design");
 
   if (isProtected && !isLoggedIn) {
@@ -27,5 +28,12 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/projects/:path*", "/settings/:path*", "/login", "/register"],
+  matcher: [
+    "/projects/:path*",
+    "/settings/:path*",
+    "/training",
+    "/training/:path*",
+    "/login",
+    "/register",
+  ],
 };

@@ -116,3 +116,17 @@ export const DESIGN_TOUR_STEPS: DesignTourStep[] = [
 ];
 
 export const DESIGN_TOUR_STEP_COUNT = DESIGN_TOUR_STEPS.length;
+
+/** Inspector / bottom-panel targets hidden on mobile until user opens a sheet. */
+export const MOBILE_HIDDEN_DESIGN_TOUR_TARGETS = new Set([
+  "tour-property-image",
+  "tour-water-source",
+  "tour-auto-place",
+  "tour-zone-isolation",
+  "tour-validation",
+  "tour-materials",
+]);
+
+export function isDesignTourStepVisibleOnMobile(target: string): boolean {
+  return !MOBILE_HIDDEN_DESIGN_TOUR_TARGETS.has(target);
+}

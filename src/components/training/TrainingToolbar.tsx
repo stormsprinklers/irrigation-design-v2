@@ -8,6 +8,7 @@ import {
   TRAINING_SHAPE_LABELS,
   type TrainingShapeClass,
 } from "@/lib/domain/training/types";
+import { cn } from "@/lib/utils";
 
 const SHAPES: { value: TrainingShapeClass | "random"; label: string }[] = [
   { value: "random", label: "Random shape" },
@@ -21,9 +22,10 @@ type Props = {
   onApprove: () => void;
   onExport: () => void;
   approving: boolean;
+  compact?: boolean;
 };
 
-export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
+export function TrainingToolbar({ onApprove, onExport, approving, compact = false }: Props) {
   const generateExample = useTrainingStore((s) => s.generateExample);
   const shapeFilter = useTrainingStore((s) => s.shapeFilter);
   const setShapeFilter = useTrainingStore((s) => s.setShapeFilter);
@@ -42,8 +44,8 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
   const correctedHeads = useTrainingStore((s) => s.correctedHeads);
 
   return (
-    <div className="flex flex-wrap items-center gap-2 border-b bg-card p-3">
-      <div className="flex items-center gap-2" data-tour="training-tour-generate">
+    <div className="flex flex-wrap items-center gap-2 border-b bg-card p-2 sm:p-3">
+      <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto" data-tour="training-tour-generate">
         <NativeSelect
           className="w-auto"
           value={shapeFilter}
@@ -76,8 +78,14 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
           Clear heads
         </Button>
       </div>
-      <div className="mx-2 h-6 w-px bg-border" />
-      <div className="flex items-center gap-2" data-tour="training-tour-view-modes">
+      {!compact && <div className="mx-2 hidden h-6 w-px bg-border sm:block" />}
+      <div
+        className={cn(
+          "flex flex-wrap items-center gap-2",
+          compact && "hidden sm:flex"
+        )}
+        data-tour="training-tour-view-modes"
+      >
         <Button
           size="sm"
           variant={viewMode === "baseline" ? "default" : "outline"}
@@ -100,8 +108,11 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
           Compare
         </Button>
       </div>
-      <div className="mx-2 h-6 w-px bg-border" />
-      <div className="flex items-center gap-2" data-tour="training-tour-tools">
+      {!compact && <div className="mx-2 hidden h-6 w-px bg-border sm:block" />}
+      <div
+        className={cn("flex items-center gap-2", compact && "w-full sm:w-auto")}
+        data-tour="training-tour-tools"
+      >
         <Button size="sm" variant={tool === "select" ? "default" : "outline"} onClick={() => setTool("select")}>
           Select
         </Button>
@@ -109,8 +120,14 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
           Add head
         </Button>
       </div>
-      <div className="mx-2 h-6 w-px bg-border" />
-      <div className="flex items-center gap-2" data-tour="training-tour-overlays">
+      {!compact && <div className="mx-2 hidden h-6 w-px bg-border sm:block" />}
+      <div
+        className={cn(
+          "flex flex-wrap items-center gap-2",
+          compact && "hidden sm:flex"
+        )}
+        data-tour="training-tour-overlays"
+      >
         <Button size="sm" variant={showHeatmap ? "default" : "outline"} onClick={toggleHeatmap}>
           Heatmap
         </Button>
@@ -121,7 +138,10 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
           Arcs
         </Button>
       </div>
-      <div className="ml-auto flex gap-2" data-tour="training-tour-approve">
+      <div
+        className="ml-auto flex w-full gap-2 sm:w-auto"
+        data-tour="training-tour-approve"
+      >
         <Button size="sm" variant="outline" onClick={onExport}>
           Export JSONL
         </Button>

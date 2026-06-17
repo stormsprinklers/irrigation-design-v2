@@ -4,10 +4,10 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30">
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+    <div className="min-h-dvh bg-gradient-to-b from-background to-secondary/30">
+      <header className="safe-top mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-6">
         <div className="text-xl font-semibold text-primary">Irrigation Design</div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <ThemeToggle compact />
           <Button variant="outline" asChild>
             <Link href="/login">Sign in</Link>
@@ -17,7 +17,7 @@ export default function HomePage() {
           </Button>
         </div>
       </header>
-      <main className="mx-auto max-w-4xl px-6 py-20 text-center">
+      <main className="mx-auto max-w-4xl px-4 py-12 text-center sm:px-6 sm:py-20">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Draw the property. Design the system. Share with confidence.
         </h1>
@@ -25,7 +25,7 @@ export default function HomePage() {
           Professional irrigation design with editable zones, pipe sizing, material costs, and
           customer-ready schematics. Automation proposes — you refine and explain.
         </p>
-        <div className="mt-10 flex justify-center gap-4">
+        <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
           <Button size="lg" asChild>
             <Link href="/register">Create free account</Link>
           </Button>

@@ -18,6 +18,16 @@ import { TrainingStatsPanel } from "./TrainingStatsPanel";
 import { ExampleListDrawer } from "./ExampleListDrawer";
 import { TrainingTour, TrainingTourHelpButton } from "./tour/TrainingTour";
 import type { TourStatus } from "@/lib/actions/tour";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Pencil, BarChart3, Archive } from "lucide-react";
 
 const TrainingCanvas = dynamic(
   () => import("./TrainingCanvas").then((m) => m.TrainingCanvas),
@@ -31,6 +41,8 @@ const TrainingCanvas = dynamic(
   }
 );
 
+type MobileTab = "edit" | "scores" | "saved";
+
 type Props = {
   catalog: CatalogItemData[];
   tourStatus: TourStatus;
@@ -38,6 +50,8 @@ type Props = {
 };
 
 export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: Props) {
+  const isMobile = useIsMobile();
+  const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const generateExample = useTrainingStore((s) => s.generateExample);
   const buildApprovalPayload = useTrainingStore((s) => s.buildApprovalPayload);
   const [approving, setApproving] = useState(false);
@@ -92,36 +106,111 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
     }
   }
 
+  const sidePanel = (
+    <>
+      <div data-tour="training-tour-head-editor">
+        <HeadEditorPanel />
+      </div>
+      <div data-tour="training-tour-scores">
+        <ScoreComparisonPanel />
+      </div>
+      <TrainingStatsPanel stats={stats} />
+      <ExampleListDrawer />
+    </>
+  );
+
   return (
-    <div className="flex h-[calc(100vh-0px)] flex-col">
+    <div className="flex h-dvh flex-col">
       <TrainingTour initialStatus={tourStatus} />
-      <div className="border-b px-4 py-3" data-tour="training-tour-header">
+      <div className="safe-top shrink-0 border-b px-3 py-3 sm:px-4" data-tour="training-tour-header">
         <div className="flex items-start gap-3">
           <TrainingTourHelpButton />
-          <div>
+          <div className="min-w-0">
             <h1 className="text-lg font-semibold">AI Training — Head Placement</h1>
             <p className="text-sm text-muted-foreground">
-              Generate synthetic lawns, correct algorithm output, and save labeled examples for future ML training.
+              Generate synthetic lawns, correct algorithm output, and save labeled examples for
+              future ML training.
             </p>
           </div>
         </div>
       </div>
-      <TrainingToolbar onApprove={handleApprove} onExport={handleExport} approving={approving} />
-      <div className="flex min-h-0 flex-1">
+      <TrainingToolbar
+        onApprove={handleApprove}
+        onExport={handleExport}
+        approving={approving}
+        compact={isMobile}
+      />
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
         <div className="min-h-0 min-w-0 flex-1" data-tour="training-tour-canvas">
           <TrainingCanvas />
         </div>
-        <aside className="flex w-80 shrink-0 flex-col border-l bg-card">
-          <div data-tour="training-tour-head-editor">
-            <HeadEditorPanel />
-          </div>
-          <div data-tour="training-tour-scores">
-            <ScoreComparisonPanel />
-          </div>
-          <TrainingStatsPanel stats={stats} />
-          <ExampleListDrawer />
-        </aside>
+        {!isMobile && (
+          <aside className="flex w-80 shrink-0 flex-col border-l bg-card">{sidePanel}</aside>
+        )}
       </div>
+
+      {isMobile && (
+        <>
+          <div className="safe-bottom flex shrink-0 border-t bg-card">
+            {(
+              [
+                { id: "edit" as const, label: "Edit", icon: Pencil },
+                { id: "scores" as const, label: "Scores", icon: BarChart3 },
+                { id: "saved" as const, label: "Saved", icon: Archive },
+              ] as const
+            ).map(({ id, label, icon: Icon }) => (
+              <Button
+                key={id}
+                variant="ghost"
+                className={cn(
+                  "h-11 flex-1 flex-col gap-0.5 rounded-none py-1 text-[10px]",
+                  mobileTab === id && "bg-accent"
+                )}
+                onClick={() => setMobileTab(id)}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </Button>
+            ))}
+          </div>
+
+          <Sheet open={mobileTab === "edit"} onOpenChange={(open) => !open && setMobileTab(null)}>
+            <SheetContent side="bottom" className="max-h-[85dvh] p-0">
+              <SheetHeader className="border-b">
+                <SheetTitle>Head editor</SheetTitle>
+              </SheetHeader>
+              <div className="overflow-y-auto">
+                <div data-tour="training-tour-head-editor">
+                  <HeadEditorPanel />
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          <Sheet open={mobileTab === "scores"} onOpenChange={(open) => !open && setMobileTab(null)}>
+            <SheetContent side="bottom" className="max-h-[85dvh] p-0">
+              <SheetHeader className="border-b">
+                <SheetTitle>Uniformity scores</SheetTitle>
+              </SheetHeader>
+              <div className="overflow-y-auto">
+                <ScoreComparisonPanel />
+                <TrainingStatsPanel stats={stats} />
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          <Sheet open={mobileTab === "saved"} onOpenChange={(open) => !open && setMobileTab(null)}>
+            <SheetContent side="bottom" className="max-h-[85dvh] p-0">
+              <SheetHeader className="border-b">
+                <SheetTitle>Saved examples</SheetTitle>
+              </SheetHeader>
+              <div className="overflow-y-auto">
+                <ExampleListDrawer />
+              </div>
+            </SheetContent>
+          </Sheet>
+        </>
+      )}
     </div>
   );
 }

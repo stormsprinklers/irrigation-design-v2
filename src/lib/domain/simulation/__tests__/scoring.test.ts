@@ -177,3 +177,41 @@ describe("estimateOversprayMetrics", () => {
     assert.ok(metrics.exclusionOversprayPercent >= metrics.oversprayEstimatePercent);
   });
 });
+
+describe("evaluateDesign radial taper", () => {
+  it("applies precip falloff for full-circle (360°) rotor arcs", () => {
+    const { readFileSync } = require("node:fs");
+    const { evaluateDesign } = require("../scoring");
+    const { resolveDefaultHeadSettings } = require("@/lib/catalog/adjustability");
+
+    const catalog = JSON.parse(
+      readFileSync("prisma/seed-data/catalog-items.json", "utf8")
+    );
+    const pgjNoz = catalog.find((c: { id: string }) => c.id === "noz_pgj_red_2_0");
+    const settings = resolveDefaultHeadSettings(pgjNoz, 65);
+    const head: TrainingHeadSnapshot = {
+      id: "h1",
+      positionFt: { x: 50, y: 50 },
+      radiusFeet: settings.radiusFeet,
+      arcDegrees: 360,
+      rotationDegrees: 0,
+      wedgeStartDeg: 0,
+      wedgeEndDeg: 360,
+      catalogItemId: pgjNoz.id,
+      gpm: settings.gpm,
+      precipInPerHr: settings.precipInPerHr,
+    };
+    const lawn = [
+      { x: 0, y: 0 },
+      { x: 100, y: 0 },
+      { x: 100, y: 100 },
+      { x: 0, y: 100 },
+    ];
+    const { precipValues } = evaluateDesign(lawn, [head]);
+    const covered = precipValues.filter((v: number) => v > 0);
+    assert.ok(covered.length > 0, "360° arc should cover interior samples");
+    const min = Math.min(...covered);
+    const max = Math.max(...covered);
+    assert.ok(max > min * 1.5, "precip should taper from head to edge");
+  });
+});
