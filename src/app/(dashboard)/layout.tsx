@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { auth, signOut } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Droplets, FolderKanban, Settings } from "lucide-react";
+import { Droplets, FolderKanban, Settings, Brain } from "lucide-react";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -21,6 +21,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
           >
             <FolderKanban className="h-4 w-4" />
             Projects
+          </Link>
+          <Link
+            href="/training"
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-accent"
+          >
+            <Brain className="h-4 w-4" />
+            AI Training
           </Link>
           <Link
             href="/settings/pricing"
