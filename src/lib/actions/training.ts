@@ -3,6 +3,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
+import type { z } from "zod";
 import {
   approveTrainingExampleSchema,
   exportTrainingExamplesSchema,
@@ -15,7 +16,10 @@ import {
   type TrainingShapeClass,
 } from "@/lib/domain/training/types";
 import { getPlacementAlgorithmVersion } from "@/lib/domain/training/algorithm-version.server";
+import { polygonEdgeLengthsFt, roundLengthFt } from "@/lib/domain/placement/geometry";
 import { revalidatePath } from "next/cache";
+
+type ParsedApprovalPayload = z.infer<typeof approveTrainingExampleSchema>["payload"];
 
 async function requireSession() {
   const session = await auth();
@@ -78,16 +82,26 @@ export async function getTrainingExample(id: string) {
   return row;
 }
 
+function normalizePolygonMetadata(
+  payload: ParsedApprovalPayload
+): TrainingExamplePayload["polygonMetadata"] {
+  const { polygonMetadata, polygonVerticesFt } = payload;
+  return {
+    ...polygonMetadata,
+    rotationDeg: polygonMetadata.rotationDeg ?? 0,
+    sideLengthsFt:
+      polygonMetadata.sideLengthsFt ??
+      polygonEdgeLengthsFt(polygonVerticesFt).map(roundLengthFt),
+  };
+}
+
 export async function approveTrainingExample(payload: TrainingExampleApprovalInput) {
   const user = await requireSession();
   const parsed = approveTrainingExampleSchema.parse({ payload });
   const fullPayload: TrainingExamplePayload = {
     ...parsed.payload,
     algorithmVersion: getPlacementAlgorithmVersion(),
-    polygonMetadata: {
-      ...parsed.payload.polygonMetadata,
-      rotationDeg: parsed.payload.polygonMetadata.rotationDeg ?? 0,
-    },
+    polygonMetadata: normalizePolygonMetadata(parsed.payload),
   };
 
   const row = await prisma.trainingExample.create({

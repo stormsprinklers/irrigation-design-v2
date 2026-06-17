@@ -71,12 +71,6 @@ function estimateOversprayPercent(vertices: Point[], heads: TrainingHeadSnapshot
       continue;
     }
 
-    const wedgeHead = {
-      position: head.positionFt,
-      arcDegrees: head.arcDegrees,
-      radiusFeet: head.radiusFeet,
-      rotationDegrees: head.rotationDegrees,
-    };
     const steps = 12;
     for (let i = 0; i <= steps; i++) {
       const angleDeg = head.rotationDegrees - head.arcDegrees / 2 + (head.arcDegrees * i) / steps;
