@@ -94,6 +94,9 @@ export function DeferredNumberInput({
         commit(draft);
         onCommitEnd?.();
       }}
+      onWheel={(e) => {
+        if (focused) e.preventDefault();
+      }}
     />
   );
 }

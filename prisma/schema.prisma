@@ -76,6 +76,7 @@ model User {
   designTourAutoShow    Boolean   @default(true)
   trainingTourCompletedAt DateTime?
   trainingTourAutoShow    Boolean   @default(true)
+  trainingGamification    Json?
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 

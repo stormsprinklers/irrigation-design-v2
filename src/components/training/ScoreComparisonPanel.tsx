@@ -1,6 +1,7 @@
 "use client";
 
 import { useTrainingStore } from "@/lib/stores/training-store";
+import { computeEditDiff } from "@/lib/domain/training/edit-diff";
 import type { UniformityScores } from "@/lib/domain/training/types";
 
 function MetricRow({
@@ -92,6 +93,8 @@ function ScoreTable({
 export function ScoreComparisonPanel() {
   const baselineScores = useTrainingStore((s) => s.baselineScores);
   const correctedScores = useTrainingStore((s) => s.correctedScores);
+  const baselineHeads = useTrainingStore((s) => s.baselineHeads);
+  const correctedHeads = useTrainingStore((s) => s.correctedHeads);
   const improvementScore = useTrainingStore((s) => s.improvementScore);
   const polygon = useTrainingStore((s) => s.polygon);
 
@@ -101,6 +104,22 @@ export function ScoreComparisonPanel() {
         Generate an example to see uniformity scores.
       </div>
     );
+  }
+
+  const editLog = computeEditDiff(baselineHeads, correctedHeads);
+  const dryDelta = baselineScores.drySpotCount - correctedScores.drySpotCount;
+  const editHints: string[] = [];
+  if (editLog.moved.length > 0) {
+    editHints.push(`${editLog.moved.length} head${editLog.moved.length === 1 ? "" : "s"} moved`);
+  }
+  if (editLog.added.length > 0) {
+    editHints.push(`${editLog.added.length} added`);
+  }
+  if (editLog.deleted.length > 0) {
+    editHints.push(`${editLog.deleted.length} removed`);
+  }
+  if (dryDelta > 0) {
+    editHints.push(`${dryDelta} dry spot${dryDelta === 1 ? "" : "s"} fixed`);
   }
 
   return (
@@ -121,6 +140,14 @@ export function ScoreComparisonPanel() {
           <> · {polygon.metadata.rotationDeg.toFixed(0)}° rotation</>
         )}
       </p>
+      {improvementScore > 0 && (
+        <p className="mb-2 text-sm font-medium text-green-700 dark:text-green-400">
+          Nice — you&apos;re beating the algorithm on this layout.
+        </p>
+      )}
+      {editHints.length > 0 && (
+        <p className="mb-3 text-xs text-muted-foreground">{editHints.join(" · ")}</p>
+      )}
       <p className="mb-3 text-xs text-muted-foreground">
         Improvement is a simulation estimate only — it does not block saving. AI training uses your
         approved head layout as the ground truth, not this score.

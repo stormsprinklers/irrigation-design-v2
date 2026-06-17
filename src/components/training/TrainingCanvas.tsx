@@ -18,6 +18,45 @@ import { PolygonSideLabels } from "./PolygonSideLabels";
 
 const PX = TRAINING_DISPLAY_PX_PER_FT;
 
+type StageLayout = ReturnType<typeof trainingStageSizePx>;
+
+function stageOffsetInWrapper(
+  layout: StageLayout,
+  viewport: { width: number; height: number }
+): { x: number; y: number } {
+  const wrapperW = Math.max(layout.widthPx, viewport.width);
+  const wrapperH = Math.max(layout.heightPx, viewport.height);
+  return {
+    x: (wrapperW - layout.widthPx) / 2,
+    y: (wrapperH - layout.heightPx) / 2,
+  };
+}
+
+/** Keep the viewport center pinned when stage padding/size changes (radius, arc, etc.). */
+function preserveViewportScroll(
+  el: HTMLDivElement,
+  prevLayout: StageLayout,
+  nextLayout: StageLayout,
+  viewport: { width: number; height: number }
+) {
+  const prevOff = stageOffsetInWrapper(prevLayout, viewport);
+  const vx = el.scrollLeft + el.clientWidth / 2;
+  const vy = el.scrollTop + el.clientHeight / 2;
+  const pxX = vx - prevOff.x - prevLayout.paddingPx;
+  const pxY = vy - prevOff.y - prevLayout.paddingPx;
+
+  const nextOff = stageOffsetInWrapper(nextLayout, viewport);
+  const targetX = nextOff.x + nextLayout.paddingPx + pxX;
+  const targetY = nextOff.y + nextLayout.paddingPx + pxY;
+
+  el.scrollLeft = Math.max(0, targetX - el.clientWidth / 2);
+  el.scrollTop = Math.max(0, targetY - el.clientHeight / 2);
+}
+
+function layoutsEqual(a: StageLayout, b: StageLayout): boolean {
+  return a.paddingPx === b.paddingPx && a.widthPx === b.widthPx && a.heightPx === b.heightPx;
+}
+
 export function TrainingCanvas() {
   const polygon = useTrainingStore((s) => s.polygon);
   const baselineHeads = useTrainingStore((s) => s.baselineHeads);
@@ -44,6 +83,8 @@ export function TrainingCanvas() {
   const computedLayoutRef = useRef({ paddingPx: 40, widthPx: 800, heightPx: 600 });
   const frozenLayoutRef = useRef<ReturnType<typeof trainingStageSizePx> | null>(null);
   const scrollAnchorRef = useRef({ left: 0, top: 0 });
+  const prevLayoutForScrollRef = useRef<StageLayout>({ paddingPx: 40, widthPx: 800, heightPx: 600 });
+  const skipLayoutScrollCompensationRef = useRef(false);
   const [isInteracting, setIsInteracting] = useState(false);
   const [frozenLayout, setFrozenLayout] = useState<ReturnType<typeof trainingStageSizePx> | null>(
     null
@@ -54,21 +95,21 @@ export function TrainingCanvas() {
     scrollLockCountRef.current = Math.max(0, scrollLockCountRef.current - 1);
     if (scrollLockCountRef.current === 0) {
       const el = containerRef.current;
-      const prevPad = frozenLayoutRef.current?.paddingPx ?? computedLayoutRef.current.paddingPx;
+      const prevLayout = frozenLayoutRef.current ?? computedLayoutRef.current;
       setIsInteracting(false);
       frozenLayoutRef.current = null;
       setFrozenLayout(null);
       if (el) {
+        const nextLayout = computedLayoutRef.current;
         requestAnimationFrame(() => {
-          const delta = computedLayoutRef.current.paddingPx - prevPad;
-          if (delta !== 0) {
-            el.scrollLeft = Math.max(0, el.scrollLeft + delta);
-            el.scrollTop = Math.max(0, el.scrollTop + delta);
+          if (!layoutsEqual(prevLayout, nextLayout)) {
+            preserveViewportScroll(el, prevLayout, nextLayout, size);
           }
+          prevLayoutForScrollRef.current = nextLayout;
         });
       }
     }
-  }, []);
+  }, [size]);
 
   const lockCanvasScroll = useCallback(() => {
     const el = containerRef.current;
@@ -174,6 +215,38 @@ export function TrainingCanvas() {
     return () => observer.disconnect();
   }, [polygon?.metadata.seed]);
 
+  useEffect(() => {
+    if (!polygon) return;
+    const seed = polygon.metadata.seed;
+    if (lastCenteredSeedRef.current === seed) return;
+    lastCenteredSeedRef.current = seed;
+    skipLayoutScrollCompensationRef.current = true;
+
+    const el = containerRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollLeft = Math.max(0, (el.scrollWidth - el.clientWidth) / 2);
+      el.scrollTop = Math.max(0, (el.scrollHeight - el.clientHeight) / 2);
+      prevLayoutForScrollRef.current = computedLayoutRef.current;
+      skipLayoutScrollCompensationRef.current = false;
+    });
+  }, [polygon?.metadata.seed]);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || !polygon || isInteracting) return;
+    if (skipLayoutScrollCompensationRef.current) return;
+
+    const prev = prevLayoutForScrollRef.current;
+    const next = computedLayoutRef.current;
+    if (layoutsEqual(prev, next)) return;
+
+    requestAnimationFrame(() => {
+      preserveViewportScroll(el, prev, next, size);
+      prevLayoutForScrollRef.current = next;
+    });
+  }, [correctedHeads, baselineHeads, viewMode, polygon, isInteracting, size]);
+
   const widthFt = polygon?.metadata.widthFt ?? 0;
   const heightFt = polygon?.metadata.heightFt ?? 0;
 
@@ -195,20 +268,6 @@ export function TrainingCanvas() {
   const contentH = activeLayout.heightPx;
   const wrapperW = Math.max(contentW, size.width);
   const wrapperH = Math.max(contentH, size.height);
-
-  useEffect(() => {
-    if (!polygon) return;
-    const seed = polygon.metadata.seed;
-    if (lastCenteredSeedRef.current === seed) return;
-    lastCenteredSeedRef.current = seed;
-
-    const el = containerRef.current;
-    if (!el) return;
-    requestAnimationFrame(() => {
-      el.scrollLeft = Math.max(0, (el.scrollWidth - el.clientWidth) / 2);
-      el.scrollTop = Math.max(0, (el.scrollHeight - el.clientHeight) / 2);
-    });
-  }, [polygon?.metadata.seed]);
 
   if (!polygon) {
     return (
