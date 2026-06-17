@@ -18,6 +18,9 @@ export const trainingHeadSnapshotSchema = z.object({
   nozzleModel: z.string().optional(),
   gpm: z.number().optional(),
   precipInPerHr: z.number().optional(),
+  stripPattern: z.enum(["side", "left_corner", "right_corner", "end", "center"]).optional(),
+  patternWidthFt: z.number().optional(),
+  patternLengthFt: z.number().optional(),
 });
 
 export const precipGridSchema = z.object({

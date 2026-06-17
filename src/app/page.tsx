@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <div className="text-xl font-semibold text-primary">Irrigation Design</div>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
+          <ThemeToggle compact />
           <Button variant="outline" asChild>
             <Link href="/login">Sign in</Link>
           </Button>

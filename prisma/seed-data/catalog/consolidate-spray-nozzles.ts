@@ -27,9 +27,12 @@ export type ExtractedNozzleRaw = {
 
 function arcToMpBand(arc: number, mpModel: string): MpArcBand | null {
   if (arc >= 360) return "360";
-  if (mpModel === "MP-800SR") return "90_210";
+  if (mpModel === "MP-800SR") {
+    if (arc >= 90 && arc <= 210) return "90_210";
+    return null;
+  }
   if (arc >= 210 && arc <= 270) return "210_270";
-  if (arc >= 40 && arc <= 210) return "90_210";
+  if (arc === 90 || arc === 180) return "90_210";
   return null;
 }
 
@@ -44,6 +47,8 @@ function pickChartSource(
   return (
     entries.find((e) => e.specs.arcDegrees === preferArc && !e.specs.radiusSetting) ??
     entries.find((e) => e.specs.arcDegrees === preferArc) ??
+    entries.find((e) => e.specs.arcDegrees === 180 && preferArc === 90) ??
+    entries.find((e) => e.specs.arcDegrees === 90) ??
     entries.find((e) => !e.specs.radiusSetting) ??
     entries[0]
   );
@@ -57,7 +62,7 @@ function mpBandSuffix(band: MpArcBand): string {
 
 function mpSkuModel(mpModel: string, band: MpArcBand): string {
   const suffix = mpBandSuffix(band);
-  if (mpModel === "MP-800SR") return "MP800SR";
+  if (mpModel === "MP-800SR") return `MP800SR-${suffix}`;
   if (mpModel === "MP Corner") return "MP Corner";
   return `${mpModel.replace("MP-", "MP")}-${suffix}`;
 }
@@ -180,7 +185,11 @@ function consolidateMpRotators(raw: ExtractedNozzleRaw[]): CatalogSeedItem[] {
       max: Math.max(...(entries[0].nozzleChart?.radiusFeet ?? [12])),
     };
 
-    const source = pickChartSource(entries, bandSpec.default) ?? entries[0];
+    const source =
+      pickChartSource(
+        entries,
+        band === "90_210" ? 90 : band === "210_270" ? 210 : bandSpec.default
+      ) ?? entries[0];
     const slug = mpModel.replace(/^MP-/i, "mp").replace(/[^a-z0-9]/gi, "").toLowerCase();
     const id = `noz_hunter_${slug}_${mpBandSuffix(band)}`;
 

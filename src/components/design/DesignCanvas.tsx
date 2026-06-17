@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Stage, Layer, Line, Circle, Image as KonvaImage, Arc, Group, Rect } from "react-konva";
+import { Stage, Layer, Line, Circle, Image as KonvaImage, Group, Rect } from "react-konva";
 import type Konva from "konva";
 import { useDesignStore } from "@/lib/stores/design-store";
 import { distanceBetweenPoints, generateId, POLYGON_CLOSE_RADIUS } from "@/lib/utils";
-import type { HydrozonePolygon, ExclusionZone, Point } from "@/lib/domain/types";
+import type { HydrozonePolygon, ExclusionZone, Point, CatalogItemData } from "@/lib/domain/types";
+import { HeadCoverageShape } from "@/components/heads/HeadCoverageShape";
+import { useCanvasSurface } from "@/lib/hooks/use-canvas-theme";
 
 const HYDROZONE_COLORS: Record<string, string> = {
   TURF: "rgba(34, 197, 94, 0.25)",
@@ -47,10 +49,11 @@ function useBackgroundImage(url?: string) {
 
 type Props = {
   imageUrl?: string;
+  catalog: CatalogItemData[];
   onCanvasClick: (point: Point) => void;
 };
 
-export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
+export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
   const stageRef = useRef<Konva.Stage>(null);
   const layerRef = useRef<Konva.Layer>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,6 +82,7 @@ export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
     setContentSize,
     centerCanvasView,
   } = useDesignStore();
+  const canvasSurface = useCanvasSurface();
 
   const bgImage = useBackgroundImage(imageUrl);
   const width = document.propertyImage?.width ?? 1200;
@@ -307,8 +311,8 @@ export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
             <Line
               points={[0, 0, width, 0, width, height, 0, height]}
               closed
-              fill="#f8fafc"
-              stroke="#e2e8f0"
+              fill={canvasSurface.fill}
+              stroke={canvasSurface.stroke}
               listening={false}
             />
           )}
@@ -358,20 +362,19 @@ export function DesignCanvas({ imageUrl, onCanvasClick }: Props) {
                     document.scale.pointB.y - document.scale.pointA.y
                   ) / document.scale.realWorldFeet
                 : 10;
-            const radiusPx = head.radiusFeet * ppf;
+            const nozzle = catalog.find((c) => c.id === head.catalogItemId);
 
             return (
               <Group key={head.id} listening={!passThroughPointer}>
                 {showArc && (
-                  <Arc
-                    x={head.position.x}
-                    y={head.position.y}
-                    innerRadius={0}
-                    outerRadius={radiusPx}
-                    angle={head.arcDegrees}
-                    rotation={head.rotationDegrees - head.arcDegrees / 2}
+                  <HeadCoverageShape
+                    positionFt={{ x: head.position.x / ppf, y: head.position.y / ppf }}
+                    pxPerFt={ppf}
+                    arcDegrees={head.arcDegrees}
+                    radiusFeet={head.radiusFeet}
+                    rotationDegrees={head.rotationDegrees}
+                    nozzle={nozzle}
                     fill={dimmed ? "rgba(59,130,246,0.05)" : "rgba(59,130,246,0.15)"}
-                    listening={false}
                   />
                 )}
                 <Circle

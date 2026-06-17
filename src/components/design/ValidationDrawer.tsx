@@ -26,7 +26,9 @@ export function ValidationDrawer() {
           Validation report
           <span className="ml-2 text-muted-foreground">
             {critical > 0 && <span className="text-destructive">{critical} critical</span>}
-            {warnings > 0 && <span className="ml-2 text-amber-600">{warnings} warnings</span>}
+            {warnings > 0 && (
+              <span className="ml-2 text-amber-600 dark:text-amber-400">{warnings} warnings</span>
+            )}
           </span>
         </h3>
       </div>
@@ -37,7 +39,8 @@ export function ValidationDrawer() {
             className={cn(
               "rounded px-2 py-1 text-xs",
               issue.severity === "critical" && "bg-destructive/10 text-destructive",
-              issue.severity === "warning" && "bg-amber-50 text-amber-800",
+              issue.severity === "warning" &&
+                "bg-amber-50 text-amber-800 dark:bg-amber-950/50 dark:text-amber-200",
               issue.severity === "info" && "bg-muted text-muted-foreground"
             )}
           >

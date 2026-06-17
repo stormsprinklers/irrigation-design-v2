@@ -66,4 +66,17 @@ describe("catalog picker groups", () => {
     assert.deepEqual(filterNozzlesByGroup(items, "fixed").map((n) => n.id), ["b"]);
     assert.deepEqual(filterNozzlesByGroup(items, "van").map((n) => n.id), ["c"]);
   });
+
+  it("sorts nozzles alphabetically by model within a group", () => {
+    const items = [
+      nozzle({ id: "z", model: "Zeta MPR", specs: { nozzleFamily: "rainbird_mpr" } }),
+      nozzle({ id: "a", model: "Alpha MPR", specs: { nozzleFamily: "rainbird_mpr" } }),
+      nozzle({ id: "m", model: "Middle MPR", specs: { nozzleFamily: "rainbird_mpr" } }),
+    ];
+    assert.deepEqual(filterNozzlesByGroup(items, "fixed").map((n) => n.model), [
+      "Alpha MPR",
+      "Middle MPR",
+      "Zeta MPR",
+    ]);
+  });
 });

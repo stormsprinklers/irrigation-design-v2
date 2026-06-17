@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { auth, signOut } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Droplets, FolderKanban, Settings, Brain } from "lucide-react";
+import { DashboardAppearance } from "@/components/layout/DashboardAppearance";
+import { FolderKanban, Settings, Brain, Droplets } from "lucide-react";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -37,6 +38,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             Pricing
           </Link>
         </nav>
+        <DashboardAppearance />
         <div className="border-t p-4 text-sm">
           <div className="flex items-center gap-2 text-muted-foreground">
             <Droplets className="h-4 w-4" />

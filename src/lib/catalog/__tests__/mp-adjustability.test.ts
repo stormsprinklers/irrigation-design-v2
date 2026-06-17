@@ -62,3 +62,4 @@ describe("MP nozzle adjustability", () => {
     assert.ok(Math.abs(half.gpm - full.gpm * 0.5) < 0.01);
   });
 });
+

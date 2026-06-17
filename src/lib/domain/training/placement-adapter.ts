@@ -1,6 +1,7 @@
 import type { CatalogItemData, HydrozonePolygon, SprinklerHead } from "../types";
 import { placeHeads } from "../placement";
 import { wedgeEndDeg, wedgeStartDeg } from "../placement/wedge";
+import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
 import type {
   GeneratedTrainingPolygon,
   TrainingHeadSnapshot,
@@ -40,6 +41,7 @@ function toSnapshot(head: SprinklerHead, catalog: CatalogItemData[]): TrainingHe
     nozzleModel: nozzle?.model,
     gpm: head.gpm,
     precipInPerHr: head.precipInPerHr,
+    ...(nozzle ? stripFieldsFromNozzle(nozzle) : {}),
   };
 }
 

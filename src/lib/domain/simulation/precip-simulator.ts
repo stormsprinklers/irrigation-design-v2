@@ -1,9 +1,9 @@
-import { isPointInWedge } from "../placement/wedge";
-import type { TrainingHeadSnapshot } from "../training/types";
+import { isPointInHeadCoverage, headStripSpec, type HeadCoverageInput } from "../placement/head-coverage";
+import { stripCoverageRatio } from "@/lib/catalog/strip-pattern";
 import type { Point } from "../types";
 import { DEFAULT_RADIAL_CURVE, type DistributionCurve } from "./radial-curve";
 import { buildPrecipGrid, samplePointsInPolygonFeet } from "./sample-grid";
-import type { PrecipGrid } from "../training/types";
+import type { PrecipGrid, TrainingHeadSnapshot } from "../training/types";
 import { TRAINING_PPF } from "../training/placement-adapter";
 
 export type SimulateOptions = {
@@ -24,18 +24,28 @@ export function precipAtPoint(
 ): number {
   let total = 0;
   for (const snap of heads) {
-    const wedgeHead = {
+    const coverageHead: HeadCoverageInput = {
       position: snap.positionFt,
       arcDegrees: snap.arcDegrees,
       radiusFeet: snap.radiusFeet,
       rotationDegrees: snap.rotationDegrees,
+      stripPattern: snap.stripPattern,
+      patternWidthFt: snap.patternWidthFt,
+      patternLengthFt: snap.patternLengthFt,
     };
-    if (!isPointInWedge(wedgeHead, point, TRAINING_PPF)) continue;
+    if (!isPointInHeadCoverage(coverageHead, point, TRAINING_PPF)) continue;
 
-    const dx = point.x - snap.positionFt.x;
-    const dy = point.y - snap.positionFt.y;
-    const distRatio = Math.hypot(dx, dy) / Math.max(snap.radiusFeet, 0.01);
-    const strength = curve.strengthAtRatio(distRatio);
+    const strip = headStripSpec(coverageHead);
+    const strength = strip
+      ? curve.strengthAtRatio(
+          stripCoverageRatio(point, snap.positionFt, snap.rotationDegrees, strip)
+        )
+      : (() => {
+          const dx = point.x - snap.positionFt.x;
+          const dy = point.y - snap.positionFt.y;
+          const distRatio = Math.hypot(dx, dy) / Math.max(snap.radiusFeet, 0.01);
+          return curve.strengthAtRatio(distRatio);
+        })();
     total += strength * baseRate(snap);
   }
   return total;

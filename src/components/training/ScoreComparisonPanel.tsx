@@ -121,6 +121,10 @@ export function ScoreComparisonPanel() {
           <> · {polygon.metadata.rotationDeg.toFixed(0)}° rotation</>
         )}
       </p>
+      <p className="mb-3 text-xs text-muted-foreground">
+        Improvement is a simulation estimate only — it does not block saving. AI training uses your
+        approved head layout as the ground truth, not this score.
+      </p>
       <ScoreTable title="Before / After" baseline={baselineScores} corrected={correctedScores} />
     </div>
   );

@@ -6,6 +6,8 @@ import { generateTrainingPolygon } from "@/lib/domain/training/polygon-generator
 import { runPlacementOnPolygon } from "@/lib/domain/training/placement-adapter";
 import { evaluateDesign, computeImprovementScore } from "@/lib/domain/simulation/scoring";
 import { computeEditDiff } from "@/lib/domain/training/edit-diff";
+import { generateId } from "@/lib/utils";
+import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
 import {
   patchHeadWithNozzle,
   wedgeBoundsForHead,
@@ -61,6 +63,7 @@ type TrainingState = {
     opts?: { deferScores?: boolean }
   ) => void;
   addCorrectedHead: (head: TrainingHeadSnapshot) => void;
+  duplicateCorrectedHead: (id: string) => void;
   deleteCorrectedHead: (id: string) => void;
   resetToBaseline: () => void;
   recomputeScores: () => void;
@@ -92,23 +95,31 @@ function applyHeadPatch(
   patch: Partial<TrainingHeadSnapshot>,
   catalog: CatalogItemData[]
 ): TrainingHeadSnapshot {
-  const nozzle = catalog.find((c) => c.id === head.catalogItemId);
+  const nozzleId = patch.catalogItemId ?? head.catalogItemId;
+  const nozzle = catalog.find((c) => c.id === nozzleId);
+  let base = { ...head, ...patch };
+
+  if (patch.catalogItemId && nozzle) {
+    base = { ...base, ...stripFieldsFromNozzle(nozzle) };
+  }
+
+  const hydNozzle = catalog.find((c) => c.id === base.catalogItemId);
   if (
-    nozzle &&
+    hydNozzle &&
     (patch.arcDegrees !== undefined ||
       patch.rotationDegrees !== undefined ||
-      patch.radiusFeet !== undefined)
+      patch.radiusFeet !== undefined ||
+      patch.catalogItemId !== undefined)
   ) {
-    const hyd = patchHeadWithNozzle(head, patch, nozzle, 65);
-    const wedges = wedgeBoundsForHead({ ...head, ...hyd, positionFt: head.positionFt });
-    return { ...head, ...patch, ...hyd, ...wedges };
+    const hyd = patchHeadWithNozzle(base, patch, hydNozzle, 65);
+    const wedges = wedgeBoundsForHead({ ...base, ...hyd, positionFt: base.positionFt });
+    return { ...base, ...hyd, ...wedges };
   }
-  const merged = { ...head, ...patch };
   if (patch.rotationDegrees !== undefined || patch.arcDegrees !== undefined) {
-    const wedges = wedgeBoundsForHead({ ...merged, positionFt: head.positionFt });
-    return { ...merged, ...wedges };
+    const wedges = wedgeBoundsForHead({ ...base, positionFt: base.positionFt });
+    return { ...base, ...wedges };
   }
-  return merged;
+  return base;
 }
 
 export const useTrainingStore = create<TrainingState>((set, get) => ({
@@ -188,6 +199,28 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     const corrected = [...correctedHeads, head];
     const scores = recompute(polygon, baselineHeads, corrected);
     set({ correctedHeads: corrected, selectedHeadId: head.id, ...scores });
+  },
+
+  duplicateCorrectedHead: (id) => {
+    const { polygon, baselineHeads, correctedHeads } = get();
+    if (!polygon) return;
+    const source = correctedHeads.find((h) => h.id === id);
+    if (!source) return;
+
+    const duplicate: TrainingHeadSnapshot = {
+      ...source,
+      id: generateId("head"),
+      positionFt: {
+        x: source.positionFt.x + 2,
+        y: source.positionFt.y + 2,
+      },
+    };
+    const wedges = wedgeBoundsForHead(duplicate);
+    const withWedges = { ...duplicate, ...wedges };
+
+    const corrected = [...correctedHeads, withWedges];
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, selectedHeadId: withWedges.id, ...scores });
   },
 
   deleteCorrectedHead: (id) => {

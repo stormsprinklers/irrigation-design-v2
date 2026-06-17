@@ -1,10 +1,11 @@
 "use client";
 
-import { Arc, Circle, Group, Text } from "react-konva";
+import { Circle, Group, Text } from "react-konva";
 import type Konva from "konva";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type { NozzleAdjustability } from "@/lib/catalog/adjustability";
 import type { TrainingHeadSnapshot } from "@/lib/domain/training/types";
+import { HeadCoverageShape } from "@/components/heads/HeadCoverageShape";
 
 const PX_PER_FT = 10;
 
@@ -25,6 +26,9 @@ type Props = {
   editable: boolean;
   selected: boolean;
   adjustability: NozzleAdjustability | null;
+  stripPattern?: TrainingHeadSnapshot["stripPattern"];
+  patternWidthFt?: number;
+  patternLengthFt?: number;
   onSelect: () => void;
   onMove: (positionFt: { x: number; y: number }, opts?: { deferScores?: boolean }) => void;
   onPatch: (patch: Partial<TrainingHeadSnapshot>, opts?: { deferScores?: boolean }) => void;
@@ -39,6 +43,9 @@ export function TrainingHeadGraphic({
   editable,
   selected,
   adjustability,
+  stripPattern,
+  patternWidthFt,
+  patternLengthFt,
   onSelect,
   onMove,
   onPatch,
@@ -46,6 +53,10 @@ export function TrainingHeadGraphic({
 }: Props) {
   const groupRef = useRef<Konva.Group>(null);
   const rotatingRef = useRef(false);
+  const headRef = useRef(head);
+  const adjustabilityRef = useRef(adjustability);
+  headRef.current = head;
+  adjustabilityRef.current = adjustability;
 
   const centerX = head.positionFt.x * PX_PER_FT + stageOffset;
   const centerY = head.positionFt.y * PX_PER_FT + stageOffset;
@@ -58,6 +69,10 @@ export function TrainingHeadGraphic({
   const plusPos = polarPx(head.wedgeEndDeg, arcBtnDist);
 
   const arcStep = 5;
+  const stripSpec =
+    stripPattern && patternWidthFt && patternLengthFt
+      ? { stripPattern, patternWidthFt, patternLengthFt }
+      : null;
 
   function stopBubble(e: Konva.KonvaEventObject<unknown>) {
     e.cancelBubble = true;
@@ -77,13 +92,18 @@ export function TrainingHeadGraphic({
     return normalizeDeg((Math.atan2(pos.y, pos.x) * 180) / Math.PI);
   }
 
-  function adjustArc(delta: number) {
-    if (!adjustability?.arcAdjustable) return;
+  function adjustArc(delta: number): boolean {
+    const adj = adjustabilityRef.current;
+    const current = headRef.current;
+    if (!adj?.arcAdjustable) return false;
     const next = Math.min(
-      adjustability.arcDegreesMax,
-      Math.max(adjustability.arcDegreesMin, head.arcDegrees + delta)
+      adj.arcDegreesMax,
+      Math.max(adj.arcDegreesMin, current.arcDegrees + delta)
     );
-    if (next !== head.arcDegrees) onPatch({ arcDegrees: next });
+    if (next === current.arcDegrees) return false;
+    headRef.current = { ...current, arcDegrees: next };
+    onPatch({ arcDegrees: next }, { deferScores: true });
+    return delta > 0 ? next < adj.arcDegreesMax : next > adj.arcDegreesMin;
   }
 
   return (
@@ -112,15 +132,16 @@ export function TrainingHeadGraphic({
       }}
     >
       {showArc && (
-        <Arc
-          x={0}
-          y={0}
-          innerRadius={0}
-          outerRadius={radiusPx}
-          angle={head.arcDegrees}
-          rotation={rotDeg - head.arcDegrees / 2}
+        <HeadCoverageShape
+          positionFt={{ x: 0, y: 0 }}
+          pxPerFt={PX_PER_FT}
+          arcDegrees={head.arcDegrees}
+          radiusFeet={head.radiusFeet}
+          rotationDegrees={head.rotationDegrees}
+          stripPattern={stripSpec?.stripPattern}
+          patternWidthFt={stripSpec?.patternWidthFt}
+          patternLengthFt={stripSpec?.patternLengthFt}
           fill={ghost ? "rgba(59,130,246,0.08)" : "rgba(59,130,246,0.18)"}
-          listening={false}
         />
       )}
 
@@ -173,7 +194,7 @@ export function TrainingHeadGraphic({
             }}
           />
 
-          {adjustability?.arcAdjustable && (
+          {adjustability?.arcAdjustable && !stripSpec && (
             <>
               <ArcAdjustButton
                 x={minusPos.x}
@@ -181,6 +202,7 @@ export function TrainingHeadGraphic({
                 label="−"
                 disabled={head.arcDegrees <= adjustability.arcDegreesMin}
                 onPress={() => adjustArc(-arcStep)}
+                onRepeatEnd={onInteractionEnd}
               />
               <ArcAdjustButton
                 x={plusPos.x}
@@ -188,6 +210,7 @@ export function TrainingHeadGraphic({
                 label="+"
                 disabled={head.arcDegrees >= adjustability.arcDegreesMax}
                 onPress={() => adjustArc(arcStep)}
+                onRepeatEnd={onInteractionEnd}
               />
             </>
           )}
@@ -203,25 +226,78 @@ function ArcAdjustButton({
   label,
   disabled,
   onPress,
+  onRepeatEnd,
 }: {
   x: number;
   y: number;
   label: string;
   disabled: boolean;
-  onPress: () => void;
+  /** Return false when the arc cannot change further in this direction. */
+  onPress: () => boolean;
+  onRepeatEnd?: () => void;
 }) {
   const size = 16;
+  const activeRef = useRef(false);
+  const timersRef = useRef<{ delay?: ReturnType<typeof setTimeout>; interval?: ReturnType<typeof setInterval> }>(
+    {}
+  );
+
+  const stopRepeat = useCallback(() => {
+    const timers = timersRef.current;
+    if (timers.delay) clearTimeout(timers.delay);
+    if (timers.interval) clearInterval(timers.interval);
+    timersRef.current = {};
+    window.removeEventListener("mouseup", stopRepeat);
+    window.removeEventListener("touchend", stopRepeat);
+    window.removeEventListener("touchcancel", stopRepeat);
+    if (activeRef.current) {
+      activeRef.current = false;
+      onRepeatEnd?.();
+    }
+  }, [onRepeatEnd]);
+
+  const tick = useCallback(() => {
+    if (disabled) {
+      stopRepeat();
+      return;
+    }
+    if (!onPress()) stopRepeat();
+  }, [disabled, onPress, stopRepeat]);
+
+  const startRepeat = useCallback(
+    (e: Konva.KonvaEventObject<unknown>) => {
+      e.cancelBubble = true;
+      if (disabled) return;
+      stopRepeat();
+      activeRef.current = true;
+      tick();
+      window.addEventListener("mouseup", stopRepeat);
+      window.addEventListener("touchend", stopRepeat);
+      window.addEventListener("touchcancel", stopRepeat);
+      timersRef.current.delay = setTimeout(() => {
+        timersRef.current.interval = setInterval(tick, 70);
+      }, 350);
+    },
+    [disabled, stopRepeat, tick]
+  );
+
+  useEffect(() => () => stopRepeat(), [stopRepeat]);
+
+  useEffect(() => {
+    if (disabled) stopRepeat();
+  }, [disabled, stopRepeat]);
+
   return (
     <Group
       x={x}
       y={y}
+      onMouseDown={startRepeat}
+      onTouchStart={startRepeat}
       onClick={(e) => {
         e.cancelBubble = true;
-        if (!disabled) onPress();
       }}
       onTap={(e) => {
         e.cancelBubble = true;
-        if (!disabled) onPress();
       }}
     >
       <Circle

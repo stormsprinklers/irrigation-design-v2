@@ -58,6 +58,10 @@ export type TrainingHeadSnapshot = {
   nozzleModel?: string;
   gpm?: number;
   precipInPerHr?: number;
+  /** Strip nozzles: rectangular W×L pattern (length = throw). */
+  stripPattern?: "side" | "left_corner" | "right_corner" | "end" | "center";
+  patternWidthFt?: number;
+  patternLengthFt?: number;
 };
 
 export type PrecipGrid = {

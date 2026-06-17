@@ -2,11 +2,13 @@
 
 import { Label } from "@/components/ui/label";
 import type { CatalogItemData } from "@/lib/domain/types";
+import { getStripNozzleSpec } from "@/lib/catalog/strip-pattern";
 import {
   getNozzleAdjustability,
   patchHeadWithNozzle,
   wedgeBoundsForHead,
 } from "@/lib/catalog/adjustability";
+import { DeferredNumberInput } from "./DeferredNumberInput";
 
 export type HeadAdjustValues = {
   arcDegrees: number;
@@ -27,6 +29,9 @@ type Props = {
   onChange: (patch: Partial<HeadAdjustValues>) => void;
 };
 
+const inputClassName =
+  "mt-1 w-full rounded-md border px-2 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60";
+
 function mpBandLabel(band: string | undefined): string | null {
   if (band === "90_210") return "MP adjustable arc: 90°–210° (fixed left edge)";
   if (band === "210_270") return "MP adjustable arc: 210°–270° (fixed left edge)";
@@ -36,6 +41,7 @@ function mpBandLabel(band: string | undefined): string | null {
 
 export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange }: Props) {
   const adj = getNozzleAdjustability(nozzle);
+  const strip = getStripNozzleSpec(nozzle);
 
   function applyPatch(
     partial: Partial<Pick<HeadAdjustValues, "arcDegrees" | "radiusFeet" | "rotationDegrees">>
@@ -49,35 +55,41 @@ export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange }: Props)
 
   return (
     <div className="space-y-3">
+      {strip && (
+        <p className="text-xs text-muted-foreground">
+          Strip pattern {strip.patternWidthFt} ft wide × {strip.patternLengthFt} ft throw (
+          {strip.stripPattern.replace("_", " ")}). Rotate to aim the long axis.
+        </p>
+      )}
       {bandHint && <p className="text-xs text-muted-foreground">{bandHint}</p>}
       <div>
         <Label className="text-xs">Radius (ft)</Label>
-        <input
-          type="number"
-          className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+        <DeferredNumberInput
+          className={inputClassName}
           value={head.radiusFeet}
           min={adj.radiusFeetMin}
           max={adj.radiusFeetMax}
           step={0.5}
           disabled={!adj.radiusAdjustable}
-          onChange={(e) => applyPatch({ radiusFeet: Number(e.target.value) })}
+          onCommit={(n) => applyPatch({ radiusFeet: n })}
         />
       </div>
       <div>
         <Label className="text-xs">Arc (°)</Label>
-        <input
-          type="number"
-          className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+        <DeferredNumberInput
+          className={inputClassName}
           value={head.arcDegrees}
           min={adj.arcDegreesMin}
           max={adj.arcDegreesMax}
           step={5}
-          disabled={!adj.arcAdjustable}
-          onChange={(e) => applyPatch({ arcDegrees: Number(e.target.value) })}
+          disabled={!adj.arcAdjustable || Boolean(strip)}
+          onCommit={(n) => applyPatch({ arcDegrees: n })}
         />
-        {!adj.arcAdjustable && (
+        {(!adj.arcAdjustable || strip) && (
           <p className="mt-1 text-xs text-muted-foreground">
-            Fixed at {adj.arcDegreesDefault}° for this nozzle
+            {strip
+              ? "Fixed strip footprint — use rotation to orient"
+              : `Fixed at ${adj.arcDegreesDefault}° for this nozzle`}
           </p>
         )}
       </div>
@@ -85,15 +97,14 @@ export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange }: Props)
         <Label className="text-xs">
           {adj.fixedLeftEdge ? "Rotation (fixed left edge) (°)" : "Rotation / arc center (°)"}
         </Label>
-        <input
-          type="number"
-          className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+        <DeferredNumberInput
+          className={inputClassName}
           value={head.rotationDegrees}
           min={0}
           max={359}
           step={5}
           disabled={!adj.rotationAdjustable}
-          onChange={(e) => applyPatch({ rotationDegrees: Number(e.target.value) })}
+          onCommit={(n) => applyPatch({ rotationDegrees: n })}
         />
         {head.wedgeStartDeg !== undefined && head.wedgeEndDeg !== undefined && (
           <p className="mt-1 text-xs text-muted-foreground">

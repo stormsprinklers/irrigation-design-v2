@@ -8,6 +8,7 @@ import { gridColorCells } from "@/lib/domain/simulation/heatmap";
 import { samplePointsInPolygonFeet } from "@/lib/domain/simulation/sample-grid";
 import { generateId } from "@/lib/utils";
 import { getNozzleAdjustability, resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
+import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
 import { getNozzlesForHead, getHeadBodies } from "@/lib/catalog/compat";
 import type { TrainingHeadSnapshot } from "@/lib/domain/training/types";
 import { wedgeStartDeg, wedgeEndDeg } from "@/lib/domain/placement/wedge";
@@ -134,6 +135,7 @@ export function TrainingCanvas() {
       nozzleModel: nozzle.model,
       gpm: settings.gpm,
       precipInPerHr: settings.precipInPerHr,
+      ...stripFieldsFromNozzle(nozzle),
     };
     addCorrectedHead(snap);
   }
@@ -191,6 +193,9 @@ export function TrainingCanvas() {
                 editable={false}
                 selected={false}
                 adjustability={nozzle ? getNozzleAdjustability(nozzle) : null}
+                stripPattern={head.stripPattern}
+                patternWidthFt={head.patternWidthFt}
+                patternLengthFt={head.patternLengthFt}
                 onSelect={() => {}}
                 onMove={() => {}}
                 onPatch={() => {}}
@@ -210,6 +215,9 @@ export function TrainingCanvas() {
                 editable={editable}
                 selected={selectedHeadId === head.id}
                 adjustability={nozzle ? getNozzleAdjustability(nozzle) : null}
+                stripPattern={head.stripPattern}
+                patternWidthFt={head.patternWidthFt}
+                patternLengthFt={head.patternLengthFt}
                 onSelect={() => setSelectedHeadId(head.id)}
                 onMove={(positionFt, opts) => moveCorrectedHead(head.id, positionFt, opts)}
                 onPatch={(patch, opts) => updateCorrectedHead(head.id, patch, opts)}

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useTrainingStore } from "@/lib/stores/training-store";
 import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
+import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
 import { getNozzlesForHead } from "@/lib/catalog/compat";
 import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
 import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
@@ -12,6 +13,7 @@ export function HeadEditorPanel() {
   const correctedHeads = useTrainingStore((s) => s.correctedHeads);
   const selectedHeadId = useTrainingStore((s) => s.selectedHeadId);
   const updateCorrectedHead = useTrainingStore((s) => s.updateCorrectedHead);
+  const duplicateCorrectedHead = useTrainingStore((s) => s.duplicateCorrectedHead);
   const deleteCorrectedHead = useTrainingStore((s) => s.deleteCorrectedHead);
   const viewMode = useTrainingStore((s) => s.viewMode);
 
@@ -43,9 +45,14 @@ export function HeadEditorPanel() {
     <div className="space-y-4 p-4">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-medium">Head editor</h3>
-        <Button size="sm" variant="destructive" onClick={() => deleteCorrectedHead(head.id)}>
-          Delete
-        </Button>
+        <div className="flex gap-2">
+          <Button size="sm" variant="outline" onClick={() => duplicateCorrectedHead(head.id)}>
+            Duplicate
+          </Button>
+          <Button size="sm" variant="destructive" onClick={() => deleteCorrectedHead(head.id)}>
+            Delete
+          </Button>
+        </div>
       </div>
       <p className="text-xs text-muted-foreground">
         {head.nozzleModel ?? head.catalogItemId} · GPM {head.gpm?.toFixed(2) ?? "—"}
@@ -63,6 +70,7 @@ export function HeadEditorPanel() {
             headBodyId: bodyId,
             catalogItemId: noz.id,
             nozzleModel: noz.model,
+            ...stripFieldsFromNozzle(noz),
             arcDegrees: settings.arcDegrees,
             radiusFeet: settings.radiusFeet,
             rotationDegrees: settings.rotationDegrees,
@@ -77,6 +85,7 @@ export function HeadEditorPanel() {
           patch({
             catalogItemId: noz.id,
             nozzleModel: noz.model,
+            ...stripFieldsFromNozzle(noz),
             arcDegrees: settings.arcDegrees,
             radiusFeet: settings.radiusFeet,
             rotationDegrees: settings.rotationDegrees,

@@ -11,6 +11,7 @@ import { InspectorPanel } from "./InspectorPanel";
 import { ValidationDrawer } from "./ValidationDrawer";
 import { VersionSelector } from "./VersionSelector";
 import { MaterialsPanel } from "./MaterialsPanel";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { placeHeads, pointInPolygon } from "@/lib/domain/placement";
 import { resolveHeadAssembly } from "@/lib/catalog/compat";
 import { validateDesign } from "@/lib/domain/validation";
@@ -357,18 +358,21 @@ export function DesignWorkspace({
             <p className="text-xs text-muted-foreground">
               {version.label}
               {version.kind === "AS_BUILT" && (
-                <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-amber-800">
+                <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-amber-800 dark:bg-amber-950 dark:text-amber-200">
                   As-built
                 </span>
               )}
             </p>
           </div>
         </div>
-        <VersionSelector
-          projectId={project.id}
-          versions={versions}
-          activeVersionId={version.id}
-        />
+        <div className="flex items-center gap-2">
+          <ThemeToggle compact />
+          <VersionSelector
+            projectId={project.id}
+            versions={versions}
+            activeVersionId={version.id}
+          />
+        </div>
       </header>
 
       <div className="flex min-h-0 flex-1">
@@ -385,6 +389,7 @@ export function DesignWorkspace({
           <div className="min-h-0 flex-1" data-tour="tour-canvas">
             <DesignCanvas
               imageUrl={displayImageUrl}
+              catalog={catalog}
               onCanvasClick={handleCanvasClick}
             />
           </div>

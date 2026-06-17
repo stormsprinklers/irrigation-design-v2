@@ -80,7 +80,7 @@ export function InspectorPanel({
               Scale: {document.scale.realWorldFeet} ft reference line
             </p>
           ) : (
-            <p className="text-xs text-amber-600">Scale not calibrated</p>
+            <p className="text-xs text-amber-600 dark:text-amber-400">Scale not calibrated</p>
           )}
           {scalePointA && scalePointB && !document.scale && (
             <div className="space-y-2">

@@ -165,6 +165,14 @@ function mergeManufacturerNozzles(
   for (const item of extracted) {
     byId.set(item.id, item);
   }
+  // PDF consolidation may omit a band SKU (e.g. MP3500-360); keep manual fallbacks.
+  for (const item of manual) {
+    if (item.specs.nozzleFamily !== "hunter_mp_rotator") continue;
+    if (item.specs.stripPattern || item.specs.mpModel === "MP Corner") continue;
+    if (!byId.has(item.id)) {
+      byId.set(item.id, item);
+    }
+  }
   return [...byId.values()];
 }
 

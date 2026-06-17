@@ -1,5 +1,6 @@
 import { pointInPolygon } from "../placement/geometry";
-import { isPointInWedge } from "../placement/wedge";
+import { headStripSpec, isPointInHeadCoverage, type HeadCoverageInput } from "../placement/head-coverage";
+import { stripPatternVertices } from "@/lib/catalog/strip-pattern";
 import type { PrecipGrid, TrainingHeadSnapshot, UniformityScores } from "../training/types";
 import { TRAINING_PPF } from "../training/placement-adapter";
 import type { Point } from "../types";
@@ -20,10 +21,11 @@ export const DEFAULT_DRY_THRESHOLD = 0.4;
 export const DEFAULT_WET_THRESHOLD = 3.5;
 
 function computeDuLq(values: number[]): number {
-  if (values.length === 0) return 0;
-  const avg = values.reduce((a, b) => a + b, 0) / values.length;
+  const covered = values.filter((v) => v > 0);
+  if (covered.length === 0) return 0;
+  const avg = covered.reduce((a, b) => a + b, 0) / covered.length;
   if (avg <= 0) return 0;
-  const sorted = [...values].sort((a, b) => a - b);
+  const sorted = [...covered].sort((a, b) => a - b);
   const q = Math.max(1, Math.ceil(sorted.length * 0.25));
   const lowSlice = sorted.slice(0, q);
   const lowAvg = lowSlice.reduce((a, b) => a + b, 0) / lowSlice.length;
@@ -51,6 +53,35 @@ function estimateOversprayPercent(vertices: Point[], heads: TrainingHeadSnapshot
   let outsideHits = 0;
   let checked = 0;
   for (const head of heads) {
+    const coverageHead: HeadCoverageInput = {
+      position: head.positionFt,
+      arcDegrees: head.arcDegrees,
+      radiusFeet: head.radiusFeet,
+      rotationDegrees: head.rotationDegrees,
+      stripPattern: head.stripPattern,
+      patternWidthFt: head.patternWidthFt,
+      patternLengthFt: head.patternLengthFt,
+    };
+    const strip = headStripSpec(coverageHead);
+
+    if (strip) {
+      const verts = stripPatternVertices(head.positionFt, head.rotationDegrees, strip);
+      const edgeCount = verts.length;
+      for (let i = 0; i < edgeCount; i++) {
+        const a = verts[i]!;
+        const b = verts[(i + 1) % edgeCount]!;
+        for (let t = 0; t <= 4; t++) {
+          const p = {
+            x: a.x + (b.x - a.x) * (t / 4),
+            y: a.y + (b.y - a.y) * (t / 4),
+          };
+          checked++;
+          if (!pointInPolygon(p, vertices)) outsideHits++;
+        }
+      }
+      continue;
+    }
+
     const wedgeHead = {
       position: head.positionFt,
       arcDegrees: head.arcDegrees,
@@ -65,7 +96,7 @@ function estimateOversprayPercent(vertices: Point[], heads: TrainingHeadSnapshot
         x: head.positionFt.x + Math.cos(angle) * head.radiusFeet,
         y: head.positionFt.y + Math.sin(angle) * head.radiusFeet,
       };
-      if (!isPointInWedge(wedgeHead, p, TRAINING_PPF)) continue;
+      if (!isPointInHeadCoverage(coverageHead, p, TRAINING_PPF)) continue;
       checked++;
       if (!pointInPolygon(p, vertices)) outsideHits++;
     }
@@ -132,6 +163,8 @@ export function computeImprovementScore(
       (approved.coveragePercent - original.coveragePercent) * 0.5 -
       (approved.drySpotCount - original.drySpotCount) * 2 -
       (approved.wetSpotCount - original.wetSpotCount) * 4 -
+      (approved.headToHeadViolations - original.headToHeadViolations) * 3 -
+      (approved.oversprayEstimatePercent - original.oversprayEstimatePercent) * 0.3 -
       Math.max(0, approved.headCount - original.headCount) * 3
   );
 }

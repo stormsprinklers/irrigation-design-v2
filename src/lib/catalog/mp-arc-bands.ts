@@ -27,7 +27,7 @@ export function inferMpArcBand(nozzle: CatalogItemData): MpArcBand | undefined {
   if (arc === undefined) return undefined;
   if (arc >= 360) return "360";
   if (arc >= 210 && arc <= 270) return "210_270";
-  if (arc >= 40 && arc <= 210) return "90_210";
+  if (arc === 90 || arc === 180) return "90_210";
   return undefined;
 }
 

@@ -7,6 +7,7 @@ import {
   inferMpArcBand,
   type MpArcBand,
 } from "@/lib/catalog/mp-arc-bands";
+import { getStripNozzleSpec } from "@/lib/catalog/strip-pattern";
 
 export type { MpArcBand };
 export { MP_ARC_BANDS, inferMpArcBand };
@@ -127,6 +128,18 @@ export function resolveDefaultHeadSettings(
   nozzle: CatalogItemData,
   pressurePsi = DEFAULT_PRESSURE_PSI
 ): Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees" | "gpm" | "precipInPerHr"> {
+  const strip = getStripNozzleSpec(nozzle);
+  if (strip) {
+    const hydraulics = calculateNozzleHydraulics(nozzle, pressurePsi, 180);
+    return {
+      arcDegrees: 180,
+      radiusFeet: strip.patternLengthFt,
+      rotationDegrees: 0,
+      gpm: hydraulics.gpm,
+      precipInPerHr: hydraulics.precipInPerHr,
+    };
+  }
+
   const adj = getNozzleAdjustability(nozzle);
   const hydraulics = calculateNozzleHydraulics(nozzle, pressurePsi, adj.arcDegreesDefault);
   const radiusFeet = Math.min(

@@ -43,6 +43,20 @@ export function getCompatibleHeadFamilies(item: CatalogItemData): string[] {
   return [];
 }
 
+/** Hunter MP SKUs: only 90–210, 210–270, and 360 bands (plus strips / corner). */
+export function isValidMpRotatorPickerNozzle(nozzle: CatalogItemData): boolean {
+  if (nozzle.specs.nozzleFamily !== "hunter_mp_rotator") return true;
+  if (nozzle.specs.stripPattern || nozzle.specs.mpModel === "MP Corner") return true;
+
+  const band = nozzle.specs.mpArcBand;
+  if (band !== "90_210" && band !== "210_270" && band !== "360") return false;
+
+  // Drop legacy PDF rows that still expose odd factory arcs in the model name.
+  if (/\b(40|50)°/.test(nozzle.model)) return false;
+
+  return true;
+}
+
 export function nozzleCompatibleWithHead(
   nozzle: CatalogItemData,
   head: CatalogItemData
@@ -66,9 +80,14 @@ export function getNozzlesForHead(
   if (!head) return [];
   const headFamily = getHeadFamily(head);
   if (!headFamily) return [];
-  return catalog.filter(
-    (item) => isNozzle(item) && getCompatibleHeadFamilies(item).includes(headFamily)
-  );
+  return catalog
+    .filter(
+      (item) =>
+        isNozzle(item) &&
+        isValidMpRotatorPickerNozzle(item) &&
+        getCompatibleHeadFamilies(item).includes(headFamily)
+    )
+    .sort((a, b) => a.model.localeCompare(b.model, undefined, { sensitivity: "base" }));
 }
 
 export function getHeadBodies(catalog: CatalogItemData[]): CatalogItemData[] {
@@ -127,7 +146,9 @@ export function filterNozzlesByGroup(
   nozzles: CatalogItemData[],
   group: NozzlePickerGroup
 ): CatalogItemData[] {
-  return nozzles.filter((n) => getNozzlePickerGroup(n) === group);
+  return nozzles
+    .filter((n) => getNozzlePickerGroup(n) === group)
+    .sort((a, b) => a.model.localeCompare(b.model, undefined, { sensitivity: "base" }));
 }
 
 export function getDefaultNozzleForHead(
