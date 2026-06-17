@@ -50,7 +50,7 @@ export function DashboardShell({ userName, signOutAction, children, mainClassNam
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="flex min-h-dvh flex-col lg:flex-row">
+    <div className="flex h-dvh max-h-dvh flex-col overflow-hidden lg:flex-row">
       <aside className="hidden w-56 shrink-0 flex-col border-r bg-card lg:flex">
         <div className="border-b p-4">
           <Link href="/" className="font-semibold text-primary">

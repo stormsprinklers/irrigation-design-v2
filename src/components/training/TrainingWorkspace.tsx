@@ -118,7 +118,7 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
   );
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex h-full min-h-0 flex-col">
       <TrainingTour initialStatus={tourStatus} />
       <div className="safe-top shrink-0 border-b px-3 py-3 sm:px-4" data-tour="training-tour-header">
         <div className="flex items-start gap-3">
@@ -137,8 +137,8 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
         onExport={handleExport}
         approving={approving}
       />
-      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <div className="min-h-0 min-w-0 flex-1" data-tour="training-tour-canvas">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
+        <div className="h-full min-h-0 min-w-0 flex-1 overflow-hidden" data-tour="training-tour-canvas">
           <TrainingCanvas />
         </div>
         <aside className="hidden w-80 min-h-0 shrink-0 flex-col overflow-y-auto border-l bg-card lg:flex">

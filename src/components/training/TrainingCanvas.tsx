@@ -138,8 +138,8 @@ export function TrainingCanvas() {
       e.preventDefault();
     };
 
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
+    el.addEventListener("wheel", onWheel, { passive: false, capture: true });
+    return () => el.removeEventListener("wheel", onWheel, { capture: true });
   }, [polygon?.metadata.seed]);
 
   useEffect(() => {
@@ -214,7 +214,7 @@ export function TrainingCanvas() {
     return (
       <div
         ref={containerRef}
-        className="flex h-full items-center justify-center text-muted-foreground"
+        className="flex h-full min-h-0 items-center justify-center text-muted-foreground"
       >
         Click Generate to create a training example
       </div>
@@ -292,7 +292,7 @@ export function TrainingCanvas() {
   return (
     <div
       ref={containerRef}
-      className={`scroll-surface h-full w-full bg-muted/30 ${
+      className={`scroll-surface h-full min-h-0 w-full bg-muted/30 ${
         isInteracting ? "overflow-hidden touch-none" : "overflow-auto"
       }`}
       style={{
