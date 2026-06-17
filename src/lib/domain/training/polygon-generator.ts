@@ -451,7 +451,7 @@ function finalizePolygon(
   if (!isSimpleEnough(rotated)) {
     const fallback = rectangle(45, 30);
     const fallbackRot = applyRotationAndNormalize(fallback, rotationDeg);
-    let exclusionZonesFt = generateAdjacentExclusions(fallbackRot, rng, seed);
+    const exclusionZonesFt = generateAdjacentExclusions(fallbackRot, rng, seed);
     const normalized = normalizeSceneToOrigin(fallbackRot, exclusionZonesFt);
     return {
       verticesFt: normalized.lawnVertices,
@@ -466,7 +466,7 @@ function finalizePolygon(
     };
   }
 
-  let exclusionZonesFt = generateAdjacentExclusions(rotated, rng, seed);
+  const exclusionZonesFt = generateAdjacentExclusions(rotated, rng, seed);
   const normalized = normalizeSceneToOrigin(rotated, exclusionZonesFt);
   return {
     verticesFt: normalized.lawnVertices,

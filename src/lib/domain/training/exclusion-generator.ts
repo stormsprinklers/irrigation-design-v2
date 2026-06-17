@@ -132,10 +132,6 @@ function randRange(rng: () => number, min: number, max: number): number {
   return min + rng() * (max - min);
 }
 
-function randInt(rng: () => number, min: number, max: number): number {
-  return min + Math.floor(rng() * (max - min + 1));
-}
-
 function pickExclusionType(rng: () => number): ExclusionType {
   const roll = rng();
   if (roll < 0.45) return "BUILDING";
