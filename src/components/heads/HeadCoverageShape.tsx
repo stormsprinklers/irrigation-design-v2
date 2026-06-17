@@ -7,6 +7,7 @@ import {
   type StripNozzleSpec,
 } from "@/lib/catalog/strip-pattern";
 import type { CatalogItemData } from "@/lib/domain/types";
+import { useCoverageOutline } from "@/lib/hooks/use-canvas-theme";
 
 type HeadCoverageProps = {
   positionFt: { x: number; y: number };
@@ -21,6 +22,8 @@ type HeadCoverageProps = {
   patternWidthFt?: number;
   patternLengthFt?: number;
   fill: string;
+  stroke?: string;
+  strokeWidth?: number;
   listening?: boolean;
 };
 
@@ -50,8 +53,14 @@ export function HeadCoverageShape(props: HeadCoverageProps) {
     radiusFeet,
     rotationDegrees,
     fill,
+    stroke: strokeOverride,
+    strokeWidth: strokeWidthOverride,
     listening = false,
   } = props;
+
+  const outline = useCoverageOutline();
+  const stroke = strokeOverride ?? outline.stroke;
+  const strokeWidth = strokeWidthOverride ?? outline.width;
 
   const strip = resolveStripSpec(props);
   if (strip) {
@@ -60,7 +69,16 @@ export function HeadCoverageShape(props: HeadCoverageProps) {
       v.x * pxPerFt + offsetX,
       v.y * pxPerFt + offsetY,
     ]);
-    return <Line points={flat} closed fill={fill} listening={listening} />;
+    return (
+      <Line
+        points={flat}
+        closed
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        listening={listening}
+      />
+    );
   }
 
   const cx = positionFt.x * pxPerFt + offsetX;
@@ -75,6 +93,8 @@ export function HeadCoverageShape(props: HeadCoverageProps) {
       angle={arcDegrees}
       rotation={rotationDegrees - arcDegrees / 2}
       fill={fill}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
       listening={listening}
     />
   );

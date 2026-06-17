@@ -61,15 +61,22 @@ export function nozzleCompatibleWithHead(
   nozzle: CatalogItemData,
   head: CatalogItemData
 ): boolean {
+  const bodyCategory = getBodyCategory(head);
+  if (!bodyCategory) return false;
+
+  if (!isNozzle(nozzle) || !isValidMpRotatorPickerNozzle(nozzle)) return false;
+
+  const allowedBodies = getCompatibleBodyCategories(nozzle);
+  if (!allowedBodies.includes(bodyCategory)) return false;
+
+  if (bodyCategory === "SPRAY_BODY") {
+    return allowedBodies.includes("SPRAY_BODY");
+  }
+
   const headFamily = getHeadFamily(head);
   if (!headFamily) return false;
   const compatible = getCompatibleHeadFamilies(nozzle);
-  if (compatible.length === 0 || !compatible.includes(headFamily)) return false;
-
-  const bodyCategory = getBodyCategory(head);
-  if (!bodyCategory) return false;
-  const allowedBodies = getCompatibleBodyCategories(nozzle);
-  return allowedBodies.includes(bodyCategory);
+  return compatible.length > 0 && compatible.includes(headFamily);
 }
 
 export function getNozzlesForHead(
@@ -78,15 +85,25 @@ export function getNozzlesForHead(
 ): CatalogItemData[] {
   const head = catalog.find((c) => c.id === headBodyId);
   if (!head) return [];
+  const bodyCategory = getBodyCategory(head);
+  if (!bodyCategory) return [];
   const headFamily = getHeadFamily(head);
-  if (!headFamily) return [];
+
   return catalog
-    .filter(
-      (item) =>
-        isNozzle(item) &&
-        isValidMpRotatorPickerNozzle(item) &&
-        getCompatibleHeadFamilies(item).includes(headFamily)
-    )
+    .filter((item) => {
+      if (!isNozzle(item) || !isValidMpRotatorPickerNozzle(item)) return false;
+
+      const allowedBodies = getCompatibleBodyCategories(item);
+      if (!allowedBodies.includes(bodyCategory)) return false;
+
+      if (bodyCategory === "SPRAY_BODY") {
+        return allowedBodies.includes("SPRAY_BODY");
+      }
+
+      if (!headFamily) return false;
+      const compatible = getCompatibleHeadFamilies(item);
+      return compatible.length > 0 && compatible.includes(headFamily);
+    })
     .sort((a, b) => a.model.localeCompare(b.model, undefined, { sensitivity: "base" }));
 }
 
@@ -120,6 +137,8 @@ export function filterHeadBodiesByGroup(
 }
 
 export function getNozzlePickerGroup(nozzle: CatalogItemData): NozzlePickerGroup {
+  if (nozzle.specs.stripPattern) return "fixed";
+
   const family =
     typeof nozzle.specs.nozzleFamily === "string" ? nozzle.specs.nozzleFamily : "";
 
