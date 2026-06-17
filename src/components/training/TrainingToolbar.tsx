@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { NativeSelect } from "@/components/ui/native-select";
 import { useTrainingStore } from "@/lib/stores/training-store";
-import type { TrainingProgressView } from "@/lib/domain/training/gamification";
 import {
   TRAINING_SHAPE_CLASSES,
   TRAINING_SHAPE_LABELS,
@@ -22,10 +21,9 @@ type Props = {
   onApprove: () => void;
   onExport: () => void;
   approving: boolean;
-  suggestedShape?: TrainingProgressView["suggestedShape"];
 };
 
-export function TrainingToolbar({ onApprove, onExport, approving, suggestedShape }: Props) {
+export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
   const generateExample = useTrainingStore((s) => s.generateExample);
   const shapeFilter = useTrainingStore((s) => s.shapeFilter);
   const setShapeFilter = useTrainingStore((s) => s.setShapeFilter);
@@ -60,18 +58,6 @@ export function TrainingToolbar({ onApprove, onExport, approving, suggestedShape
         <Button size="sm" onClick={() => generateExample()}>
           Generate
         </Button>
-        {suggestedShape && shapeFilter === "random" && (
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={() => {
-              setShapeFilter(suggestedShape);
-              generateExample();
-            }}
-          >
-            Try {TRAINING_SHAPE_LABELS[suggestedShape]}
-          </Button>
-        )}
         <Button
           size="sm"
           variant="outline"

@@ -11,13 +11,10 @@ import {
   getTrainingExampleStats,
 } from "@/lib/actions/training";
 import type { TrainingExampleStats } from "@/lib/domain/training/types";
-import type { TrainingProgressView } from "@/lib/domain/training/gamification";
 import { TrainingToolbar } from "./TrainingToolbar";
 import { HeadEditorPanel } from "./HeadEditorPanel";
 import { ScoreComparisonPanel } from "./ScoreComparisonPanel";
-import { TrainingMasteryPanel } from "./TrainingMasteryPanel";
-import { TrainingProgressHeader, TrainingProgressHeaderCompact } from "./TrainingProgressHeader";
-import { showTrainingApproveCelebration } from "./training-celebrations";
+import { TrainingStatsPanel } from "./TrainingStatsPanel";
 import { ExampleListDrawer } from "./ExampleListDrawer";
 import { TrainingTour, TrainingTourHelpButton } from "./tour/TrainingTour";
 import type { TourStatus } from "@/lib/actions/tour";
@@ -49,21 +46,18 @@ type Props = {
   catalog: CatalogItemData[];
   tourStatus: TourStatus;
   stats: TrainingExampleStats;
-  initialProgress: TrainingProgressView;
 };
 
 export function TrainingWorkspace({
   catalog,
   tourStatus,
   stats: initialStats,
-  initialProgress,
 }: Props) {
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const generateExample = useTrainingStore((s) => s.generateExample);
   const buildApprovalPayload = useTrainingStore((s) => s.buildApprovalPayload);
   const [approving, setApproving] = useState(false);
   const [stats, setStats] = useState(initialStats);
-  const [progress, setProgress] = useState(initialProgress);
 
   useEffect(() => {
     const store = useTrainingStore.getState();
@@ -84,9 +78,8 @@ export function TrainingWorkspace({
     }
     setApproving(true);
     try {
-      const result = await approveTrainingExample(payload);
-      showTrainingApproveCelebration(result);
-      setProgress(result.progress);
+      await approveTrainingExample(payload);
+      toast.success("Example saved");
       setStats(await getTrainingExampleStats());
       generateExample();
     } catch (e) {
@@ -123,7 +116,7 @@ export function TrainingWorkspace({
       <div data-tour="training-tour-scores">
         <ScoreComparisonPanel />
       </div>
-      <TrainingMasteryPanel progress={progress} stats={stats} />
+      <TrainingStatsPanel stats={stats} />
       <ExampleListDrawer />
     </>
   );
@@ -140,19 +133,10 @@ export function TrainingWorkspace({
               Generate synthetic lawns, correct algorithm output, and save labeled examples for
               future ML training.
             </p>
-            <TrainingProgressHeaderCompact progress={progress} className="mt-1 lg:hidden" />
           </div>
         </div>
       </div>
-      <div className="hidden border-b bg-muted/20 lg:block" data-tour="training-tour-progress">
-        <TrainingProgressHeader progress={progress} onProgressChange={setProgress} />
-      </div>
-      <TrainingToolbar
-        onApprove={handleApprove}
-        onExport={handleExport}
-        approving={approving}
-        suggestedShape={progress.suggestedShape}
-      />
+      <TrainingToolbar onApprove={handleApprove} onExport={handleExport} approving={approving} />
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
         <div className="h-full min-h-0 min-w-0 flex-1 overflow-hidden" data-tour="training-tour-canvas">
           <TrainingCanvas />
@@ -206,7 +190,7 @@ export function TrainingWorkspace({
               </SheetHeader>
               <div className="overflow-y-auto">
                 <ScoreComparisonPanel />
-                <TrainingMasteryPanel progress={progress} stats={stats} />
+                <TrainingStatsPanel stats={stats} />
               </div>
             </SheetContent>
           </Sheet>

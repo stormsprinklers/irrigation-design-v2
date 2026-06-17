@@ -23,29 +23,7 @@ import {
   annotateTrainingPayload,
   payloadNeedsRescore,
 } from "@/lib/domain/training/training-payload";
-import {
-  clampDailyGoal,
-  computeProgressUpdate,
-  parseGamificationState,
-  refreshDailyGamificationState,
-  toProgressView,
-  type TrainingGamificationState,
-  type TrainingProgressView,
-} from "@/lib/domain/training/gamification";
 import { revalidatePath } from "next/cache";
-
-export type ApproveTrainingResult = {
-  id: string;
-  progress: TrainingProgressView;
-  xpGained: number;
-  leveledUp: boolean;
-  previousLevel: number;
-  newLevel: number;
-  achievementsUnlocked: string[];
-  streakIncreased: boolean;
-  dailyGoalJustCompleted: boolean;
-  dailyQuestJustCompleted: boolean;
-};
 
 type ParsedApprovalPayload = z.infer<typeof approveTrainingExampleSchema>["payload"];
 
@@ -85,32 +63,6 @@ export async function getTrainingExampleStats(): Promise<TrainingExampleStats> {
   }
 
   return { total: rows.length, byShape, needsRescore, trainingReady };
-}
-
-async function loadUserGamification(userId: string): Promise<TrainingGamificationState> {
-  const row = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { trainingGamification: true },
-  });
-  return parseGamificationState(row?.trainingGamification);
-}
-
-export async function getTrainingProgress(): Promise<TrainingProgressView> {
-  const user = await requireSession();
-  const state = refreshDailyGamificationState(await loadUserGamification(user.id));
-  return toProgressView(state);
-}
-
-export async function updateTrainingDailyGoal(goal: number): Promise<TrainingProgressView> {
-  const user = await requireSession();
-  const state = await loadUserGamification(user.id);
-  state.dailyGoal = clampDailyGoal(goal);
-  await prisma.user.update({
-    where: { id: user.id },
-    data: { trainingGamification: state as unknown as Prisma.InputJsonValue },
-  });
-  revalidatePath("/training");
-  return toProgressView(state);
 }
 
 export async function listTrainingExamples(status?: "IN_PROGRESS" | "APPROVED" | "DISCARDED") {
@@ -175,7 +127,7 @@ function normalizePolygonMetadata(
 
 export async function approveTrainingExample(
   payload: TrainingExampleApprovalInput
-): Promise<ApproveTrainingResult> {
+): Promise<{ id: string }> {
   const user = await requireSession();
   const parsed = approveTrainingExampleSchema.parse({ payload });
   const fullPayload: TrainingExamplePayload = {
@@ -187,9 +139,6 @@ export async function approveTrainingExample(
     validForTraining: parsed.payload.validForTraining ?? true,
     needsRescore: parsed.payload.needsRescore ?? false,
   };
-
-  const priorState = await loadUserGamification(user.id);
-  const progressResult = computeProgressUpdate(priorState, fullPayload, new Date(), "UTC");
 
   const row = await prisma.trainingExample.create({
     data: {
@@ -203,26 +152,8 @@ export async function approveTrainingExample(
     },
   });
 
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
-      trainingGamification: progressResult.state as unknown as Prisma.InputJsonValue,
-    },
-  });
-
   revalidatePath("/training");
-  return {
-    id: row.id,
-    progress: toProgressView(progressResult.state),
-    xpGained: progressResult.xpGained,
-    leveledUp: progressResult.leveledUp,
-    previousLevel: progressResult.previousLevel,
-    newLevel: progressResult.newLevel,
-    achievementsUnlocked: progressResult.achievementsUnlocked,
-    streakIncreased: progressResult.streakIncreased,
-    dailyGoalJustCompleted: progressResult.dailyGoalJustCompleted,
-    dailyQuestJustCompleted: progressResult.dailyQuestJustCompleted,
-  };
+  return { id: row.id };
 }
 
 export async function rescoreTrainingExample(id: string) {
