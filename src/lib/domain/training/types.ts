@@ -14,6 +14,25 @@ export type TrainingShapeClass =
   | "back_yard"
   | "irregular";
 
+export const TRAINING_SHAPE_LABELS: Record<TrainingShapeClass, string> = {
+  rectangle: "Rectangle",
+  l_shape: "L-shape",
+  narrow_strip: "Narrow strip",
+  concave: "Concave notch",
+  front_yard: "Front yard",
+  back_yard: "Back yard",
+  irregular: "Irregular",
+};
+
+export const TRAINING_SHAPE_CLASSES = Object.keys(
+  TRAINING_SHAPE_LABELS
+) as TrainingShapeClass[];
+
+export type TrainingExampleStats = {
+  total: number;
+  byShape: Record<TrainingShapeClass, number>;
+};
+
 export type TrainingPolygonMetadata = {
   shapeClass: TrainingShapeClass;
   seed: number;

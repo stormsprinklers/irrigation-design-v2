@@ -7,7 +7,13 @@ import {
   approveTrainingExampleSchema,
   exportTrainingExamplesSchema,
 } from "@/lib/domain/training/schemas";
-import type { TrainingExampleApprovalInput, TrainingExamplePayload } from "@/lib/domain/training/types";
+import {
+  TRAINING_SHAPE_CLASSES,
+  type TrainingExampleApprovalInput,
+  type TrainingExamplePayload,
+  type TrainingExampleStats,
+  type TrainingShapeClass,
+} from "@/lib/domain/training/types";
 import { getPlacementAlgorithmVersion } from "@/lib/domain/training/algorithm-version.server";
 import { revalidatePath } from "next/cache";
 
@@ -15,6 +21,31 @@ async function requireSession() {
   const session = await auth();
   if (!session?.user) throw new Error("Unauthorized");
   return session.user;
+}
+
+function emptyShapeCounts(): Record<TrainingShapeClass, number> {
+  return Object.fromEntries(
+    TRAINING_SHAPE_CLASSES.map((shape) => [shape, 0])
+  ) as Record<TrainingShapeClass, number>;
+}
+
+export async function getTrainingExampleStats(): Promise<TrainingExampleStats> {
+  const user = await requireSession();
+  const rows = await prisma.trainingExample.findMany({
+    where: { createdById: user.id, status: "APPROVED" },
+    select: { polygonMetadata: true },
+  });
+
+  const byShape = emptyShapeCounts();
+  for (const row of rows) {
+    const meta = row.polygonMetadata as { shapeClass?: string };
+    const shape = meta.shapeClass;
+    if (shape && shape in byShape) {
+      byShape[shape as TrainingShapeClass] += 1;
+    }
+  }
+
+  return { total: rows.length, byShape };
 }
 
 export async function listTrainingExamples(status?: "IN_PROGRESS" | "APPROVED" | "DISCARDED") {

@@ -2,17 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import { useTrainingStore } from "@/lib/stores/training-store";
-import type { TrainingShapeClass } from "@/lib/domain/training/types";
+import {
+  TRAINING_SHAPE_CLASSES,
+  TRAINING_SHAPE_LABELS,
+  type TrainingShapeClass,
+} from "@/lib/domain/training/types";
 
 const SHAPES: { value: TrainingShapeClass | "random"; label: string }[] = [
   { value: "random", label: "Random shape" },
-  { value: "rectangle", label: "Rectangle" },
-  { value: "l_shape", label: "L-shape" },
-  { value: "narrow_strip", label: "Narrow strip" },
-  { value: "concave", label: "Concave notch" },
-  { value: "front_yard", label: "Front yard" },
-  { value: "back_yard", label: "Back yard" },
-  { value: "irregular", label: "Irregular" },
+  ...TRAINING_SHAPE_CLASSES.map((value) => ({
+    value,
+    label: TRAINING_SHAPE_LABELS[value],
+  })),
 ];
 
 type Props = {

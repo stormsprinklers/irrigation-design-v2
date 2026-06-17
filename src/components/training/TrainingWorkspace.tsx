@@ -5,10 +5,16 @@ import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import type { CatalogItemData } from "@/lib/domain/types";
 import { useTrainingStore } from "@/lib/stores/training-store";
-import { approveTrainingExample, exportTrainingExamplesJsonl } from "@/lib/actions/training";
+import {
+  approveTrainingExample,
+  exportTrainingExamplesJsonl,
+  getTrainingExampleStats,
+} from "@/lib/actions/training";
+import type { TrainingExampleStats } from "@/lib/domain/training/types";
 import { TrainingToolbar } from "./TrainingToolbar";
 import { HeadEditorPanel } from "./HeadEditorPanel";
 import { ScoreComparisonPanel } from "./ScoreComparisonPanel";
+import { TrainingStatsPanel } from "./TrainingStatsPanel";
 import { ExampleListDrawer } from "./ExampleListDrawer";
 import { TrainingTour, TrainingTourHelpButton } from "./tour/TrainingTour";
 import type { TourStatus } from "@/lib/actions/tour";
@@ -28,12 +34,14 @@ const TrainingCanvas = dynamic(
 type Props = {
   catalog: CatalogItemData[];
   tourStatus: TourStatus;
+  stats: TrainingExampleStats;
 };
 
-export function TrainingWorkspace({ catalog, tourStatus }: Props) {
+export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: Props) {
   const generateExample = useTrainingStore((s) => s.generateExample);
   const buildApprovalPayload = useTrainingStore((s) => s.buildApprovalPayload);
   const [approving, setApproving] = useState(false);
+  const [stats, setStats] = useState(initialStats);
 
   useEffect(() => {
     const store = useTrainingStore.getState();
@@ -56,6 +64,7 @@ export function TrainingWorkspace({ catalog, tourStatus }: Props) {
     try {
       const { id } = await approveTrainingExample(payload);
       toast.success(`Saved training example ${id.slice(0, 8)}…`);
+      setStats(await getTrainingExampleStats());
       generateExample();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Save failed");
@@ -106,6 +115,7 @@ export function TrainingWorkspace({ catalog, tourStatus }: Props) {
           <div data-tour="training-tour-scores">
             <ScoreComparisonPanel />
           </div>
+          <TrainingStatsPanel stats={stats} />
           <ExampleListDrawer />
         </aside>
       </div>
