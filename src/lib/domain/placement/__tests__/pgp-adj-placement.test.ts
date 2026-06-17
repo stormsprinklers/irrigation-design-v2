@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it } from "node:test";
 import type { CatalogItemData } from "../../types";
+import { getNozzleAdjustability } from "@/lib/catalog/adjustability";
 import {
   PGP_ADJ_HEAD_BODY_ID,
   assignPgpAdjNozzlesToHeads,
@@ -82,5 +83,31 @@ describe("pgp-adj placement", () => {
     assert.equal(heads[1]?.catalogItemId, findPgpAdjNozzle(catalog, 3)?.id);
     assert.equal(heads[2]?.catalogItemId, findPgpAdjNozzle(catalog, 6)?.id);
     assert.ok(heads.every((h) => h.headBodyId === PGP_ADJ_HEAD_BODY_ID));
+  });
+
+  it("clamps radius to the assigned MPR nozzle throw range", () => {
+    const heads = assignPgpAdjNozzlesToHeads(
+      catalog,
+      [
+        {
+          id: "h1",
+          zoneId: "z1",
+          position: { x: 0, y: 0 },
+          catalogItemId: "noz_pgp_adj_blue_3_0",
+          arcDegrees: 90,
+          radiusFeet: 39,
+          rotationDegrees: 45,
+          locked: false,
+        },
+      ],
+      65,
+      "square"
+    );
+
+    const nozzle = findPgpAdjNozzle(catalog, 1.5);
+    assert.ok(nozzle);
+    const adj = getNozzleAdjustability(nozzle!);
+    assert.equal(heads[0]?.catalogItemId, nozzle!.id);
+    assert.equal(heads[0]?.radiusFeet, adj.radiusFeetMax);
   });
 });

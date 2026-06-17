@@ -141,7 +141,7 @@ export function TrainingWorkspace({ catalog, tourStatus, stats: initialStats }: 
         <div className="min-h-0 min-w-0 flex-1" data-tour="training-tour-canvas">
           <TrainingCanvas />
         </div>
-        <aside className="hidden w-80 shrink-0 flex-col border-l bg-card lg:flex">
+        <aside className="hidden w-80 min-h-0 shrink-0 flex-col overflow-y-auto border-l bg-card lg:flex">
           {sidePanel}
         </aside>
       </div>

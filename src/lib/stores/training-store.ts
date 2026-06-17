@@ -11,6 +11,7 @@ import { generateId } from "@/lib/utils";
 import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
 import {
   patchHeadWithNozzle,
+  swapHeadNozzle,
   wedgeBoundsForHead,
 } from "@/lib/catalog/adjustability";
 import type {
@@ -109,13 +110,18 @@ function applyHeadPatch(
   }
 
   const hydNozzle = catalog.find((c) => c.id === base.catalogItemId);
-  if (
-    hydNozzle &&
-    (patch.arcDegrees !== undefined ||
-      patch.rotationDegrees !== undefined ||
-      patch.radiusFeet !== undefined ||
-      patch.catalogItemId !== undefined)
-  ) {
+  const geometryTouched =
+    patch.arcDegrees !== undefined ||
+    patch.rotationDegrees !== undefined ||
+    patch.radiusFeet !== undefined;
+
+  if (hydNozzle && patch.catalogItemId !== undefined && !geometryTouched) {
+    const hyd = swapHeadNozzle(base, hydNozzle, 65);
+    const wedges = wedgeBoundsForHead({ ...base, positionFt: base.positionFt });
+    return { ...base, ...hyd, ...wedges };
+  }
+
+  if (hydNozzle && (geometryTouched || patch.catalogItemId !== undefined)) {
     const hyd = patchHeadWithNozzle(base, patch, hydNozzle, 65);
     const wedges = wedgeBoundsForHead({ ...base, ...hyd, positionFt: base.positionFt });
     return { ...base, ...hyd, ...wedges };

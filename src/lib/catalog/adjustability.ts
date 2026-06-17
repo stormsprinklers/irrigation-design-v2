@@ -1,4 +1,4 @@
-import type { CatalogItemData, Point, SprinklerHead } from "@/lib/domain/types";
+import type { CatalogItemData, Point, SpacingPattern, SprinklerHead } from "@/lib/domain/types";
 import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
 import { calculateNozzleHydraulics } from "@/lib/domain/hydraulics";
 import { wedgeEndDeg, wedgeStartDeg } from "@/lib/domain/placement/wedge";
@@ -165,6 +165,23 @@ export function resolveDefaultHeadSettings(
     rotationDegrees: 0,
     gpm: hydraulics.gpm,
     precipInPerHr: hydraulics.precipInPerHr,
+  };
+}
+
+/** Swap nozzle on a head without changing arc, radius, or rotation; recalculates flow only. */
+export function swapHeadNozzle(
+  head: Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees">,
+  nozzle: CatalogItemData,
+  pressurePsi = DEFAULT_PRESSURE_PSI,
+  pattern?: SpacingPattern
+): Pick<SprinklerHead, "gpm" | "precipInPerHr"> {
+  const hyd = calculateNozzleHydraulics(nozzle, pressurePsi, head.arcDegrees, pattern);
+  const gpmScale = head.arcDegrees >= 360 ? 1 : head.arcDegrees / 360;
+  const gpm =
+    hyd.gpm * (head.arcDegrees <= 180 ? head.arcDegrees / 180 : gpmScale);
+  return {
+    gpm,
+    precipInPerHr: pattern === "triangular" ? hyd.precipTriInPerHr : hyd.precipInPerHr,
   };
 }
 

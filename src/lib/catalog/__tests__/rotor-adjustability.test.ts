@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getNozzleAdjustability } from "../adjustability";
+import { getNozzleAdjustability, swapHeadNozzle } from "../adjustability";
 import type { CatalogItemData } from "../../domain/types";
 
 function rotorNozzle(specs: Record<string, unknown> = {}): CatalogItemData {
@@ -69,5 +69,24 @@ describe("rotor nozzle adjustability", () => {
       })
     );
     assert.equal(adj.radiusAdjustable, false);
+  });
+
+  it("swapHeadNozzle keeps arc, radius, and rotation unchanged", () => {
+    const nozzleB = rotorNozzle({
+      radiusFeetMin: 10,
+      radiusFeetMax: 20,
+      arcDegreesDefault: 90,
+    });
+    const head = {
+      arcDegrees: 90,
+      radiusFeet: 18,
+      rotationDegrees: 135,
+    };
+    const hyd = swapHeadNozzle(head, nozzleB, 45);
+    assert.equal(head.arcDegrees, 90);
+    assert.equal(head.radiusFeet, 18);
+    assert.equal(head.rotationDegrees, 135);
+    assert.ok(typeof hyd.gpm === "number");
+    assert.ok(typeof hyd.precipInPerHr === "number");
   });
 });

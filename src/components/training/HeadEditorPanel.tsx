@@ -89,16 +89,9 @@ export function HeadEditorPanel() {
         onNozzleChange={(catalogItemId) => {
           const noz = catalog.find((c) => c.id === catalogItemId);
           if (!noz) return;
-          const settings = resolveDefaultHeadSettings(noz, 65);
           patch({
             catalogItemId: noz.id,
             nozzleModel: noz.model,
-            ...stripFieldsFromNozzle(noz),
-            arcDegrees: settings.arcDegrees,
-            radiusFeet: settings.radiusFeet,
-            rotationDegrees: settings.rotationDegrees,
-            gpm: settings.gpm,
-            precipInPerHr: settings.precipInPerHr,
           });
         }}
       />

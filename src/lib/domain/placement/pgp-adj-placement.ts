@@ -1,4 +1,4 @@
-import { getNozzleAdjustability } from "@/lib/catalog/adjustability";
+import { clampHeadToNozzle, getNozzleAdjustability } from "@/lib/catalog/adjustability";
 import { calculateNozzleHydraulics } from "../hydraulics";
 import type { CatalogItemData, SpacingPattern, SprinklerHead } from "../types";
 import type { PolygonAnalysis } from "./geometry";
@@ -87,10 +87,14 @@ export function assignPgpAdjNozzlesToHeads(
       return { ...head, headBodyId: PGP_ADJ_HEAD_BODY_ID };
     }
 
+    const clamped = clampHeadToNozzle(head, nozzle);
     const withNozzle: SprinklerHead = {
       ...head,
       headBodyId: PGP_ADJ_HEAD_BODY_ID,
       catalogItemId: nozzle.id,
+      arcDegrees: clamped.arcDegrees,
+      radiusFeet: clamped.radiusFeet,
+      rotationDegrees: clamped.rotationDegrees,
     };
 
     return finalizeHeadHydraulics([withNozzle], nozzle, pressurePsi, pattern)[0]!;

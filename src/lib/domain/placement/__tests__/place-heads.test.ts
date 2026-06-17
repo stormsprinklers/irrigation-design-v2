@@ -100,6 +100,7 @@ describe("placeHeads head-to-head spacing", () => {
     const edge = result.heads.find((h) => h.arcDegrees >= 170 && h.arcDegrees <= 190);
     if (corner) {
       assert.equal(corner.catalogItemId, "noz_pgp_adj_blue_1_5");
+      assert.ok(corner.radiusFeet <= 32, `corner radius ${corner.radiusFeet} exceeds 1.5 nozzle max`);
     }
     if (edge) {
       assert.equal(edge.catalogItemId, "noz_pgp_adj_blue_3_0");

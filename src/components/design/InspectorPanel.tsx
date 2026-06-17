@@ -14,6 +14,7 @@ import {
 } from "@/lib/catalog/compat";
 import {
   resolveDefaultHeadSettings,
+  swapHeadNozzle,
 } from "@/lib/catalog/adjustability";
 import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
 import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
@@ -331,10 +332,10 @@ export function InspectorPanel({
                 const nozzle = catalog.find((c) => c.id === catalogItemId);
                 if (!nozzle) return;
                 const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
-                const settings = resolveDefaultHeadSettings(nozzle, pressure);
+                const hyd = swapHeadNozzle(selectedHead, nozzle, pressure);
                 const heads = document.heads.map((h) =>
                   h.id === selectedHead.id
-                    ? { ...h, catalogItemId: nozzle.id, ...settings }
+                    ? { ...h, catalogItemId: nozzle.id, ...hyd }
                     : h
                 );
                 setDocument({ ...document, heads });
