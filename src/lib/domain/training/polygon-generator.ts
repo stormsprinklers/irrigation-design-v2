@@ -12,6 +12,12 @@ import {
   wavyFrontYard,
   circularLawn,
 } from "./organic-edges";
+import {
+  generateAdjacentExclusions,
+  normalizeSceneToOrigin,
+  sceneBoundsFt,
+} from "./exclusion-generator";
+import type { ExclusionZone } from "../types";
 
 export type PolygonGeneratorOptions = {
   seed?: number;
@@ -170,9 +176,11 @@ function metadataFor(
   vertices: Point[],
   shapeClass: TrainingShapeClass,
   seed: number,
-  rotationDeg: number
+  rotationDeg: number,
+  exclusions: ExclusionZone[]
 ): TrainingPolygonMetadata {
-  const b = polygonBounds(vertices);
+  const b =
+    exclusions.length > 0 ? sceneBoundsFt(vertices, exclusions) : polygonBounds(vertices);
   return {
     shapeClass,
     seed,
@@ -181,7 +189,7 @@ function metadataFor(
     areaSqFt: Math.round(polygonArea(vertices) * 10) / 10,
     vertexCount: vertices.length,
     sideLengthsFt: polygonEdgeLengthsFt(vertices).map(roundLengthFt),
-    hasExclusions: false,
+    hasExclusions: exclusions.length > 0,
     rotationDeg: Math.round(rotationDeg * 10) / 10,
   };
 }
@@ -436,23 +444,40 @@ function finalizePolygon(
   vertices: Point[],
   shapeClass: TrainingShapeClass,
   seed: number,
-  rotationDeg: number
+  rotationDeg: number,
+  rng: () => number
 ): GeneratedTrainingPolygon {
   const rotated = applyRotationAndNormalize(vertices, rotationDeg);
   if (!isSimpleEnough(rotated)) {
     const fallback = rectangle(45, 30);
     const fallbackRot = applyRotationAndNormalize(fallback, rotationDeg);
+    let exclusionZonesFt = generateAdjacentExclusions(fallbackRot, rng, seed);
+    const normalized = normalizeSceneToOrigin(fallbackRot, exclusionZonesFt);
     return {
-      verticesFt: fallbackRot,
-      metadata: metadataFor(fallbackRot, "rectangle", seed, rotationDeg),
-      exclusionZonesFt: [],
+      verticesFt: normalized.lawnVertices,
+      metadata: metadataFor(
+        normalized.lawnVertices,
+        "rectangle",
+        seed,
+        rotationDeg,
+        normalized.exclusions
+      ),
+      exclusionZonesFt: normalized.exclusions,
     };
   }
 
+  let exclusionZonesFt = generateAdjacentExclusions(rotated, rng, seed);
+  const normalized = normalizeSceneToOrigin(rotated, exclusionZonesFt);
   return {
-    verticesFt: rotated,
-    metadata: metadataFor(rotated, shapeClass, seed, rotationDeg),
-    exclusionZonesFt: [],
+    verticesFt: normalized.lawnVertices,
+    metadata: metadataFor(
+      normalized.lawnVertices,
+      shapeClass,
+      seed,
+      rotationDeg,
+      normalized.exclusions
+    ),
+    exclusionZonesFt: normalized.exclusions,
   };
 }
 
@@ -472,10 +497,10 @@ export function generateTrainingPolygon(
     if (!isSimpleEnough(vertices)) {
       vertices = rectangle(45, 30);
     }
-    return finalizePolygon(vertices, "rectangle", seed, rotationDeg);
+    return finalizePolygon(vertices, "rectangle", seed, rotationDeg, rng);
   }
 
-  return finalizePolygon(vertices, shapeClass, seed, rotationDeg);
+  return finalizePolygon(vertices, shapeClass, seed, rotationDeg, rng);
 }
 
 /** Exported for tests — compare unrotated canonical shapes (no organic edge pass). */

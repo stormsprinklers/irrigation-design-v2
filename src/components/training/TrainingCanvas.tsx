@@ -193,6 +193,21 @@ export function TrainingCanvas() {
                 listening={false}
               />
             ))}
+          {polygon.exclusionZonesFt.map((zone) => (
+            <Line
+              key={zone.id}
+              points={zone.vertices.flatMap((v) => [
+                v.x * PX + STAGE_OFFSET,
+                v.y * PX + STAGE_OFFSET,
+              ])}
+              closed
+              fill="rgba(239, 68, 68, 0.2)"
+              stroke="#f87171"
+              strokeWidth={1}
+              dash={[8, 4]}
+              listening={false}
+            />
+          ))}
           <Line
             points={flatVertices.map((v) => v + STAGE_OFFSET)}
             closed
