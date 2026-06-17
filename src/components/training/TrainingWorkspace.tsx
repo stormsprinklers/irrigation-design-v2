@@ -10,6 +10,8 @@ import { TrainingToolbar } from "./TrainingToolbar";
 import { HeadEditorPanel } from "./HeadEditorPanel";
 import { ScoreComparisonPanel } from "./ScoreComparisonPanel";
 import { ExampleListDrawer } from "./ExampleListDrawer";
+import { TrainingTour, TrainingTourHelpButton } from "./tour/TrainingTour";
+import type { TourStatus } from "@/lib/actions/tour";
 
 const TrainingCanvas = dynamic(
   () => import("./TrainingCanvas").then((m) => m.TrainingCanvas),
@@ -25,9 +27,10 @@ const TrainingCanvas = dynamic(
 
 type Props = {
   catalog: CatalogItemData[];
+  tourStatus: TourStatus;
 };
 
-export function TrainingWorkspace({ catalog }: Props) {
+export function TrainingWorkspace({ catalog, tourStatus }: Props) {
   const generateExample = useTrainingStore((s) => s.generateExample);
   const buildApprovalPayload = useTrainingStore((s) => s.buildApprovalPayload);
   const [approving, setApproving] = useState(false);
@@ -79,20 +82,30 @@ export function TrainingWorkspace({ catalog }: Props) {
 
   return (
     <div className="flex h-[calc(100vh-0px)] flex-col">
-      <div className="border-b px-4 py-3">
-        <h1 className="text-lg font-semibold">AI Training — Head Placement</h1>
-        <p className="text-sm text-muted-foreground">
-          Generate synthetic lawns, correct algorithm output, and save labeled examples for future ML training.
-        </p>
+      <TrainingTour initialStatus={tourStatus} />
+      <div className="border-b px-4 py-3" data-tour="training-tour-header">
+        <div className="flex items-start gap-3">
+          <TrainingTourHelpButton />
+          <div>
+            <h1 className="text-lg font-semibold">AI Training — Head Placement</h1>
+            <p className="text-sm text-muted-foreground">
+              Generate synthetic lawns, correct algorithm output, and save labeled examples for future ML training.
+            </p>
+          </div>
+        </div>
       </div>
       <TrainingToolbar onApprove={handleApprove} onExport={handleExport} approving={approving} />
       <div className="flex min-h-0 flex-1">
-        <div className="min-w-0 flex-1">
+        <div className="min-h-0 min-w-0 flex-1" data-tour="training-tour-canvas">
           <TrainingCanvas />
         </div>
         <aside className="flex w-80 shrink-0 flex-col border-l bg-card">
-          <HeadEditorPanel />
-          <ScoreComparisonPanel />
+          <div data-tour="training-tour-head-editor">
+            <HeadEditorPanel />
+          </div>
+          <div data-tour="training-tour-scores">
+            <ScoreComparisonPanel />
+          </div>
           <ExampleListDrawer />
         </aside>
       </div>

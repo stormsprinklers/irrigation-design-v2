@@ -39,6 +39,24 @@ describe("polygon-generator", () => {
     const a = generateTrainingPolygon({ seed: 999, shapeClass: "concave" });
     const b = generateTrainingPolygon({ seed: 999, shapeClass: "concave" });
     assert.deepEqual(a.verticesFt, b.verticesFt);
+    assert.equal(a.metadata.rotationDeg, b.metadata.rotationDeg);
+  });
+
+  it("irregular shapes have more vertices than L-shapes and differ structurally", () => {
+    const l = generateTrainingPolygon({ seed: 100, shapeClass: "l_shape" });
+    const irregular = generateTrainingPolygon({ seed: 100, shapeClass: "irregular" });
+    assert.ok(irregular.verticesFt.length >= 8);
+    assert.notDeepEqual(
+      irregular.verticesFt.map((v) => [Math.round(v.x), Math.round(v.y)]),
+      l.verticesFt.map((v) => [Math.round(v.x), Math.round(v.y)])
+    );
+  });
+
+  it("applies seeded rotation so the same shape class varies in orientation", () => {
+    const a = generateTrainingPolygon({ seed: 55, shapeClass: "rectangle" });
+    const b = generateTrainingPolygon({ seed: 56, shapeClass: "rectangle" });
+    assert.ok(a.metadata.rotationDeg >= 0 && a.metadata.rotationDeg <= 360);
+    assert.notDeepEqual(a.verticesFt, b.verticesFt);
   });
 });
 

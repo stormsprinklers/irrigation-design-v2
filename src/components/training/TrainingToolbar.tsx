@@ -40,66 +40,74 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
 
   return (
     <div className="flex flex-wrap items-center gap-2 border-b bg-card p-3">
-      <select
-        className="rounded-md border px-2 py-1.5 text-sm"
-        value={shapeFilter}
-        onChange={(e) => setShapeFilter(e.target.value as TrainingShapeClass | "random")}
-      >
-        {SHAPES.map((s) => (
-          <option key={s.value} value={s.value}>
-            {s.label}
-          </option>
-        ))}
-      </select>
-      <Button size="sm" onClick={() => generateExample()}>
-        Generate
-      </Button>
-      <Button size="sm" variant="outline" onClick={() => generateExample()} disabled={!polygon}>
-        Next example
-      </Button>
-      <Button size="sm" variant="outline" onClick={resetToBaseline} disabled={!polygon}>
-        Reset to algorithm
-      </Button>
+      <div className="flex items-center gap-2" data-tour="training-tour-generate">
+        <select
+          className="rounded-md border px-2 py-1.5 text-sm"
+          value={shapeFilter}
+          onChange={(e) => setShapeFilter(e.target.value as TrainingShapeClass | "random")}
+        >
+          {SHAPES.map((s) => (
+            <option key={s.value} value={s.value}>
+              {s.label}
+            </option>
+          ))}
+        </select>
+        <Button size="sm" onClick={() => generateExample()}>
+          Generate
+        </Button>
+        <Button size="sm" variant="outline" onClick={() => generateExample()} disabled={!polygon}>
+          Next example
+        </Button>
+        <Button size="sm" variant="outline" onClick={resetToBaseline} disabled={!polygon}>
+          Reset to algorithm
+        </Button>
+      </div>
       <div className="mx-2 h-6 w-px bg-border" />
-      <Button
-        size="sm"
-        variant={viewMode === "baseline" ? "default" : "outline"}
-        onClick={() => setViewMode("baseline")}
-      >
-        Baseline
-      </Button>
-      <Button
-        size="sm"
-        variant={viewMode === "corrected" ? "default" : "outline"}
-        onClick={() => setViewMode("corrected")}
-      >
-        Corrected
-      </Button>
-      <Button
-        size="sm"
-        variant={viewMode === "compare" ? "default" : "outline"}
-        onClick={() => setViewMode("compare")}
-      >
-        Compare
-      </Button>
+      <div className="flex items-center gap-2" data-tour="training-tour-view-modes">
+        <Button
+          size="sm"
+          variant={viewMode === "baseline" ? "default" : "outline"}
+          onClick={() => setViewMode("baseline")}
+        >
+          Baseline
+        </Button>
+        <Button
+          size="sm"
+          variant={viewMode === "corrected" ? "default" : "outline"}
+          onClick={() => setViewMode("corrected")}
+        >
+          Corrected
+        </Button>
+        <Button
+          size="sm"
+          variant={viewMode === "compare" ? "default" : "outline"}
+          onClick={() => setViewMode("compare")}
+        >
+          Compare
+        </Button>
+      </div>
       <div className="mx-2 h-6 w-px bg-border" />
-      <Button size="sm" variant={tool === "select" ? "default" : "outline"} onClick={() => setTool("select")}>
-        Select
-      </Button>
-      <Button size="sm" variant={tool === "add" ? "default" : "outline"} onClick={() => setTool("add")}>
-        Add head
-      </Button>
+      <div className="flex items-center gap-2" data-tour="training-tour-tools">
+        <Button size="sm" variant={tool === "select" ? "default" : "outline"} onClick={() => setTool("select")}>
+          Select
+        </Button>
+        <Button size="sm" variant={tool === "add" ? "default" : "outline"} onClick={() => setTool("add")}>
+          Add head
+        </Button>
+      </div>
       <div className="mx-2 h-6 w-px bg-border" />
-      <Button size="sm" variant={showHeatmap ? "default" : "outline"} onClick={toggleHeatmap}>
-        Heatmap
-      </Button>
-      <Button size="sm" variant={showSampleGrid ? "default" : "outline"} onClick={toggleSampleGrid}>
-        Grid
-      </Button>
-      <Button size="sm" variant={showArcs ? "default" : "outline"} onClick={toggleArcs}>
-        Arcs
-      </Button>
-      <div className="ml-auto flex gap-2">
+      <div className="flex items-center gap-2" data-tour="training-tour-overlays">
+        <Button size="sm" variant={showHeatmap ? "default" : "outline"} onClick={toggleHeatmap}>
+          Heatmap
+        </Button>
+        <Button size="sm" variant={showSampleGrid ? "default" : "outline"} onClick={toggleSampleGrid}>
+          Grid
+        </Button>
+        <Button size="sm" variant={showArcs ? "default" : "outline"} onClick={toggleArcs}>
+          Arcs
+        </Button>
+      </div>
+      <div className="ml-auto flex gap-2" data-tour="training-tour-approve">
         <Button size="sm" variant="outline" onClick={onExport}>
           Export JSONL
         </Button>

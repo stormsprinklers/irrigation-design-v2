@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { TourSpotlight, type SpotlightRect } from "./TourSpotlight";
-import { TourBubble } from "./TourBubble";
-import { useTourStore } from "@/lib/stores/tour-store";
-import { DESIGN_TOUR_STEPS } from "@/lib/tour/design-tour-steps";
-import type { TourPlacement } from "@/lib/tour/design-tour-steps";
-import { completeTour } from "@/lib/actions/tour";
+import { TourSpotlight, type SpotlightRect } from "@/components/design/tour/TourSpotlight";
+import { TourBubble } from "@/components/design/tour/TourBubble";
+import { useTrainingTourStore } from "@/lib/stores/training-tour-store";
+import {
+  TRAINING_TOUR_STEPS,
+  type TourPlacement,
+} from "@/lib/tour/training-tour-steps";
+import { completeTrainingTour } from "@/lib/actions/tour";
 import type { TourStatus } from "@/lib/actions/tour";
 import { CircleHelp } from "lucide-react";
 
@@ -77,8 +79,8 @@ type Props = {
   initialStatus: TourStatus;
 };
 
-export function DesignTour({ initialStatus }: Props) {
-  const { isActive, currentStep, startTour, next, prev, skip, endTour } = useTourStore();
+export function TrainingTour({ initialStatus }: Props) {
+  const { isActive, currentStep, startTour, next, prev, skip, endTour } = useTrainingTourStore();
   const [mounted, setMounted] = useState(false);
   const [spotlightRect, setSpotlightRect] = useState<SpotlightRect | null>(null);
   const [bubbleStyle, setBubbleStyle] = useState<React.CSSProperties>({});
@@ -86,8 +88,8 @@ export function DesignTour({ initialStatus }: Props) {
   const [highlightedEl, setHighlightedEl] = useState<HTMLElement | null>(null);
   const hasAutoStarted = useRef(false);
 
-  const step = DESIGN_TOUR_STEPS[currentStep];
-  const isLast = currentStep === DESIGN_TOUR_STEPS.length - 1;
+  const step = TRAINING_TOUR_STEPS[currentStep];
+  const isLast = currentStep === TRAINING_TOUR_STEPS.length - 1;
 
   const updatePosition = useCallback(() => {
     if (!step) return;
@@ -170,7 +172,7 @@ export function DesignTour({ initialStatus }: Props) {
 
   const handleSkip = useCallback(async () => {
     try {
-      await completeTour(true);
+      await completeTrainingTour(true);
     } catch {
       // Non-blocking
     }
@@ -183,7 +185,7 @@ export function DesignTour({ initialStatus }: Props) {
   const handleFinish = useCallback(
     async (dontAutoShow: boolean) => {
       try {
-        await completeTour(!dontAutoShow);
+        await completeTrainingTour(!dontAutoShow);
       } catch {
         // Non-blocking
       }
@@ -219,10 +221,11 @@ export function DesignTour({ initialStatus }: Props) {
           title={step.title}
           body={step.body}
           stepIndex={currentStep}
-          stepCount={DESIGN_TOUR_STEPS.length}
+          stepCount={TRAINING_TOUR_STEPS.length}
           placement={effectivePlacement}
           style={bubbleStyle}
           isLast={isLast}
+          finishLabel="Start training"
           onBack={prev}
           onNext={next}
           onSkip={handleSkip}
@@ -234,16 +237,16 @@ export function DesignTour({ initialStatus }: Props) {
   );
 }
 
-export function TourHelpButton() {
-  const startTour = useTourStore((s) => s.startTour);
+export function TrainingTourHelpButton() {
+  const startTour = useTrainingTourStore((s) => s.startTour);
 
   return (
     <button
       type="button"
       onClick={() => startTour()}
       className="flex h-8 w-8 items-center justify-center rounded-md border bg-background text-muted-foreground hover:bg-accent hover:text-foreground"
-      title="Design workspace tour"
-      aria-label="Start design workspace tour"
+      title="AI Training tour"
+      aria-label="Start AI Training tour"
     >
       <CircleHelp className="h-4 w-4" />
     </button>

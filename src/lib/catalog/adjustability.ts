@@ -1,9 +1,17 @@
-import type { CatalogItemData, SprinklerHead } from "@/lib/domain/types";
+import type { CatalogItemData, Point, SprinklerHead } from "@/lib/domain/types";
 import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
-import { calculateHeadGpm } from "@/lib/domain/hydraulics";
+import { calculateNozzleHydraulics } from "@/lib/domain/hydraulics";
+import { wedgeEndDeg, wedgeStartDeg } from "@/lib/domain/placement/wedge";
+import {
+  MP_ARC_BANDS,
+  inferMpArcBand,
+  type MpArcBand,
+} from "@/lib/catalog/mp-arc-bands";
+
+export type { MpArcBand };
+export { MP_ARC_BANDS, inferMpArcBand };
 
 export type BodyCategory = "SPRAY_BODY" | "ROTOR_BODY";
-export type MpArcBand = "90_210" | "210_270" | "360";
 
 export type NozzleAdjustability = {
   compatibleBodyCategories: BodyCategory[];
@@ -60,9 +68,29 @@ export function getNozzleAdjustability(nozzle: CatalogItemData): NozzleAdjustabi
     : 12;
   const radiusMax = num(nozzle.specs.radiusFeetMax, chartMax);
   const radiusMin = num(nozzle.specs.radiusFeetMin, Math.round(radiusMax * 0.75 * 100) / 100);
-  const arcDefault = num(nozzle.specs.arcDegreesDefault, num(nozzle.specs.arcDegrees, 360));
-  const arcMin = num(nozzle.specs.arcDegreesMin, arcDefault);
-  const arcMax = num(nozzle.specs.arcDegreesMax, arcDefault);
+
+  const mpBand =
+    nozzle.category === "MP_ROTATOR" ? inferMpArcBand(nozzle) : undefined;
+  const bandSpec = mpBand ? MP_ARC_BANDS[mpBand] : undefined;
+
+  const arcDefault = bandSpec
+    ? bandSpec.default
+    : num(nozzle.specs.arcDegreesDefault, num(nozzle.specs.arcDegrees, 360));
+  const arcMin = bandSpec
+    ? bandSpec.min
+    : num(nozzle.specs.arcDegreesMin, arcDefault);
+  const arcMax = bandSpec
+    ? bandSpec.max
+    : num(nozzle.specs.arcDegreesMax, arcDefault);
+
+  const hasExplicitArcRange =
+    typeof nozzle.specs.arcDegreesMin === "number" &&
+    typeof nozzle.specs.arcDegreesMax === "number" &&
+    nozzle.specs.arcDegreesMin !== nozzle.specs.arcDegreesMax;
+
+  const arcAdjustable = bandSpec
+    ? mpBand !== "360"
+    : bool(nozzle.specs.arcAdjustable, hasExplicitArcRange || arcMin !== arcMax);
 
   return {
     compatibleBodyCategories: getCompatibleBodyCategories(nozzle),
@@ -71,16 +99,13 @@ export function getNozzleAdjustability(nozzle: CatalogItemData): NozzleAdjustabi
     arcDegreesDefault: arcDefault,
     radiusFeetMin: radiusMin,
     radiusFeetMax: radiusMax,
-    arcAdjustable: bool(nozzle.specs.arcAdjustable, arcMin !== arcMax),
+    arcAdjustable,
     radiusAdjustable: bool(nozzle.specs.radiusAdjustable, radiusMin !== radiusMax),
     rotationAdjustable: bool(nozzle.specs.rotationAdjustable, true),
-    fixedLeftEdge: bool(nozzle.specs.fixedLeftEdge, false),
-    mpArcBand:
-      nozzle.specs.mpArcBand === "90_210" ||
-      nozzle.specs.mpArcBand === "210_270" ||
-      nozzle.specs.mpArcBand === "360"
-        ? (nozzle.specs.mpArcBand as MpArcBand)
-        : undefined,
+    fixedLeftEdge: bandSpec
+      ? bandSpec.fixedLeftEdge
+      : bool(nozzle.specs.fixedLeftEdge, false),
+    mpArcBand: mpBand,
   };
 }
 
@@ -99,7 +124,7 @@ export function resolveDefaultHeadSettings(
   pressurePsi = DEFAULT_PRESSURE_PSI
 ): Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees" | "gpm" | "precipInPerHr"> {
   const adj = getNozzleAdjustability(nozzle);
-  const hydraulics = calculateHeadGpm(nozzle, pressurePsi);
+  const hydraulics = calculateNozzleHydraulics(nozzle, pressurePsi, adj.arcDegreesDefault);
   const radiusFeet = Math.min(
     adj.radiusFeetMax,
     Math.max(adj.radiusFeetMin, hydraulics.radiusFeet ?? adj.radiusFeetMax)
@@ -111,6 +136,47 @@ export function resolveDefaultHeadSettings(
     rotationDegrees: 0,
     gpm: hydraulics.gpm,
     precipInPerHr: hydraulics.precipInPerHr,
+  };
+}
+
+export function patchHeadWithNozzle(
+  head: Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees" | "gpm" | "precipInPerHr">,
+  partial: Partial<Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees">>,
+  nozzle: CatalogItemData,
+  pressurePsi = DEFAULT_PRESSURE_PSI
+): Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees" | "gpm" | "precipInPerHr"> {
+  const clamped = clampHeadToNozzle({ ...head, ...partial }, nozzle);
+  const hydraulics = calculateNozzleHydraulics(
+    nozzle,
+    pressurePsi,
+    clamped.arcDegrees
+  );
+  return {
+    ...clamped,
+    gpm: hydraulics.gpm,
+    precipInPerHr: hydraulics.precipInPerHr,
+  };
+}
+
+export function wedgeBoundsForHead(
+  head: Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees"> & {
+    position?: Point;
+    positionFt?: Point;
+  }
+): { wedgeStartDeg: number; wedgeEndDeg: number } {
+  const position = head.position ?? head.positionFt;
+  if (!position) {
+    return { wedgeStartDeg: 0, wedgeEndDeg: head.arcDegrees };
+  }
+  const wedgeHead = {
+    position,
+    arcDegrees: head.arcDegrees,
+    radiusFeet: head.radiusFeet,
+    rotationDegrees: head.rotationDegrees,
+  };
+  return {
+    wedgeStartDeg: wedgeStartDeg(wedgeHead),
+    wedgeEndDeg: wedgeEndDeg(wedgeHead),
   };
 }
 

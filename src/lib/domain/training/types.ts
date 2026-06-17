@@ -22,6 +22,8 @@ export type TrainingPolygonMetadata = {
   areaSqFt: number;
   vertexCount: number;
   hasExclusions: boolean;
+  /** World rotation applied after shape construction (degrees, seeded). */
+  rotationDeg: number;
 };
 
 export type TrainingHeadSnapshot = {

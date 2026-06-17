@@ -14,6 +14,11 @@ export type ScoringOptions = {
   curve?: DistributionCurve;
 };
 
+/** Dry = covered sample below this fraction of mean covered precip. */
+export const DEFAULT_DRY_THRESHOLD = 0.4;
+/** Wet = only extreme overlap/runoff — well above normal head-to-head doubling. */
+export const DEFAULT_WET_THRESHOLD = 3.5;
+
 function computeDuLq(values: number[]): number {
   if (values.length === 0) return 0;
   const avg = values.reduce((a, b) => a + b, 0) / values.length;
@@ -74,26 +79,32 @@ export function scoreUniformity(
   precipValues: number[],
   options: ScoringOptions = {}
 ): UniformityScores {
-  const dryThreshold = options.dryThreshold ?? 0.4;
-  const wetThreshold = options.wetThreshold ?? 1.6;
+  const dryThreshold = options.dryThreshold ?? DEFAULT_DRY_THRESHOLD;
+  const wetThreshold = options.wetThreshold ?? DEFAULT_WET_THRESHOLD;
 
   const sampleCount = precipValues.length;
-  const withPrecip = precipValues.filter((v) => v > 0);
+  const coveredValues = precipValues.filter((v) => v > 0);
   const coveragePercent =
-    sampleCount === 0 ? 0 : Math.round((withPrecip.length / sampleCount) * 100);
+    sampleCount === 0 ? 0 : Math.round((coveredValues.length / sampleCount) * 100);
 
   const avgPrecip =
     sampleCount === 0 ? 0 : precipValues.reduce((a, b) => a + b, 0) / sampleCount;
+  const avgCoveredPrecip =
+    coveredValues.length === 0
+      ? 0
+      : coveredValues.reduce((a, b) => a + b, 0) / coveredValues.length;
   const minPrecip = sampleCount === 0 ? 0 : Math.min(...precipValues);
   const maxPrecip = sampleCount === 0 ? 0 : Math.max(...precipValues);
   const duLq = Math.round(computeDuLq(precipValues) * 1000) / 1000;
 
   let drySpotCount = 0;
   let wetSpotCount = 0;
-  if (avgPrecip > 0) {
+  if (avgCoveredPrecip > 0) {
+    const dryCutoff = avgCoveredPrecip * dryThreshold;
+    const wetCutoff = avgCoveredPrecip * wetThreshold;
     for (const v of precipValues) {
-      if (v > 0 && v < avgPrecip * dryThreshold) drySpotCount++;
-      if (v > avgPrecip * wetThreshold) wetSpotCount++;
+      if (v > 0 && v < dryCutoff) drySpotCount++;
+      if (v > wetCutoff) wetSpotCount++;
     }
   }
 
@@ -120,6 +131,7 @@ export function computeImprovementScore(
     (approved.duLq - original.duLq) * 40 +
       (approved.coveragePercent - original.coveragePercent) * 0.5 -
       (approved.drySpotCount - original.drySpotCount) * 2 -
+      (approved.wetSpotCount - original.wetSpotCount) * 4 -
       Math.max(0, approved.headCount - original.headCount) * 3
   );
 }

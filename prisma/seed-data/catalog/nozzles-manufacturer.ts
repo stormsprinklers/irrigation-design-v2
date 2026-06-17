@@ -3,6 +3,7 @@
  * Sources: chart_3500.pdf, chart_5000.pdf, R-VAN-TechSpec-27AUG18.pdf, rc_mprotator_dom.pdf
  */
 import { buildNozzleChart, type CatalogSeedItem, type ChartPoint } from "./chart";
+import { MP_ARC_BANDS, MP_RADIUS_FT, sprayNozzleSpecs, type MpArcBand } from "./adjustability";
 
 const RB_1800_HEADS = ["rainbird_1800", "rainbird_1800_prs", "rainbird_1800_sam"];
 
@@ -30,6 +31,17 @@ function rotorNozzle(
   };
 }
 
+function mpBandForArc(arc: number): MpArcBand {
+  if (arc >= 360) return "360";
+  if (arc >= 210) return "210_270";
+  return "90_210";
+}
+
+function mpModelFromSku(model: string): string {
+  const match = model.match(/^MP-?(\d+)/i);
+  return match ? `MP-${match[1]}` : "MP-1000";
+}
+
 function mpNozzle(
   id: string,
   model: string,
@@ -37,17 +49,41 @@ function mpNozzle(
   points: ChartPoint[],
   recommendedPsi = 40
 ): CatalogSeedItem {
+  const arc = (specs.arcDegrees as number) ?? 180;
+  const radiusFeet = (specs.radiusFeet as number) ?? 12;
+  const normalizedMpModel = mpModelFromSku(model);
+  const band = mpBandForArc(arc);
+  const bandSpec = MP_ARC_BANDS[band];
+  const radius = MP_RADIUS_FT[normalizedMpModel] ?? {
+    min: Math.round(radiusFeet * 0.75 * 100) / 100,
+    max: radiusFeet,
+  };
+
   return {
     id,
     category: "MP_ROTATOR",
     manufacturer: "Hunter",
     model,
-    specs: {
-      itemRole: "nozzle",
-      nozzleFamily: "hunter_mp_rotator",
-      compatibleHeadFamilies: ["hunter_pro_spray", "hunter_pro_spray_prs40"],
-      ...specs,
-    },
+    specs: sprayNozzleSpecs(
+      {
+        itemRole: "nozzle",
+        nozzleFamily: "hunter_mp_rotator",
+        compatibleHeadFamilies: ["hunter_pro_spray", "hunter_pro_spray_prs40"],
+        mpModel: normalizedMpModel,
+        chartReferenceArcDegrees: bandSpec.default,
+      },
+      {
+        arcMin: bandSpec.min,
+        arcMax: bandSpec.max,
+        arcDefault: bandSpec.default,
+        radiusMin: radius.min,
+        radiusMax: radius.max,
+        arcAdjustable: band !== "360",
+        radiusAdjustable: true,
+        fixedLeftEdge: bandSpec.fixedLeftEdge,
+        mpArcBand: band,
+      }
+    ),
     nozzleChart: buildNozzleChart(points, recommendedPsi),
   };
 }

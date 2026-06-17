@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useTrainingStore } from "@/lib/stores/training-store";
-import { getNozzleAdjustability, resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
+import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
 import { getNozzlesForHead, getHeadBodies } from "@/lib/catalog/compat";
-import { wedgeStartDeg, wedgeEndDeg } from "@/lib/domain/placement/wedge";
+import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
 
 export function HeadEditorPanel() {
   const catalog = useTrainingStore((s) => s.catalog);
@@ -34,21 +34,9 @@ export function HeadEditorPanel() {
   }
 
   const nozzle = catalog.find((c) => c.id === head.catalogItemId);
-  const adj = nozzle ? getNozzleAdjustability(nozzle) : null;
 
   function patch(partial: Parameters<typeof updateCorrectedHead>[1]) {
-    const next = { ...head!, ...partial };
-    const wedgeHead = {
-      position: next.positionFt,
-      arcDegrees: next.arcDegrees,
-      radiusFeet: next.radiusFeet,
-      rotationDegrees: next.rotationDegrees,
-    };
-    updateCorrectedHead(head!.id, {
-      ...partial,
-      wedgeStartDeg: wedgeStartDeg(wedgeHead),
-      wedgeEndDeg: wedgeEndDeg(wedgeHead),
-    });
+    updateCorrectedHead(head!.id, partial);
   }
 
   return (
@@ -120,45 +108,14 @@ export function HeadEditorPanel() {
           </select>
         </div>
       )}
-      <div>
-        <Label className="text-xs">Radius (ft)</Label>
-        <input
-          type="number"
-          className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
-          value={head.radiusFeet}
-          min={adj?.radiusFeetMin ?? 5}
-          max={adj?.radiusFeetMax ?? 40}
-          step={0.5}
-          onChange={(e) => patch({ radiusFeet: Number(e.target.value) })}
+      {nozzle && (
+        <HeadAdjustFields
+          head={head}
+          nozzle={nozzle}
+          pressurePsi={65}
+          onChange={(next) => patch(next)}
         />
-      </div>
-      <div>
-        <Label className="text-xs">Arc (°)</Label>
-        <input
-          type="number"
-          className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
-          value={head.arcDegrees}
-          min={adj?.arcDegreesMin ?? 0}
-          max={adj?.arcDegreesMax ?? 360}
-          step={5}
-          onChange={(e) => patch({ arcDegrees: Number(e.target.value) })}
-        />
-      </div>
-      <div>
-        <Label className="text-xs">Rotation / arc center (°)</Label>
-        <input
-          type="number"
-          className="mt-1 w-full rounded-md border px-2 py-1.5 text-sm"
-          value={head.rotationDegrees}
-          min={0}
-          max={359}
-          step={5}
-          onChange={(e) => patch({ rotationDegrees: Number(e.target.value) })}
-        />
-        <p className="mt-1 text-xs text-muted-foreground">
-          Arc edges: {head.wedgeStartDeg.toFixed(0)}° – {head.wedgeEndDeg.toFixed(0)}°
-        </p>
-      </div>
+      )}
       <p className="text-xs text-muted-foreground">
         Position: ({head.positionFt.x.toFixed(1)}, {head.positionFt.y.toFixed(1)}) ft
       </p>

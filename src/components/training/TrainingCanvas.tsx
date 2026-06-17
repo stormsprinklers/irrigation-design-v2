@@ -1,22 +1,20 @@
 "use client";
 
-import { Layer, Line, Rect, Stage, Circle, Arc, Group } from "react-konva";
+import { Layer, Line, Rect, Stage } from "react-konva";
 import { useEffect, useRef, useState } from "react";
 import { useTrainingStore } from "@/lib/stores/training-store";
 import { TRAINING_DISPLAY_PX_PER_FT } from "@/lib/domain/training/types";
 import { gridColorCells } from "@/lib/domain/simulation/heatmap";
 import { samplePointsInPolygonFeet } from "@/lib/domain/simulation/sample-grid";
 import { generateId } from "@/lib/utils";
-import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
+import { getNozzleAdjustability, resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
 import { getNozzlesForHead, getHeadBodies } from "@/lib/catalog/compat";
 import type { TrainingHeadSnapshot } from "@/lib/domain/training/types";
 import { wedgeStartDeg, wedgeEndDeg } from "@/lib/domain/placement/wedge";
+import { TrainingHeadGraphic } from "./TrainingHeadGraphic";
 
 const PX = TRAINING_DISPLAY_PX_PER_FT;
-
-function toPx(p: { x: number; y: number }) {
-  return { x: p.x * PX, y: p.y * PX };
-}
+const STAGE_OFFSET = 40;
 
 export function TrainingCanvas() {
   const polygon = useTrainingStore((s) => s.polygon);
@@ -33,6 +31,8 @@ export function TrainingCanvas() {
   const catalog = useTrainingStore((s) => s.catalog);
   const setSelectedHeadId = useTrainingStore((s) => s.setSelectedHeadId);
   const moveCorrectedHead = useTrainingStore((s) => s.moveCorrectedHead);
+  const updateCorrectedHead = useTrainingStore((s) => s.updateCorrectedHead);
+  const recomputeScores = useTrainingStore((s) => s.recomputeScores);
   const addCorrectedHead = useTrainingStore((s) => s.addCorrectedHead);
 
   const stageRef = useRef(null);
@@ -74,6 +74,7 @@ export function TrainingCanvas() {
         : correctedHeads;
 
   const ghostHeads = viewMode === "compare" ? baselineHeads : [];
+  const editable = tool === "select" && viewMode !== "baseline";
 
   const grid = viewMode === "baseline" ? baselineGrid : correctedGrid;
   const heatCells = showHeatmap && grid ? gridColorCells(grid, PX) : [];
@@ -88,12 +89,14 @@ export function TrainingCanvas() {
   const stageW = Math.max(widthFt * PX + 80, size.width);
   const stageH = Math.max(heightFt * PX + 80, size.height);
 
-  function handleStageClick(e: { target: { getStage?: () => { getPointerPosition?: () => { x: number; y: number } | null } | null } }) {
+  function handleStageClick(e: {
+    target: { getStage?: () => { getPointerPosition?: () => { x: number; y: number } | null } | null };
+  }) {
     if (tool !== "add") return;
     const stage = e.target.getStage?.();
     const pos = stage?.getPointerPosition?.();
     if (!pos) return;
-    const feet = { x: pos.x / PX, y: pos.y / PX };
+    const feet = { x: (pos.x - STAGE_OFFSET) / PX, y: (pos.y - STAGE_OFFSET) / PX };
     const body = getHeadBodies(catalog)[0];
     if (!body) return;
     const nozzle = getNozzlesForHead(catalog, body.id)[0];
@@ -123,10 +126,7 @@ export function TrainingCanvas() {
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="h-full w-full overflow-auto bg-muted/30"
-    >
+    <div ref={containerRef} className="h-full w-full overflow-auto bg-muted/30">
       <Stage
         ref={stageRef}
         width={stageW}
@@ -138,8 +138,8 @@ export function TrainingCanvas() {
           {heatCells.map((cell, i) => (
             <Rect
               key={`h-${i}`}
-              x={cell.x + 40}
-              y={cell.y + 40}
+              x={cell.x + STAGE_OFFSET}
+              y={cell.y + STAGE_OFFSET}
               width={cell.width}
               height={cell.height}
               fill={`rgba(${cell.color.r},${cell.color.g},${cell.color.b},${cell.color.a})`}
@@ -148,103 +148,64 @@ export function TrainingCanvas() {
           ))}
           {showSampleGrid &&
             samplePts.map((p, i) => (
-              <Circle
+              <Rect
                 key={`s-${i}`}
-                x={p.x * PX + 40}
-                y={p.y * PX + 40}
-                radius={2}
+                x={p.x * PX + STAGE_OFFSET - 2}
+                y={p.y * PX + STAGE_OFFSET - 2}
+                width={4}
+                height={4}
                 fill="rgba(100,100,100,0.4)"
                 listening={false}
               />
             ))}
           <Line
-            points={flatVertices.map((v, i) => (i % 2 === 0 ? v + 40 : v + 40))}
+            points={flatVertices.map((v) => v + STAGE_OFFSET)}
             closed
             stroke="#16a34a"
             strokeWidth={2}
             fill="rgba(34,197,94,0.08)"
             listening={false}
           />
-          {ghostHeads.map((head) => (
-            <HeadGraphic
-              key={`ghost-${head.id}`}
-              head={head}
-              offset={40}
-              ghost
-              showArc={showArcs}
-              draggable={false}
-              selected={false}
-              onSelect={() => {}}
-              onDragEnd={() => {}}
-            />
-          ))}
-          {displayHeads.map((head) => (
-            <HeadGraphic
-              key={head.id}
-              head={head}
-              offset={40}
-              ghost={false}
-              showArc={showArcs}
-              draggable={tool === "select" && viewMode !== "baseline"}
-              selected={selectedHeadId === head.id}
-              onSelect={() => setSelectedHeadId(head.id)}
-              onDragEnd={(x, y) => moveCorrectedHead(head.id, { x: (x - 40) / PX, y: (y - 40) / PX })}
-            />
-          ))}
+          {ghostHeads.map((head) => {
+            const nozzle = catalog.find((c) => c.id === head.catalogItemId);
+            return (
+              <TrainingHeadGraphic
+                key={`ghost-${head.id}`}
+                head={head}
+                stageOffset={STAGE_OFFSET}
+                ghost
+                showArc={showArcs}
+                editable={false}
+                selected={false}
+                adjustability={nozzle ? getNozzleAdjustability(nozzle) : null}
+                onSelect={() => {}}
+                onMove={() => {}}
+                onPatch={() => {}}
+                onInteractionEnd={() => {}}
+              />
+            );
+          })}
+          {displayHeads.map((head) => {
+            const nozzle = catalog.find((c) => c.id === head.catalogItemId);
+            return (
+              <TrainingHeadGraphic
+                key={head.id}
+                head={head}
+                stageOffset={STAGE_OFFSET}
+                ghost={false}
+                showArc={showArcs}
+                editable={editable}
+                selected={selectedHeadId === head.id}
+                adjustability={nozzle ? getNozzleAdjustability(nozzle) : null}
+                onSelect={() => setSelectedHeadId(head.id)}
+                onMove={(positionFt, opts) => moveCorrectedHead(head.id, positionFt, opts)}
+                onPatch={(patch, opts) => updateCorrectedHead(head.id, patch, opts)}
+                onInteractionEnd={() => recomputeScores()}
+              />
+            );
+          })}
         </Layer>
       </Stage>
     </div>
-  );
-}
-
-function HeadGraphic({
-  head,
-  offset,
-  ghost,
-  showArc,
-  draggable,
-  selected,
-  onSelect,
-  onDragEnd,
-}: {
-  head: TrainingHeadSnapshot;
-  offset: number;
-  ghost: boolean;
-  showArc: boolean;
-  draggable: boolean;
-  selected: boolean;
-  onSelect: () => void;
-  onDragEnd: (x: number, y: number) => void;
-}) {
-  const p = toPx(head.positionFt);
-  const x = p.x + offset;
-  const y = p.y + offset;
-  const radiusPx = head.radiusFeet * PX;
-
-  return (
-    <Group>
-      {showArc && (
-        <Arc
-          x={x}
-          y={y}
-          innerRadius={0}
-          outerRadius={radiusPx}
-          angle={head.arcDegrees}
-          rotation={head.rotationDegrees - head.arcDegrees / 2}
-          fill={ghost ? "rgba(59,130,246,0.08)" : "rgba(59,130,246,0.18)"}
-          listening={false}
-        />
-      )}
-      <Circle
-        x={x}
-        y={y}
-        radius={selected ? 8 : 6}
-        fill={ghost ? "#94a3b8" : selected ? "#2563eb" : "#1d4ed8"}
-        draggable={draggable}
-        onClick={onSelect}
-        onTap={onSelect}
-        onDragEnd={(e) => onDragEnd(e.target.x(), e.target.y())}
-      />
-    </Group>
   );
 }

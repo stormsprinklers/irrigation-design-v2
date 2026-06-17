@@ -19,7 +19,7 @@ export function ExampleListDrawer() {
   }, [open]);
 
   return (
-    <div className="border-t">
+    <div className="border-t" data-tour="training-tour-saved">
       <button
         type="button"
         className="w-full px-4 py-2 text-left text-sm font-medium hover:bg-accent"

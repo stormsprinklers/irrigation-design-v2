@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DESIGN_TOUR_STEP_COUNT } from "@/lib/tour/design-tour-steps";
 import type { TourPlacement } from "@/lib/tour/design-tour-steps";
 import { cn } from "@/lib/utils";
 
@@ -10,9 +9,11 @@ type Props = {
   title: string;
   body: string;
   stepIndex: number;
+  stepCount: number;
   placement: TourPlacement;
   style: React.CSSProperties;
   isLast: boolean;
+  finishLabel?: string;
   onBack: () => void;
   onNext: () => void;
   onSkip: () => void;
@@ -31,9 +32,11 @@ export function TourBubble({
   title,
   body,
   stepIndex,
+  stepCount,
   placement,
   style,
   isLast,
+  finishLabel = "Start designing",
   onBack,
   onNext,
   onSkip,
@@ -60,7 +63,7 @@ export function TourBubble({
       )}
 
       <div className="mb-1 text-xs font-medium text-primary">
-        Step {stepIndex + 1} of {DESIGN_TOUR_STEP_COUNT}
+        Step {stepIndex + 1} of {stepCount}
       </div>
       <h3 id="tour-bubble-title" className="text-base font-semibold">
         {title}
@@ -105,9 +108,9 @@ export function TourBubble({
               type="button"
               size="sm"
               onClick={() => onFinish(dontAutoShow)}
-              aria-label="Start designing"
+              aria-label={finishLabel}
             >
-              Start designing
+              {finishLabel}
             </Button>
           ) : (
             <Button type="button" size="sm" onClick={onNext} aria-label="Next step">

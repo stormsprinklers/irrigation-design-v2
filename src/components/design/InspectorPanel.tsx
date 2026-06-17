@@ -17,6 +17,7 @@ import {
   getNozzleAdjustability,
   resolveDefaultHeadSettings,
 } from "@/lib/catalog/adjustability";
+import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
 
 type Props = {
   catalog: CatalogItemData[];
@@ -368,6 +369,24 @@ export function InspectorPanel({
                 })()}
               </div>
             )}
+            {selectedHead.headBodyId && selectedHead.catalogItemId && (() => {
+              const nozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
+              if (!nozzle) return null;
+              const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
+              return (
+                <HeadAdjustFields
+                  head={selectedHead}
+                  nozzle={nozzle}
+                  pressurePsi={pressure}
+                  onChange={(patch) => {
+                    const heads = document.heads.map((h) =>
+                      h.id === selectedHead.id ? { ...h, ...patch } : h
+                    );
+                    setDocument({ ...document, heads });
+                  }}
+                />
+              );
+            })()}
             <label className="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"

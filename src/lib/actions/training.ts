@@ -53,6 +53,10 @@ export async function approveTrainingExample(payload: TrainingExampleApprovalInp
   const fullPayload: TrainingExamplePayload = {
     ...parsed.payload,
     algorithmVersion: getPlacementAlgorithmVersion(),
+    polygonMetadata: {
+      ...parsed.payload.polygonMetadata,
+      rotationDeg: parsed.payload.polygonMetadata.rotationDeg ?? 0,
+    },
   };
 
   const row = await prisma.trainingExample.create({
