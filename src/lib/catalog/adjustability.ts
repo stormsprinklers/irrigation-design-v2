@@ -88,9 +88,13 @@ export function getNozzleAdjustability(nozzle: CatalogItemData): NozzleAdjustabi
     typeof nozzle.specs.arcDegreesMax === "number" &&
     nozzle.specs.arcDegreesMin !== nozzle.specs.arcDegreesMax;
 
+  const isRotor = getCompatibleBodyCategories(nozzle).includes("ROTOR_BODY");
+
   const arcAdjustable = bandSpec
     ? mpBand !== "360"
-    : bool(nozzle.specs.arcAdjustable, hasExplicitArcRange || arcMin !== arcMax);
+    : isRotor && arcMax > arcMin
+      ? true
+      : bool(nozzle.specs.arcAdjustable, hasExplicitArcRange || arcMin !== arcMax);
 
   return {
     compatibleBodyCategories: getCompatibleBodyCategories(nozzle),

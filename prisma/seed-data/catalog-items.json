@@ -640,14 +640,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 16,
-      "radiusFeetMin": 12,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 12
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -693,14 +693,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 17,
-      "radiusFeetMin": 12.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 12.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -746,14 +746,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 19,
-      "radiusFeetMin": 14.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 14.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -799,14 +799,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 22,
-      "radiusFeetMin": 16.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 16.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -852,14 +852,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 25,
-      "radiusFeetMin": 18.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 18.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -905,14 +905,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 28,
-      "radiusFeetMin": 21,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 21
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -958,14 +958,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 31,
-      "radiusFeetMin": 23.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 23.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1011,14 +1011,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 34,
-      "radiusFeetMin": 25.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 25.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1064,14 +1064,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 30,
-      "radiusFeetMin": 22.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 22.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1122,14 +1122,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 31,
-      "radiusFeetMin": 23.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 23.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1180,14 +1180,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1238,14 +1238,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 34,
-      "radiusFeetMin": 25.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 25.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1296,14 +1296,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 38,
-      "radiusFeetMin": 28.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 28.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1354,14 +1354,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 38,
-      "radiusFeetMin": 28.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 28.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1412,14 +1412,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 40,
-      "radiusFeetMin": 30,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 30
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1470,14 +1470,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 31.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1528,14 +1528,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 45,
-      "radiusFeetMin": 33.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 33.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1586,14 +1586,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 49,
-      "radiusFeetMin": 36.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 36.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1644,14 +1644,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 51,
-      "radiusFeetMin": 38.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 38.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1702,14 +1702,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 52,
-      "radiusFeetMin": 39,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 39
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1760,14 +1760,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1823,14 +1823,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 34,
-      "radiusFeetMin": 25.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 25.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1886,14 +1886,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 26.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -1949,14 +1949,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 39,
-      "radiusFeetMin": 29.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 29.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2012,14 +2012,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 41,
-      "radiusFeetMin": 30.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 30.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2075,14 +2075,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 31.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2138,14 +2138,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 44,
-      "radiusFeetMin": 33,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 33
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2201,14 +2201,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 46,
-      "radiusFeetMin": 34.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 34.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2264,14 +2264,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 28,
-      "radiusFeetMin": 21,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 21
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2322,14 +2322,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 30,
-      "radiusFeetMin": 22.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 22.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2380,14 +2380,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 26.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2438,14 +2438,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 27.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2496,14 +2496,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 38,
-      "radiusFeetMin": 28.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 28.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2554,14 +2554,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 31.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2612,14 +2612,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 44,
-      "radiusFeetMin": 33,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 33
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2671,14 +2671,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2735,14 +2735,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 34,
-      "radiusFeetMin": 25.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 25.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2799,14 +2799,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 26.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2863,14 +2863,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 39,
-      "radiusFeetMin": 29.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 29.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2927,14 +2927,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 41,
-      "radiusFeetMin": 30.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 30.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -2991,14 +2991,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 31.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3055,14 +3055,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 44,
-      "radiusFeetMin": 33,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 33
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3119,14 +3119,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 46,
-      "radiusFeetMin": 34.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 34.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3183,14 +3183,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 30,
-      "radiusFeetMin": 22.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 22.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3242,14 +3242,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 26.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3301,14 +3301,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 27.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3360,14 +3360,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 27.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3419,14 +3419,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 47,
-      "radiusFeetMin": 35.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 35.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3478,14 +3478,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 47,
-      "radiusFeetMin": 35.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 35.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3537,14 +3537,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 39,
-      "radiusFeetMin": 29.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 29.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3596,14 +3596,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 41,
-      "radiusFeetMin": 30.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 30.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3655,14 +3655,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 19,
-      "radiusFeetMin": 14.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 14.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3714,14 +3714,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 19,
-      "radiusFeetMin": 14.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 14.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3773,14 +3773,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 19,
-      "radiusFeetMin": 14.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 14.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3832,14 +3832,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 26,
-      "radiusFeetMin": 19.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 19.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3891,14 +3891,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 26,
-      "radiusFeetMin": 19.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 19.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -3950,14 +3950,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 26,
-      "radiusFeetMin": 19.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 19.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4010,14 +4010,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 23,
-      "radiusFeetMin": 17.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 17.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4075,14 +4075,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 23,
-      "radiusFeetMin": 17.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 17.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4140,14 +4140,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 23,
-      "radiusFeetMin": 17.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 17.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4205,14 +4205,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 23,
-      "radiusFeetMin": 17.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 17.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4270,14 +4270,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 21.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4335,14 +4335,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 21.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4400,14 +4400,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 21.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4465,14 +4465,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 21.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4530,14 +4530,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4595,14 +4595,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4660,14 +4660,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4725,14 +4725,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4788,14 +4788,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 18,
-      "radiusFeetMin": 13.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 13.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4846,14 +4846,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 22,
-      "radiusFeetMin": 16.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 16.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4904,14 +4904,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 24,
-      "radiusFeetMin": 18,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 18
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -4962,14 +4962,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 28,
-      "radiusFeetMin": 21,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 21
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5020,14 +5020,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 32,
-      "radiusFeetMin": 24,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5078,14 +5078,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 26.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5137,14 +5137,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 29,
-      "radiusFeetMin": 21.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 21.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5200,14 +5200,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 35,
-      "radiusFeetMin": 26.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 26.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5264,14 +5264,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 31,
-      "radiusFeetMin": 23.25,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 23.25
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5327,14 +5327,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 27.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5391,14 +5391,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 33,
-      "radiusFeetMin": 24.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 24.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5454,14 +5454,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 37,
-      "radiusFeetMin": 27.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 27.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5517,14 +5517,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 40,
-      "radiusFeetMin": 30,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 30
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5581,14 +5581,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 36,
-      "radiusFeetMin": 27,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 27
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5644,14 +5644,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 42,
-      "radiusFeetMin": 31.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 31.5
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5707,14 +5707,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 45,
-      "radiusFeetMin": 33.75,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 33.75
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5770,14 +5770,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 48,
-      "radiusFeetMin": 36,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 36
     },
     "nozzleChart": {
       "pressurePsi": [
@@ -5833,14 +5833,14 @@
       "compatibleBodyCategories": [
         "ROTOR_BODY"
       ],
-      "arcAdjustable": false,
+      "arcDegreesMin": 40,
+      "arcDegreesMax": 360,
+      "arcDegreesDefault": 180,
+      "arcAdjustable": true,
       "radiusAdjustable": false,
       "rotationAdjustable": true,
       "radiusFeetMax": 50,
-      "radiusFeetMin": 37.5,
-      "arcDegreesMin": 40,
-      "arcDegreesMax": 360,
-      "arcDegreesDefault": 180
+      "radiusFeetMin": 37.5
     },
     "nozzleChart": {
       "pressurePsi": [
