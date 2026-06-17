@@ -90,11 +90,24 @@ export function TrainingCanvas() {
   const stageH = Math.max(heightFt * PX + 80, size.height);
 
   function handleStageClick(e: {
-    target: { getStage?: () => { getPointerPosition?: () => { x: number; y: number } | null } | null };
+    target: {
+      getStage?: () => { getPointerPosition?: () => { x: number; y: number } | null } | null;
+      getClassName?: () => string;
+    };
   }) {
-    if (tool !== "add") return;
     const stage = e.target.getStage?.();
-    const pos = stage?.getPointerPosition?.();
+    if (!stage) return;
+    const clickedEmpty =
+      e.target === stage || e.target.getClassName?.() === "Layer";
+    if (!clickedEmpty) return;
+
+    if (tool === "select") {
+      setSelectedHeadId(null);
+      return;
+    }
+
+    if (tool !== "add") return;
+    const pos = stage.getPointerPosition?.();
     if (!pos) return;
     const feet = { x: (pos.x - STAGE_OFFSET) / PX, y: (pos.y - STAGE_OFFSET) / PX };
     const body = getHeadBodies(catalog)[0];

@@ -101,6 +101,10 @@ export function TrainingHeadGraphic({
         onSelect();
       }}
       onDragStart={stopBubble}
+      onDragMove={(e) => {
+        stopBubble(e);
+        onMove(feetFromGroup(e.target as Konva.Group), { deferScores: true });
+      }}
       onDragEnd={(e) => {
         stopBubble(e);
         onMove(feetFromGroup(e.target as Konva.Group));
@@ -125,7 +129,8 @@ export function TrainingHeadGraphic({
         y={0}
         radius={selected ? 8 : 6}
         fill={ghost ? "#94a3b8" : selected ? "#2563eb" : "#1d4ed8"}
-        listening={!editable}
+        listening={!ghost}
+        hitStrokeWidth={editable ? 12 : 0}
       />
 
       {editable && selected && !ghost && (

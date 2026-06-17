@@ -19,19 +19,29 @@ export function samplePointsInPolygonFeet(
 
 export function buildPrecipGrid(
   vertices: Point[],
+  samplePoints: Point[],
   values: number[],
   stepFt: number
 ): PrecipGrid {
   const bounds = polygonBounds(vertices);
   const cols = Math.max(1, Math.floor((bounds.maxX - bounds.minX) / stepFt) + 1);
   const rows = Math.max(1, Math.floor((bounds.maxY - bounds.minY) / stepFt) + 1);
-  return {
+  const grid: PrecipGrid = {
     originFt: { x: bounds.minX, y: bounds.minY },
     stepFt,
     cols,
     rows,
-    values,
+    values: new Array(cols * rows).fill(0),
   };
+
+  for (let i = 0; i < samplePoints.length; i++) {
+    const idx = gridIndexForPoint(grid, samplePoints[i]!);
+    if (idx >= 0) {
+      grid.values[idx] = values[i] ?? 0;
+    }
+  }
+
+  return grid;
 }
 
 export function gridIndexForPoint(grid: PrecipGrid, point: Point): number {

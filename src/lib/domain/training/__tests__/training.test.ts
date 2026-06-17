@@ -14,6 +14,7 @@ import { describe, it } from "node:test";
 import { generateTrainingPolygon } from "../polygon-generator";
 import { runPlacementOnPolygon } from "../placement-adapter";
 import { evaluateDesign } from "../../simulation/scoring";
+import { precipValueAtPoint } from "../../simulation/sample-grid";
 import { DEFAULT_RADIAL_CURVE } from "../../simulation/radial-curve";
 import { pointInPolygon } from "../../placement/geometry";
 import type { CatalogItemData } from "../../types";
@@ -73,10 +74,14 @@ describe("training pipeline integration", () => {
   it("generate → place → simulate → score", () => {
     const poly = generateTrainingPolygon({ seed: 7, shapeClass: "back_yard" });
     const placed = runPlacementOnPolygon(poly, catalog);
-    const { scores, grid } = evaluateDesign(poly.verticesFt, placed.heads);
+    const { scores, grid, samplePoints, precipValues } = evaluateDesign(poly.verticesFt, placed.heads);
     assert.ok(scores.sampleCount > 0);
     assert.ok(scores.headCount === placed.heads.length);
-    assert.ok(grid.values.length === scores.sampleCount);
+    assert.equal(grid.values.length, grid.cols * grid.rows);
+    assert.equal(scores.sampleCount, samplePoints.length);
+    for (let i = 0; i < samplePoints.length; i++) {
+      assert.equal(precipValueAtPoint(grid, samplePoints[i]!), precipValues[i]);
+    }
     assert.ok(scores.duLq >= 0 && scores.duLq <= 1.5);
   });
 });

@@ -152,6 +152,6 @@ export function evaluateDesign(
   const precipValues = samplePoints.map((p) => precipAtPoint(p, heads, curve));
   const scores = scoreUniformity(heads, precipValues, options);
   scores.oversprayEstimatePercent = estimateOversprayPercent(vertices, heads);
-  const grid = buildPrecipGrid(vertices, precipValues, stepFt);
+  const grid = buildPrecipGrid(vertices, samplePoints, precipValues, stepFt);
   return { scores, grid, samplePoints, precipValues };
 }

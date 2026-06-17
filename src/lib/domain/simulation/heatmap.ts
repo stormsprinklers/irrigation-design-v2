@@ -35,6 +35,7 @@ export function gridColorCells(
     for (let col = 0; col < grid.cols; col++) {
       const idx = row * grid.cols + col;
       const value = grid.values[idx] ?? 0;
+      if (value <= 0) continue;
       cells.push({
         x: (grid.originFt.x + col * grid.stepFt) * pxPerFt,
         y: (grid.originFt.y + row * grid.stepFt) * pxPerFt,

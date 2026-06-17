@@ -50,6 +50,6 @@ export function simulatePrecipitation(
   const curve = options.curve ?? DEFAULT_RADIAL_CURVE;
   const samplePoints = samplePointsInPolygonFeet(vertices, stepFt);
   const values = samplePoints.map((p) => precipAtPoint(p, heads, curve));
-  const grid = buildPrecipGrid(vertices, values, stepFt);
+  const grid = buildPrecipGrid(vertices, samplePoints, values, stepFt);
   return { grid, samplePoints, values };
 }
