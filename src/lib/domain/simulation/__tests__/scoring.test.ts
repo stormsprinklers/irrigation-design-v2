@@ -71,11 +71,54 @@ describe("computeImprovementScore", () => {
     assert.ok(computeImprovementScore(original, approved) < 0);
   });
 
-  it("rewards fewer head-to-head violations and less overspray", () => {
-    const original = baseScores({ headToHeadViolations: 4, oversprayEstimatePercent: 20 });
-    const approved = baseScores({ headToHeadViolations: 1, oversprayEstimatePercent: 5 });
+  it("rewards less overspray", () => {
+    const original = baseScores({ oversprayEstimatePercent: 20 });
+    const approved = baseScores({ oversprayEstimatePercent: 5 });
     const withFixes = computeImprovementScore(original, approved);
     const withoutFixes = computeImprovementScore(original, baseScores());
     assert.ok(withFixes > withoutFixes);
+  });
+});
+
+describe("scoreUniformity dry spots near edge", () => {
+  it("ignores dry samples within 2 ft of the polygon edge", () => {
+    const vertices = [
+      { x: 0, y: 0 },
+      { x: 30, y: 0 },
+      { x: 30, y: 20 },
+      { x: 0, y: 20 },
+    ];
+    const samplePoints = [
+      { x: 1, y: 10 },
+      { x: 15, y: 10 },
+    ];
+    const precipValues = [0.1, 1];
+    const scores = scoreUniformity(emptyHeads, precipValues, {
+      samplePoints,
+      polygonVertices: vertices,
+      drySpotEdgeMarginFt: 2,
+    });
+    assert.equal(scores.drySpotCount, 0);
+  });
+
+  it("still counts dry samples farther than 2 ft from the edge", () => {
+    const vertices = [
+      { x: 0, y: 0 },
+      { x: 30, y: 0 },
+      { x: 30, y: 20 },
+      { x: 0, y: 20 },
+    ];
+    const samplePoints = [
+      { x: 1, y: 10 },
+      { x: 15, y: 10 },
+      { x: 16, y: 10 },
+    ];
+    const precipValues = [0.1, 0.15, 1];
+    const scores = scoreUniformity(emptyHeads, precipValues, {
+      samplePoints,
+      polygonVertices: vertices,
+      drySpotEdgeMarginFt: 2,
+    });
+    assert.equal(scores.drySpotCount, 1);
   });
 });

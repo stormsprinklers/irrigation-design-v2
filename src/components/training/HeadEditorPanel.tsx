@@ -13,6 +13,7 @@ export function HeadEditorPanel() {
   const correctedHeads = useTrainingStore((s) => s.correctedHeads);
   const selectedHeadId = useTrainingStore((s) => s.selectedHeadId);
   const updateCorrectedHead = useTrainingStore((s) => s.updateCorrectedHead);
+  const recomputeScores = useTrainingStore((s) => s.recomputeScores);
   const duplicateCorrectedHead = useTrainingStore((s) => s.duplicateCorrectedHead);
   const deleteCorrectedHead = useTrainingStore((s) => s.deleteCorrectedHead);
   const viewMode = useTrainingStore((s) => s.viewMode);
@@ -37,8 +38,15 @@ export function HeadEditorPanel() {
 
   const nozzle = catalog.find((c) => c.id === head.catalogItemId);
 
-  function patch(partial: Parameters<typeof updateCorrectedHead>[1]) {
-    updateCorrectedHead(head!.id, partial);
+  function patch(
+    partial: Parameters<typeof updateCorrectedHead>[1],
+    opts?: { deferScores?: boolean }
+  ) {
+    updateCorrectedHead(head!.id, partial, opts);
+  }
+
+  function patchLive(partial: Parameters<typeof updateCorrectedHead>[1]) {
+    patch(partial, { deferScores: true });
   }
 
   return (
@@ -99,7 +107,8 @@ export function HeadEditorPanel() {
           head={head}
           nozzle={nozzle}
           pressurePsi={65}
-          onChange={(next) => patch(next)}
+          onChange={(next) => patchLive(next)}
+          onAdjustEnd={recomputeScores}
         />
       )}
       <p className="text-xs text-muted-foreground">

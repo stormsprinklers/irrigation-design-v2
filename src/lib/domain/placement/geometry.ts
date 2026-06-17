@@ -26,6 +26,32 @@ export function pointInPolygon(point: Point, vertices: Point[]): boolean {
   return inside;
 }
 
+/** Shortest distance from a point to the polygon boundary (feet). */
+export function distanceToPolygonBoundaryFt(point: Point, vertices: Point[]): number {
+  if (vertices.length < 2) return Infinity;
+
+  let minDist = Infinity;
+  for (let i = 0; i < vertices.length; i++) {
+    const a = vertices[i]!;
+    const b = vertices[(i + 1) % vertices.length]!;
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const lenSq = dx * dx + dy * dy;
+    let dist: number;
+    if (lenSq === 0) {
+      dist = Math.hypot(point.x - a.x, point.y - a.y);
+    } else {
+      const t = Math.max(
+        0,
+        Math.min(1, ((point.x - a.x) * dx + (point.y - a.y) * dy) / lenSq)
+      );
+      dist = Math.hypot(point.x - (a.x + t * dx), point.y - (a.y + t * dy));
+    }
+    if (dist < minDist) minDist = dist;
+  }
+  return minDist;
+}
+
 export function polygonBounds(vertices: Point[]) {
   const xs = vertices.map((v) => v.x);
   const ys = vertices.map((v) => v.y);

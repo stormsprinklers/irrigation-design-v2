@@ -1,4 +1,4 @@
-import { pointInPolygon } from "../placement/geometry";
+import { pointInPolygon, distanceToPolygonBoundaryFt } from "../placement/geometry";
 import { headStripSpec, isPointInHeadCoverage, type HeadCoverageInput } from "../placement/head-coverage";
 import { stripPatternVertices } from "@/lib/catalog/strip-pattern";
 import type { PrecipGrid, TrainingHeadSnapshot, UniformityScores } from "../training/types";
@@ -13,6 +13,12 @@ export type ScoringOptions = {
   dryThreshold?: number;
   wetThreshold?: number;
   curve?: DistributionCurve;
+  /** Sample locations aligned with precipValues (feet). */
+  samplePoints?: Point[];
+  /** Lawn polygon vertices (feet) for edge dry-spot filtering. */
+  polygonVertices?: Point[];
+  /** Ignore dry spots within this distance of the polygon edge (feet). */
+  drySpotEdgeMarginFt?: number;
 };
 
 /** Dry = covered sample below this fraction of mean covered precip. */
@@ -30,23 +36,6 @@ function computeDuLq(values: number[]): number {
   const lowSlice = sorted.slice(0, q);
   const lowAvg = lowSlice.reduce((a, b) => a + b, 0) / lowSlice.length;
   return lowAvg / avg;
-}
-
-function countHeadToHeadViolations(heads: TrainingHeadSnapshot[]): number {
-  let violations = 0;
-  for (let i = 0; i < heads.length; i++) {
-    for (let j = i + 1; j < heads.length; j++) {
-      const h1 = heads[i];
-      const h2 = heads[j];
-      const r = Math.max(h1.radiusFeet, h2.radiusFeet);
-      const d = Math.hypot(
-        h1.positionFt.x - h2.positionFt.x,
-        h1.positionFt.y - h2.positionFt.y
-      );
-      if (d > r * 1.08 && d < r * 2.5) violations++;
-    }
-  }
-  return violations;
 }
 
 function estimateOversprayPercent(vertices: Point[], heads: TrainingHeadSnapshot[]): number {
@@ -112,6 +101,9 @@ export function scoreUniformity(
 ): UniformityScores {
   const dryThreshold = options.dryThreshold ?? DEFAULT_DRY_THRESHOLD;
   const wetThreshold = options.wetThreshold ?? DEFAULT_WET_THRESHOLD;
+  const edgeMarginFt = options.drySpotEdgeMarginFt ?? 2;
+  const samplePoints = options.samplePoints;
+  const polygonVertices = options.polygonVertices;
 
   const sampleCount = precipValues.length;
   const coveredValues = precipValues.filter((v) => v > 0);
@@ -133,8 +125,16 @@ export function scoreUniformity(
   if (avgCoveredPrecip > 0) {
     const dryCutoff = avgCoveredPrecip * dryThreshold;
     const wetCutoff = avgCoveredPrecip * wetThreshold;
-    for (const v of precipValues) {
-      if (v > 0 && v < dryCutoff) drySpotCount++;
+    for (let i = 0; i < precipValues.length; i++) {
+      const v = precipValues[i]!;
+      if (v > 0 && v < dryCutoff) {
+        const nearEdge =
+          samplePoints &&
+          polygonVertices &&
+          polygonVertices.length >= 3 &&
+          distanceToPolygonBoundaryFt(samplePoints[i]!, polygonVertices) < edgeMarginFt;
+        if (!nearEdge) drySpotCount++;
+      }
       if (v > wetCutoff) wetSpotCount++;
     }
   }
@@ -147,7 +147,7 @@ export function scoreUniformity(
     duLq,
     drySpotCount,
     wetSpotCount,
-    headToHeadViolations: countHeadToHeadViolations(heads),
+    headToHeadViolations: 0,
     oversprayEstimatePercent: 0,
     headCount: heads.length,
     sampleCount,
@@ -163,7 +163,6 @@ export function computeImprovementScore(
       (approved.coveragePercent - original.coveragePercent) * 0.5 -
       (approved.drySpotCount - original.drySpotCount) * 2 -
       (approved.wetSpotCount - original.wetSpotCount) * 4 -
-      (approved.headToHeadViolations - original.headToHeadViolations) * 3 -
       (approved.oversprayEstimatePercent - original.oversprayEstimatePercent) * 0.3 -
       Math.max(0, approved.headCount - original.headCount) * 3
   );
@@ -183,7 +182,11 @@ export function evaluateDesign(
   const curve = options.curve ?? DEFAULT_RADIAL_CURVE;
   const samplePoints = samplePointsInPolygonFeet(vertices, stepFt);
   const precipValues = samplePoints.map((p) => precipAtPoint(p, heads, curve));
-  const scores = scoreUniformity(heads, precipValues, options);
+  const scores = scoreUniformity(heads, precipValues, {
+    ...options,
+    samplePoints,
+    polygonVertices: vertices,
+  });
   scores.oversprayEstimatePercent = estimateOversprayPercent(vertices, heads);
   const grid = buildPrecipGrid(vertices, samplePoints, precipValues, stepFt);
   return { scores, grid, samplePoints, precipValues };

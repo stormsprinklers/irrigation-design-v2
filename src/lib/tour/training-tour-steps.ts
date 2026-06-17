@@ -21,7 +21,7 @@ export const TRAINING_TOUR_STEPS: TrainingTourStep[] = [
     id: "generate",
     target: "training-tour-generate",
     title: "Generate examples",
-    body: "Pick a shape class or leave Random, then click Generate. Each example uses a seeded polygon in feet with automatic head placement.",
+    body: "Pick a shape class or leave Random, then click Generate. Reset to algorithm restores the placement output; Clear heads wipes your corrected layout so you can start fresh on the same lawn.",
     placement: "bottom",
   },
   {
@@ -64,7 +64,7 @@ export const TRAINING_TOUR_STEPS: TrainingTourStep[] = [
     id: "scores",
     target: "training-tour-scores",
     title: "Uniformity scores",
-    body: "DU_LQ, coverage, dry/wet spots, and head-to-head violations update live as you edit. Compare baseline vs corrected improvement.",
+    body: "DU_LQ, coverage, dry/wet spots, and overspray update live as you edit. Compare baseline vs corrected improvement.",
     placement: "left",
     scrollIntoView: true,
   },

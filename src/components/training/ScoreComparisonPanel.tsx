@@ -71,12 +71,6 @@ function ScoreTable({
             lowerIsBetter
           />
           <MetricRow
-            label="H2H violations"
-            baseline={baseline.headToHeadViolations}
-            corrected={corrected.headToHeadViolations}
-            lowerIsBetter
-          />
-          <MetricRow
             label="Overspray est. %"
             baseline={baseline.oversprayEstimatePercent}
             corrected={corrected.oversprayEstimatePercent}

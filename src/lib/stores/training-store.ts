@@ -65,6 +65,7 @@ type TrainingState = {
   addCorrectedHead: (head: TrainingHeadSnapshot) => void;
   duplicateCorrectedHead: (id: string) => void;
   deleteCorrectedHead: (id: string) => void;
+  clearCorrectedHeads: () => void;
   resetToBaseline: () => void;
   recomputeScores: () => void;
   buildApprovalPayload: () => import("@/lib/domain/training/types").TrainingExampleApprovalInput | null;
@@ -231,6 +232,19 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     set({
       correctedHeads: corrected,
       selectedHeadId: selectedHeadId === id ? null : selectedHeadId,
+      ...scores,
+    });
+  },
+
+  clearCorrectedHeads: () => {
+    const { polygon, baselineHeads } = get();
+    if (!polygon) return;
+    const corrected: TrainingHeadSnapshot[] = [];
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({
+      correctedHeads: corrected,
+      selectedHeadId: null,
+      viewMode: "corrected",
       ...scores,
     });
   },

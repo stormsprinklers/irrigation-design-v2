@@ -38,7 +38,9 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
   const toggleSampleGrid = useTrainingStore((s) => s.toggleSampleGrid);
   const toggleArcs = useTrainingStore((s) => s.toggleArcs);
   const resetToBaseline = useTrainingStore((s) => s.resetToBaseline);
+  const clearCorrectedHeads = useTrainingStore((s) => s.clearCorrectedHeads);
   const polygon = useTrainingStore((s) => s.polygon);
+  const correctedHeads = useTrainingStore((s) => s.correctedHeads);
 
   return (
     <div className="flex flex-wrap items-center gap-2 border-b bg-card p-3">
@@ -62,6 +64,23 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
         </Button>
         <Button size="sm" variant="outline" onClick={resetToBaseline} disabled={!polygon}>
           Reset to algorithm
+        </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          disabled={!polygon || correctedHeads.length === 0}
+          onClick={() => {
+            if (
+              !window.confirm(
+                "Remove all heads from your corrected design? The algorithm baseline is unchanged — use Add head to place sprinklers from scratch."
+              )
+            ) {
+              return;
+            }
+            clearCorrectedHeads();
+          }}
+        >
+          Clear heads
         </Button>
       </div>
       <div className="mx-2 h-6 w-px bg-border" />

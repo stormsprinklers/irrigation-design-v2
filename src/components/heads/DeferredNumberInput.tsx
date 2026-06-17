@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   value: number;
   onCommit: (value: number) => void;
+  /** Fires once when the field loses focus after editing. */
+  onCommitEnd?: () => void;
   disabled?: boolean;
   min?: number;
   max?: number;
@@ -12,9 +14,22 @@ type Props = {
   className?: string;
 };
 
+function isTypingKey(key: string): boolean {
+  return (
+    key.length === 1 ||
+    key === "Backspace" ||
+    key === "Delete" ||
+    key === "ArrowLeft" ||
+    key === "ArrowRight" ||
+    key === "Home" ||
+    key === "End"
+  );
+}
+
 export function DeferredNumberInput({
   value,
   onCommit,
+  onCommitEnd,
   disabled,
   min,
   max,
@@ -23,6 +38,7 @@ export function DeferredNumberInput({
 }: Props) {
   const [focused, setFocused] = useState(false);
   const [draft, setDraft] = useState(String(value));
+  const typingRef = useRef(false);
 
   useEffect(() => {
     if (!focused) {
@@ -50,16 +66,33 @@ export function DeferredNumberInput({
       onFocus={() => {
         setFocused(true);
         setDraft(String(value));
-      }}
-      onChange={(e) => setDraft(e.target.value)}
-      onBlur={() => {
-        setFocused(false);
-        commit(draft);
+        typingRef.current = false;
       }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           e.currentTarget.blur();
+          return;
         }
+        if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+          typingRef.current = false;
+          return;
+        }
+        if (isTypingKey(e.key)) {
+          typingRef.current = true;
+        }
+      }}
+      onChange={(e) => {
+        const next = e.target.value;
+        setDraft(next);
+        if (!typingRef.current) {
+          commit(next);
+        }
+      }}
+      onBlur={() => {
+        setFocused(false);
+        typingRef.current = false;
+        commit(draft);
+        onCommitEnd?.();
       }}
     />
   );

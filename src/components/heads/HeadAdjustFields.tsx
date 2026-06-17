@@ -27,6 +27,7 @@ type Props = {
   nozzle: CatalogItemData;
   pressurePsi: number;
   onChange: (patch: Partial<HeadAdjustValues>) => void;
+  onAdjustEnd?: () => void;
 };
 
 const inputClassName =
@@ -39,7 +40,7 @@ function mpBandLabel(band: string | undefined): string | null {
   return null;
 }
 
-export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange }: Props) {
+export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange, onAdjustEnd }: Props) {
   const adj = getNozzleAdjustability(nozzle);
   const strip = getStripNozzleSpec(nozzle);
 
@@ -72,6 +73,7 @@ export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange }: Props)
           step={0.5}
           disabled={!adj.radiusAdjustable}
           onCommit={(n) => applyPatch({ radiusFeet: n })}
+          onCommitEnd={onAdjustEnd}
         />
       </div>
       <div>
@@ -84,6 +86,7 @@ export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange }: Props)
           step={5}
           disabled={!adj.arcAdjustable || Boolean(strip)}
           onCommit={(n) => applyPatch({ arcDegrees: n })}
+          onCommitEnd={onAdjustEnd}
         />
         {(!adj.arcAdjustable || strip) && (
           <p className="mt-1 text-xs text-muted-foreground">
@@ -105,6 +108,7 @@ export function HeadAdjustFields({ head, nozzle, pressurePsi, onChange }: Props)
           step={5}
           disabled={!adj.rotationAdjustable}
           onCommit={(n) => applyPatch({ rotationDegrees: n })}
+          onCommitEnd={onAdjustEnd}
         />
         {head.wedgeStartDeg !== undefined && head.wedgeEndDeg !== undefined && (
           <p className="mt-1 text-xs text-muted-foreground">
