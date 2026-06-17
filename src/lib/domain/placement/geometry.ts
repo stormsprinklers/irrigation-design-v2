@@ -188,7 +188,11 @@ export type PolygonEdgeLabel = {
   rotationDeg: number;
 };
 
-export function polygonEdgeLabels(vertices: Point[], offsetFt = 2): PolygonEdgeLabel[] {
+export function polygonEdgeLabels(
+  vertices: Point[],
+  offsetFt = 2,
+  minEdgeLengthFt = 0
+): PolygonEdgeLabel[] {
   if (vertices.length < 2) return [];
 
   const centroid = polygonCentroid(vertices);
@@ -198,6 +202,7 @@ export function polygonEdgeLabels(vertices: Point[], offsetFt = 2): PolygonEdgeL
     const a = vertices[i]!;
     const b = vertices[(i + 1) % vertices.length]!;
     const lengthFt = Math.hypot(b.x - a.x, b.y - a.y);
+    if (lengthFt < minEdgeLengthFt) continue;
     const mid = pointAlongEdge(a, b, 0.5);
     const inward = perpendicularInwardBearing(a, b, centroid);
     const outwardRad = ((inward + 180) * Math.PI) / 180;

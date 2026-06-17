@@ -13,7 +13,7 @@ type Props = {
 };
 
 export function PolygonSideLabels({ verticesFt, pxPerFt, stageOffset }: Props) {
-  const labels = polygonEdgeLabels(verticesFt);
+  const labels = polygonEdgeLabels(verticesFt, 2, 8);
 
   return (
     <>

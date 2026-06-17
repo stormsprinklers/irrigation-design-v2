@@ -11,7 +11,8 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it } from "node:test";
-import { generateTrainingPolygon } from "../polygon-generator";
+import { generateTrainingPolygon, buildCanonicalTrainingPolygon } from "../polygon-generator";
+import { applyOrganicEdges, circularLawn } from "../organic-edges";
 import { runPlacementOnPolygon } from "../placement-adapter";
 import { evaluateDesign } from "../../simulation/scoring";
 import { precipValueAtPoint } from "../../simulation/sample-grid";
@@ -43,6 +44,45 @@ describe("polygon-generator", () => {
       assert.ok(len > 0);
       assert.equal(len, Math.round(len * 10) / 10);
     }
+  });
+
+  it("sometimes adds curved or wavy edges with more vertices than the canonical shape", () => {
+    let foundOrganic = false;
+    for (let seed = 0; seed < 80; seed++) {
+      const canonical = buildCanonicalTrainingPolygon("back_yard", seed);
+      const generated = generateTrainingPolygon({ seed, shapeClass: "back_yard" });
+      if (generated.verticesFt.length > canonical.length) {
+        foundOrganic = true;
+        break;
+      }
+    }
+    assert.ok(foundOrganic, "expected at least one seed with organic edge discretization");
+  });
+
+  it("organic edge pass keeps simple valid polygons", () => {
+    const base = buildCanonicalTrainingPolygon("rectangle", 12);
+    const rng = () => 0.1;
+    const organic = applyOrganicEdges(base, rng, { probability: 1 });
+    assert.ok(organic.length > base.length);
+    const poly = generateTrainingPolygon({ seed: 1200, shapeClass: "rectangle" });
+    assert.ok(poly.metadata.areaSqFt >= 80);
+    assert.ok(poly.verticesFt.length >= 4);
+  });
+
+  it("irregular variants can be circular lawns", () => {
+    const rng = () => 0.5;
+    const randRange = (_rng: () => number, min: number, max: number) => (min + max) / 2;
+    const randInt = (_rng: () => number, min: number, max: number) => Math.floor((min + max) / 2);
+    const vertices = circularLawn(rng, randRange, randInt);
+    assert.ok(vertices.length >= 20);
+    const lengths = vertices.map((v, i) => {
+      const next = vertices[(i + 1) % vertices.length]!;
+      return Math.hypot(next.x - v.x, next.y - v.y);
+    });
+    const mean = lengths.reduce((sum, len) => sum + len, 0) / lengths.length;
+    assert.ok(lengths.every((len) => Math.abs(len - mean) / mean < 0.02));
+    const poly = generateTrainingPolygon({ seed: 4242, shapeClass: "irregular" });
+    assert.ok(poly.metadata.areaSqFt >= 80);
   });
 
   it("is reproducible with the same seed", () => {

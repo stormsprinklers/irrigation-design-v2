@@ -5,6 +5,13 @@ import type {
   TrainingPolygonMetadata,
   TrainingShapeClass,
 } from "./types";
+import {
+  applyOrganicEdges,
+  maybeApplyOrganicEdges,
+  roundedRectangle,
+  wavyFrontYard,
+  circularLawn,
+} from "./organic-edges";
 
 export type PolygonGeneratorOptions = {
   seed?: number;
@@ -386,6 +393,9 @@ const IRREGULAR_BUILDERS: ((rng: () => number) => Point[])[] = [
   irregularHook,
   irregularZigzag,
   irregularKidney,
+  (rng) => roundedRectangle(rng, randRange, randInt),
+  (rng) => wavyFrontYard(rng, randRange),
+  (rng) => circularLawn(rng, randRange, randInt),
 ];
 
 function irregular(rng: () => number): Point[] {
@@ -415,6 +425,12 @@ const ALL_SHAPES: TrainingShapeClass[] = [
   "back_yard",
   "irregular",
 ];
+
+function buildVertices(shapeClass: TrainingShapeClass, rng: () => number): Point[] {
+  let vertices = SHAPE_BUILDERS[shapeClass](rng);
+  vertices = maybeApplyOrganicEdges(vertices, shapeClass, rng);
+  return vertices;
+}
 
 function finalizePolygon(
   vertices: Point[],
@@ -449,16 +465,20 @@ export function generateTrainingPolygon(
     options.shapeClass ?? ALL_SHAPES[Math.floor(rng() * ALL_SHAPES.length)];
   const rotationDeg = randRange(rng, 0, 360);
 
-  let vertices = SHAPE_BUILDERS[shapeClass](rng);
+  let vertices = buildVertices(shapeClass, rng);
   if (!isSimpleEnough(vertices)) {
     vertices = rectangle(45, 30);
+    vertices = applyOrganicEdges(vertices, rng, { probability: 0.25, minEdgeFt: 18 });
+    if (!isSimpleEnough(vertices)) {
+      vertices = rectangle(45, 30);
+    }
     return finalizePolygon(vertices, "rectangle", seed, rotationDeg);
   }
 
   return finalizePolygon(vertices, shapeClass, seed, rotationDeg);
 }
 
-/** Exported for tests — compare unrotated canonical shapes. */
+/** Exported for tests — compare unrotated canonical shapes (no organic edge pass). */
 export function buildCanonicalTrainingPolygon(
   shapeClass: TrainingShapeClass,
   seed: number
