@@ -51,10 +51,14 @@ type TrainingState = {
   shapeCounts: Record<TrainingShapeClass, number>;
   copiedHeads: TrainingHeadSnapshot[] | null;
   pasteGeneration: number;
+  mlRefinementEnabled: boolean;
 
   initCatalog: (catalog: CatalogItemData[]) => void;
+  setMlRefinementEnabled: (enabled: boolean) => void;
   setShapeCounts: (counts: Record<TrainingShapeClass, number>) => void;
   generateExample: (seed?: number) => void;
+  /** Apply ML-refined layout as starting corrected heads (baseline stays heuristic). */
+  applyMlStartingLayout: (heads: TrainingHeadSnapshot[]) => void;
   selectHead: (id: string, opts?: { additive?: boolean }) => void;
   setSelectedHeadIds: (ids: string[]) => void;
   clearSelection: () => void;
@@ -184,8 +188,10 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   shapeCounts: emptyShapeCounts(),
   copiedHeads: null,
   pasteGeneration: 0,
+  mlRefinementEnabled: false,
 
   initCatalog: (catalog) => set({ catalog }),
+  setMlRefinementEnabled: (enabled) => set({ mlRefinementEnabled: enabled }),
   setShapeCounts: (counts) => set({ shapeCounts: counts }),
 
   generateExample: (seed) => {
@@ -210,6 +216,19 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
       baselineHeads: baseline,
       correctedHeads: corrected,
       placementContext: placed.placementContext,
+      selectedHeadIds: [],
+      viewMode: "corrected",
+      ...scores,
+    });
+  },
+
+  applyMlStartingLayout: (heads) => {
+    const { polygon, baselineHeads } = get();
+    if (!polygon) return;
+    const corrected = cloneHeads(heads);
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({
+      correctedHeads: corrected,
       selectedHeadIds: [],
       viewMode: "corrected",
       ...scores,

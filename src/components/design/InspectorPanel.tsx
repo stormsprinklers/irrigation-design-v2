@@ -28,6 +28,10 @@ type Props = {
   onAutoPlace: (hydrozoneId: string) => void;
   onValidate: () => void;
   onScaleCalibrate: (feet: number) => void;
+  autoPlacing?: boolean;
+  mlRefinementEnabled?: boolean;
+  mlAvailable?: boolean;
+  onMlRefinementChange?: (enabled: boolean) => void;
   className?: string;
   variant?: "sidebar" | "sheet";
 };
@@ -38,6 +42,10 @@ export function InspectorPanel({
   onAutoPlace,
   onValidate,
   onScaleCalibrate,
+  autoPlacing = false,
+  mlRefinementEnabled = false,
+  mlAvailable = false,
+  onMlRefinementChange,
   className,
   variant = "sidebar",
 }: Props) {
@@ -217,11 +225,21 @@ export function InspectorPanel({
           <Button
             size="sm"
             variant="outline"
-            disabled={!selectedHydrozone}
+            disabled={!selectedHydrozone || autoPlacing}
             onClick={() => selectedHydrozone && onAutoPlace(selectedHydrozone.id)}
           >
-            Auto-place heads
+            {autoPlacing ? "Placing…" : "Auto-place heads"}
           </Button>
+          {mlAvailable && onMlRefinementChange && (
+            <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <input
+                type="checkbox"
+                checked={mlRefinementEnabled}
+                onChange={(e) => onMlRefinementChange(e.target.checked)}
+              />
+              ML refinement (beta)
+            </label>
+          )}
         </section>
 
         {selectedHydrozone && (

@@ -21,9 +21,23 @@ type Props = {
   onApprove: () => void;
   onExport: () => void;
   approving: boolean;
+  generating?: boolean;
+  mlRefinementEnabled?: boolean;
+  mlAvailable?: boolean;
+  onMlRefinementChange?: (enabled: boolean) => void;
+  onGenerate?: () => void;
 };
 
-export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
+export function TrainingToolbar({
+  onApprove,
+  onExport,
+  approving,
+  generating = false,
+  mlRefinementEnabled = false,
+  mlAvailable = false,
+  onMlRefinementChange,
+  onGenerate,
+}: Props) {
   const generateExample = useTrainingStore((s) => s.generateExample);
   const shapeFilter = useTrainingStore((s) => s.shapeFilter);
   const setShapeFilter = useTrainingStore((s) => s.setShapeFilter);
@@ -55,18 +69,32 @@ export function TrainingToolbar({ onApprove, onExport, approving }: Props) {
             </option>
           ))}
         </NativeSelect>
-        <Button size="sm" onClick={() => generateExample()}>
-          Generate
+        <Button
+          size="sm"
+          disabled={generating}
+          onClick={() => (onGenerate ? onGenerate() : generateExample())}
+        >
+          {generating ? "Generating…" : "Generate"}
         </Button>
         <Button
           size="sm"
           variant="outline"
-          disabled={!polygon}
-          onClick={() => generateExample()}
+          disabled={!polygon || generating}
+          onClick={() => (onGenerate ? onGenerate() : generateExample())}
           title="Skip this lawn without saving"
         >
           Skip lawn
         </Button>
+        {mlAvailable && onMlRefinementChange && (
+          <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <input
+              type="checkbox"
+              checked={mlRefinementEnabled}
+              onChange={(e) => onMlRefinementChange(e.target.checked)}
+            />
+            ML refinement (beta)
+          </label>
+        )}
         <Button
           size="sm"
           variant="outline"

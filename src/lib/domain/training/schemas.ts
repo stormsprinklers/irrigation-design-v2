@@ -101,4 +101,7 @@ export const exportTrainingExamplesSchema = z.object({
   status: z.enum(["APPROVED", "IN_PROGRESS", "DISCARDED"]).optional(),
   limit: z.number().int().min(1).max(5000).optional(),
   validForTrainingOnly: z.boolean().optional(),
+  algorithmVersion: z.string().optional(),
+  since: z.string().datetime().optional(),
+  format: z.enum(["full", "slim"]).optional(),
 });

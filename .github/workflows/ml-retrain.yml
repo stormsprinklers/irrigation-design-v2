@@ -1,0 +1,54 @@
+name: ML Retrain
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+
+jobs:
+  export-and-train:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.DATABASE_URL != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Export training JSONL
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          npm run training:export -- \
+            --output training-export.jsonl \
+            --manifest training-split-manifest.json
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Train and evaluate
+        run: |
+          pip install -e ml
+          python -m placement_ml.train \
+            --data training-export.jsonl \
+            --manifest training-split-manifest.json \
+            --output ml/checkpoints
+          python -m placement_ml.evaluate \
+            --data training-export.jsonl \
+            --checkpoint ml/checkpoints/best.pt \
+            --manifest training-split-manifest.json \
+            --output ml/checkpoints/eval_metrics.json
+
+      - name: Upload checkpoint artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: placement-ml-checkpoint
+          path: |
+            ml/checkpoints/best.pt
+            ml/checkpoints/eval_metrics.json
+            ml/checkpoints/feature_vocab.json

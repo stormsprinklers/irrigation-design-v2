@@ -7,6 +7,7 @@ import {
 import { getCatalogItems } from "@/lib/catalog";
 import { getPricingProfile } from "@/lib/actions/design";
 import { getTourStatus } from "@/lib/actions/tour";
+import { getPlacementMlStatus } from "@/lib/actions/placement-ml";
 import { auth } from "@/lib/auth";
 import { blobProxyUrl } from "@/lib/blob/urls";
 import { DesignWorkspace } from "@/components/design/DesignWorkspace";
@@ -21,13 +22,14 @@ export default async function DesignPage({ params }: Props) {
   const session = await auth();
   if (!session?.user) notFound();
 
-  const [project, version, versions, catalog, pricing, tourStatus] = await Promise.all([
+  const [project, version, versions, catalog, pricing, tourStatus, mlStatus] = await Promise.all([
     getProject(projectId),
     getActiveDesignVersion(projectId),
     getDesignVersions(projectId),
     getCatalogItems(session.user.organizationId),
     getPricingProfile(),
     getTourStatus(),
+    getPlacementMlStatus(),
   ]);
 
   const pricingData: PricingProfileData = pricing
@@ -69,6 +71,7 @@ export default async function DesignPage({ params }: Props) {
         completedAt: tourStatus.completedAt,
         autoShow: tourStatus.autoShow,
       }}
+      mlStatus={mlStatus}
     />
   );
 }

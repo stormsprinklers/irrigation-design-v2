@@ -66,6 +66,10 @@ export function snapshotsToSprinklerHeads(
   }));
 }
 
+/**
+ * Heuristic placement for training polygons.
+ * Optional ML refinement runs server-side via maybeRefineWithMl / refinePlacementWithMl.
+ */
 export function runPlacementOnPolygon(
   generated: GeneratedTrainingPolygon,
   catalog: CatalogItemData[],

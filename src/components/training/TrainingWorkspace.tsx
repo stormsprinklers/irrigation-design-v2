@@ -10,6 +10,8 @@ import {
   exportTrainingExamplesJsonl,
   getTrainingExampleStats,
 } from "@/lib/actions/training";
+import { refinePlacementWithMl } from "@/lib/actions/placement-ml";
+import type { PlacementMlStatus } from "@/lib/actions/placement-ml";
 import type { TrainingExampleStats } from "@/lib/domain/training/types";
 import { TrainingToolbar } from "./TrainingToolbar";
 import { HeadEditorPanel } from "./HeadEditorPanel";
@@ -46,30 +48,98 @@ type Props = {
   catalog: CatalogItemData[];
   tourStatus: TourStatus;
   stats: TrainingExampleStats;
+  mlStatus: PlacementMlStatus;
 };
 
 export function TrainingWorkspace({
   catalog,
   tourStatus,
   stats: initialStats,
+  mlStatus,
 }: Props) {
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
   const generateExample = useTrainingStore((s) => s.generateExample);
+  const applyMlStartingLayout = useTrainingStore((s) => s.applyMlStartingLayout);
+  const mlRefinementEnabled = useTrainingStore((s) => s.mlRefinementEnabled);
+  const setMlRefinementEnabled = useTrainingStore((s) => s.setMlRefinementEnabled);
   const buildApprovalPayload = useTrainingStore((s) => s.buildApprovalPayload);
   const [approving, setApproving] = useState(false);
+  const [generating, setGenerating] = useState(false);
   const [stats, setStats] = useState(initialStats);
+
+  const mlAvailable =
+    mlStatus.serviceHealthy && mlStatus.modelLoaded;
+
+  async function generateWithOptionalMl(seed?: number) {
+    setGenerating(true);
+    try {
+      generateExample(seed);
+      const store = useTrainingStore.getState();
+      if (!mlRefinementEnabled || !store.polygon || !store.placementContext) return;
+
+      const refined = await refinePlacementWithMl({
+        polygonVerticesFt: store.polygon.verticesFt,
+        shapeClass: store.polygon.metadata.shapeClass,
+        baselineHeads: store.baselineHeads,
+        placementContext: store.placementContext,
+        catalog,
+        forceMl: true,
+        source: "training",
+      });
+
+      if (refined.usedMl) {
+        applyMlStartingLayout(refined.heads);
+        toast.success("ML refinement applied as starting layout");
+      } else if (refined.error) {
+        toast.message("Using heuristic layout", { description: refined.error });
+      }
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed to generate example");
+    } finally {
+      setGenerating(false);
+    }
+  }
 
   useEffect(() => {
     const store = useTrainingStore.getState();
     store.initCatalog(catalog);
     store.setShapeCounts(initialStats.byShape);
-    try {
-      store.generateExample();
-    } catch (e) {
-      console.error("Failed to generate training example", e);
-      toast.error(e instanceof Error ? e.message : "Failed to generate example");
+    const enableMl = mlStatus.enabled && mlAvailable;
+    if (enableMl) {
+      store.setMlRefinementEnabled(true);
     }
-  }, [catalog, initialStats.byShape]);
+
+    async function init() {
+      setGenerating(true);
+      try {
+        store.generateExample();
+        if (!enableMl) return;
+        const after = useTrainingStore.getState();
+        if (!after.polygon || !after.placementContext) return;
+
+        const refined = await refinePlacementWithMl({
+          polygonVerticesFt: after.polygon.verticesFt,
+          shapeClass: after.polygon.metadata.shapeClass,
+          baselineHeads: after.baselineHeads,
+          placementContext: after.placementContext,
+          catalog,
+          forceMl: true,
+          source: "training",
+        });
+
+        if (refined.usedMl) {
+          useTrainingStore.getState().applyMlStartingLayout(refined.heads);
+        }
+      } catch (e) {
+        console.error("Failed to generate training example", e);
+        toast.error(e instanceof Error ? e.message : "Failed to generate example");
+      } finally {
+        setGenerating(false);
+      }
+    }
+
+    void init();
+  }, [catalog, initialStats.byShape, mlStatus.enabled, mlAvailable]);
 
   useEffect(() => {
     useTrainingStore.getState().setShapeCounts(stats.byShape);
@@ -131,7 +201,7 @@ export function TrainingWorkspace({
       await approveTrainingExample(payload);
       toast.success("Example saved");
       setStats(await getTrainingExampleStats());
-      generateExample();
+      await generateWithOptionalMl();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Save failed");
     } finally {
@@ -186,7 +256,16 @@ export function TrainingWorkspace({
           </div>
         </div>
       </div>
-      <TrainingToolbar onApprove={handleApprove} onExport={handleExport} approving={approving} />
+      <TrainingToolbar
+        onApprove={handleApprove}
+        onExport={handleExport}
+        approving={approving}
+        generating={generating}
+        mlRefinementEnabled={mlRefinementEnabled}
+        mlAvailable={mlAvailable}
+        onMlRefinementChange={setMlRefinementEnabled}
+        onGenerate={() => void generateWithOptionalMl()}
+      />
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
         <div className="h-full min-h-0 min-w-0 flex-1 overflow-hidden" data-tour="training-tour-canvas">
           <TrainingCanvas />

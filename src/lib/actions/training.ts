@@ -24,6 +24,11 @@ import {
   payloadNeedsRescore,
 } from "@/lib/domain/training/training-payload";
 import { revalidatePath } from "next/cache";
+import {
+  rowPassesExportFilters,
+  serializeTrainingExportLine,
+  type TrainingExportRow,
+} from "@/lib/domain/training/export-training";
 
 type ParsedApprovalPayload = z.infer<typeof approveTrainingExampleSchema>["payload"];
 
@@ -212,6 +217,9 @@ export async function exportTrainingExamplesJsonl(input?: {
   status?: "IN_PROGRESS" | "APPROVED" | "DISCARDED";
   limit?: number;
   validForTrainingOnly?: boolean;
+  algorithmVersion?: string;
+  since?: string;
+  format?: "full" | "slim";
 }) {
   const user = await requireSession();
   const parsed = exportTrainingExamplesSchema.parse(input ?? {});
@@ -219,16 +227,23 @@ export async function exportTrainingExamplesJsonl(input?: {
     where: {
       organizationId: user.organizationId,
       status: parsed.status ?? "APPROVED",
+      ...(parsed.since ? { createdAt: { gte: new Date(parsed.since) } } : {}),
     },
     orderBy: { createdAt: "asc" },
-    take: parsed.limit ?? 1000,
+    ...(parsed.limit ? { take: parsed.limit } : {}),
   });
+
+  const exportOptions = {
+    validForTrainingOnly: parsed.validForTrainingOnly,
+    algorithmVersion: parsed.algorithmVersion,
+    since: parsed.since ? new Date(parsed.since) : undefined,
+    format: parsed.format ?? "full",
+  };
 
   const lines = rows
     .map((row) => {
       const payload = annotateTrainingPayload(row.payload as TrainingExamplePayload);
-      if (parsed.validForTrainingOnly && !payload.validForTraining) return null;
-      return JSON.stringify({
+      const exportRow: TrainingExportRow = {
         id: row.id,
         organizationId: row.organizationId,
         createdById: row.createdById,
@@ -240,7 +255,9 @@ export async function exportTrainingExamplesJsonl(input?: {
         createdAt: row.createdAt.toISOString(),
         approvedAt: row.approvedAt?.toISOString() ?? null,
         payload,
-      });
+      };
+      if (!rowPassesExportFilters(exportRow, exportOptions)) return null;
+      return serializeTrainingExportLine(exportRow, exportOptions.format);
     })
     .filter((line): line is string => line != null);
 

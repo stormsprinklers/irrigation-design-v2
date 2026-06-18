@@ -38,3 +38,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python / ml
+__pycache__/
+*.py[cod]
+ml/.venv/
+training-export.jsonl
+training-split-manifest.json

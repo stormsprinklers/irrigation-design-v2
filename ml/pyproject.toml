@@ -1,0 +1,23 @@
+[project]
+name = "placement-ml"
+version = "0.1.0"
+description = "Sprinkler placement correction ML training and inference"
+requires-python = ">=3.11"
+dependencies = [
+  "torch>=2.2.0",
+  "numpy>=1.26.0",
+  "pydantic>=2.6.0",
+  "fastapi>=0.110.0",
+  "uvicorn[standard]>=0.27.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[build-system]
+requires = ["setuptools>=69.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["placement_ml*"]

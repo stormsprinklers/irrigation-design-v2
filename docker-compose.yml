@@ -1,0 +1,13 @@
+services:
+  ml-serve:
+    build:
+      context: .
+      dockerfile: ml/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      ML_API_KEY: ${ML_API_KEY:-dev-secret}
+      ML_CHECKPOINT_PATH: /app/ml/checkpoints/best.pt
+      ML_MODEL_VERSION: ${ML_MODEL_VERSION:-v1}
+    volumes:
+      - ./ml/checkpoints:/app/ml/checkpoints:ro

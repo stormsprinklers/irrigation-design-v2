@@ -31,6 +31,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { refineDesignHeadsWithMl } from "@/lib/actions/placement-ml";
+import type { PlacementMlStatus } from "@/lib/actions/placement-ml";
 import { ClipboardList, Package, Settings2 } from "lucide-react";
 
 const DesignCanvas = dynamic(() => import("./DesignCanvas").then((m) => m.DesignCanvas), {
@@ -45,6 +47,7 @@ type Props = {
   pricing: PricingProfileData;
   imageUrl?: string;
   tourStatus: TourStatus;
+  mlStatus: PlacementMlStatus;
 };
 
 export function DesignWorkspace({
@@ -55,11 +58,16 @@ export function DesignWorkspace({
   pricing,
   imageUrl,
   tourStatus,
+  mlStatus,
 }: Props) {
   const isMobile = useIsMobile();
   const [inspectorOpen, setInspectorOpen] = useState(false);
   const [materialsOpen, setMaterialsOpen] = useState(false);
   const [validationOpen, setValidationOpen] = useState(false);
+  const [mlRefinementEnabled, setMlRefinementEnabled] = useState(
+    mlStatus.enabled && mlStatus.serviceHealthy && mlStatus.modelLoaded
+  );
+  const [autoPlacing, setAutoPlacing] = useState(false);
   const store = useDesignStore();
   const {
     init,
@@ -287,7 +295,7 @@ export function DesignWorkspace({
     toast.success(`Scale set: ${feet} ft`);
   }
 
-  function handleAutoPlace(hydrozoneId: string) {
+  async function handleAutoPlace(hydrozoneId: string) {
     const hydrozone = document.hydrozones.find((h) => h.id === hydrozoneId);
     if (!hydrozone) return;
     let zoneId = hydrozone.zoneId ?? document.zones[0]?.id;
@@ -298,28 +306,59 @@ export function DesignWorkspace({
         zones: [...document.zones, { id: zoneId!, name: "Zone 1", hydrozoneIds: [hydrozoneId] }],
       });
     }
-    const result = placeHeads({
-      hydrozone,
-      zoneId: zoneId!,
-      catalog,
-      scale: document.scale,
-      exclusionZones: document.exclusionZones,
-      pressurePsi: document.waterSource?.staticPressurePsi,
-    });
-    const unlockedHeads = document.heads.filter(
-      (h) => h.hydrozoneId !== hydrozoneId || h.locked
-    );
-    setDocument({
-      ...document,
-      heads: [...unlockedHeads, ...result.heads],
-    });
-    setValidationIssues([...store.validationIssues, ...result.warnings]);
-    const patternLabel = result.pattern === "triangular" ? "triangular" : "square";
-    const nozzleLabel = result.nozzleModel ?? "nozzle";
-    const overlap = result.overlapPercent ?? result.coveragePercent;
-    toast.success(
-      `Placed ${result.heads.length} heads · ${patternLabel} · ${nozzleLabel} · R ${result.radiusFeet?.toFixed(0) ?? "?"} ft · ${overlap}% overlap`
-    );
+    setAutoPlacing(true);
+    try {
+      const result = placeHeads({
+        hydrozone,
+        zoneId: zoneId!,
+        catalog,
+        scale: document.scale,
+        exclusionZones: document.exclusionZones,
+        pressurePsi: document.waterSource?.staticPressurePsi,
+      });
+
+      let heads = result.heads;
+      if (mlRefinementEnabled && mlStatus.serviceHealthy && mlStatus.modelLoaded) {
+        const catalogItemIds = [...new Set(heads.map((h) => h.catalogItemId))];
+        const refined = await refineDesignHeadsWithMl({
+          hydrozone,
+          zoneId: zoneId!,
+          baselineHeads: heads,
+          catalog,
+          placementContext: {
+            headPreference: hydrozone.headPreference,
+            pressurePsi: document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI,
+            pattern: result.pattern,
+            nozzleModel: result.nozzleModel,
+            catalogItemIds,
+          },
+          forceMl: true,
+        });
+        if (refined.usedMl) {
+          heads = refined.heads;
+          toast.success("ML refinement applied");
+        } else if (refined.error) {
+          toast.message("Using heuristic placement", { description: refined.error });
+        }
+      }
+
+      const unlockedHeads = document.heads.filter(
+        (h) => h.hydrozoneId !== hydrozoneId || h.locked
+      );
+      setDocument({
+        ...document,
+        heads: [...unlockedHeads, ...heads],
+      });
+      setValidationIssues([...store.validationIssues, ...result.warnings]);
+      const patternLabel = result.pattern === "triangular" ? "triangular" : "square";
+      const nozzleLabel = result.nozzleModel ?? "nozzle";
+      const overlap = result.overlapPercent ?? result.coveragePercent;
+      toast.success(
+        `Placed ${heads.length} heads · ${patternLabel} · ${nozzleLabel} · R ${result.radiusFeet?.toFixed(0) ?? "?"} ft · ${overlap}% overlap`
+      );
+    } finally {
+      setAutoPlacing(false);
+    }
   }
 
   function handleValidate() {
@@ -362,6 +401,10 @@ export function DesignWorkspace({
     onAutoPlace: handleAutoPlace,
     onValidate: handleValidate,
     onScaleCalibrate: handleScaleCalibrate,
+    autoPlacing,
+    mlRefinementEnabled,
+    mlAvailable: mlStatus.serviceHealthy && mlStatus.modelLoaded,
+    onMlRefinementChange: setMlRefinementEnabled,
   };
 
   return (

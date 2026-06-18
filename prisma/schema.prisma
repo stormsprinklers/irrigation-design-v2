@@ -188,3 +188,38 @@ model TrainingExample {
   @@index([organizationId, status])
   @@index([createdById])
 }
+
+model PlacementModelVersion {
+  id                String   @id @default(cuid())
+  version           String   @unique
+  checkpointUrl     String
+  algorithmVersion  String
+  metricsJson       Json     @default("{}")
+  promotionPassed   Boolean  @default(false)
+  promotionNotes    String?
+  isActive          Boolean  @default(false)
+  trainedAt         DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([isActive])
+}
+
+model PlacementInferenceLog {
+  id                 String   @id @default(cuid())
+  organizationId     String
+  userId             String?
+  source             String
+  modelVersion       String?
+  usedMl             Boolean  @default(false)
+  shadowOnly         Boolean  @default(false)
+  baselineHeadCount  Int
+  refinedHeadCount   Int
+  meanConfidence     Float?
+  error              String?
+  diagnostics        Json?
+  createdAt          DateTime @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([source])
+}

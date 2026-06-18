@@ -153,6 +153,9 @@ export const TRAINING_PPF = 1;
  */
 export const TRAINING_EXPORT_SCHEMA_VERSION = 1;
 
+/** Slim ML export — omits precip grids and scores (recomputable via scoreLayout). */
+export const TRAINING_ML_EXPORT_SCHEMA_VERSION = 2;
+
 export const TRAINING_FEET_SCALE = {
   pointA: { x: 0, y: 0 },
   pointB: { x: 1, y: 0 },
