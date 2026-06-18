@@ -16,4 +16,6 @@ ENV PORT=8000
 
 EXPOSE 8000
 
-CMD ["/app/ml/scripts/start.sh"]
+WORKDIR /app/ml
+
+CMD ["./scripts/start.sh"]
