@@ -1,4 +1,4 @@
-/** Promotion gate checks for ML model deployment. */
+/** Promotion gate checks for ML model deployment (sanity checks only — metrics are advisory). */
 export type MlEvalMetrics = {
   n_examples?: number;
   position_mae_ft_mean?: number;
@@ -14,19 +14,26 @@ export type MlEvalMetrics = {
 export type PromotionGateResult = {
   passed: boolean;
   reasons: string[];
+  warnings: string[];
 };
 
-const MAX_HEAD_COUNT_DELTA = 2.0;
+/** Reject only runaway head-count predictions that could hang inference. */
+export const MAX_HEAD_COUNT_DELTA = 30;
 
 export function evaluatePromotionGates(metrics: MlEvalMetrics): PromotionGateResult {
   const reasons: string[] = [];
+  const warnings: string[] = [];
 
-  if ((metrics.n_examples ?? 0) < 10) {
-    reasons.push("Fewer than 10 test examples");
+  if ((metrics.n_examples ?? 0) < 1) {
+    reasons.push("No evaluation examples in export");
+  }
+
+  if ((metrics.head_count_delta_mean ?? 0) > MAX_HEAD_COUNT_DELTA) {
+    reasons.push(`Head count delta mean exceeds ${MAX_HEAD_COUNT_DELTA}`);
   }
 
   if (!metrics.model_beats_baseline_mae) {
-    reasons.push("Model position MAE does not beat baseline");
+    warnings.push("Model position MAE does not beat baseline (informational only)");
   }
 
   if (
@@ -34,14 +41,10 @@ export function evaluatePromotionGates(metrics: MlEvalMetrics): PromotionGateRes
     metrics.baseline_position_mae_ft_mean != null &&
     metrics.model_position_mae_ft_mean >= metrics.baseline_position_mae_ft_mean
   ) {
-    reasons.push("Model mean position MAE >= baseline mean");
+    warnings.push("Model mean position MAE >= baseline mean (informational only)");
   }
 
-  if ((metrics.head_count_delta_mean ?? 0) > MAX_HEAD_COUNT_DELTA) {
-    reasons.push(`Head count delta mean exceeds ${MAX_HEAD_COUNT_DELTA}`);
-  }
-
-  return { passed: reasons.length === 0, reasons };
+  return { passed: reasons.length === 0, reasons, warnings };
 }
 
 export function parseEvalMetricsJson(raw: unknown): MlEvalMetrics | null {

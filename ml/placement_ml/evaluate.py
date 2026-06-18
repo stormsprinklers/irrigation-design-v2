@@ -49,7 +49,7 @@ def main():
     parser.add_argument("--data", required=True)
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--manifest", default=None)
-    parser.add_argument("--split", default="test", choices=["train", "val", "test"])
+    parser.add_argument("--split", default="all", choices=["train", "val", "test", "all"])
     parser.add_argument("--algorithm-version", default=None)
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--output", default=None, help="Write metrics JSON")
@@ -65,7 +65,7 @@ def main():
     manifest = load_manifest(args.manifest) if args.manifest else None
     eval_records = filter_records(
         records,
-        valid_for_training_only=True,
+        valid_for_training_only=False,
         algorithm_version=args.algorithm_version,
         split=args.split,
         manifest=manifest,

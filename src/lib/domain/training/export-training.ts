@@ -76,7 +76,7 @@ function toSlimRecord(row: TrainingExportRow): TrainingMlSlimRecord {
     approvedOutput: payload.approvedOutput,
     editLog: payload.editLog,
     improvementScore: payload.improvementScore,
-    validForTraining: row.validForTraining,
+    validForTraining: payload.validForTraining !== false,
     distributionCurveVersion: row.distributionCurveVersion,
     approvedAt: row.approvedAt,
   };
@@ -86,7 +86,7 @@ export function rowPassesExportFilters(
   row: TrainingExportRow,
   options: ExportTrainingOptions
 ): boolean {
-  if (options.validForTrainingOnly && !row.validForTraining) return false;
+  if (options.validForTrainingOnly && row.validForTraining === false) return false;
   if (
     options.algorithmVersion &&
     row.algorithmVersion !== options.algorithmVersion

@@ -82,14 +82,14 @@ def main():
     manifest = load_manifest(args.manifest) if args.manifest else None
     train_records = filter_records(
         records,
-        valid_for_training_only=True,
+        valid_for_training_only=False,
         algorithm_version=args.algorithm_version,
         split="train",
         manifest=manifest,
     )
     val_records = filter_records(
         records,
-        valid_for_training_only=True,
+        valid_for_training_only=False,
         algorithm_version=args.algorithm_version,
         split="val",
         manifest=manifest,

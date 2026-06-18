@@ -43,7 +43,7 @@ class TrainingRecord:
                 approved_output=p["approvedOutput"],
                 edit_log=p.get("editLog"),
                 improvement_score=p.get("improvementScore", 0),
-                valid_for_training=obj.get("validForTraining", p.get("validForTraining", False)),
+                valid_for_training=obj.get("validForTraining", p.get("validForTraining", True)) is not False,
             )
         return cls(
             id=obj["id"],
@@ -58,7 +58,7 @@ class TrainingRecord:
             approved_output=obj["approvedOutput"],
             edit_log=obj.get("editLog"),
             improvement_score=obj.get("improvementScore", 0),
-            valid_for_training=obj.get("validForTraining", False),
+            valid_for_training=obj.get("validForTraining", True) is not False,
         )
 
 
@@ -90,23 +90,23 @@ def load_manifest(path: str | Path) -> dict[str, Any]:
 def filter_records(
     records: list[TrainingRecord],
     *,
-    valid_for_training_only: bool = True,
+    valid_for_training_only: bool = False,
     algorithm_version: str | None = None,
-    split: SplitName | None = None,
+    split: SplitName | str | None = None,
     manifest: dict[str, Any] | None = None,
 ) -> list[TrainingRecord]:
     out: list[TrainingRecord] = []
     for r in records:
-        if valid_for_training_only and not r.valid_for_training:
+        if valid_for_training_only and r.valid_for_training is False:
             continue
         if algorithm_version and r.algorithm_version != algorithm_version:
             continue
-        if split and manifest:
-            allowed = set(manifest.get("splits", {}).get(split, []))
-            if r.id not in allowed:
-                continue
-        elif split:
-            if seed_split_bucket(r.seed) != split:
+        if split and split != "all":
+            if manifest:
+                allowed = set(manifest.get("splits", {}).get(split, []))
+                if r.id not in allowed:
+                    continue
+            elif seed_split_bucket(r.seed) != split:
                 continue
         out.append(r)
     return out

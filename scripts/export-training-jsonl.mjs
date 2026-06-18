@@ -103,9 +103,9 @@ function seedSplitBucket(seed) {
   return "test";
 }
 
-function annotatePayload(payload) {
-  if (!payload || typeof payload !== "object") return payload;
-  return { ...payload };
+function isValidForTraining(payload) {
+  if (!payload || typeof payload !== "object") return false;
+  return payload.validForTraining !== false;
 }
 
 function toSlimRecord(row, payload) {
@@ -123,7 +123,7 @@ function toSlimRecord(row, payload) {
     approvedOutput: payload.approvedOutput,
     editLog: payload.editLog,
     improvementScore: payload.improvementScore,
-    validForTraining: payload.validForTraining ?? false,
+    validForTraining: isValidForTraining(payload),
     distributionCurveVersion: payload.distributionCurveVersion,
     approvedAt: row.approvedAt?.toISOString() ?? null,
   };
@@ -172,7 +172,7 @@ async function main() {
 
     for (const row of rows) {
       const payload = annotatePayload(row.payload);
-      const validForTraining = payload.validForTraining ?? false;
+      const validForTraining = isValidForTraining(payload);
 
       if (opts.validForTrainingOnly && !validForTraining) continue;
       if (opts.algorithmVersion && row.algorithmVersion !== opts.algorithmVersion) continue;

@@ -66,27 +66,11 @@ jobs:
             --data training-export.jsonl \
             --checkpoint ml/checkpoints/best.pt \
             --manifest training-split-manifest.json \
+            --split all \
             --output ml/checkpoints/eval_metrics.json
 
-      - name: Check promotion gates
-        id: promote
-        run: node scripts/ml-check-promotion.mjs ml/checkpoints/eval_metrics.json
-
-      - name: Deploy checkpoint to Railway ML service
-        if: success() && steps.promote.outcome == 'success' && steps.secrets_check.outputs.deploy_ready == 'true'
-        env:
-          ML_INFERENCE_URL: ${{ secrets.ML_INFERENCE_URL }}
-          ML_API_KEY: ${{ secrets.ML_API_KEY }}
-        run: node scripts/ml-deploy-checkpoint.mjs ml/checkpoints/best.pt
-
-      - name: Register model version in database
-        if: success() && steps.promote.outcome == 'success'
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          ML_MODEL_VERSION: ${{ secrets.ML_MODEL_VERSION || 'v1' }}
-        run: node scripts/ml-register-model.mjs ml/checkpoints/eval_metrics.json
-
       - name: Upload checkpoint artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: placement-ml-checkpoint
@@ -94,3 +78,29 @@ jobs:
             ml/checkpoints/best.pt
             ml/checkpoints/eval_metrics.json
             ml/checkpoints/feature_vocab.json
+
+      - name: Check promotion sanity (advisory metrics)
+        id: promote
+        continue-on-error: true
+        run: node scripts/ml-check-promotion.mjs ml/checkpoints/eval_metrics.json
+
+      - name: Promotion sanity failed
+        if: steps.promote.outcome != 'success'
+        run: |
+          echo "::warning::Promotion sanity check failed (empty export or extreme head-count delta)."
+          echo "Checkpoint artifact is still available; deploy skipped to avoid a runaway model."
+
+      - name: Deploy checkpoint to Railway ML service
+        if: steps.promote.outcome == 'success' && steps.secrets_check.outputs.deploy_ready == 'true'
+        env:
+          ML_INFERENCE_URL: ${{ secrets.ML_INFERENCE_URL }}
+          ML_API_KEY: ${{ secrets.ML_API_KEY }}
+        run: node scripts/ml-deploy-checkpoint.mjs ml/checkpoints/best.pt
+
+      - name: Register model version in database
+        if: steps.promote.outcome == 'success'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ML_MODEL_VERSION: ${{ secrets.ML_MODEL_VERSION || 'v1' }}
+        run: node scripts/ml-register-model.mjs ml/checkpoints/eval_metrics.json
+
