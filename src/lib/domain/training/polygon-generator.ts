@@ -14,6 +14,7 @@ import {
 } from "./organic-edges";
 import {
   normalizeSceneToOrigin,
+  generateAdjacentExclusions,
 } from "./exclusion-generator";
 
 export type PolygonGeneratorOptions = {
@@ -173,7 +174,8 @@ function metadataFor(
   vertices: Point[],
   shapeClass: TrainingShapeClass,
   seed: number,
-  rotationDeg: number
+  rotationDeg: number,
+  hasExclusions: boolean
 ): TrainingPolygonMetadata {
   const b = polygonBounds(vertices);
   return {
@@ -184,7 +186,7 @@ function metadataFor(
     areaSqFt: Math.round(polygonArea(vertices) * 10) / 10,
     vertexCount: vertices.length,
     sideLengthsFt: polygonEdgeLengthsFt(vertices).map(roundLengthFt),
-    hasExclusions: false,
+    hasExclusions,
     rotationDeg: Math.round(rotationDeg * 10) / 10,
   };
 }
@@ -440,35 +442,41 @@ function finalizePolygon(
   shapeClass: TrainingShapeClass,
   seed: number,
   rotationDeg: number,
-  _rng: () => number
+  rng: () => number
 ): GeneratedTrainingPolygon {
   const rotated = applyRotationAndNormalize(vertices, rotationDeg);
   if (!isSimpleEnough(rotated)) {
     const fallback = rectangle(45, 30);
     const fallbackRot = applyRotationAndNormalize(fallback, rotationDeg);
-    const normalized = normalizeSceneToOrigin(fallbackRot, []);
+    const exclusions = generateAdjacentExclusions(fallbackRot, rng, seed, {
+      minCount: 1,
+    });
+    const normalized = normalizeSceneToOrigin(fallbackRot, exclusions);
     return {
       verticesFt: normalized.lawnVertices,
       metadata: metadataFor(
         normalized.lawnVertices,
         "rectangle",
         seed,
-        rotationDeg
+        rotationDeg,
+        normalized.exclusions.length > 0
       ),
-      exclusionZonesFt: [],
+      exclusionZonesFt: normalized.exclusions,
     };
   }
 
-  const normalized = normalizeSceneToOrigin(rotated, []);
+  const exclusions = generateAdjacentExclusions(rotated, rng, seed, { minCount: 1 });
+  const normalized = normalizeSceneToOrigin(rotated, exclusions);
   return {
     verticesFt: normalized.lawnVertices,
     metadata: metadataFor(
       normalized.lawnVertices,
       shapeClass,
       seed,
-      rotationDeg
+      rotationDeg,
+      normalized.exclusions.length > 0
     ),
-    exclusionZonesFt: [],
+    exclusionZonesFt: normalized.exclusions,
   };
 }
 

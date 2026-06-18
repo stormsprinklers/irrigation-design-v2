@@ -132,11 +132,43 @@ describe("polygon-generator", () => {
     assert.notDeepEqual(a.verticesFt, b.verticesFt);
   });
 
-  it("does not generate exclusion zones on synthetic lawns", () => {
+  it("generates at least one adjacent exclusion zone per synthetic lawn", () => {
     for (let seed = 0; seed < 200; seed++) {
-      const poly = generateTrainingPolygon({ seed, shapeClass: "back_yard" });
-      assert.equal(poly.exclusionZonesFt.length, 0);
-      assert.equal(poly.metadata.hasExclusions, false);
+      const poly = generateTrainingPolygon({ seed });
+      assert.ok(
+        poly.exclusionZonesFt.length >= 1,
+        `seed ${seed} expected >= 1 exclusion, got ${poly.exclusionZonesFt.length}`
+      );
+      assert.equal(poly.metadata.hasExclusions, true);
+    }
+  });
+
+  it("keeps exclusion zones outside the lawn interior", () => {
+    for (let seed = 0; seed < 200; seed++) {
+      const poly = generateTrainingPolygon({ seed });
+      for (const zone of poly.exclusionZonesFt) {
+        for (const v of zone.vertices) {
+          const inside = pointInPolygon(v, poly.verticesFt);
+          if (!inside) continue;
+          const onBoundary = poly.verticesFt.some((_, i) => {
+            const a = poly.verticesFt[i]!;
+            const b = poly.verticesFt[(i + 1) % poly.verticesFt.length]!;
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const len = Math.hypot(dx, dy);
+            if (len < 1e-6) return false;
+            const t = ((v.x - a.x) * dx + (v.y - a.y) * dy) / (len * len);
+            if (t < -0.02 || t > 1.02) return false;
+            const px = a.x + t * dx;
+            const py = a.y + t * dy;
+            return Math.hypot(v.x - px, v.y - py) <= 0.15;
+          });
+          assert.ok(
+            onBoundary,
+            `seed ${seed} exclusion vertex (${v.x}, ${v.y}) lies inside lawn`
+          );
+        }
+      }
     }
   });
 
@@ -144,6 +176,7 @@ describe("polygon-generator", () => {
     const a = generateTrainingPolygon({ seed: 4242, shapeClass: "rectangle" });
     const b = generateTrainingPolygon({ seed: 4242, shapeClass: "rectangle" });
     assert.deepEqual(a.exclusionZonesFt, b.exclusionZonesFt);
+    assert.ok(a.exclusionZonesFt.length >= 1);
   });
 });
 

@@ -109,12 +109,19 @@ function buildAttachedExclusion(
   const outward = outwardUnitNormal(edge.start, edge.end, ccw);
   if (Math.hypot(outward.x, outward.y) < 1e-6) return null;
 
-  const span = randRange(rng, 0.55, 1);
-  const maxSpan = Math.min(1, Math.max(0.35, span));
-  const margin = (1 - maxSpan) / 2;
-  const t0 = margin + randRange(rng, 0, 0.08);
-  const t1 = 1 - margin - randRange(rng, 0, 0.08);
-  if (t1 - t0 < 0.25) return null;
+  let t0: number;
+  let t1: number;
+  if (edge.lengthFt < 10) {
+    t0 = 0.05;
+    t1 = 0.95;
+  } else {
+    const span = randRange(rng, 0.55, 1);
+    const maxSpan = Math.min(1, Math.max(0.35, span));
+    const margin = (1 - maxSpan) / 2;
+    t0 = margin + randRange(rng, 0, 0.08);
+    t1 = 1 - margin - randRange(rng, 0, 0.08);
+    if (t1 - t0 < 0.25) return null;
+  }
 
   const a = pointAlongEdge(edge.start, edge.end, t0);
   const b = pointAlongEdge(edge.start, edge.end, t1);
@@ -168,40 +175,75 @@ export function normalizeSceneToOrigin(
   };
 }
 
-/** Generate exclusion polygons attached to lawn edges (design / future use only — not used for AI training lawns). */
+/** Generate exclusion polygons attached to lawn edges, outward from the lawn boundary. */
 export function generateAdjacentExclusions(
   lawnVertices: Point[],
   rng: () => number,
-  seed: number
+  seed: number,
+  options: { minCount?: number; maxCount?: number } = {}
 ): ExclusionZone[] {
+  const minCount = options.minCount ?? 1;
+  const maxCount = options.maxCount ?? 3;
   const roll = rng();
-  const targetCount = roll < 0.32 ? 0 : roll < 0.68 ? 1 : roll < 0.9 ? 2 : 3;
+  const extra = roll < 0.5 ? 0 : roll < 0.85 ? 1 : 2;
+  const targetCount = Math.min(maxCount, Math.max(minCount, minCount + extra));
 
-  const edges = eligibleLawnEdges(lawnVertices, 10);
-  if (edges.length === 0 || targetCount === 0) return [];
+  for (const minEdgeLengthFt of [10, 6, 4, 3]) {
+    const zones = collectAdjacentExclusions(
+      lawnVertices,
+      rng,
+      seed,
+      targetCount,
+      minEdgeLengthFt
+    );
+    if (zones.length >= minCount) return zones;
+  }
+
+  return collectAdjacentExclusions(lawnVertices, rng, seed, minCount, 0);
+}
+
+function collectAdjacentExclusions(
+  lawnVertices: Point[],
+  rng: () => number,
+  seed: number,
+  targetCount: number,
+  minEdgeLengthFt: number
+): ExclusionZone[] {
+  let edges = eligibleLawnEdges(lawnVertices, minEdgeLengthFt);
+  if (edges.length === 0 && minEdgeLengthFt === 0) {
+    edges = eligibleLawnEdges(lawnVertices, 0).sort(
+      (a, b) => b.lengthFt - a.lengthFt
+    );
+    edges = edges.slice(0, 1);
+  }
+  if (edges.length === 0) return [];
 
   const shuffled = [...edges].sort(() => rng() - 0.5);
   const zones: ExclusionZone[] = [];
+  const depthOptions = [10, 14, 18, 22, 8, 16, 20];
 
   for (const edge of shuffled) {
     if (zones.length >= targetCount) break;
 
-    const depthFt = randRange(rng, 8, 22);
-    const vertices = buildAttachedExclusion(edge, lawnVertices, rng, depthFt);
-    if (!vertices) continue;
-    if (exclusionOverlapsLawnInterior(vertices, lawnVertices)) continue;
-    if (zones.some((z) => exclusionsOverlap(vertices, z.vertices))) continue;
+    for (const depthFt of depthOptions) {
+      if (zones.length >= targetCount) break;
+      const vertices = buildAttachedExclusion(edge, lawnVertices, rng, depthFt);
+      if (!vertices) continue;
+      if (exclusionOverlapsLawnInterior(vertices, lawnVertices)) continue;
+      if (zones.some((z) => exclusionsOverlap(vertices, z.vertices))) continue;
 
-    const boundaryVerts = vertices.filter((v) => onLawnBoundary(v, lawnVertices));
-    if (boundaryVerts.length < 2) continue;
+      const boundaryVerts = vertices.filter((v) => onLawnBoundary(v, lawnVertices));
+      if (boundaryVerts.length < 2) continue;
 
-    const exclusionType = pickExclusionType(rng);
-    zones.push({
-      id: `training-excl-${seed}-${edge.index}-${zones.length}`,
-      name: exclusionName(exclusionType, rng, zones.length),
-      vertices,
-      exclusionType,
-    });
+      const exclusionType = pickExclusionType(rng);
+      zones.push({
+        id: `training-excl-${seed}-${edge.index}-${zones.length}`,
+        name: exclusionName(exclusionType, rng, zones.length),
+        vertices,
+        exclusionType,
+      });
+      break;
+    }
   }
 
   return zones;
