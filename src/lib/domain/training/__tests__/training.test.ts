@@ -10,6 +10,10 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  emptyShapeCounts,
+  pickWeightedUnderrepresentedShape,
+} from "../shape-selection";
 import { describe, it } from "node:test";
 import { generateTrainingPolygon, buildCanonicalTrainingPolygon } from "../polygon-generator";
 import { computeTrainingStagePaddingPx, trainingStageSizePx } from "../stage-layout";
@@ -25,6 +29,24 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const catalog = JSON.parse(
   readFileSync(join(__dirname, "../../../../../prisma/seed-data/catalog-items.json"), "utf8")
 ) as CatalogItemData[];
+
+describe("shape-selection", () => {
+  it("favors shapes with fewer saved corrections", () => {
+    const counts = emptyShapeCounts();
+    counts.rectangle = 50;
+    counts.l_shape = 0;
+    counts.concave = 1;
+
+    const picked = new Map<string, number>();
+    for (let i = 0; i < 2000; i++) {
+      const shape = pickWeightedUnderrepresentedShape(counts, () => Math.random());
+      picked.set(shape, (picked.get(shape) ?? 0) + 1);
+    }
+
+    assert.ok((picked.get("l_shape") ?? 0) > (picked.get("rectangle") ?? 0));
+    assert.ok((picked.get("concave") ?? 0) > (picked.get("rectangle") ?? 0));
+  });
+});
 
 describe("polygon-generator", () => {
   it("generates valid CCW polygons with minimum area", () => {

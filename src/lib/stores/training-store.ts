@@ -22,6 +22,10 @@ import type {
   TrainingShapeClass,
   UniformityScores,
 } from "@/lib/domain/training/types";
+import {
+  emptyShapeCounts,
+  pickWeightedUnderrepresentedShape,
+} from "@/lib/domain/training/shape-selection";
 
 export type TrainingViewMode = "baseline" | "corrected" | "compare";
 export type TrainingTool = "select" | "add" | "pan";
@@ -44,10 +48,12 @@ type TrainingState = {
   showSampleGrid: boolean;
   showArcs: boolean;
   shapeFilter: TrainingShapeClass | "random";
+  shapeCounts: Record<TrainingShapeClass, number>;
   copiedHeads: TrainingHeadSnapshot[] | null;
   pasteGeneration: number;
 
   initCatalog: (catalog: CatalogItemData[]) => void;
+  setShapeCounts: (counts: Record<TrainingShapeClass, number>) => void;
   generateExample: (seed?: number) => void;
   selectHead: (id: string, opts?: { additive?: boolean }) => void;
   setSelectedHeadIds: (ids: string[]) => void;
@@ -175,19 +181,25 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   showSampleGrid: false,
   showArcs: true,
   shapeFilter: "random",
+  shapeCounts: emptyShapeCounts(),
   copiedHeads: null,
   pasteGeneration: 0,
 
   initCatalog: (catalog) => set({ catalog }),
+  setShapeCounts: (counts) => set({ shapeCounts: counts }),
 
   generateExample: (seed) => {
-    const { catalog, shapeFilter } = get();
+    const { catalog, shapeFilter, shapeCounts } = get();
     if (catalog.length === 0) {
       throw new Error("Catalog is empty — run db:seed or add catalog items.");
     }
+    const shapeClass =
+      shapeFilter === "random"
+        ? pickWeightedUnderrepresentedShape(shapeCounts)
+        : shapeFilter;
     const poly = generateTrainingPolygon({
       seed,
-      shapeClass: shapeFilter === "random" ? undefined : shapeFilter,
+      shapeClass,
     });
     const placed = runPlacementOnPolygon(poly, catalog);
     const baseline = cloneHeads(placed.heads);

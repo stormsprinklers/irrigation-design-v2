@@ -62,13 +62,18 @@ export function TrainingWorkspace({
   useEffect(() => {
     const store = useTrainingStore.getState();
     store.initCatalog(catalog);
+    store.setShapeCounts(initialStats.byShape);
     try {
       store.generateExample();
     } catch (e) {
       console.error("Failed to generate training example", e);
       toast.error(e instanceof Error ? e.message : "Failed to generate example");
     }
-  }, [catalog]);
+  }, [catalog, initialStats.byShape]);
+
+  useEffect(() => {
+    useTrainingStore.getState().setShapeCounts(stats.byShape);
+  }, [stats.byShape]);
 
   useEffect(() => {
     function isEditableTarget(target: EventTarget | null): boolean {
