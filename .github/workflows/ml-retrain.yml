@@ -10,9 +10,26 @@ on:
 jobs:
   export-and-train:
     runs-on: ubuntu-latest
-    if: ${{ secrets.DATABASE_URL != '' }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Require repository secrets
+        id: secrets_check
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ML_INFERENCE_URL: ${{ secrets.ML_INFERENCE_URL }}
+          ML_API_KEY: ${{ secrets.ML_API_KEY }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::DATABASE_URL secret is not configured (Settings → Secrets and variables → Actions)"
+            exit 1
+          fi
+          if [ -n "$ML_INFERENCE_URL" ] && [ -n "$ML_API_KEY" ]; then
+            echo "deploy_ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy_ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::ML_INFERENCE_URL or ML_API_KEY not set — train/eval will run but deploy will be skipped"
+          fi
 
       - uses: actions/setup-node@v4
         with:
@@ -56,7 +73,7 @@ jobs:
         run: node scripts/ml-check-promotion.mjs ml/checkpoints/eval_metrics.json
 
       - name: Deploy checkpoint to Railway ML service
-        if: success() && steps.promote.outcome == 'success'
+        if: success() && steps.promote.outcome == 'success' && steps.secrets_check.outputs.deploy_ready == 'true'
         env:
           ML_INFERENCE_URL: ${{ secrets.ML_INFERENCE_URL }}
           ML_API_KEY: ${{ secrets.ML_API_KEY }}
