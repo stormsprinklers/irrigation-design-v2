@@ -1,6 +1,7 @@
 import type { NozzleAdjustability } from "@/lib/catalog/adjustability";
 import type { CatalogItemData } from "../types";
 import { calculateNozzleHydraulics } from "../hydraulics";
+import { headGpmFromHydraulics } from "../hydraulics/nozzle-gpm";
 import type { ExclusionZone, Point, SpacingPattern, SprinklerHead } from "../types";
 import type { EdgeRun } from "./edge-spacing";
 import {
@@ -377,10 +378,9 @@ export function finalizeHeadHydraulics(
 ): SprinklerHead[] {
   return heads.map((head) => {
     const hyd = calculateNozzleHydraulics(nozzle, pressurePsi, head.arcDegrees, pattern);
-    const gpmScale = head.arcDegrees >= 360 ? 1 : head.arcDegrees / 360;
     return {
       ...head,
-      gpm: hyd.gpm * (head.arcDegrees <= 180 ? head.arcDegrees / 180 : gpmScale),
+      gpm: headGpmFromHydraulics(nozzle, hyd, head.arcDegrees),
       precipInPerHr: pattern === "triangular" ? hyd.precipTriInPerHr : hyd.precipInPerHr,
     };
   });

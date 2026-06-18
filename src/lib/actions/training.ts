@@ -24,6 +24,7 @@ import {
   payloadNeedsRescore,
 } from "@/lib/domain/training/training-payload";
 import { revalidatePath } from "next/cache";
+import { maybeTriggerMlRetrain } from "@/lib/domain/training/ml-retrain-trigger";
 import {
   rowPassesExportFilters,
   serializeTrainingExportLine,
@@ -158,6 +159,12 @@ export async function approveTrainingExample(
   });
 
   revalidatePath("/training");
+
+  const approvedCount = await prisma.trainingExample.count({
+    where: { organizationId: user.organizationId, status: "APPROVED" },
+  });
+  void maybeTriggerMlRetrain(approvedCount);
+
   return { id: row.id };
 }
 

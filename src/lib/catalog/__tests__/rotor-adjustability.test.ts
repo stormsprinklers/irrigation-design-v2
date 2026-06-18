@@ -86,7 +86,15 @@ describe("rotor nozzle adjustability", () => {
     assert.equal(head.arcDegrees, 90);
     assert.equal(head.radiusFeet, 18);
     assert.equal(head.rotationDegrees, 135);
-    assert.ok(typeof hyd.gpm === "number");
+    assert.equal(hyd.gpm, 0.5);
     assert.ok(typeof hyd.precipInPerHr === "number");
+  });
+
+  it("GPM is unchanged when arc differs for the same rotor nozzle", () => {
+    const nozzle = rotorNozzle();
+    const narrow = swapHeadNozzle({ arcDegrees: 90, radiusFeet: 15, rotationDegrees: 0 }, nozzle, 45);
+    const wide = swapHeadNozzle({ arcDegrees: 270, radiusFeet: 15, rotationDegrees: 0 }, nozzle, 45);
+    assert.equal(narrow.gpm, wide.gpm);
+    assert.equal(narrow.gpm, 0.5);
   });
 });

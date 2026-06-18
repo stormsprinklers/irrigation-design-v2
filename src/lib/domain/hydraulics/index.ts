@@ -1,5 +1,6 @@
 import type { CatalogItemData, Point, SpacingPattern } from "../types";
 import { chartReferenceArcDegrees } from "@/lib/catalog/mp-arc-bands";
+import { nozzleGpmScalesWithArc } from "./nozzle-gpm";
 
 export function distance(p1: Point, p2: Point): number {
   return Math.hypot(p2.x - p1.x, p2.y - p1.y);
@@ -100,6 +101,13 @@ export function calculateNozzleHydraulics(
   pattern?: SpacingPattern
 ): NozzleChartValues {
   const base = interpolateGpm(nozzle, pressurePsi);
+  if (!nozzleGpmScalesWithArc(nozzle)) {
+    if (pattern === "triangular" && base.precipTriInPerHr !== undefined) {
+      return { ...base, precipTriInPerHr: base.precipTriInPerHr };
+    }
+    return base;
+  }
+
   const chartArc = chartReferenceArcDegrees(nozzle);
   const arc = arcDegrees ?? chartArc;
   const arcRatio = chartArc > 0 ? Math.min(1, arc / chartArc) : 1;

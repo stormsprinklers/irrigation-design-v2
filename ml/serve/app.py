@@ -2,12 +2,12 @@
 from __future__ import annotations
 
 import os
+import urllib.request
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Any
 
 import torch
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, File, Header, HTTPException, UploadFile
 
 from placement_ml.features import build_ml_feature_tensors, tensors_to_model_arrays
 from placement_ml.labels import apply_predicted_deltas
@@ -20,6 +20,31 @@ from .schemas import (
     ReloadResponseSchema,
     TrainingHeadSnapshotSchema,
 )
+
+
+def default_checkpoint_path() -> str:
+    return os.environ.get("ML_CHECKPOINT_PATH", "checkpoints/best.pt")
+
+
+def download_checkpoint(url: str, dest: Path) -> None:
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    with urllib.request.urlopen(url, timeout=120) as response:
+        dest.write_bytes(response.read())
+
+
+def ensure_checkpoint(path: str | None = None) -> str:
+    ckpt = path or default_checkpoint_path()
+    ckpt_path = Path(ckpt)
+    if ckpt_path.exists():
+        return str(ckpt_path)
+
+    download_url = os.environ.get("CHECKPOINT_DOWNLOAD_URL")
+    if download_url:
+        print(f"Downloading checkpoint from CHECKPOINT_DOWNLOAD_URL to {ckpt_path}")
+        download_checkpoint(download_url, ckpt_path)
+        return str(ckpt_path)
+
+    raise FileNotFoundError(f"Checkpoint not found: {ckpt}")
 
 
 class ModelStore:
@@ -105,12 +130,12 @@ def verify_api_key(x_ml_api_key: str | None = Header(default=None)):
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    ckpt = os.environ.get("ML_CHECKPOINT_PATH", "ml/checkpoints/best.pt")
-    if Path(ckpt).exists():
-        store.load(ckpt)
-        print(f"Loaded model from {ckpt}")
-    else:
-        print(f"No checkpoint at {ckpt} — /v1/refine will return 503 until loaded")
+    try:
+        path = ensure_checkpoint()
+        store.load(path)
+        print(f"Loaded model from {path}")
+    except FileNotFoundError as err:
+        print(f"{err} — /v1/refine will return 503 until loaded")
     yield
 
 
@@ -131,9 +156,29 @@ def refine(req: RefineRequestSchema):
 
 
 @app.post("/admin/reload", response_model=ReloadResponseSchema, dependencies=[Depends(verify_api_key)])
-def reload(checkpoint_path: str | None = None):
-    path = checkpoint_path or os.environ.get("ML_CHECKPOINT_PATH", "ml/checkpoints/best.pt")
-    if not Path(path).exists():
-        raise HTTPException(status_code=404, detail=f"Checkpoint not found: {path}")
-    store.load(path)
+def reload(checkpoint_path: str | None = None, checkpoint_url: str | None = None):
+    try:
+        if checkpoint_url:
+            dest = Path(checkpoint_path or default_checkpoint_path())
+            download_checkpoint(checkpoint_url, dest)
+            path = str(dest)
+        else:
+            path = ensure_checkpoint(checkpoint_path)
+        store.load(path)
+    except FileNotFoundError as err:
+        raise HTTPException(status_code=404, detail=str(err)) from err
     return ReloadResponseSchema(ok=True, modelVersion=store.model_version, message=f"Loaded {path}")
+
+
+@app.post("/admin/upload-checkpoint", response_model=ReloadResponseSchema, dependencies=[Depends(verify_api_key)])
+async def upload_checkpoint(file: UploadFile = File(...)):
+    dest = Path(default_checkpoint_path())
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    content = await file.read()
+    dest.write_bytes(content)
+    store.load(str(dest))
+    return ReloadResponseSchema(
+        ok=True,
+        modelVersion=store.model_version,
+        message=f"Uploaded and loaded {dest} ({len(content)} bytes)",
+    )

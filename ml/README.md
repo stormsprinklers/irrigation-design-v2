@@ -67,6 +67,43 @@ docker run -p 8000:8000 \
 3. Set `ML_API_KEY` and `ML_MODEL_VERSION`.
 4. Point Next.js `ML_INFERENCE_URL` at the service URL.
 
+# GitHub Actions secrets (for automated retrain deploy)
+# DATABASE_URL — same as production DB
+# ML_INFERENCE_URL — Railway ML service URL
+# ML_API_KEY — shared with Railway ML service
+# ML_MODEL_VERSION — optional tag, default v1
+
+## Automated retrain loop
+
+1. Approve training examples in the app (data saved to Postgres).
+2. GitHub Actions [`.github/workflows/ml-retrain.yml`](../.github/workflows/ml-retrain.yml) runs weekly, on manual dispatch, or when Vercel triggers `repository_dispatch` every 25 approvals.
+3. CI exports JSONL, trains, evaluates, checks promotion gates.
+4. If gates pass, CI uploads `best.pt` to Railway via `POST /admin/upload-checkpoint` (persists on volume).
+5. Model registry row created in `PlacementModelVersion`.
+
+### GitHub repository secrets
+
+| Secret | Purpose |
+|--------|---------|
+| `DATABASE_URL` | Export training examples |
+| `ML_INFERENCE_URL` | Railway service base URL |
+| `ML_API_KEY` | Auth for upload endpoint |
+
+### Vercel env (optional auto-trigger)
+
+```
+ML_RETRAIN_ON_APPROVE=true
+ML_RETRAIN_BATCH_SIZE=25
+GITHUB_RETRAIN_TOKEN=<PAT with repo dispatch>
+GITHUB_REPOSITORY=your-org/Irrigation-Design-v2
+```
+
+### Manual deploy after local train
+
+```bash
+ML_INFERENCE_URL=https://... ML_API_KEY=... node scripts/ml-deploy-checkpoint.mjs ml/checkpoints/best.pt
+```
+
 ### Railway
 
 Railway must build the **Python Docker image**, not the Next.js app. If you see `npm ci` / `package-lock.json` errors, Railway is treating this repo as Node — switch the builder to Dockerfile (see below).

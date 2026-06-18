@@ -16,7 +16,8 @@
     "catalog:build": "npm run catalog:parse-hunter && npx tsx prisma/seed-data/catalog/build-catalog.ts",
     "predb:seed": "npm run catalog:build",
     "test": "node --import tsx --test src/lib/domain/**/__tests__/*.test.ts src/lib/catalog/**/__tests__/*.test.ts",
-    "training:export": "node scripts/export-training-jsonl.mjs --format slim --valid-for-training-only"
+    "training:export": "node scripts/export-training-jsonl.mjs --format slim --valid-for-training-only",
+    "ml:deploy": "node scripts/ml-deploy-checkpoint.mjs"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

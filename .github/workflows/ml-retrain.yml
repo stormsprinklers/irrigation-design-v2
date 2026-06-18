@@ -2,6 +2,8 @@ name: ML Retrain
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [ml-retrain]
   schedule:
     - cron: "0 6 * * 1"
 
@@ -18,6 +20,11 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      - name: Check minimum training examples
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: node scripts/ml-count-training-examples.mjs
 
       - name: Export training JSONL
         env:
@@ -43,6 +50,24 @@ jobs:
             --checkpoint ml/checkpoints/best.pt \
             --manifest training-split-manifest.json \
             --output ml/checkpoints/eval_metrics.json
+
+      - name: Check promotion gates
+        id: promote
+        run: node scripts/ml-check-promotion.mjs ml/checkpoints/eval_metrics.json
+
+      - name: Deploy checkpoint to Railway ML service
+        if: success() && steps.promote.outcome == 'success'
+        env:
+          ML_INFERENCE_URL: ${{ secrets.ML_INFERENCE_URL }}
+          ML_API_KEY: ${{ secrets.ML_API_KEY }}
+        run: node scripts/ml-deploy-checkpoint.mjs ml/checkpoints/best.pt
+
+      - name: Register model version in database
+        if: success() && steps.promote.outcome == 'success'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          ML_MODEL_VERSION: ${{ secrets.ML_MODEL_VERSION || 'v1' }}
+        run: node scripts/ml-register-model.mjs ml/checkpoints/eval_metrics.json
 
       - name: Upload checkpoint artifact
         uses: actions/upload-artifact@v4
