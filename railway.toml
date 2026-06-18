@@ -1,0 +1,15 @@
+# Railway config for the Placement ML inference API (Python/FastAPI).
+# Deploy this repo as a NEW Railway service — do not use the same service as Vercel/Next.js.
+#
+# Dashboard: Settings → set "Root Directory" to repo root (default).
+# Railway will build ml/Dockerfile instead of running npm ci on the Next.js app.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "ml/Dockerfile"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

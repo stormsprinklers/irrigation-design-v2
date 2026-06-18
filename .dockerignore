@@ -1,0 +1,8 @@
+# Keep Docker build context small — ML image does not need the Next.js app.
+node_modules
+.next
+.git
+*.md
+!ml/README.md
+training-export.jsonl
+training-split-manifest.json
