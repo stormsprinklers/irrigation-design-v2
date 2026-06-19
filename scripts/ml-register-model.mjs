@@ -12,7 +12,18 @@ if (!metricsPath) {
 }
 
 const metrics = JSON.parse(readFileSync(metricsPath, "utf8"));
-const version = process.env.ML_MODEL_VERSION ?? `v1-${new Date().toISOString().slice(0, 10)}`;
+
+/** Each CI run gets a unique registry row; ML_MODEL_VERSION is the family prefix. */
+function resolveRegistryVersion() {
+  const base = (process.env.ML_MODEL_VERSION ?? "v1").trim() || "v1";
+  const suffix =
+    process.env.GITHUB_RUN_NUMBER ??
+    process.env.GITHUB_RUN_ID ??
+    new Date().toISOString().slice(0, 19).replace(/[T:]/g, "-");
+  return `${base}-${suffix}`;
+}
+
+const version = resolveRegistryVersion();
 const algorithmVersion = process.env.PLACEMENT_ALGORITHM_VERSION ?? "placement@ci";
 const checkpointUrl = process.env.ML_INFERENCE_URL
   ? `${process.env.ML_INFERENCE_URL.replace(/\/$/, "")}/admin/upload-checkpoint`

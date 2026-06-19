@@ -71,7 +71,7 @@ docker run -p 8000:8000 \
 # DATABASE_URL — same as production DB
 # ML_INFERENCE_URL — Railway ML service URL
 # ML_API_KEY — shared with Railway ML service
-# ML_MODEL_VERSION — optional tag, default v1
+# ML_MODEL_VERSION — optional prefix; CI registers as v1-<run-number>
 
 ## Automated retrain loop
 
