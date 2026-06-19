@@ -13,7 +13,7 @@ import { getNozzlesForHead, getHeadBodies } from "@/lib/catalog/compat";
 import type { TrainingHeadSnapshot } from "@/lib/domain/training/types";
 import type Konva from "konva";
 import { wedgeStartDeg, wedgeEndDeg } from "@/lib/domain/placement/wedge";
-import { trainingStageSizePx } from "@/lib/domain/training/stage-layout";
+import { trainingSceneDimensionsFt, trainingStageSizePx } from "@/lib/domain/training/stage-layout";
 import { TrainingHeadGraphic } from "./TrainingHeadGraphic";
 import { PolygonSideLabels } from "./PolygonSideLabels";
 
@@ -225,8 +225,8 @@ export function TrainingCanvas() {
         e.preventDefault();
         return;
       }
-      const canScrollX = el.scrollWidth > el.clientWidth;
-      const canScrollY = el.scrollHeight > el.clientHeight;
+      const canScrollX = el.scrollWidth > el.clientWidth + 1;
+      const canScrollY = el.scrollHeight > el.clientHeight + 1;
       if (!canScrollX && !canScrollY) return;
 
       if (canScrollX) el.scrollLeft += e.deltaX;
@@ -302,9 +302,6 @@ export function TrainingCanvas() {
     });
   }, [correctedHeads, baselineHeads, viewMode, polygon, isInteracting, size]);
 
-  const widthFt = polygon?.metadata.widthFt ?? 0;
-  const heightFt = polygon?.metadata.heightFt ?? 0;
-
   const headsForBounds =
     viewMode === "compare"
       ? [...baselineHeads, ...correctedHeads]
@@ -313,7 +310,13 @@ export function TrainingCanvas() {
         : correctedHeads;
 
   const stageLayout = polygon
-    ? trainingStageSizePx(widthFt, heightFt, headsForBounds, PX)
+    ? (() => {
+        const { widthFt, heightFt } = trainingSceneDimensionsFt(
+          polygon.verticesFt,
+          polygon.exclusionZonesFt
+        );
+        return trainingStageSizePx(widthFt, heightFt, headsForBounds, PX);
+      })()
     : { paddingPx: 40, widthPx: 800, heightPx: 600 };
   computedLayoutRef.current = stageLayout;
   const activeLayout = frozenLayout ?? stageLayout;
@@ -323,6 +326,8 @@ export function TrainingCanvas() {
   const contentH = activeLayout.heightPx;
   const wrapperW = Math.max(contentW, size.width);
   const wrapperH = Math.max(contentH, size.height);
+  const insetX = (wrapperW - contentW) / 2;
+  const insetY = (wrapperH - contentH) / 2;
 
   if (!polygon) {
     return (
@@ -485,7 +490,7 @@ export function TrainingCanvas() {
     <div
       ref={containerRef}
       className={`scroll-surface h-full min-h-0 w-full bg-muted/30 ${
-        isInteracting ? "overflow-hidden touch-none" : "overflow-auto"
+        isInteracting ? "overflow-hidden touch-none" : "overflow-x-auto overflow-y-auto"
       }`}
       style={{
         overscrollBehavior: "contain",
@@ -493,9 +498,23 @@ export function TrainingCanvas() {
       }}
     >
       <div
-        className="flex items-center justify-center"
-        style={{ width: wrapperW, height: wrapperH, minWidth: wrapperW, minHeight: wrapperH }}
+        style={{
+          width: wrapperW,
+          height: wrapperH,
+          minWidth: wrapperW,
+          minHeight: wrapperH,
+          position: "relative",
+        }}
       >
+        <div
+          style={{
+            position: "absolute",
+            left: insetX,
+            top: insetY,
+            width: contentW,
+            height: contentH,
+          }}
+        >
         <Stage
           ref={stageRef}
           width={contentW}
@@ -663,6 +682,7 @@ export function TrainingCanvas() {
           )}
           </Layer>
         </Stage>
+        </div>
       </div>
     </div>
   );

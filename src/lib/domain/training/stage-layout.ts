@@ -1,4 +1,7 @@
+import type { Point } from "../types";
 import type { TrainingHeadSnapshot } from "./types";
+import { sceneBoundsFt } from "./exclusion-generator";
+import type { ExclusionZone } from "../types";
 
 export const TRAINING_MIN_STAGE_PADDING_PX = 40;
 
@@ -38,6 +41,17 @@ export function computeTrainingStagePaddingPx(
   pad = Math.max(pad, minPaddingPx + 28);
 
   return Math.ceil(pad);
+}
+
+export function trainingSceneDimensionsFt(
+  lawnVertices: Point[],
+  exclusions: ExclusionZone[]
+): { widthFt: number; heightFt: number } {
+  const b = sceneBoundsFt(lawnVertices, exclusions);
+  return {
+    widthFt: Math.max(0, b.maxX - b.minX),
+    heightFt: Math.max(0, b.maxY - b.minY),
+  };
 }
 
 export function trainingStageSizePx(

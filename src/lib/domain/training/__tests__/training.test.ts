@@ -16,7 +16,7 @@ import {
 } from "../shape-selection";
 import { describe, it } from "node:test";
 import { generateTrainingPolygon, buildCanonicalTrainingPolygon } from "../polygon-generator";
-import { computeTrainingStagePaddingPx, trainingStageSizePx } from "../stage-layout";
+import { computeTrainingStagePaddingPx, trainingSceneDimensionsFt, trainingStageSizePx } from "../stage-layout";
 import { applyOrganicEdges, circularLawn } from "../organic-edges";
 import { runPlacementOnPolygon } from "../placement-adapter";
 import { evaluateDesign } from "../../simulation/scoring";
@@ -209,6 +209,31 @@ describe("stage-layout", () => {
     const size = trainingStageSizePx(45, 30, heads, 10);
     assert.equal(size.widthPx, 45 * 10 + pad * 2);
     assert.equal(size.heightPx, 30 * 10 + pad * 2);
+  });
+
+  it("includes exclusion zones when sizing the scene", () => {
+    const lawn = [
+      { x: 0, y: 0 },
+      { x: 40, y: 0 },
+      { x: 40, y: 20 },
+      { x: 0, y: 20 },
+    ];
+    const exclusions = [
+      {
+        id: "ex",
+        name: "Driveway",
+        exclusionType: "DRIVEWAY" as const,
+        vertices: [
+          { x: 40, y: 0 },
+          { x: 58, y: 0 },
+          { x: 58, y: 20 },
+          { x: 40, y: 20 },
+        ],
+      },
+    ];
+    const dims = trainingSceneDimensionsFt(lawn, exclusions);
+    assert.equal(dims.widthFt, 58);
+    assert.equal(dims.heightFt, 20);
   });
 });
 
