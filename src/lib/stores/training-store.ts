@@ -28,6 +28,8 @@ import {
   emptyShapeCounts,
   pickWeightedUnderrepresentedShape,
 } from "@/lib/domain/training/shape-selection";
+import { TRAINING_HEAD_PRESETS } from "@/lib/domain/training/head-presets";
+import type { Point } from "@/lib/domain/types";
 
 export type TrainingViewMode = "baseline" | "corrected" | "compare";
 export type TrainingTool = "select" | "add" | "pan";
@@ -65,6 +67,7 @@ type TrainingState = {
   shapeCounts: Record<TrainingShapeClass, number>;
   copiedHeads: TrainingHeadSnapshot[] | null;
   pasteGeneration: number;
+  lastCanvasClickFt: Point | null;
   mlRefinementEnabled: boolean;
   snapArcToPolygonEdges: boolean;
   generatingExample: boolean;
@@ -109,6 +112,10 @@ type TrainingState = {
     patch: Partial<TrainingHeadSnapshot>,
     opts?: { deferScores?: boolean }
   ) => void;
+  setSelectedHeadAssembly: (headBodyId: string, catalogItemId: string) => void;
+  applyProsMp2000Preset: () => void;
+  applyPgpAdj15Preset: () => void;
+  setLastCanvasClickFt: (positionFt: Point | null) => void;
   setSelectedArcDegrees: (arcDegrees: number) => void;
   rotateSelectedHeads: (deltaDeg: number) => void;
   snapSelectedArcsToPolygonEdges: () => void;
@@ -141,15 +148,31 @@ function cloneHeadWithOffset(
   source: TrainingHeadSnapshot,
   offsetFt: number
 ): TrainingHeadSnapshot {
+  return cloneHeadAtPosition(source, {
+    x: source.positionFt.x + offsetFt,
+    y: source.positionFt.y + offsetFt,
+  });
+}
+
+function cloneHeadAtPosition(
+  source: TrainingHeadSnapshot,
+  positionFt: Point
+): TrainingHeadSnapshot {
   const head: TrainingHeadSnapshot = {
     ...source,
     id: generateId("head"),
-    positionFt: {
-      x: source.positionFt.x + offsetFt,
-      y: source.positionFt.y + offsetFt,
-    },
+    positionFt: { ...positionFt },
   };
   return { ...head, ...wedgeBoundsForHead(head) };
+}
+
+function headsCentroid(heads: TrainingHeadSnapshot[]): Point {
+  if (heads.length === 0) return { x: 0, y: 0 };
+  const sum = heads.reduce(
+    (acc, h) => ({ x: acc.x + h.positionFt.x, y: acc.y + h.positionFt.y }),
+    { x: 0, y: 0 }
+  );
+  return { x: sum.x / heads.length, y: sum.y / heads.length };
 }
 
 function recompute(
@@ -273,6 +296,7 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   shapeCounts: emptyShapeCounts(),
   copiedHeads: null,
   pasteGeneration: 0,
+  lastCanvasClickFt: null,
   mlRefinementEnabled: false,
   snapArcToPolygonEdges: false,
   generatingExample: false,
@@ -466,6 +490,30 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     set({ correctedHeads: corrected, ...scores });
   },
 
+  setSelectedHeadAssembly: (headBodyId, catalogItemId) => {
+    const { catalog, selectedHeadIds } = get();
+    if (selectedHeadIds.length === 0) return;
+    const nozzle = catalog.find((c) => c.id === catalogItemId);
+    if (!nozzle) return;
+    get().patchSelectedHeads({
+      headBodyId,
+      catalogItemId,
+      nozzleModel: nozzle.model,
+    });
+  },
+
+  applyProsMp2000Preset: () => {
+    const preset = TRAINING_HEAD_PRESETS.prosMp2000;
+    get().setSelectedHeadAssembly(preset.headBodyId, preset.catalogItemId);
+  },
+
+  applyPgpAdj15Preset: () => {
+    const preset = TRAINING_HEAD_PRESETS.pgpAdj15;
+    get().setSelectedHeadAssembly(preset.headBodyId, preset.catalogItemId);
+  },
+
+  setLastCanvasClickFt: (positionFt) => set({ lastCanvasClickFt: positionFt }),
+
   setSelectedArcDegrees: (arcDegrees) => {
     const { selectedHeadIds, correctedHeads, catalog } = get();
     if (selectedHeadIds.length === 0) return;
@@ -599,13 +647,40 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   },
 
   pasteCopiedHeads: () => {
-    const { polygon, baselineHeads, correctedHeads, copiedHeads, pasteGeneration, viewMode } =
-      get();
+    const {
+      polygon,
+      baselineHeads,
+      correctedHeads,
+      copiedHeads,
+      pasteGeneration,
+      lastCanvasClickFt,
+      viewMode,
+    } = get();
     if (!polygon || viewMode === "baseline" || !copiedHeads?.length) return;
 
     const generation = pasteGeneration + 1;
-    const offsetFt = PASTE_OFFSET_FT * generation;
-    const pasted = copiedHeads.map((source) => cloneHeadWithOffset(source, offsetFt));
+    let pasted: TrainingHeadSnapshot[];
+
+    if (lastCanvasClickFt) {
+      const centroid = headsCentroid(copiedHeads);
+      const extra = PASTE_OFFSET_FT * (generation - 1);
+      const target = {
+        x: lastCanvasClickFt.x + extra,
+        y: lastCanvasClickFt.y + extra,
+      };
+      const dx = target.x - centroid.x;
+      const dy = target.y - centroid.y;
+      pasted = copiedHeads.map((source) =>
+        cloneHeadAtPosition(source, {
+          x: source.positionFt.x + dx,
+          y: source.positionFt.y + dy,
+        })
+      );
+    } else {
+      const offsetFt = PASTE_OFFSET_FT * generation;
+      pasted = copiedHeads.map((source) => cloneHeadWithOffset(source, offsetFt));
+    }
+
     const corrected = [...correctedHeads, ...pasted];
     const scores = recompute(polygon, baselineHeads, corrected);
     set({

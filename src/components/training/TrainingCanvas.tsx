@@ -123,6 +123,7 @@ export function TrainingCanvas() {
   const updateCorrectedHead = useTrainingStore((s) => s.updateCorrectedHead);
   const recomputeScores = useTrainingStore((s) => s.recomputeScores);
   const addCorrectedHead = useTrainingStore((s) => s.addCorrectedHead);
+  const setLastCanvasClickFt = useTrainingStore((s) => s.setLastCanvasClickFt);
 
   const stageRef = useRef(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -352,6 +353,17 @@ export function TrainingCanvas() {
 
   const flatVertices = polygon.verticesFt.flatMap((v) => [v.x * PX, v.y * PX]);
 
+  function recordCanvasPointerFt(
+    stage: { getPointerPosition?: () => { x: number; y: number } | null } | null | undefined
+  ) {
+    const pos = stage?.getPointerPosition?.();
+    if (!pos) return;
+    setLastCanvasClickFt({
+      x: (pos.x - stagePadding) / PX,
+      y: (pos.y - stagePadding) / PX,
+    });
+  }
+
   function finishMarqueeSelection(
     startX: number,
     startY: number,
@@ -387,6 +399,7 @@ export function TrainingCanvas() {
     const stage = e.target.getStage();
     const pos = stage?.getPointerPosition();
     if (!pos) return;
+    recordCanvasPointerFt(stage);
     marqueeUsedRef.current = false;
     setMarquee({ startX: pos.x, startY: pos.y, currentX: pos.x, currentY: pos.y });
   }
@@ -422,6 +435,7 @@ export function TrainingCanvas() {
   }) {
     const stage = e.target.getStage?.();
     if (!stage) return;
+    recordCanvasPointerFt(stage);
     const clickedEmpty =
       e.target === stage || e.target.getClassName?.() === "Layer";
     if (!clickedEmpty) return;

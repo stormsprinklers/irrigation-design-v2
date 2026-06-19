@@ -216,6 +216,16 @@ export function TrainingWorkspace({
           store.snapSelectedArcsToPolygonEdges();
           return;
         }
+        if (key === "s") {
+          e.preventDefault();
+          store.applyProsMp2000Preset();
+          return;
+        }
+        if (key === "r") {
+          e.preventDefault();
+          store.applyPgpAdj15Preset();
+          return;
+        }
       }
 
       if (
