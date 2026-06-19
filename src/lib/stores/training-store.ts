@@ -16,7 +16,7 @@ import {
   getNozzleAdjustability,
 } from "@/lib/catalog/adjustability";
 import { snapHeadPositionToPolygon, snapHeadRotationToPolygon } from "@/lib/domain/training/arc-edge-snap";
-import { nextHeadPositionAlongEdgeAtArcEnd } from "@/lib/domain/training/edge-duplicate";
+import { flippedRotationDegrees } from "@/lib/domain/training/flip-wedge";
 import {
   loadTrainingSpeedBests,
   recordTrainingSpeedBest,
@@ -127,6 +127,7 @@ type TrainingState = {
   setLastCanvasClickFt: (positionFt: Point | null) => void;
   setSelectedArcDegrees: (arcDegrees: number) => void;
   rotateSelectedHeads: (deltaDeg: number) => void;
+  flipSelectedHeads: () => void;
   snapSelectedArcsToPolygonEdges: () => void;
   adjustSelectedRadius: (deltaFt: number, opts?: { deferScores?: boolean }) => void;
   moveSelectedHeadsByDelta: (
@@ -602,6 +603,26 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     const corrected = correctedHeads.map((h) => {
       if (!idSet.has(h.id)) return h;
       const rotationDegrees = ((h.rotationDegrees + deltaDeg) % 360 + 360) % 360;
+      return applyPatchWithOptionalSnap(
+        h,
+        { rotationDegrees },
+        catalog,
+        polygon,
+        snapArcToPolygonEdges
+      );
+    });
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, ...scores });
+  },
+
+  flipSelectedHeads: () => {
+    const { polygon, baselineHeads, correctedHeads, selectedHeadIds, catalog, snapArcToPolygonEdges } =
+      get();
+    if (!polygon || selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    const corrected = correctedHeads.map((h) => {
+      if (!idSet.has(h.id)) return h;
+      const rotationDegrees = flippedRotationDegrees(h.rotationDegrees, h.arcDegrees);
       return applyPatchWithOptionalSnap(
         h,
         { rotationDegrees },

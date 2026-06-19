@@ -155,6 +155,16 @@ export function TrainingWorkspace({
       const store = useTrainingStore.getState();
       const mod = e.ctrlKey || e.metaKey;
 
+      if (mod && e.key.toLowerCase() === "a") {
+        if (!store.polygon) return;
+        const heads =
+          store.viewMode === "baseline" ? store.baselineHeads : store.correctedHeads;
+        if (heads.length === 0) return;
+        e.preventDefault();
+        store.setSelectedHeadIds(heads.map((h) => h.id));
+        return;
+      }
+
       if (mod && e.key.toLowerCase() === "c") {
         if (store.viewMode === "baseline" || store.selectedHeadIds.length === 0) return;
         e.preventDefault();
@@ -219,6 +229,11 @@ export function TrainingWorkspace({
         if (e.key === "Enter") {
           e.preventDefault();
           store.rotateSelectedHeads(90);
+          return;
+        }
+        if (e.key === "\\" || e.code === "Backslash") {
+          e.preventDefault();
+          store.flipSelectedHeads();
           return;
         }
         if (e.key === "." || e.code === "Period") {
