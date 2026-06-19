@@ -32,6 +32,18 @@ import {
 export type TrainingViewMode = "baseline" | "corrected" | "compare";
 export type TrainingTool = "select" | "add" | "pan";
 
+export type BuiltTrainingExample = {
+  polygon: GeneratedTrainingPolygon;
+  baselineHeads: TrainingHeadSnapshot[];
+  correctedHeads: TrainingHeadSnapshot[];
+  placementContext: TrainingPlacementContext;
+  baselineScores: UniformityScores;
+  correctedScores: UniformityScores;
+  baselineGrid: PrecipGrid;
+  correctedGrid: PrecipGrid;
+  improvementScore: number;
+};
+
 type TrainingState = {
   catalog: CatalogItemData[];
   polygon: GeneratedTrainingPolygon | null;
@@ -55,11 +67,19 @@ type TrainingState = {
   pasteGeneration: number;
   mlRefinementEnabled: boolean;
   snapArcToPolygonEdges: boolean;
+  generatingExample: boolean;
 
   initCatalog: (catalog: CatalogItemData[]) => void;
   setMlRefinementEnabled: (enabled: boolean) => void;
   toggleSnapArcToPolygonEdges: () => void;
   setShapeCounts: (counts: Record<TrainingShapeClass, number>) => void;
+  beginGeneratingExample: () => void;
+  endGeneratingExample: () => void;
+  buildTrainingExample: (seed?: number) => BuiltTrainingExample;
+  commitTrainingExample: (
+    built: BuiltTrainingExample,
+    correctedHeads?: TrainingHeadSnapshot[]
+  ) => void;
   generateExample: (seed?: number) => void;
   /** Apply ML-refined layout as starting corrected heads (baseline stays heuristic). */
   applyMlStartingLayout: (heads: TrainingHeadSnapshot[]) => void;
@@ -91,6 +111,7 @@ type TrainingState = {
   ) => void;
   setSelectedArcDegrees: (arcDegrees: number) => void;
   rotateSelectedHeads: (deltaDeg: number) => void;
+  snapSelectedArcsToPolygonEdges: () => void;
   adjustSelectedRadius: (deltaFt: number, opts?: { deferScores?: boolean }) => void;
   moveSelectedHeadsByDelta: (
     dxFt: number,
@@ -254,6 +275,7 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   pasteGeneration: 0,
   mlRefinementEnabled: false,
   snapArcToPolygonEdges: false,
+  generatingExample: false,
 
   initCatalog: (catalog) => set({ catalog }),
   setMlRefinementEnabled: (enabled) => set({ mlRefinementEnabled: enabled }),
@@ -261,7 +283,24 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     set((s) => ({ snapArcToPolygonEdges: !s.snapArcToPolygonEdges })),
   setShapeCounts: (counts) => set({ shapeCounts: counts }),
 
-  generateExample: (seed) => {
+  beginGeneratingExample: () =>
+    set({
+      generatingExample: true,
+      polygon: null,
+      baselineHeads: [],
+      correctedHeads: [],
+      placementContext: null,
+      baselineScores: null,
+      correctedScores: null,
+      baselineGrid: null,
+      correctedGrid: null,
+      improvementScore: 0,
+      selectedHeadIds: [],
+    }),
+
+  endGeneratingExample: () => set({ generatingExample: false }),
+
+  buildTrainingExample: (seed) => {
     const { catalog, shapeFilter, shapeCounts } = get();
     if (catalog.length === 0) {
       throw new Error("Catalog is empty — run db:seed or add catalog items.");
@@ -278,15 +317,41 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     const baseline = cloneHeads(placed.heads);
     const corrected = cloneHeads(placed.heads);
     const scores = recompute(poly, baseline, corrected);
-    set({
+    return {
       polygon: poly,
       baselineHeads: baseline,
       correctedHeads: corrected,
       placementContext: placed.placementContext,
+      ...scores,
+    };
+  },
+
+  commitTrainingExample: (built, correctedHeads) => {
+    const corrected = correctedHeads ?? built.correctedHeads;
+    const scores =
+      correctedHeads != null
+        ? recompute(built.polygon, built.baselineHeads, corrected)
+        : {
+            baselineScores: built.baselineScores,
+            correctedScores: built.correctedScores,
+            baselineGrid: built.baselineGrid,
+            correctedGrid: built.correctedGrid,
+            improvementScore: built.improvementScore,
+          };
+    set({
+      polygon: built.polygon,
+      baselineHeads: built.baselineHeads,
+      correctedHeads: corrected,
+      placementContext: built.placementContext,
       selectedHeadIds: [],
       viewMode: "corrected",
       ...scores,
     });
+  },
+
+  generateExample: (seed) => {
+    const built = get().buildTrainingExample(seed);
+    get().commitTrainingExample(built);
   },
 
   applyMlStartingLayout: (heads) => {
@@ -442,6 +507,29 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
         snapArcToPolygonEdges
       );
     });
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, ...scores });
+  },
+
+  snapSelectedArcsToPolygonEdges: () => {
+    const { polygon, baselineHeads, correctedHeads, selectedHeadIds, catalog } = get();
+    if (!polygon || selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    let changed = false;
+    const corrected = correctedHeads.map((h) => {
+      if (!idSet.has(h.id)) return h;
+      const snapped = snapHeadRotationToPolygon(
+        { rotationDegrees: h.rotationDegrees, arcDegrees: h.arcDegrees },
+        polygon.verticesFt,
+        180
+      );
+      if (snapped == null) return h;
+      const rotationDegrees = ((snapped % 360) + 360) % 360;
+      if (rotationDegrees === ((h.rotationDegrees % 360) + 360) % 360) return h;
+      changed = true;
+      return applyHeadPatch(h, { rotationDegrees }, catalog);
+    });
+    if (!changed) return;
     const scores = recompute(polygon, baselineHeads, corrected);
     set({ correctedHeads: corrected, ...scores });
   },

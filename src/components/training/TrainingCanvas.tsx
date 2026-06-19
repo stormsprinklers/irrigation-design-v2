@@ -114,6 +114,7 @@ export function TrainingCanvas() {
   const correctedGrid = useTrainingStore((s) => s.correctedGrid);
   const baselineGrid = useTrainingStore((s) => s.baselineGrid);
   const catalog = useTrainingStore((s) => s.catalog);
+  const generatingExample = useTrainingStore((s) => s.generatingExample);
   const selectHead = useTrainingStore((s) => s.selectHead);
   const setSelectedHeadIds = useTrainingStore((s) => s.setSelectedHeadIds);
   const clearSelection = useTrainingStore((s) => s.clearSelection);
@@ -328,7 +329,7 @@ export function TrainingCanvas() {
         ref={containerRef}
         className="flex h-full min-h-0 items-center justify-center text-muted-foreground"
       >
-        Click Generate to create a training example
+        {generatingExample ? "Generating lawn…" : "Click Generate to create a training example"}
       </div>
     );
   }

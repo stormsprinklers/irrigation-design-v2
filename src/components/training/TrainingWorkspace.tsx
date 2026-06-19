@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import type { CatalogItemData } from "@/lib/domain/types";
-import { useTrainingStore } from "@/lib/stores/training-store";
+import { useTrainingStore, type BuiltTrainingExample } from "@/lib/stores/training-store";
 import {
   approveTrainingExample,
   exportTrainingExamplesJsonl,
@@ -58,45 +58,55 @@ export function TrainingWorkspace({
   mlStatus,
 }: Props) {
   const [mobileTab, setMobileTab] = useState<MobileTab | null>(null);
-  const generateExample = useTrainingStore((s) => s.generateExample);
-  const applyMlStartingLayout = useTrainingStore((s) => s.applyMlStartingLayout);
-  const mlRefinementEnabled = useTrainingStore((s) => s.mlRefinementEnabled);
-  const setMlRefinementEnabled = useTrainingStore((s) => s.setMlRefinementEnabled);
-  const buildApprovalPayload = useTrainingStore((s) => s.buildApprovalPayload);
   const [approving, setApproving] = useState(false);
-  const [generating, setGenerating] = useState(false);
   const [stats, setStats] = useState(initialStats);
+  const initialGenerateDone = useRef(false);
 
   const mlAvailable =
     mlStatus.serviceHealthy && mlStatus.modelLoaded;
 
-  async function generateWithOptionalMl(seed?: number) {
-    setGenerating(true);
+  async function generateWithOptionalMl(seed?: number, opts?: { forceMl?: boolean }) {
+    const store = useTrainingStore.getState();
+    store.beginGeneratingExample();
+    let built: BuiltTrainingExample | null = null;
     try {
-      generateExample(seed);
-      const store = useTrainingStore.getState();
-      if (!mlRefinementEnabled || !store.polygon || !store.placementContext) return;
+      built = store.buildTrainingExample(seed);
+      const useMl = opts?.forceMl ?? (store.mlRefinementEnabled && mlAvailable);
+
+      if (!useMl) {
+        store.commitTrainingExample(built);
+        return;
+      }
 
       const refined = await refinePlacementWithMl({
-        polygonVerticesFt: store.polygon.verticesFt,
-        shapeClass: store.polygon.metadata.shapeClass,
-        baselineHeads: store.baselineHeads,
-        placementContext: store.placementContext,
+        polygonVerticesFt: built.polygon.verticesFt,
+        shapeClass: built.polygon.metadata.shapeClass,
+        baselineHeads: built.baselineHeads,
+        placementContext: built.placementContext,
         catalog,
         forceMl: true,
         source: "training",
       });
 
+      const correctedHeads = refined.usedMl ? refined.heads : built.correctedHeads;
+      store.commitTrainingExample(built, correctedHeads);
+
       if (refined.usedMl) {
-        applyMlStartingLayout(refined.heads);
         toast.success("ML refinement applied as starting layout");
       } else if (refined.error) {
         toast.message("Using heuristic layout", { description: refined.error });
       }
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed to generate example");
+      if (built) {
+        store.commitTrainingExample(built);
+        toast.message("Using heuristic layout", {
+          description: e instanceof Error ? e.message : "ML refine failed",
+        });
+      } else {
+        toast.error(e instanceof Error ? e.message : "Failed to generate example");
+      }
     } finally {
-      setGenerating(false);
+      useTrainingStore.getState().endGeneratingExample();
     }
   }
 
@@ -104,42 +114,22 @@ export function TrainingWorkspace({
     const store = useTrainingStore.getState();
     store.initCatalog(catalog);
     store.setShapeCounts(initialStats.byShape);
-    const enableMl = mlStatus.enabled && mlAvailable;
-    if (enableMl) {
+    if (mlStatus.enabled && mlAvailable) {
       store.setMlRefinementEnabled(true);
     }
-
-    async function init() {
-      setGenerating(true);
-      try {
-        store.generateExample();
-        if (!enableMl) return;
-        const after = useTrainingStore.getState();
-        if (!after.polygon || !after.placementContext) return;
-
-        const refined = await refinePlacementWithMl({
-          polygonVerticesFt: after.polygon.verticesFt,
-          shapeClass: after.polygon.metadata.shapeClass,
-          baselineHeads: after.baselineHeads,
-          placementContext: after.placementContext,
-          catalog,
-          forceMl: true,
-          source: "training",
-        });
-
-        if (refined.usedMl) {
-          useTrainingStore.getState().applyMlStartingLayout(refined.heads);
-        }
-      } catch (e) {
-        console.error("Failed to generate training example", e);
-        toast.error(e instanceof Error ? e.message : "Failed to generate example");
-      } finally {
-        setGenerating(false);
-      }
-    }
-
-    void init();
   }, [catalog, initialStats.byShape, mlStatus.enabled, mlAvailable]);
+
+  useEffect(() => {
+    if (initialGenerateDone.current || catalog.length === 0) return;
+    initialGenerateDone.current = true;
+    void generateWithOptionalMl(undefined, {
+      forceMl: mlStatus.enabled && mlAvailable,
+    });
+  }, [catalog.length, mlAvailable, mlStatus.enabled]);
+
+  const mlRefinementEnabled = useTrainingStore((s) => s.mlRefinementEnabled);
+  const setMlRefinementEnabled = useTrainingStore((s) => s.setMlRefinementEnabled);
+  const buildApprovalPayload = useTrainingStore((s) => s.buildApprovalPayload);
 
   useEffect(() => {
     useTrainingStore.getState().setShapeCounts(stats.byShape);
@@ -219,6 +209,11 @@ export function TrainingWorkspace({
         if (e.key === "Enter") {
           e.preventDefault();
           store.rotateSelectedHeads(90);
+          return;
+        }
+        if (e.key === "." || e.code === "Period") {
+          e.preventDefault();
+          store.snapSelectedArcsToPolygonEdges();
           return;
         }
       }
@@ -311,7 +306,6 @@ export function TrainingWorkspace({
         onApprove={handleApprove}
         onExport={handleExport}
         approving={approving}
-        generating={generating}
         mlRefinementEnabled={mlRefinementEnabled}
         mlAvailable={mlAvailable}
         onMlRefinementChange={setMlRefinementEnabled}

@@ -21,7 +21,6 @@ type Props = {
   onApprove: () => void;
   onExport: () => void;
   approving: boolean;
-  generating?: boolean;
   mlRefinementEnabled?: boolean;
   mlAvailable?: boolean;
   onMlRefinementChange?: (enabled: boolean) => void;
@@ -32,7 +31,6 @@ export function TrainingToolbar({
   onApprove,
   onExport,
   approving,
-  generating = false,
   mlRefinementEnabled = false,
   mlAvailable = false,
   onMlRefinementChange,
@@ -53,6 +51,7 @@ export function TrainingToolbar({
   const toggleArcs = useTrainingStore((s) => s.toggleArcs);
   const snapArcToPolygonEdges = useTrainingStore((s) => s.snapArcToPolygonEdges);
   const toggleSnapArcToPolygonEdges = useTrainingStore((s) => s.toggleSnapArcToPolygonEdges);
+  const generatingExample = useTrainingStore((s) => s.generatingExample);
   const clearCorrectedHeads = useTrainingStore((s) => s.clearCorrectedHeads);
   const polygon = useTrainingStore((s) => s.polygon);
   const correctedHeads = useTrainingStore((s) => s.correctedHeads);
@@ -73,15 +72,15 @@ export function TrainingToolbar({
         </NativeSelect>
         <Button
           size="sm"
-          disabled={generating}
+          disabled={generatingExample}
           onClick={() => (onGenerate ? onGenerate() : generateExample())}
         >
-          {generating ? "Generating…" : "Generate"}
+          {generatingExample ? "Generating…" : "Generate"}
         </Button>
         <Button
           size="sm"
           variant="outline"
-          disabled={!polygon || generating}
+          disabled={!polygon || generatingExample}
           onClick={() => (onGenerate ? onGenerate() : generateExample())}
           title="Skip this lawn without saving"
         >

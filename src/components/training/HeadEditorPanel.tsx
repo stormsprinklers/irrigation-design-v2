@@ -32,13 +32,7 @@ export function HeadEditorPanel() {
   }
 
   if (selectedHeadIds.length === 0) {
-    return (
-      <div className="p-4 text-sm text-muted-foreground">
-        Shift+click or drag a box to select multiple heads. Drag any selected head to move the
-        group. Ctrl+D duplicate · Ctrl+C/V copy/paste · Space/Delete remove · Enter rotate 90°
-        · M/N/B/V arc 90/180/270/360° · +/- radius.
-      </div>
-    );
+    return null;
   }
 
   if (selectedHeadIds.length > 1) {
