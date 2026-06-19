@@ -73,6 +73,17 @@ docker run -p 8000:8000 \
 # ML_API_KEY — shared with Railway ML service
 # ML_MODEL_VERSION — optional prefix; CI registers as v1-<run-number>
 
+## Model versions
+
+| Version | Behavior |
+|---------|----------|
+| **v1** (legacy) | Move/delete algorithm heads only — cannot add new heads |
+| **v2** (default) | Places heads with predicted **position**, **throw distance (radius)**, **arc**, **rotation**, **nozzle** (`catalogItemId`), and **spray/rotor body** (`headBodyId`). Values are clamped to each nozzle's adjustability range and GPM is recalculated after inference. |
+
+Training defaults to `--model v2`. Checkpoints include `"model_type": "v2"`. The inference service loads v1 or v2 automatically.
+
+After deploying v2 training code, **re-run ML Retrain** so Railway serves a v2 checkpoint. Old v1 checkpoints will still load but only edit algorithm heads.
+
 ## Automated retrain loop
 
 1. Approve training examples in the app (data saved to Postgres).

@@ -113,6 +113,7 @@ def filter_records(
 
 
 def build_catalog_vocab_from_records(records: list[TrainingRecord]) -> dict[str, int]:
+    """Nozzle catalog item IDs (catalogItemId on each head)."""
     ids: set[str] = set()
     for r in records:
         for h in r.algorithm_output + r.approved_output:
@@ -122,3 +123,14 @@ def build_catalog_vocab_from_records(records: list[TrainingRecord]) -> dict[str,
         for cid in r.placement_context.get("catalogItemIds", []):
             ids.add(cid)
     return {cid: i + 1 for i, cid in enumerate(sorted(ids))}
+
+
+def build_body_vocab_from_records(records: list[TrainingRecord]) -> dict[str, int]:
+    """Spray/rotor body catalog item IDs (headBodyId on each head)."""
+    ids: set[str] = set()
+    for r in records:
+        for h in r.algorithm_output + r.approved_output:
+            bid = h.get("headBodyId")
+            if bid:
+                ids.add(bid)
+    return {bid: i + 1 for i, bid in enumerate(sorted(ids))}
