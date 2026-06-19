@@ -7,6 +7,8 @@ export type WedgeHead = Pick<
   "position" | "arcDegrees" | "radiusFeet" | "rotationDegrees"
 >;
 
+export type WedgeAngles = Pick<SprinklerHead, "arcDegrees" | "rotationDegrees">;
+
 function normalizeDeg(deg: number): number {
   let d = deg % 360;
   if (d < 0) d += 360;
@@ -14,11 +16,11 @@ function normalizeDeg(deg: number): number {
 }
 
 /** Canvas convention: rotationDegrees is arc center bearing; Konva uses rotation - arc/2 for start. */
-export function wedgeStartDeg(head: WedgeHead): number {
+export function wedgeStartDeg(head: WedgeAngles): number {
   return normalizeDeg(head.rotationDegrees - head.arcDegrees / 2);
 }
 
-export function wedgeEndDeg(head: WedgeHead): number {
+export function wedgeEndDeg(head: WedgeAngles): number {
   return normalizeDeg(wedgeStartDeg(head) + head.arcDegrees);
 }
 
