@@ -171,7 +171,7 @@ async function main() {
     const lines = [];
 
     for (const row of rows) {
-      const payload = annotatePayload(row.payload);
+      const payload = row.payload;
       const validForTraining = isValidForTraining(payload);
 
       if (opts.validForTrainingOnly && !validForTraining) continue;
