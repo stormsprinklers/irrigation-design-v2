@@ -16,6 +16,7 @@ import {
   getNozzleAdjustability,
 } from "@/lib/catalog/adjustability";
 import { snapHeadPositionToPolygon, snapHeadRotationToPolygon } from "@/lib/domain/training/arc-edge-snap";
+import { nextHeadPositionAlongEdgeAtArcEnd } from "@/lib/domain/training/edge-duplicate";
 import { flippedRotationDegrees } from "@/lib/domain/training/flip-wedge";
 import {
   loadTrainingSpeedBests,
