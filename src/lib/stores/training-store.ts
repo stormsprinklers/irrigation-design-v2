@@ -16,6 +16,12 @@ import {
   getNozzleAdjustability,
 } from "@/lib/catalog/adjustability";
 import { snapHeadPositionToPolygon, snapHeadRotationToPolygon } from "@/lib/domain/training/arc-edge-snap";
+import { nextHeadPositionAlongEdgeAtArcEnd } from "@/lib/domain/training/edge-duplicate";
+import {
+  loadTrainingSpeedBests,
+  recordTrainingSpeedBest,
+  type TrainingSpeedBests,
+} from "@/lib/domain/training/training-timer";
 import type {
   GeneratedTrainingPolygon,
   PrecipGrid,
@@ -71,6 +77,8 @@ type TrainingState = {
   mlRefinementEnabled: boolean;
   snapArcToPolygonEdges: boolean;
   generatingExample: boolean;
+  exampleTimerStartedAt: number | null;
+  speedBests: TrainingSpeedBests;
 
   initCatalog: (catalog: CatalogItemData[]) => void;
   setMlRefinementEnabled: (enabled: boolean) => void;
@@ -108,6 +116,7 @@ type TrainingState = {
   addCorrectedHead: (head: TrainingHeadSnapshot) => void;
   duplicateCorrectedHead: (id: string) => void;
   duplicateSelectedHeads: () => void;
+  duplicateSelectedHeadAlongEdge: () => void;
   patchSelectedHeads: (
     patch: Partial<TrainingHeadSnapshot>,
     opts?: { deferScores?: boolean }
@@ -135,6 +144,10 @@ type TrainingState = {
   pasteCopiedHeads: () => void;
   clearCorrectedHeads: () => void;
   recomputeScores: () => void;
+  initSpeedBests: () => void;
+  startExampleTimer: () => void;
+  clearExampleTimer: () => void;
+  recordExampleSpeedBest: () => { elapsedSec: number; shapeBest: boolean; overallBest: boolean } | null;
   buildApprovalPayload: () => import("@/lib/domain/training/types").TrainingExampleApprovalInput | null;
 };
 
@@ -300,6 +313,8 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   mlRefinementEnabled: false,
   snapArcToPolygonEdges: false,
   generatingExample: false,
+  exampleTimerStartedAt: null,
+  speedBests: { overallSec: null, byShape: {} },
 
   initCatalog: (catalog) => set({ catalog }),
   setMlRefinementEnabled: (enabled) => set({ mlRefinementEnabled: enabled }),
@@ -310,6 +325,7 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   beginGeneratingExample: () =>
     set({
       generatingExample: true,
+      exampleTimerStartedAt: null,
       polygon: null,
       baselineHeads: [],
       correctedHeads: [],
@@ -369,6 +385,7 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
       placementContext: built.placementContext,
       selectedHeadIds: [],
       viewMode: "corrected",
+      exampleTimerStartedAt: Date.now(),
       ...scores,
     });
   },
@@ -468,6 +485,44 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     set({
       correctedHeads: corrected,
       selectedHeadIds: dupes.map((h) => h.id),
+      ...scores,
+    });
+  },
+
+  duplicateSelectedHeadAlongEdge: () => {
+    const {
+      polygon,
+      baselineHeads,
+      correctedHeads,
+      selectedHeadIds,
+      snapArcToPolygonEdges,
+      catalog,
+    } = get();
+    if (!polygon || selectedHeadIds.length !== 1) return;
+
+    const source = correctedHeads.find((h) => h.id === selectedHeadIds[0]);
+    if (!source) return;
+
+    const nextPos = nextHeadPositionAlongEdgeAtArcEnd(source, polygon.verticesFt);
+    if (!nextPos) return;
+
+    const positionFt = snapArcToPolygonEdges
+      ? snapHeadPositionToPolygon(nextPos, polygon.verticesFt)
+      : nextPos;
+
+    let duplicate = cloneHeadAtPosition(source, positionFt);
+    if (snapArcToPolygonEdges) {
+      const snappedRot = snapHeadRotationToPolygon(duplicate, polygon.verticesFt, 180);
+      if (snappedRot != null) {
+        duplicate = applyHeadPatch(duplicate, { rotationDegrees: snappedRot }, catalog);
+      }
+    }
+
+    const corrected = [...correctedHeads, duplicate];
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({
+      correctedHeads: corrected,
+      selectedHeadIds: [duplicate.id],
       ...scores,
     });
   },
@@ -727,6 +782,25 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     if (!polygon) return;
     const scores = recompute(polygon, baselineHeads, correctedHeads);
     set(scores);
+  },
+
+  initSpeedBests: () => set({ speedBests: loadTrainingSpeedBests() }),
+
+  startExampleTimer: () => set({ exampleTimerStartedAt: Date.now() }),
+
+  clearExampleTimer: () => set({ exampleTimerStartedAt: null }),
+
+  recordExampleSpeedBest: () => {
+    const { polygon, exampleTimerStartedAt, speedBests } = get();
+    if (!polygon || exampleTimerStartedAt == null) return null;
+    const elapsedSec = (Date.now() - exampleTimerStartedAt) / 1000;
+    const { bests, shapeBest, overallBest } = recordTrainingSpeedBest(
+      speedBests,
+      polygon.metadata.shapeClass,
+      elapsedSec
+    );
+    set({ speedBests: bests, exampleTimerStartedAt: null });
+    return { elapsedSec, shapeBest, overallBest };
   },
 
   buildApprovalPayload: () => {

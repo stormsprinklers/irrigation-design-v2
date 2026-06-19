@@ -12,6 +12,7 @@ import {
 } from "@/lib/actions/training";
 import { refinePlacementWithMl } from "@/lib/actions/placement-ml";
 import type { PlacementMlStatus } from "@/lib/actions/placement-ml";
+import { formatElapsedSeconds } from "@/lib/domain/training/training-timer";
 import type { TrainingExampleStats } from "@/lib/domain/training/types";
 import { TrainingToolbar } from "./TrainingToolbar";
 import { HeadEditorPanel } from "./HeadEditorPanel";
@@ -114,6 +115,7 @@ export function TrainingWorkspace({
     const store = useTrainingStore.getState();
     store.initCatalog(catalog);
     store.setShapeCounts(initialStats.byShape);
+    store.initSpeedBests();
     if (mlStatus.enabled && mlAvailable) {
       store.setMlRefinementEnabled(true);
     }
@@ -175,6 +177,14 @@ export function TrainingWorkspace({
       }
 
       if (store.viewMode !== "baseline" && store.selectedHeadIds.length > 0) {
+        if (e.shiftKey && (e.key === "?" || e.code === "Slash")) {
+          if (store.selectedHeadIds.length === 1) {
+            e.preventDefault();
+            store.duplicateSelectedHeadAlongEdge();
+          }
+          return;
+        }
+
         const key = e.key.toLowerCase();
         if (key === "m") {
           e.preventDefault();
@@ -254,8 +264,22 @@ export function TrainingWorkspace({
     }
     setApproving(true);
     try {
+      const speedResult = useTrainingStore.getState().recordExampleSpeedBest();
       await approveTrainingExample(payload);
-      toast.success("Example saved");
+      if (speedResult) {
+        const { elapsedSec, shapeBest, overallBest } = speedResult;
+        const timeLabel = formatElapsedSeconds(elapsedSec);
+        if (shapeBest || overallBest) {
+          const parts: string[] = [];
+          if (shapeBest) parts.push("shape");
+          if (overallBest) parts.push("overall");
+          toast.success(`New ${parts.join(" & ")} best — ${timeLabel}`);
+        } else {
+          toast.success(`Example saved in ${timeLabel}`);
+        }
+      } else {
+        toast.success("Example saved");
+      }
       setStats(await getTrainingExampleStats());
       await generateWithOptionalMl();
     } catch (e) {
@@ -316,6 +340,7 @@ export function TrainingWorkspace({
         onApprove={handleApprove}
         onExport={handleExport}
         approving={approving}
+        totalCompleted={stats.total}
         mlRefinementEnabled={mlRefinementEnabled}
         mlAvailable={mlAvailable}
         onMlRefinementChange={setMlRefinementEnabled}

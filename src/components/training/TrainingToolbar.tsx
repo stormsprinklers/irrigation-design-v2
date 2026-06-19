@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { NativeSelect } from "@/components/ui/native-select";
 import { useTrainingStore } from "@/lib/stores/training-store";
@@ -8,19 +9,70 @@ import {
   TRAINING_SHAPE_LABELS,
   type TrainingShapeClass,
 } from "@/lib/domain/training/types";
+import {
+  formatElapsedSeconds,
+} from "@/lib/domain/training/training-timer";
 
-const SHAPES: { value: TrainingShapeClass | "random"; label: string }[] = [
-  { value: "random", label: "Random shape" },
-  ...TRAINING_SHAPE_CLASSES.map((value) => ({
-    value,
-    label: TRAINING_SHAPE_LABELS[value],
-  })),
-];
+function shapeOptionLabel(
+  value: TrainingShapeClass | "random",
+  shapeCounts: Record<TrainingShapeClass, number>,
+  totalCompleted: number
+): string {
+  if (value === "random") {
+    return `Random shape (${totalCompleted})`;
+  }
+  const count = shapeCounts[value] ?? 0;
+  return `${TRAINING_SHAPE_LABELS[value]} (${count})`;
+}
+
+function TrainingTimerDisplay() {
+  const polygon = useTrainingStore((s) => s.polygon);
+  const startedAt = useTrainingStore((s) => s.exampleTimerStartedAt);
+  const speedBests = useTrainingStore((s) => s.speedBests);
+  const generatingExample = useTrainingStore((s) => s.generatingExample);
+  const [, tick] = useState(0);
+
+  useEffect(() => {
+    if (!startedAt || generatingExample) return;
+    const id = window.setInterval(() => tick((n) => n + 1), 100);
+    return () => window.clearInterval(id);
+  }, [startedAt, generatingExample]);
+
+  if (!polygon || !startedAt || generatingExample) return null;
+
+  const elapsedSec = (Date.now() - startedAt) / 1000;
+  const shapeBest = speedBests.byShape[polygon.metadata.shapeClass];
+  const overallBest = speedBests.overallSec;
+
+  return (
+    <div className="flex flex-col gap-0.5 rounded-md border bg-muted/40 px-2.5 py-1.5 text-xs tabular-nums">
+      <div className="flex items-baseline gap-2">
+        <span className="text-muted-foreground">Time</span>
+        <span className="font-semibold text-foreground">{formatElapsedSeconds(elapsedSec)}</span>
+      </div>
+      <div className="flex flex-wrap gap-x-3 gap-y-0.5 text-muted-foreground">
+        {shapeBest != null && (
+          <span>
+            {TRAINING_SHAPE_LABELS[polygon.metadata.shapeClass]} best{" "}
+            <span className="font-medium text-foreground">{formatElapsedSeconds(shapeBest)}</span>
+          </span>
+        )}
+        {overallBest != null && (
+          <span>
+            Overall best{" "}
+            <span className="font-medium text-foreground">{formatElapsedSeconds(overallBest)}</span>
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
 
 type Props = {
   onApprove: () => void;
   onExport: () => void;
   approving: boolean;
+  totalCompleted: number;
   mlRefinementEnabled?: boolean;
   mlAvailable?: boolean;
   onMlRefinementChange?: (enabled: boolean) => void;
@@ -31,6 +83,7 @@ export function TrainingToolbar({
   onApprove,
   onExport,
   approving,
+  totalCompleted,
   mlRefinementEnabled = false,
   mlAvailable = false,
   onMlRefinementChange,
@@ -39,6 +92,7 @@ export function TrainingToolbar({
   const generateExample = useTrainingStore((s) => s.generateExample);
   const shapeFilter = useTrainingStore((s) => s.shapeFilter);
   const setShapeFilter = useTrainingStore((s) => s.setShapeFilter);
+  const shapeCounts = useTrainingStore((s) => s.shapeCounts);
   const viewMode = useTrainingStore((s) => s.viewMode);
   const setViewMode = useTrainingStore((s) => s.setViewMode);
   const tool = useTrainingStore((s) => s.tool);
@@ -56,20 +110,29 @@ export function TrainingToolbar({
   const polygon = useTrainingStore((s) => s.polygon);
   const correctedHeads = useTrainingStore((s) => s.correctedHeads);
 
+  const shapeOptions: { value: TrainingShapeClass | "random"; label: string }[] = [
+    { value: "random", label: shapeOptionLabel("random", shapeCounts, totalCompleted) },
+    ...TRAINING_SHAPE_CLASSES.map((value) => ({
+      value,
+      label: shapeOptionLabel(value, shapeCounts, totalCompleted),
+    })),
+  ];
+
   return (
     <div className="flex flex-wrap items-center gap-2 border-b bg-card p-2 sm:p-3">
       <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto" data-tour="training-tour-generate">
         <NativeSelect
-          className="w-auto"
+          className="w-auto max-w-[min(100%,14rem)]"
           value={shapeFilter}
           onChange={(e) => setShapeFilter(e.target.value as TrainingShapeClass | "random")}
         >
-          {SHAPES.map((s) => (
+          {shapeOptions.map((s) => (
             <option key={s.value} value={s.value}>
               {s.label}
             </option>
           ))}
         </NativeSelect>
+        <TrainingTimerDisplay />
         <Button
           size="sm"
           disabled={generatingExample}
