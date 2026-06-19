@@ -25,7 +25,20 @@ jobs:
             exit 1
           fi
           if [ -n "$ML_INFERENCE_URL" ] && [ -n "$ML_API_KEY" ]; then
-            echo "deploy_ready=true" >> "$GITHUB_OUTPUT"
+            url="${ML_INFERENCE_URL//[$'\r\n\t ']/}"
+            url="${url#\"}"; url="${url%\"}"
+            url="${url#\'}"; url="${url%\'}"
+            case "$url" in
+              http://*|https://*) ;;
+              *) url="https://${url}" ;;
+            esac
+            url="${url%/}"
+            if node -e "new URL(process.argv[1])" "$url" 2>/dev/null; then
+              echo "deploy_ready=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "deploy_ready=false" >> "$GITHUB_OUTPUT"
+              echo "::warning::ML_INFERENCE_URL is set but not a valid URL. Use https://your-service.up.railway.app"
+            fi
           else
             echo "deploy_ready=false" >> "$GITHUB_OUTPUT"
             echo "::warning::ML_INFERENCE_URL or ML_API_KEY not set — train/eval will run but deploy will be skipped"

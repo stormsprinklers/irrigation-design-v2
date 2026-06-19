@@ -169,16 +169,30 @@ export function resolveDefaultHeadSettings(
   };
 }
 
-/** Swap nozzle on a head without changing arc, radius, or rotation; recalculates flow only. */
+/** Swap nozzle; spray nozzles reset throw to max, rotors keep arc/radius/rotation. */
 export function swapHeadNozzle(
   head: Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees">,
   nozzle: CatalogItemData,
   pressurePsi = DEFAULT_PRESSURE_PSI,
   pattern?: SpacingPattern
-): Pick<SprinklerHead, "gpm" | "precipInPerHr"> {
-  const hyd = calculateNozzleHydraulics(nozzle, pressurePsi, head.arcDegrees, pattern);
+): Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees" | "gpm" | "precipInPerHr"> {
+  let working = { ...head };
+
+  if (isSprayNozzle(nozzle)) {
+    const strip = getStripNozzleSpec(nozzle);
+    if (strip) {
+      working = { ...working, radiusFeet: strip.patternWidthFt };
+    } else {
+      const adj = getNozzleAdjustability(nozzle);
+      working = { ...working, radiusFeet: adj.radiusFeetMax };
+    }
+  }
+
+  const clamped = clampHeadToNozzle(working, nozzle);
+  const hyd = calculateNozzleHydraulics(nozzle, pressurePsi, clamped.arcDegrees, pattern);
   return {
-    gpm: headGpmFromHydraulics(nozzle, hyd, head.arcDegrees),
+    ...clamped,
+    gpm: headGpmFromHydraulics(nozzle, hyd, clamped.arcDegrees),
     precipInPerHr: pattern === "triangular" ? hyd.precipTriInPerHr : hyd.precipInPerHr,
   };
 }

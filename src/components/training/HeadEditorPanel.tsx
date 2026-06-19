@@ -34,8 +34,9 @@ export function HeadEditorPanel() {
   if (selectedHeadIds.length === 0) {
     return (
       <div className="p-4 text-sm text-muted-foreground">
-        Select a head to edit, or use Add head and click on the lawn. Drag a box on the canvas or
-        Shift+click to select multiple heads. Ctrl+C / Ctrl+V to copy and paste.
+        Shift+click or drag a box to select multiple heads. Drag any selected head to move the
+        group. Ctrl+D duplicate · Ctrl+C/V copy/paste · Space/Delete remove · Enter rotate 90°
+        · M/N/B/V arc 90/180/270/360° · +/- radius.
       </div>
     );
   }
@@ -50,8 +51,9 @@ export function HeadEditorPanel() {
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">
-          Press Delete or Backspace to remove the selection. Ctrl+C / Ctrl+V to copy and paste.
-          Select one head to edit radius, arc, and nozzle settings.
+          Drag any selected head to move the whole group. Ctrl+D duplicate · Enter rotate 90°
+          · Space/Delete/Backspace remove · M/N/B/V set arc · +/- radius. Select one head for
+          nozzle and handle edits.
         </p>
       </div>
     );

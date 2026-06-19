@@ -3,6 +3,30 @@ import { describe, it } from "node:test";
 import { getNozzleAdjustability, swapHeadNozzle } from "../adjustability";
 import type { CatalogItemData } from "../../domain/types";
 
+function sprayNozzle(specs: Record<string, unknown> = {}): CatalogItemData {
+  return {
+    id: "test_spray_noz",
+    category: "SPRAY",
+    manufacturer: "Rain Bird",
+    model: "15H",
+    specs: {
+      compatibleBodyCategories: ["SPRAY_BODY"],
+      arcDegreesMin: 90,
+      arcDegreesMax: 360,
+      arcDegreesDefault: 360,
+      radiusFeetMin: 9,
+      radiusFeetMax: 15,
+      ...specs,
+    },
+    nozzleChart: {
+      pressurePsi: [30],
+      gpm: [1.2],
+      radiusFeet: [15],
+      precipInPerHr: [1.5],
+    },
+  };
+}
+
 function rotorNozzle(specs: Record<string, unknown> = {}): CatalogItemData {
   return {
     id: "test_rotor_noz",
@@ -71,7 +95,21 @@ describe("rotor nozzle adjustability", () => {
     assert.equal(adj.radiusAdjustable, false);
   });
 
-  it("swapHeadNozzle keeps arc, radius, and rotation unchanged", () => {
+  it("swapHeadNozzle sets spray nozzle throw to max distance", () => {
+    const nozzle = sprayNozzle({ radiusFeetMin: 9, radiusFeetMax: 18 });
+    const head = {
+      arcDegrees: 90,
+      radiusFeet: 10,
+      rotationDegrees: 45,
+    };
+    const result = swapHeadNozzle(head, nozzle, 30);
+    assert.equal(result.radiusFeet, 18);
+    assert.equal(result.arcDegrees, 90);
+    assert.equal(result.rotationDegrees, 45);
+    assert.ok(typeof result.gpm === "number" && result.gpm > 0);
+  });
+
+  it("swapHeadNozzle keeps arc, radius, and rotation unchanged for rotors", () => {
     const nozzleB = rotorNozzle({
       radiusFeetMin: 10,
       radiusFeetMax: 20,

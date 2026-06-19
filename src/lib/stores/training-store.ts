@@ -13,7 +13,9 @@ import {
   patchHeadWithNozzle,
   swapHeadNozzle,
   wedgeBoundsForHead,
+  getNozzleAdjustability,
 } from "@/lib/catalog/adjustability";
+import { snapHeadPositionToPolygon, snapHeadRotationToPolygon } from "@/lib/domain/training/arc-edge-snap";
 import type {
   GeneratedTrainingPolygon,
   PrecipGrid,
@@ -52,9 +54,11 @@ type TrainingState = {
   copiedHeads: TrainingHeadSnapshot[] | null;
   pasteGeneration: number;
   mlRefinementEnabled: boolean;
+  snapArcToPolygonEdges: boolean;
 
   initCatalog: (catalog: CatalogItemData[]) => void;
   setMlRefinementEnabled: (enabled: boolean) => void;
+  toggleSnapArcToPolygonEdges: () => void;
   setShapeCounts: (counts: Record<TrainingShapeClass, number>) => void;
   generateExample: (seed?: number) => void;
   /** Apply ML-refined layout as starting corrected heads (baseline stays heuristic). */
@@ -80,6 +84,23 @@ type TrainingState = {
   ) => void;
   addCorrectedHead: (head: TrainingHeadSnapshot) => void;
   duplicateCorrectedHead: (id: string) => void;
+  duplicateSelectedHeads: () => void;
+  patchSelectedHeads: (
+    patch: Partial<TrainingHeadSnapshot>,
+    opts?: { deferScores?: boolean }
+  ) => void;
+  setSelectedArcDegrees: (arcDegrees: number) => void;
+  rotateSelectedHeads: (deltaDeg: number) => void;
+  adjustSelectedRadius: (deltaFt: number, opts?: { deferScores?: boolean }) => void;
+  moveSelectedHeadsByDelta: (
+    dxFt: number,
+    dyFt: number,
+    opts?: { deferScores?: boolean }
+  ) => void;
+  moveHeadsToPositions: (
+    positions: Record<string, { x: number; y: number }>,
+    opts?: { deferScores?: boolean }
+  ) => void;
   deleteCorrectedHeads: (ids: string[]) => void;
   deleteSelectedHeads: () => void;
   copySelectedHeads: () => void;
@@ -167,6 +188,49 @@ function applyHeadPatch(
   return base;
 }
 
+function applyPatchWithOptionalSnap(
+  head: TrainingHeadSnapshot,
+  patch: Partial<TrainingHeadSnapshot>,
+  catalog: CatalogItemData[],
+  polygon: GeneratedTrainingPolygon | null,
+  snapToPolygon: boolean
+): TrainingHeadSnapshot {
+  let nextPatch = patch;
+  if (snapToPolygon && polygon) {
+    if (
+      patch.rotationDegrees !== undefined &&
+      patch.rotationDegrees !== head.rotationDegrees
+    ) {
+      const candidate = { ...head, ...nextPatch };
+      const snapped = snapHeadRotationToPolygon(candidate, polygon.verticesFt);
+      if (snapped != null) {
+        nextPatch = { ...nextPatch, rotationDegrees: snapped };
+      }
+    }
+    if (patch.positionFt !== undefined) {
+      const candidatePos = patch.positionFt;
+      const snappedPos = snapHeadPositionToPolygon(candidatePos, polygon.verticesFt);
+      if (snappedPos.x !== candidatePos.x || snappedPos.y !== candidatePos.y) {
+        nextPatch = { ...nextPatch, positionFt: snappedPos };
+      }
+    }
+  }
+  return applyHeadPatch(head, nextPatch, catalog);
+}
+
+function snapPositionsIfEnabled(
+  positions: Record<string, { x: number; y: number }>,
+  polygon: GeneratedTrainingPolygon | null,
+  snapToPolygon: boolean
+): Record<string, { x: number; y: number }> {
+  if (!snapToPolygon || !polygon) return positions;
+  const out: Record<string, { x: number; y: number }> = {};
+  for (const [id, pos] of Object.entries(positions)) {
+    out[id] = snapHeadPositionToPolygon(pos, polygon.verticesFt);
+  }
+  return out;
+}
+
 export const useTrainingStore = create<TrainingState>((set, get) => ({
   catalog: [],
   polygon: null,
@@ -189,9 +253,12 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   copiedHeads: null,
   pasteGeneration: 0,
   mlRefinementEnabled: false,
+  snapArcToPolygonEdges: false,
 
   initCatalog: (catalog) => set({ catalog }),
   setMlRefinementEnabled: (enabled) => set({ mlRefinementEnabled: enabled }),
+  toggleSnapArcToPolygonEdges: () =>
+    set((s) => ({ snapArcToPolygonEdges: !s.snapArcToPolygonEdges })),
   setShapeCounts: (counts) => set({ shapeCounts: counts }),
 
   generateExample: (seed) => {
@@ -257,10 +324,12 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
   setShapeFilter: (shape) => set({ shapeFilter: shape }),
 
   updateCorrectedHead: (id, patch, opts) => {
-    const { polygon, baselineHeads, correctedHeads, catalog } = get();
+    const { polygon, baselineHeads, correctedHeads, catalog, snapArcToPolygonEdges } = get();
     if (!polygon) return;
     const corrected = correctedHeads.map((h) =>
-      h.id === id ? applyHeadPatch(h, patch, catalog) : h
+      h.id === id
+        ? applyPatchWithOptionalSnap(h, patch, catalog, polygon, snapArcToPolygonEdges)
+        : h
     );
     if (opts?.deferScores) {
       set({ correctedHeads: corrected });
@@ -287,11 +356,149 @@ export const useTrainingStore = create<TrainingState>((set, get) => ({
     if (!polygon) return;
     const source = correctedHeads.find((h) => h.id === id);
     if (!source) return;
-
-    const withWedges = cloneHeadWithOffset(source, PASTE_OFFSET_FT);
-    const corrected = [...correctedHeads, withWedges];
+    const dupes = [cloneHeadWithOffset(source, PASTE_OFFSET_FT)];
+    const corrected = [...correctedHeads, ...dupes];
     const scores = recompute(polygon, baselineHeads, corrected);
-    set({ correctedHeads: corrected, selectedHeadIds: [withWedges.id], ...scores });
+    set({
+      correctedHeads: corrected,
+      selectedHeadIds: dupes.map((h) => h.id),
+      ...scores,
+    });
+  },
+
+  duplicateSelectedHeads: () => {
+    const { polygon, baselineHeads, correctedHeads, selectedHeadIds } = get();
+    if (!polygon || selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    const dupes = correctedHeads
+      .filter((h) => idSet.has(h.id))
+      .map((h) => cloneHeadWithOffset(h, PASTE_OFFSET_FT));
+    if (dupes.length === 0) return;
+    const corrected = [...correctedHeads, ...dupes];
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({
+      correctedHeads: corrected,
+      selectedHeadIds: dupes.map((h) => h.id),
+      ...scores,
+    });
+  },
+
+  patchSelectedHeads: (patch, opts) => {
+    const { selectedHeadIds, polygon, baselineHeads, correctedHeads, catalog, snapArcToPolygonEdges } =
+      get();
+    if (!polygon || selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    const corrected = correctedHeads.map((h) =>
+      idSet.has(h.id)
+        ? applyPatchWithOptionalSnap(h, patch, catalog, polygon, snapArcToPolygonEdges)
+        : h
+    );
+    if (opts?.deferScores) {
+      set({ correctedHeads: corrected });
+      return;
+    }
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, ...scores });
+  },
+
+  setSelectedArcDegrees: (arcDegrees) => {
+    const { selectedHeadIds, correctedHeads, catalog } = get();
+    if (selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    const patches: Record<string, Partial<TrainingHeadSnapshot>> = {};
+    for (const h of correctedHeads) {
+      if (!idSet.has(h.id)) continue;
+      const nozzle = catalog.find((c) => c.id === h.catalogItemId);
+      if (!nozzle) continue;
+      const adj = getNozzleAdjustability(nozzle);
+      if (!adj.arcAdjustable) continue;
+      const next = Math.min(adj.arcDegreesMax, Math.max(adj.arcDegreesMin, arcDegrees));
+      patches[h.id] = { arcDegrees: next };
+    }
+    const { polygon, baselineHeads, snapArcToPolygonEdges } = get();
+    if (!polygon) return;
+    const corrected = correctedHeads.map((h) => {
+      const patch = patches[h.id];
+      if (!patch) return h;
+      return applyPatchWithOptionalSnap(h, patch, catalog, polygon, snapArcToPolygonEdges);
+    });
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, ...scores });
+  },
+
+  rotateSelectedHeads: (deltaDeg) => {
+    const { polygon, baselineHeads, correctedHeads, selectedHeadIds, catalog, snapArcToPolygonEdges } =
+      get();
+    if (!polygon || selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    const corrected = correctedHeads.map((h) => {
+      if (!idSet.has(h.id)) return h;
+      const rotationDegrees = ((h.rotationDegrees + deltaDeg) % 360 + 360) % 360;
+      return applyPatchWithOptionalSnap(
+        h,
+        { rotationDegrees },
+        catalog,
+        polygon,
+        snapArcToPolygonEdges
+      );
+    });
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, ...scores });
+  },
+
+  adjustSelectedRadius: (deltaFt, opts) => {
+    const { polygon, baselineHeads, correctedHeads, selectedHeadIds, catalog } = get();
+    if (!polygon || selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    const corrected = correctedHeads.map((h) => {
+      if (!idSet.has(h.id)) return h;
+      const nozzle = catalog.find((c) => c.id === h.catalogItemId);
+      if (!nozzle) return h;
+      const adj = getNozzleAdjustability(nozzle);
+      if (!adj.radiusAdjustable) return h;
+      return applyHeadPatch(h, { radiusFeet: h.radiusFeet + deltaFt }, catalog);
+    });
+    if (opts?.deferScores) {
+      set({ correctedHeads: corrected });
+      return;
+    }
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, ...scores });
+  },
+
+  moveSelectedHeadsByDelta: (dxFt, dyFt, opts) => {
+    const { polygon, baselineHeads, correctedHeads, selectedHeadIds } = get();
+    if (!polygon || selectedHeadIds.length === 0) return;
+    const idSet = new Set(selectedHeadIds);
+    const corrected = correctedHeads.map((h) =>
+      idSet.has(h.id)
+        ? {
+            ...h,
+            positionFt: { x: h.positionFt.x + dxFt, y: h.positionFt.y + dyFt },
+          }
+        : h
+    );
+    if (opts?.deferScores) {
+      set({ correctedHeads: corrected });
+      return;
+    }
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, ...scores });
+  },
+
+  moveHeadsToPositions: (positions, opts) => {
+    const { polygon, baselineHeads, correctedHeads, snapArcToPolygonEdges } = get();
+    if (!polygon || Object.keys(positions).length === 0) return;
+    const snapped = snapPositionsIfEnabled(positions, polygon, snapArcToPolygonEdges);
+    const corrected = correctedHeads.map((h) =>
+      snapped[h.id] ? { ...h, positionFt: { ...snapped[h.id]! } } : h
+    );
+    if (opts?.deferScores) {
+      set({ correctedHeads: corrected });
+      return;
+    }
+    const scores = recompute(polygon, baselineHeads, corrected);
+    set({ correctedHeads: corrected, ...scores });
   },
 
   copySelectedHeads: () => {

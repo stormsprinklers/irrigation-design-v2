@@ -177,13 +177,64 @@ export function TrainingWorkspace({
         return;
       }
 
-      if (e.key !== "Delete" && e.key !== "Backspace") return;
+      if (mod && e.key.toLowerCase() === "d") {
+        if (store.viewMode === "baseline" || store.selectedHeadIds.length === 0) return;
+        e.preventDefault();
+        store.duplicateSelectedHeads();
+        return;
+      }
 
-      const { selectedHeadIds, viewMode, deleteSelectedHeads } = store;
-      if (viewMode === "baseline" || selectedHeadIds.length === 0) return;
+      if (store.viewMode !== "baseline" && store.selectedHeadIds.length > 0) {
+        const key = e.key.toLowerCase();
+        if (key === "m") {
+          e.preventDefault();
+          store.setSelectedArcDegrees(90);
+          return;
+        }
+        if (key === "n") {
+          e.preventDefault();
+          store.setSelectedArcDegrees(180);
+          return;
+        }
+        if (key === "b") {
+          e.preventDefault();
+          store.setSelectedArcDegrees(270);
+          return;
+        }
+        if (key === "v") {
+          e.preventDefault();
+          store.setSelectedArcDegrees(360);
+          return;
+        }
+        if (key === "+" || key === "=") {
+          e.preventDefault();
+          store.adjustSelectedRadius(1);
+          return;
+        }
+        if (key === "-" || key === "_") {
+          e.preventDefault();
+          store.adjustSelectedRadius(-1);
+          return;
+        }
+        if (e.key === "Enter") {
+          e.preventDefault();
+          store.rotateSelectedHeads(90);
+          return;
+        }
+      }
 
-      e.preventDefault();
-      deleteSelectedHeads();
+      if (
+        e.key === "Delete" ||
+        e.key === "Backspace" ||
+        e.key === " " ||
+        e.code === "Space"
+      ) {
+        const { selectedHeadIds, viewMode, deleteSelectedHeads } = store;
+        if (viewMode === "baseline" || selectedHeadIds.length === 0) return;
+
+        e.preventDefault();
+        deleteSelectedHeads();
+      }
     }
 
     window.addEventListener("keydown", onKeyDown);

@@ -51,6 +51,8 @@ export function TrainingToolbar({
   const toggleHeatmap = useTrainingStore((s) => s.toggleHeatmap);
   const toggleSampleGrid = useTrainingStore((s) => s.toggleSampleGrid);
   const toggleArcs = useTrainingStore((s) => s.toggleArcs);
+  const snapArcToPolygonEdges = useTrainingStore((s) => s.snapArcToPolygonEdges);
+  const toggleSnapArcToPolygonEdges = useTrainingStore((s) => s.toggleSnapArcToPolygonEdges);
   const clearCorrectedHeads = useTrainingStore((s) => s.clearCorrectedHeads);
   const polygon = useTrainingStore((s) => s.polygon);
   const correctedHeads = useTrainingStore((s) => s.correctedHeads);
@@ -157,6 +159,14 @@ export function TrainingToolbar({
         <Button size="sm" variant={showArcs ? "default" : "outline"} onClick={toggleArcs}>
           Arcs
         </Button>
+        <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={snapArcToPolygonEdges}
+            onChange={() => toggleSnapArcToPolygonEdges()}
+          />
+          Snap heads & arcs to edges
+        </label>
       </div>
       <div
         className="ml-auto flex w-full gap-2 sm:w-auto"

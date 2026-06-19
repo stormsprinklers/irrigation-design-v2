@@ -31,7 +31,9 @@ type Props = {
   patternWidthFt?: number;
   patternLengthFt?: number;
   onSelect: (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => void;
+  onDragStart?: () => void;
   onMove: (positionFt: { x: number; y: number }, opts?: { deferScores?: boolean }) => void;
+  onDragEnd?: () => void;
   onPatch: (patch: Partial<TrainingHeadSnapshot>, opts?: { deferScores?: boolean }) => void;
   onInteractionStart?: () => void;
   onInteractionEnd: () => void;
@@ -50,7 +52,9 @@ export function TrainingHeadGraphic({
   patternWidthFt,
   patternLengthFt,
   onSelect,
+  onDragStart,
   onMove,
+  onDragEnd,
   onPatch,
   onInteractionStart,
   onInteractionEnd,
@@ -68,9 +72,8 @@ export function TrainingHeadGraphic({
   const rotDeg = head.rotationDegrees;
   const handleDist = Math.min(Math.max(radiusPx * 0.35, 18), 48);
   const handlePos = polarPx(rotDeg, handleDist);
-  const headMarkerRadius = selected ? 8 : 6;
   const arcBtnGap = 18;
-  const arcClusterDist = Math.max(headMarkerRadius + 16, 22);
+  const arcClusterDist = Math.max((selected ? 9 : 6) + 16, 22);
   const arcClusterAngle = rotDeg + 180;
   const arcClusterCenter = polarPx(arcClusterAngle, arcClusterDist);
   const arcTangent = polarPx(arcClusterAngle + 90, arcBtnGap / 2);
@@ -140,7 +143,10 @@ export function TrainingHeadGraphic({
         stopBubble(e);
         onSelect(e);
       }}
-      onDragStart={stopDragScroll}
+      onDragStart={(e) => {
+        stopDragScroll(e);
+        onDragStart?.();
+      }}
       onDragMove={(e) => {
         stopBubble(e);
         onMove(feetFromGroup(e.target as Konva.Group), { deferScores: true });
@@ -148,6 +154,7 @@ export function TrainingHeadGraphic({
       onDragEnd={(e) => {
         stopBubble(e);
         onMove(feetFromGroup(e.target as Konva.Group));
+        onDragEnd?.();
         onInteractionEnd();
       }}
     >
@@ -165,11 +172,39 @@ export function TrainingHeadGraphic({
         />
       )}
 
+      {selected && !ghost && (
+        <>
+          <Circle
+            x={0}
+            y={0}
+            radius={16}
+            stroke="#38bdf8"
+            strokeWidth={4}
+            opacity={0.95}
+            shadowBlur={16}
+            shadowColor="#0ea5e9"
+            shadowOpacity={0.85}
+            listening={false}
+          />
+          <Circle
+            x={0}
+            y={0}
+            radius={12}
+            stroke="#bae6fd"
+            strokeWidth={2}
+            opacity={0.7}
+            listening={false}
+          />
+        </>
+      )}
+
       <Circle
         x={0}
         y={0}
-        radius={selected ? 8 : 6}
+        radius={selected ? 9 : 6}
         fill={ghost ? "#94a3b8" : selected ? "#2563eb" : "#1d4ed8"}
+        stroke={selected ? "#ffffff" : undefined}
+        strokeWidth={selected ? 2 : 0}
         listening={!ghost}
         hitStrokeWidth={editable ? 12 : 0}
       />

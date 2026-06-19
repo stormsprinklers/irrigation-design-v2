@@ -118,6 +118,7 @@ export function TrainingCanvas() {
   const setSelectedHeadIds = useTrainingStore((s) => s.setSelectedHeadIds);
   const clearSelection = useTrainingStore((s) => s.clearSelection);
   const moveCorrectedHead = useTrainingStore((s) => s.moveCorrectedHead);
+  const moveHeadsToPositions = useTrainingStore((s) => s.moveHeadsToPositions);
   const updateCorrectedHead = useTrainingStore((s) => s.updateCorrectedHead);
   const recomputeScores = useTrainingStore((s) => s.recomputeScores);
   const addCorrectedHead = useTrainingStore((s) => s.addCorrectedHead);
@@ -138,6 +139,10 @@ export function TrainingCanvas() {
   const [size, setSize] = useState({ width: 800, height: 600 });
   const [marquee, setMarquee] = useState<MarqueeState | null>(null);
   const marqueeUsedRef = useRef(false);
+  const groupDragRef = useRef<{
+    anchorId: string;
+    starts: Record<string, { x: number; y: number }>;
+  } | null>(null);
 
   const unlockCanvasScroll = useCallback(() => {
     scrollLockCountRef.current = Math.max(0, scrollLockCountRef.current - 1);
@@ -582,10 +587,46 @@ export function TrainingCanvas() {
                 onSelect={(e) => {
                   selectHead(head.id, { additive: isAdditivePointerEvent(e.evt) });
                 }}
-                onMove={(positionFt, opts) => moveCorrectedHead(head.id, positionFt, opts)}
+                onDragStart={() => {
+                  if (
+                    editable &&
+                    selectedHeadIds.length > 1 &&
+                    selectedHeadIds.includes(head.id)
+                  ) {
+                    groupDragRef.current = {
+                      anchorId: head.id,
+                      starts: Object.fromEntries(
+                        correctedHeads
+                          .filter((h) => selectedHeadIds.includes(h.id))
+                          .map((h) => [h.id, { ...h.positionFt }])
+                      ),
+                    };
+                  } else {
+                    groupDragRef.current = null;
+                  }
+                }}
+                onMove={(positionFt, opts) => {
+                  const drag = groupDragRef.current;
+                  if (drag && drag.anchorId === head.id && drag.starts[head.id]) {
+                    const start = drag.starts[head.id]!;
+                    const dx = positionFt.x - start.x;
+                    const dy = positionFt.y - start.y;
+                    const positions: Record<string, { x: number; y: number }> = {};
+                    for (const [id, pos] of Object.entries(drag.starts)) {
+                      positions[id] = { x: pos.x + dx, y: pos.y + dy };
+                    }
+                    moveHeadsToPositions(positions, opts);
+                    return;
+                  }
+                  moveCorrectedHead(head.id, positionFt, opts);
+                }}
                 onPatch={(patch, opts) => updateCorrectedHead(head.id, patch, opts)}
                 onInteractionStart={lockCanvasScroll}
+                onDragEnd={() => {
+                  groupDragRef.current = null;
+                }}
                 onInteractionEnd={() => {
+                  groupDragRef.current = null;
                   unlockCanvasScroll();
                   recomputeScores();
                 }}
