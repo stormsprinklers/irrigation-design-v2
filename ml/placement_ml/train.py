@@ -58,7 +58,7 @@ class PlacementDataset(Dataset):
             "poly": torch.tensor(s["poly"]),
             "heads": torch.tensor(s["heads"]),
             "context": torch.tensor(s["context"]),
-            "head_mask": torch.tensor(s["mask"]),
+            "head_mask": torch.tensor(s["head_mask"]),
             "exist": torch.tensor(s["exist"]),
             "pos": torch.tensor(s["pos"]),
             "radius": torch.tensor(s["radius"]),
