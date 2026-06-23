@@ -6,7 +6,9 @@ import type Konva from "konva";
 import { useDesignStore } from "@/lib/stores/design-store";
 import { distanceBetweenPoints, generateId, POLYGON_CLOSE_RADIUS } from "@/lib/utils";
 import type { HydrozonePolygon, ExclusionZone, Point, CatalogItemData } from "@/lib/domain/types";
-import { HeadCoverageShape } from "@/components/heads/HeadCoverageShape";
+import { InteractiveHeadGraphic } from "@/components/heads/InteractiveHeadGraphic";
+import { getNozzleAdjustability } from "@/lib/catalog/adjustability";
+import { pixelsPerFootFromDocument } from "@/lib/domain/design/head-editing";
 import { useCanvasSurface } from "@/lib/hooks/use-canvas-theme";
 import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Button } from "@/components/ui/button";
@@ -82,6 +84,7 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     scalePointA,
     scalePointB,
     selectedId,
+    selectedType,
     canvasZoom,
     stagePosition,
     viewportSize,
@@ -95,6 +98,8 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     zoomIn,
     zoomOut,
     resetCanvasView,
+    patchSelectedHead,
+    moveSelectedHead,
   } = useDesignStore();
   const canvasSurface = useCanvasSurface();
 
@@ -321,11 +326,18 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
   }
 
   function handleHeadDrag(headId: string, x: number, y: number) {
+    if (selectedId === headId && selectedType === "head") {
+      moveSelectedHead({ x, y });
+      return;
+    }
     const heads = document.heads.map((h) =>
       h.id === headId && !h.locked ? { ...h, position: { x, y } } : h
     );
     setDocument({ ...document, heads });
   }
+
+  const ppf = pixelsPerFootFromDocument(document);
+  const headEditable = activeTool === "select";
 
   const previewPolygonPoints =
     previewPoint && drawingVertices.length >= 2
@@ -438,41 +450,45 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
           {document.heads.map((head) => {
             const dimmed = isDimmed(head.zoneId);
             const showArc = !activeZoneId || activeZoneId === head.zoneId;
-            const ppf =
-              document.scale && document.scale.realWorldFeet > 0
-                ? Math.hypot(
-                    document.scale.pointB.x - document.scale.pointA.x,
-                    document.scale.pointB.y - document.scale.pointA.y
-                  ) / document.scale.realWorldFeet
-                : 10;
             const nozzle = catalog.find((c) => c.id === head.catalogItemId);
+            const selected = selectedId === head.id;
+            const showHandles = headEditable && selected && !head.locked && !passThroughPointer;
 
             return (
-              <Group key={head.id} listening={!passThroughPointer}>
-                {showArc && (
-                  <HeadCoverageShape
-                    positionFt={{ x: head.position.x / ppf, y: head.position.y / ppf }}
-                    pxPerFt={ppf}
-                    arcDegrees={head.arcDegrees}
-                    radiusFeet={head.radiusFeet}
-                    rotationDegrees={head.rotationDegrees}
-                    nozzle={nozzle}
-                    fill={dimmed ? "rgba(59,130,246,0.05)" : "rgba(59,130,246,0.15)"}
-                  />
-                )}
-                <Circle
-                  x={head.position.x}
-                  y={head.position.y}
-                  radius={headRadius}
-                  hitStrokeWidth={headHitStroke}
-                  fill={head.locked ? "#f59e0b" : selectedId === head.id ? "#2563eb" : "#1d4ed8"}
-                  opacity={dimmed ? 0.2 : 1}
-                  draggable={activeTool === "select" && !head.locked}
-                  onDragEnd={(e) => handleHeadDrag(head.id, e.target.x(), e.target.y())}
-                  onClick={() => setSelected(head.id, "head")}
-                  onTap={() => setSelected(head.id, "head")}
-                />
-              </Group>
+              <InteractiveHeadGraphic
+                key={head.id}
+                centerX={head.position.x}
+                centerY={head.position.y}
+                pxPerFt={ppf}
+                head={head}
+                ghost={false}
+                showArc={showArc}
+                editable={headEditable && !passThroughPointer}
+                selected={selected}
+                locked={head.locked}
+                showAdjustHandles={showHandles}
+                listening={!passThroughPointer}
+                adjustability={nozzle ? getNozzleAdjustability(nozzle) : null}
+                coverageFill={dimmed ? "rgba(59,130,246,0.05)" : "rgba(59,130,246,0.15)"}
+                nozzle={nozzle}
+                headMarkerRadius={headRadius}
+                headHitStrokeWidth={headHitStroke}
+                onSelect={() => setSelected(head.id, "head")}
+                onMove={(position) => {
+                  if (head.locked) return;
+                  if (selected) {
+                    moveSelectedHead(position);
+                  } else {
+                    handleHeadDrag(head.id, position.x, position.y);
+                  }
+                }}
+                onPatch={(patch) => {
+                  if (head.locked) return;
+                  setSelected(head.id, "head");
+                  patchSelectedHead(catalog, patch);
+                }}
+                onInteractionEnd={() => {}}
+              />
             );
           })}
 

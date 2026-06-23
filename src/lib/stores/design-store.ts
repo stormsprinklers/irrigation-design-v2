@@ -1,8 +1,18 @@
 "use client";
 
 import { create } from "zustand";
-import type { DesignDocument, Point, ValidationIssue } from "@/lib/domain/types";
+import type { CatalogItemData, DesignDocument, Point, SprinklerHead, ValidationIssue } from "@/lib/domain/types";
 import { EMPTY_DESIGN_DOCUMENT } from "@/lib/domain/types";
+import {
+  adjustHeadRadius,
+  deleteHeadFromDocument,
+  designPressurePsi,
+  duplicateHeadInDocument,
+  moveHeadInDocument,
+  patchHeadInDocument,
+  rotateHeadDegrees,
+  setHeadArcDegrees,
+} from "@/lib/domain/design/head-editing";
 
 export type DesignTool =
   | "select"
@@ -56,6 +66,25 @@ type DesignState = {
   zoomOut: () => void;
   resetCanvasView: () => void;
   clearCanvasDesign: () => void;
+  patchSelectedHead: (
+    catalog: CatalogItemData[],
+    patch: Partial<SprinklerHead>,
+    pressurePsi?: number
+  ) => void;
+  moveSelectedHead: (position: Point) => void;
+  deleteSelectedHead: () => void;
+  duplicateSelectedHead: () => void;
+  rotateSelectedHead: (deltaDeg: number, catalog: CatalogItemData[], pressurePsi?: number) => void;
+  setSelectedHeadArcDegrees: (
+    arcDegrees: number,
+    catalog: CatalogItemData[],
+    pressurePsi?: number
+  ) => void;
+  adjustSelectedHeadRadius: (
+    deltaFt: number,
+    catalog: CatalogItemData[],
+    pressurePsi?: number
+  ) => void;
 };
 
 function centeredPosition(
@@ -203,4 +232,128 @@ export const useDesignStore = create<DesignState>((set) => ({
       validationIssues: [],
       isDirty: true,
     })),
+
+  patchSelectedHead: (catalog, patch, pressurePsi) =>
+    set((s) => {
+      if (s.selectedType !== "head" || !s.selectedId) return s;
+      const head = s.document.heads.find((h) => h.id === s.selectedId);
+      if (!head || head.locked) return s;
+      return {
+        document: patchHeadInDocument(
+          s.document,
+          s.selectedId,
+          patch,
+          catalog,
+          pressurePsi
+        ),
+        isDirty: true,
+      };
+    }),
+
+  moveSelectedHead: (position) =>
+    set((s) => {
+      if (s.selectedType !== "head" || !s.selectedId) return s;
+      const head = s.document.heads.find((h) => h.id === s.selectedId);
+      if (!head || head.locked) return s;
+      return {
+        document: moveHeadInDocument(s.document, s.selectedId, position),
+        isDirty: true,
+      };
+    }),
+
+  deleteSelectedHead: () =>
+    set((s) => {
+      if (s.selectedType !== "head" || !s.selectedId) return s;
+      return {
+        document: deleteHeadFromDocument(s.document, s.selectedId),
+        selectedId: null,
+        selectedType: null,
+        isDirty: true,
+      };
+    }),
+
+  duplicateSelectedHead: () =>
+    set((s) => {
+      if (s.selectedType !== "head" || !s.selectedId) return s;
+      const result = duplicateHeadInDocument(s.document, s.selectedId);
+      if (!result) return s;
+      return {
+        document: result.document,
+        selectedId: result.newHeadId,
+        selectedType: "head" as const,
+        isDirty: true,
+      };
+    }),
+
+  rotateSelectedHead: (deltaDeg, catalog, pressurePsi) =>
+    set((s) => {
+      if (s.selectedType !== "head" || !s.selectedId) return s;
+      const head = s.document.heads.find((h) => h.id === s.selectedId);
+      if (!head || head.locked) return s;
+      const pressure = pressurePsi ?? designPressurePsi(s.document);
+      const next = rotateHeadDegrees(head, deltaDeg, catalog, pressure);
+      return {
+        document: patchHeadInDocument(
+          s.document,
+          s.selectedId,
+          {
+            rotationDegrees: next.rotationDegrees,
+            gpm: next.gpm,
+            precipInPerHr: next.precipInPerHr,
+          },
+          catalog,
+          pressure
+        ),
+        isDirty: true,
+      };
+    }),
+
+  setSelectedHeadArcDegrees: (arcDegrees, catalog, pressurePsi) =>
+    set((s) => {
+      if (s.selectedType !== "head" || !s.selectedId) return s;
+      const head = s.document.heads.find((h) => h.id === s.selectedId);
+      if (!head || head.locked) return s;
+      const pressure = pressurePsi ?? designPressurePsi(s.document);
+      const next = setHeadArcDegrees(head, arcDegrees, catalog, pressure);
+      if (!next) return s;
+      return {
+        document: patchHeadInDocument(
+          s.document,
+          s.selectedId,
+          {
+            arcDegrees: next.arcDegrees,
+            gpm: next.gpm,
+            precipInPerHr: next.precipInPerHr,
+            radiusFeet: next.radiusFeet,
+          },
+          catalog,
+          pressure
+        ),
+        isDirty: true,
+      };
+    }),
+
+  adjustSelectedHeadRadius: (deltaFt, catalog, pressurePsi) =>
+    set((s) => {
+      if (s.selectedType !== "head" || !s.selectedId) return s;
+      const head = s.document.heads.find((h) => h.id === s.selectedId);
+      if (!head || head.locked) return s;
+      const pressure = pressurePsi ?? designPressurePsi(s.document);
+      const next = adjustHeadRadius(head, deltaFt, catalog, pressure);
+      if (!next) return s;
+      return {
+        document: patchHeadInDocument(
+          s.document,
+          s.selectedId,
+          {
+            radiusFeet: next.radiusFeet,
+            gpm: next.gpm,
+            precipInPerHr: next.precipInPerHr,
+          },
+          catalog,
+          pressure
+        ),
+        isDirty: true,
+      };
+    }),
 }));

@@ -94,6 +94,83 @@ export function DesignWorkspace({
   }, [project.id, version.id, version.kind, version.designData, init]);
 
   useEffect(() => {
+    function isEditableTarget(target: EventTarget | null): boolean {
+      if (!(target instanceof HTMLElement)) return false;
+      const tag = target.tagName;
+      return (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        target.isContentEditable
+      );
+    }
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (isEditableTarget(e.target)) return;
+
+      const state = useDesignStore.getState();
+      if (state.selectedType !== "head" || !state.selectedId) return;
+
+      const head = state.document.heads.find((h) => h.id === state.selectedId);
+      if (!head || head.locked) return;
+
+      const mod = e.ctrlKey || e.metaKey;
+      const pressure = state.document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
+
+      if (mod && e.key.toLowerCase() === "d") {
+        e.preventDefault();
+        state.duplicateSelectedHead();
+        return;
+      }
+
+      if (e.key === "Delete" || e.key === "Backspace") {
+        e.preventDefault();
+        state.deleteSelectedHead();
+        return;
+      }
+
+      const key = e.key.toLowerCase();
+      if (key === "m") {
+        e.preventDefault();
+        state.setSelectedHeadArcDegrees(90, catalog, pressure);
+        return;
+      }
+      if (key === "n") {
+        e.preventDefault();
+        state.setSelectedHeadArcDegrees(180, catalog, pressure);
+        return;
+      }
+      if (key === "b") {
+        e.preventDefault();
+        state.setSelectedHeadArcDegrees(270, catalog, pressure);
+        return;
+      }
+      if (key === "v" && !mod) {
+        e.preventDefault();
+        state.setSelectedHeadArcDegrees(360, catalog, pressure);
+        return;
+      }
+      if (e.key === "+" || e.key === "=") {
+        e.preventDefault();
+        state.adjustSelectedHeadRadius(1, catalog, pressure);
+        return;
+      }
+      if (e.key === "-" || e.key === "_") {
+        e.preventDefault();
+        state.adjustSelectedHeadRadius(-1, catalog, pressure);
+        return;
+      }
+      if (e.key === "Enter") {
+        e.preventDefault();
+        state.rotateSelectedHead(90, catalog, pressure);
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [catalog]);
+
+  useEffect(() => {
     if (!isDirty || !projectId || !versionId) return;
     const timer = setTimeout(async () => {
       setSaving(true);

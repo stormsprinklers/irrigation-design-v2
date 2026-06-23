@@ -12,10 +12,8 @@ import {
   getNozzlesForHead,
   nozzleCompatibleWithHead,
 } from "@/lib/catalog/compat";
-import {
-  resolveDefaultHeadSettings,
-  swapHeadNozzle,
-} from "@/lib/catalog/adjustability";
+import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
+import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
 import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
 import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
 import { NativeSelect } from "@/components/ui/native-select";
@@ -53,14 +51,18 @@ export function InspectorPanel({
     document,
     setDocument,
     selectedId,
+    selectedType,
     scalePointA,
     scalePointB,
     activeZoneId,
     setActiveZoneId,
+    patchSelectedHead,
+    deleteSelectedHead,
+    duplicateSelectedHead,
   } = useDesignStore();
 
   const scaleFeetRef = useRef<HTMLInputElement>(null);
-  const selectedHead = document.heads.find((h) => h.id === selectedId);
+  const selectedHead = selectedType === "head" ? document.heads.find((h) => h.id === selectedId) : undefined;
   const selectedHydrozone = document.hydrozones.find((h) => h.id === selectedId);
   const selectedZone = document.zones.find((z) => z.id === activeZoneId);
 
@@ -315,9 +317,23 @@ export function InspectorPanel({
 
         {selectedHead && (
           <section className="space-y-3">
-            <h3 className="text-sm font-medium">Head</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium">Head</h3>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => duplicateSelectedHead()}>
+                  Duplicate
+                </Button>
+                <Button size="sm" variant="destructive" onClick={() => deleteSelectedHead()}>
+                  Delete
+                </Button>
+              </div>
+            </div>
             <p className="text-xs text-muted-foreground">
               GPM: {selectedHead.gpm?.toFixed(2) ?? "—"} · Radius: {selectedHead.radiusFeet} ft
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Drag the orange handle to rotate · use +/- on canvas for arc · M/N/B/V arc presets ·
+              Enter rotate 90° · +/- radius
             </p>
             <HeadCatalogPickers
               catalog={catalog}
@@ -332,31 +348,24 @@ export function InspectorPanel({
                   currentNozzle && headBody && nozzleCompatibleWithHead(currentNozzle, headBody)
                     ? currentNozzle
                     : compatible[0];
+                if (!nozzle) return;
                 const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
-                const settings = nozzle ? resolveDefaultHeadSettings(nozzle, pressure) : null;
-                const heads = document.heads.map((h) =>
-                  h.id === selectedHead.id
-                    ? {
-                        ...h,
-                        headBodyId,
-                        catalogItemId: nozzle?.id ?? h.catalogItemId,
-                        ...(settings ?? {}),
-                      }
-                    : h
-                );
-                setDocument({ ...document, heads });
+                const settings = resolveDefaultHeadSettings(nozzle, pressure);
+                patchSelectedHead(catalog, {
+                  headBodyId,
+                  catalogItemId: nozzle.id,
+                  ...stripFieldsFromNozzle(nozzle),
+                  arcDegrees: settings.arcDegrees,
+                  radiusFeet: settings.radiusFeet,
+                  rotationDegrees: settings.rotationDegrees,
+                  gpm: settings.gpm,
+                  precipInPerHr: settings.precipInPerHr,
+                });
               }}
               onNozzleChange={(catalogItemId) => {
                 const nozzle = catalog.find((c) => c.id === catalogItemId);
                 if (!nozzle) return;
-                const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
-                const hyd = swapHeadNozzle(selectedHead, nozzle, pressure);
-                const heads = document.heads.map((h) =>
-                  h.id === selectedHead.id
-                    ? { ...h, catalogItemId: nozzle.id, ...hyd }
-                    : h
-                );
-                setDocument({ ...document, heads });
+                patchSelectedHead(catalog, { catalogItemId: nozzle.id });
               }}
             />
             {selectedHead.headBodyId && selectedHead.catalogItemId && (() => {
@@ -368,12 +377,7 @@ export function InspectorPanel({
                   head={selectedHead}
                   nozzle={nozzle}
                   pressurePsi={pressure}
-                  onChange={(patch) => {
-                    const heads = document.heads.map((h) =>
-                      h.id === selectedHead.id ? { ...h, ...patch } : h
-                    );
-                    setDocument({ ...document, heads });
-                  }}
+                  onChange={(patch) => patchSelectedHead(catalog, patch)}
                 />
               );
             })()}
