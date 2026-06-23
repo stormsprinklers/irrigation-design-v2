@@ -203,7 +203,10 @@ export function patchHeadWithNozzle(
   nozzle: CatalogItemData,
   pressurePsi = DEFAULT_PRESSURE_PSI
 ): Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees" | "gpm" | "precipInPerHr"> {
-  const clamped = clampHeadToNozzle({ ...head, ...partial }, nozzle);
+  const definedPartial = Object.fromEntries(
+    Object.entries(partial).filter((entry): entry is [string, number] => entry[1] !== undefined)
+  ) as Partial<Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees">>;
+  const clamped = clampHeadToNozzle({ ...head, ...definedPartial }, nozzle);
   const hydraulics = calculateNozzleHydraulics(
     nozzle,
     pressurePsi,

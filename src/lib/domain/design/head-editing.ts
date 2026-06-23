@@ -23,41 +23,65 @@ export function designPressurePsi(document: DesignDocument): number {
   return document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
 }
 
+function geometryPatchFromPartial(
+  patch: Partial<SprinklerHead>
+): Partial<Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees">> {
+  const out: Partial<Pick<SprinklerHead, "arcDegrees" | "radiusFeet" | "rotationDegrees">> = {};
+  if (patch.arcDegrees !== undefined) out.arcDegrees = patch.arcDegrees;
+  if (patch.radiusFeet !== undefined) out.radiusFeet = patch.radiusFeet;
+  if (patch.rotationDegrees !== undefined) out.rotationDegrees = patch.rotationDegrees;
+  return out;
+}
+
+function sanitizeHeadNumbers(head: SprinklerHead): SprinklerHead {
+  return {
+    ...head,
+    arcDegrees: Number.isFinite(head.arcDegrees) ? head.arcDegrees : 360,
+    radiusFeet: Number.isFinite(head.radiusFeet) ? head.radiusFeet : 0,
+    rotationDegrees: Number.isFinite(head.rotationDegrees) ? head.rotationDegrees : 0,
+    gpm: head.gpm !== undefined && Number.isFinite(head.gpm) ? head.gpm : undefined,
+    precipInPerHr:
+      head.precipInPerHr !== undefined && Number.isFinite(head.precipInPerHr)
+        ? head.precipInPerHr
+        : undefined,
+  };
+}
+
 export function applyDesignHeadPatch(
   head: SprinklerHead,
   patch: Partial<SprinklerHead>,
   catalog: CatalogItemData[],
   pressurePsi = DEFAULT_PRESSURE_PSI
 ): SprinklerHead {
-  const catalogItemId = patch.catalogItemId ?? head.catalogItemId;
+  const safeHead = sanitizeHeadNumbers(head);
+  const catalogItemId = patch.catalogItemId ?? safeHead.catalogItemId;
   const nozzle = catalog.find((c) => c.id === catalogItemId);
-  let next: SprinklerHead = { ...head, ...patch };
+  const definedPatch = Object.fromEntries(
+    Object.entries(patch).filter((entry) => entry[1] !== undefined)
+  ) as Partial<SprinklerHead>;
+  let next: SprinklerHead = { ...safeHead, ...definedPatch };
 
-  if (patch.catalogItemId && nozzle && patch.catalogItemId !== head.catalogItemId) {
-    const hyd = swapHeadNozzle(head, nozzle, pressurePsi);
+  if (patch.catalogItemId && nozzle && patch.catalogItemId !== safeHead.catalogItemId) {
+    const hyd = swapHeadNozzle(safeHead, nozzle, pressurePsi);
     next = { ...next, catalogItemId: nozzle.id, ...hyd };
   }
 
-  const geometryTouched =
-    patch.arcDegrees !== undefined ||
-    patch.rotationDegrees !== undefined ||
-    patch.radiusFeet !== undefined;
+  const geometryPatch = geometryPatchFromPartial(patch);
+  const geometryTouched = Object.keys(geometryPatch).length > 0;
 
   if (nozzle && geometryTouched) {
-    const hyd = patchHeadWithNozzle(
-      next,
-      {
-        arcDegrees: patch.arcDegrees,
-        radiusFeet: patch.radiusFeet,
-        rotationDegrees: patch.rotationDegrees,
-      },
-      nozzle,
-      pressurePsi
-    );
+    const hyd = patchHeadWithNozzle(next, geometryPatch, nozzle, pressurePsi);
     next = { ...next, ...hyd };
   }
 
-  return next;
+  return sanitizeHeadNumbers(next);
+}
+
+export function sanitizeDesignHeads(document: DesignDocument): DesignDocument {
+  return {
+    ...document,
+    heads: document.heads.map((h) => sanitizeHeadNumbers(h)),
+  };
 }
 
 export function patchHeadInDocument(

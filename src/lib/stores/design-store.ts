@@ -15,6 +15,7 @@ import {
   pasteHeadsInDocument,
   rotateHeadDegrees,
   setHeadArcDegrees,
+  sanitizeDesignHeads,
 } from "@/lib/domain/design/head-editing";
 
 export type DesignTool =
@@ -195,7 +196,7 @@ export const useDesignStore = create<DesignState>((set, get) => ({
         projectId,
         versionId,
         versionKind,
-        document: doc,
+        document: sanitizeDesignHeads(doc),
         isDirty: false,
         drawingVertices: [],
         scalePointA: null,

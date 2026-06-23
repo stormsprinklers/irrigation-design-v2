@@ -129,7 +129,8 @@ export function InteractiveHeadGraphic({
     const g = group as Konva.Group;
     const pos = g.getRelativePointerPosition();
     if (!pos) return null;
-    return normalizeDeg((Math.atan2(pos.y, pos.x) * 180) / Math.PI);
+    const deg = normalizeDeg((Math.atan2(pos.y, pos.x) * 180) / Math.PI);
+    return Number.isFinite(deg) ? deg : null;
   }
 
   function adjustArc(delta: number): boolean {
