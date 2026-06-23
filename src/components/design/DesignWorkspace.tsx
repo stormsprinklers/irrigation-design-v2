@@ -33,7 +33,9 @@ import {
 } from "@/components/ui/sheet";
 import { refineDesignHeadsWithMl } from "@/lib/actions/placement-ml";
 import type { PlacementMlStatus } from "@/lib/actions/placement-ml";
-import { ClipboardList, Package, Settings2 } from "lucide-react";
+import { DesignHeadEditorPanel } from "./DesignHeadEditorPanel";
+import { useDesignHeadKeyboard } from "@/lib/hooks/use-design-head-keyboard";
+import { ClipboardList, Package, Settings2, Pencil } from "lucide-react";
 
 const DesignCanvas = dynamic(() => import("./DesignCanvas").then((m) => m.DesignCanvas), {
   ssr: false,
@@ -62,6 +64,7 @@ export function DesignWorkspace({
 }: Props) {
   const isMobile = useIsMobile();
   const [inspectorOpen, setInspectorOpen] = useState(false);
+  const [headEditorOpen, setHeadEditorOpen] = useState(false);
   const [materialsOpen, setMaterialsOpen] = useState(false);
   const [validationOpen, setValidationOpen] = useState(false);
   const [mlRefinementEnabled, setMlRefinementEnabled] = useState(
@@ -87,88 +90,15 @@ export function DesignWorkspace({
     setSaving,
     projectId,
     versionId,
+    setSelected,
+    setLastCanvasClick,
   } = store;
+
+  useDesignHeadKeyboard({ catalog });
 
   useEffect(() => {
     init(project.id, version.id, version.kind, version.designData as DesignDocument);
   }, [project.id, version.id, version.kind, version.designData, init]);
-
-  useEffect(() => {
-    function isEditableTarget(target: EventTarget | null): boolean {
-      if (!(target instanceof HTMLElement)) return false;
-      const tag = target.tagName;
-      return (
-        tag === "INPUT" ||
-        tag === "TEXTAREA" ||
-        tag === "SELECT" ||
-        target.isContentEditable
-      );
-    }
-
-    function onKeyDown(e: KeyboardEvent) {
-      if (isEditableTarget(e.target)) return;
-
-      const state = useDesignStore.getState();
-      if (state.selectedType !== "head" || !state.selectedId) return;
-
-      const head = state.document.heads.find((h) => h.id === state.selectedId);
-      if (!head || head.locked) return;
-
-      const mod = e.ctrlKey || e.metaKey;
-      const pressure = state.document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
-
-      if (mod && e.key.toLowerCase() === "d") {
-        e.preventDefault();
-        state.duplicateSelectedHead();
-        return;
-      }
-
-      if (e.key === "Delete" || e.key === "Backspace") {
-        e.preventDefault();
-        state.deleteSelectedHead();
-        return;
-      }
-
-      const key = e.key.toLowerCase();
-      if (key === "m") {
-        e.preventDefault();
-        state.setSelectedHeadArcDegrees(90, catalog, pressure);
-        return;
-      }
-      if (key === "n") {
-        e.preventDefault();
-        state.setSelectedHeadArcDegrees(180, catalog, pressure);
-        return;
-      }
-      if (key === "b") {
-        e.preventDefault();
-        state.setSelectedHeadArcDegrees(270, catalog, pressure);
-        return;
-      }
-      if (key === "v" && !mod) {
-        e.preventDefault();
-        state.setSelectedHeadArcDegrees(360, catalog, pressure);
-        return;
-      }
-      if (e.key === "+" || e.key === "=") {
-        e.preventDefault();
-        state.adjustSelectedHeadRadius(1, catalog, pressure);
-        return;
-      }
-      if (e.key === "-" || e.key === "_") {
-        e.preventDefault();
-        state.adjustSelectedHeadRadius(-1, catalog, pressure);
-        return;
-      }
-      if (e.key === "Enter") {
-        e.preventDefault();
-        state.rotateSelectedHead(90, catalog, pressure);
-      }
-    }
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [catalog]);
 
   useEffect(() => {
     if (!isDirty || !projectId || !versionId) return;
@@ -264,6 +194,8 @@ export function DesignWorkspace({
 
   const handleCanvasClick = useCallback(
     (point: Point) => {
+      setLastCanvasClick(point);
+
       if (activeTool === "scale") {
         if (!scalePointA) {
           setScalePointA(point);
@@ -318,6 +250,7 @@ export function DesignWorkspace({
           locked: false,
         };
         setDocument({ ...document, heads: [...document.heads, head] });
+        setSelected(head.id, "head");
         return;
       }
 
@@ -355,6 +288,8 @@ export function DesignWorkspace({
       document,
       catalog,
       setDocument,
+      setSelected,
+      setLastCanvasClick,
       drawingVertices,
       clearDrawing,
       finishPolygon,
@@ -542,12 +477,29 @@ export function DesignWorkspace({
             </>
           )}
         </div>
-        {!isMobile && <InspectorPanel {...inspectorProps} />}
+        {!isMobile && (
+          <aside className="flex w-80 min-h-0 shrink-0 flex-col overflow-hidden border-l bg-card">
+            <div className="max-h-[min(50%,28rem)] shrink-0 overflow-y-auto border-b">
+              <DesignHeadEditorPanel catalog={catalog} />
+            </div>
+            <div className="min-h-0 flex-1 overflow-hidden">
+              <InspectorPanel {...inspectorProps} className="h-full w-full border-l-0" />
+            </div>
+          </aside>
+        )}
       </div>
 
       {isMobile && (
         <>
           <div className="flex shrink-0 border-t bg-card">
+            <Button
+              variant="ghost"
+              className="h-11 flex-1 flex-col gap-0.5 rounded-none py-1 text-[10px]"
+              onClick={() => setHeadEditorOpen(true)}
+            >
+              <Pencil className="h-4 w-4" />
+              Head
+            </Button>
             <Button
               variant="ghost"
               className="h-11 flex-1 flex-col gap-0.5 rounded-none py-1 text-[10px]"
@@ -576,6 +528,17 @@ export function DesignWorkspace({
           <DesignToolbar layout="dock" />
         </>
       )}
+
+      <Sheet open={headEditorOpen} onOpenChange={setHeadEditorOpen}>
+        <SheetContent side="bottom" className="max-h-[85dvh] p-0">
+          <SheetHeader className="border-b">
+            <SheetTitle>Head editor</SheetTitle>
+          </SheetHeader>
+          <div className="overflow-y-auto">
+            <DesignHeadEditorPanel catalog={catalog} />
+          </div>
+        </SheetContent>
+      </Sheet>
 
       <Sheet open={inspectorOpen} onOpenChange={setInspectorOpen}>
         <SheetContent side="right" className="w-full max-w-md p-0">

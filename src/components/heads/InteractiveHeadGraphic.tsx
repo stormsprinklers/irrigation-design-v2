@@ -158,6 +158,8 @@ export function InteractiveHeadGraphic({
       y={centerY}
       listening={listening}
       draggable={canEdit}
+      onMouseDown={stopBubble}
+      onTouchStart={stopBubble}
       onClick={(e) => {
         stopBubble(e);
         onSelect(e);

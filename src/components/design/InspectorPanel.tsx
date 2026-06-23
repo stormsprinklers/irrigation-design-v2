@@ -8,14 +8,6 @@ import { Button } from "@/components/ui/button";
 import { generateId } from "@/lib/utils";
 import type { CatalogItemData } from "@/lib/domain/types";
 import { DEFAULT_PRESSURE_PSI, DEFAULT_WATER_SOURCE } from "@/lib/domain/types";
-import {
-  getNozzlesForHead,
-  nozzleCompatibleWithHead,
-} from "@/lib/catalog/compat";
-import { resolveDefaultHeadSettings } from "@/lib/catalog/adjustability";
-import { stripFieldsFromNozzle } from "@/lib/catalog/strip-pattern";
-import { HeadAdjustFields } from "@/components/heads/HeadAdjustFields";
-import { HeadCatalogPickers } from "@/components/heads/HeadCatalogPickers";
 import { NativeSelect } from "@/components/ui/native-select";
 
 import { cn } from "@/lib/utils";
@@ -51,18 +43,13 @@ export function InspectorPanel({
     document,
     setDocument,
     selectedId,
-    selectedType,
     scalePointA,
     scalePointB,
     activeZoneId,
     setActiveZoneId,
-    patchSelectedHead,
-    deleteSelectedHead,
-    duplicateSelectedHead,
   } = useDesignStore();
 
   const scaleFeetRef = useRef<HTMLInputElement>(null);
-  const selectedHead = selectedType === "head" ? document.heads.find((h) => h.id === selectedId) : undefined;
   const selectedHydrozone = document.hydrozones.find((h) => h.id === selectedId);
   const selectedZone = document.zones.find((z) => z.id === activeZoneId);
 
@@ -312,103 +299,6 @@ export function InspectorPanel({
             <p className="text-xs text-muted-foreground">
               Auto-place uses head-to-head spacing with corners first, then edges and interior fill.
             </p>
-          </section>
-        )}
-
-        {selectedHead && (
-          <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-medium">Head</h3>
-              <div className="flex gap-2">
-                <Button size="sm" variant="outline" onClick={() => duplicateSelectedHead()}>
-                  Duplicate
-                </Button>
-                <Button size="sm" variant="destructive" onClick={() => deleteSelectedHead()}>
-                  Delete
-                </Button>
-              </div>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              GPM: {selectedHead.gpm?.toFixed(2) ?? "—"} · Radius: {selectedHead.radiusFeet} ft
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Drag the orange handle to rotate · use +/- on canvas for arc · M/N/B/V arc presets ·
-              Enter rotate 90° · +/- radius
-            </p>
-            <HeadCatalogPickers
-              catalog={catalog}
-              headBodyId={selectedHead.headBodyId}
-              catalogItemId={selectedHead.catalogItemId}
-              showNozzleDetails
-              onBodyChange={(headBodyId) => {
-                const compatible = getNozzlesForHead(catalog, headBodyId);
-                const currentNozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
-                const headBody = catalog.find((c) => c.id === headBodyId);
-                const nozzle =
-                  currentNozzle && headBody && nozzleCompatibleWithHead(currentNozzle, headBody)
-                    ? currentNozzle
-                    : compatible[0];
-                if (!nozzle) return;
-                const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
-                const settings = resolveDefaultHeadSettings(nozzle, pressure);
-                patchSelectedHead(catalog, {
-                  headBodyId,
-                  catalogItemId: nozzle.id,
-                  ...stripFieldsFromNozzle(nozzle),
-                  arcDegrees: settings.arcDegrees,
-                  radiusFeet: settings.radiusFeet,
-                  rotationDegrees: settings.rotationDegrees,
-                  gpm: settings.gpm,
-                  precipInPerHr: settings.precipInPerHr,
-                });
-              }}
-              onNozzleChange={(catalogItemId) => {
-                const nozzle = catalog.find((c) => c.id === catalogItemId);
-                if (!nozzle) return;
-                patchSelectedHead(catalog, { catalogItemId: nozzle.id });
-              }}
-            />
-            {selectedHead.headBodyId && selectedHead.catalogItemId && (() => {
-              const nozzle = catalog.find((c) => c.id === selectedHead.catalogItemId);
-              if (!nozzle) return null;
-              const pressure = document.waterSource?.staticPressurePsi ?? DEFAULT_PRESSURE_PSI;
-              return (
-                <HeadAdjustFields
-                  head={selectedHead}
-                  nozzle={nozzle}
-                  pressurePsi={pressure}
-                  onChange={(patch) => patchSelectedHead(catalog, patch)}
-                />
-              );
-            })()}
-            <label className="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={selectedHead.locked}
-                onChange={(e) => {
-                  const heads = document.heads.map((h) =>
-                    h.id === selectedHead.id ? { ...h, locked: e.target.checked } : h
-                  );
-                  setDocument({ ...document, heads });
-                }}
-              />
-              Lock head
-            </label>
-            <NativeSelect
-              value={selectedHead.zoneId}
-              onChange={(e) => {
-                const heads = document.heads.map((h) =>
-                  h.id === selectedHead.id ? { ...h, zoneId: e.target.value } : h
-                );
-                setDocument({ ...document, heads });
-              }}
-            >
-              {document.zones.map((z) => (
-                <option key={z.id} value={z.id}>
-                  {z.name}
-                </option>
-              ))}
-            </NativeSelect>
           </section>
         )}
 

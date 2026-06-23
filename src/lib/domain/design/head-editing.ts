@@ -4,10 +4,12 @@ import {
   patchHeadWithNozzle,
   swapHeadNozzle,
 } from "@/lib/catalog/adjustability";
+import { flippedRotationDegrees } from "@/lib/domain/training/flip-wedge";
 import type { CatalogItemData, DesignDocument, Point, SprinklerHead } from "@/lib/domain/types";
 import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
 
 const DUPLICATE_OFFSET_FT = 2;
+const PASTE_OFFSET_FT = 2;
 
 export function pixelsPerFootFromDocument(document: DesignDocument): number {
   if (document.scale && document.scale.realWorldFeet > 0) {
@@ -74,6 +76,13 @@ export function patchHeadInDocument(
   };
 }
 
+export function cloneHeadForClipboard(head: SprinklerHead): SprinklerHead {
+  return {
+    ...head,
+    position: { ...head.position },
+  };
+}
+
 export function duplicateHead(head: SprinklerHead, ppf: number): SprinklerHead {
   const offset = DUPLICATE_OFFSET_FT * ppf;
   return {
@@ -95,6 +104,42 @@ export function duplicateHeadInDocument(
   return {
     document: { ...document, heads: [...document.heads, copy] },
     newHeadId: copy.id,
+  };
+}
+
+export function pasteHeadsInDocument(
+  document: DesignDocument,
+  sources: SprinklerHead[],
+  target: Point,
+  generation: number
+): { document: DesignDocument; newHeadIds: string[] } {
+  const ppf = pixelsPerFootFromDocument(document);
+  const extra = PASTE_OFFSET_FT * ppf * Math.max(0, generation - 1);
+  const centroid = sources.reduce(
+    (acc, h) => ({ x: acc.x + h.position.x, y: acc.y + h.position.y }),
+    { x: 0, y: 0 }
+  );
+  const count = sources.length || 1;
+  centroid.x /= count;
+  centroid.y /= count;
+
+  const pasted = sources.map((source) => {
+    const dx = target.x + extra - centroid.x;
+    const dy = target.y + extra - centroid.y;
+    return {
+      ...cloneHeadForClipboard(source),
+      id: generateId("head"),
+      position: {
+        x: source.position.x + dx,
+        y: source.position.y + dy,
+      },
+      locked: false,
+    };
+  });
+
+  return {
+    document: { ...document, heads: [...document.heads, ...pasted] },
+    newHeadIds: pasted.map((h) => h.id),
   };
 }
 
@@ -127,6 +172,15 @@ export function rotateHeadDegrees(
 ): SprinklerHead {
   const nextRot = ((head.rotationDegrees + deltaDeg) % 360 + 360) % 360;
   return applyDesignHeadPatch(head, { rotationDegrees: nextRot }, catalog, pressurePsi);
+}
+
+export function flipHead(
+  head: SprinklerHead,
+  catalog: CatalogItemData[],
+  pressurePsi: number
+): SprinklerHead {
+  const rotationDegrees = flippedRotationDegrees(head.rotationDegrees, head.arcDegrees);
+  return applyDesignHeadPatch(head, { rotationDegrees }, catalog, pressurePsi);
 }
 
 export function setHeadArcDegrees(

@@ -84,12 +84,12 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     scalePointA,
     scalePointB,
     selectedId,
-    selectedType,
     canvasZoom,
     stagePosition,
     viewportSize,
     canvasViewResetAt,
     setSelected,
+    clearSelection,
     setDocument,
     setCanvasView,
     setViewportSize,
@@ -98,8 +98,10 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     zoomIn,
     zoomOut,
     resetCanvasView,
-    patchSelectedHead,
-    moveSelectedHead,
+    editHead,
+    moveHeadById,
+    setHeadCanvasInteracting,
+    setLastCanvasClick,
   } = useDesignStore();
   const canvasSurface = useCanvasSurface();
 
@@ -143,6 +145,10 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
 
   const isDrawingPolygon = activeTool === "hydrozone" || activeTool === "exclusion";
   const drawStyle = isDrawingPolygon ? POLYGON_DRAW_STYLES[activeTool] : null;
+  const isHeadEditTool = activeTool === "select" || activeTool === "head";
+  const blockStagePointer =
+    activeTool === "pan" || isDrawingPolygon || activeTool === "scale" || activeTool === "pipe";
+  const passThroughPointer = !isHeadEditTool;
 
   const nearFirstVertex =
     isDrawingPolygon &&
@@ -247,9 +253,43 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
 
     if (!isPlacementTool) return;
 
+    // Head placement uses the Konva stage handler so clicks on existing heads are not treated as new placements.
+    if (activeTool === "head") return;
+
     const pos = clientToCanvas(e.clientX, e.clientY);
     if (!pos) return;
+    setLastCanvasClick(pos);
     onCanvasClick(pos);
+  }
+
+  function canvasPointFromStage(): Point | null {
+    const stage = stageRef.current;
+    const layer = layerRef.current;
+    if (!stage || !layer) return null;
+    const pointer = stage.getPointerPosition();
+    if (!pointer) return null;
+    const transform = layer.getAbsoluteTransform().copy();
+    transform.invert();
+    return transform.point(pointer);
+  }
+
+  function handleStagePointerDown(e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) {
+    const target = e.target;
+    const stage = target.getStage();
+    const isEmptyTarget = target === stage || target.getClassName() === "Layer";
+
+    if (activeTool === "head" && isEmptyTarget) {
+      const pos = canvasPointFromStage();
+      if (pos) {
+        setLastCanvasClick(pos);
+        onCanvasClick(pos);
+      }
+      return;
+    }
+
+    if (isHeadEditTool && isEmptyTarget) {
+      clearSelection();
+    }
   }
 
   function handleContainerPointerMove(e: React.PointerEvent<HTMLDivElement>) {
@@ -325,19 +365,12 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     }
   }
 
-  function handleHeadDrag(headId: string, x: number, y: number) {
-    if (selectedId === headId && selectedType === "head") {
-      moveSelectedHead({ x, y });
-      return;
-    }
-    const heads = document.heads.map((h) =>
-      h.id === headId && !h.locked ? { ...h, position: { x, y } } : h
-    );
-    setDocument({ ...document, heads });
+  function handleHeadMove(headId: string, position: Point) {
+    moveHeadById(headId, position);
   }
 
   const ppf = pixelsPerFootFromDocument(document);
-  const headEditable = activeTool === "select";
+  const headEditable = isHeadEditTool;
 
   const previewPolygonPoints =
     previewPoint && drawingVertices.length >= 2
@@ -347,7 +380,6 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
   const stageWidth = Math.max(viewportSize.width, 1);
   const stageHeight = Math.max(viewportSize.height, 1);
   const isPanTool = activeTool === "pan";
-  const passThroughPointer = activeTool !== "select";
   const headRadius = isMobile ? 8 : 6;
   const headHitStroke = isMobile ? 16 : 8;
   const needsTouchActionNone = isPanTool || isPlacementTool || isMobile;
@@ -381,7 +413,9 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
         ref={stageRef}
         width={stageWidth}
         height={stageHeight}
-        style={{ pointerEvents: isPlacementTool || isPanTool ? "none" : "auto" }}
+        style={{ pointerEvents: blockStagePointer ? "none" : "auto" }}
+        onMouseDown={handleStagePointerDown}
+        onTouchStart={handleStagePointerDown}
       >
         <Layer
           ref={layerRef}
@@ -476,18 +510,14 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
                 onSelect={() => setSelected(head.id, "head")}
                 onMove={(position) => {
                   if (head.locked) return;
-                  if (selected) {
-                    moveSelectedHead(position);
-                  } else {
-                    handleHeadDrag(head.id, position.x, position.y);
-                  }
+                  handleHeadMove(head.id, position);
                 }}
                 onPatch={(patch) => {
                   if (head.locked) return;
-                  setSelected(head.id, "head");
-                  patchSelectedHead(catalog, patch);
+                  editHead(head.id, catalog, patch);
                 }}
-                onInteractionEnd={() => {}}
+                onInteractionStart={() => setHeadCanvasInteracting(true)}
+                onInteractionEnd={() => setHeadCanvasInteracting(false)}
               />
             );
           })}

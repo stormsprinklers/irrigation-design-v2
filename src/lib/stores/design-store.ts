@@ -5,11 +5,14 @@ import type { CatalogItemData, DesignDocument, Point, SprinklerHead, ValidationI
 import { EMPTY_DESIGN_DOCUMENT } from "@/lib/domain/types";
 import {
   adjustHeadRadius,
+  cloneHeadForClipboard,
   deleteHeadFromDocument,
   designPressurePsi,
   duplicateHeadInDocument,
+  flipHead,
   moveHeadInDocument,
   patchHeadInDocument,
+  pasteHeadsInDocument,
   rotateHeadDegrees,
   setHeadArcDegrees,
 } from "@/lib/domain/design/head-editing";
@@ -22,6 +25,11 @@ export type DesignTool =
   | "scale"
   | "head"
   | "pipe";
+
+type HeadPreset = {
+  headBodyId: string;
+  catalogItemId: string;
+};
 
 type DesignState = {
   projectId: string | null;
@@ -44,12 +52,17 @@ type DesignState = {
   viewportSize: { width: number; height: number };
   contentSize: { width: number; height: number };
   canvasViewResetAt: number;
+  headCanvasInteracting: boolean;
+  copiedHeads: SprinklerHead[] | null;
+  pasteGeneration: number;
+  lastCanvasClick: Point | null;
 
   init: (projectId: string, versionId: string, versionKind: string, doc: DesignDocument) => void;
   setDocument: (doc: DesignDocument) => void;
   setTool: (tool: DesignTool) => void;
   setActiveZoneId: (zoneId: string | null) => void;
   setSelected: (id: string | null, type: DesignState["selectedType"]) => void;
+  clearSelection: () => void;
   addDrawingVertex: (point: Point) => void;
   clearDrawing: () => void;
   setScalePointA: (point: Point | null) => void;
@@ -66,6 +79,15 @@ type DesignState = {
   zoomOut: () => void;
   resetCanvasView: () => void;
   clearCanvasDesign: () => void;
+  setHeadCanvasInteracting: (interacting: boolean) => void;
+  setLastCanvasClick: (point: Point | null) => void;
+  editHead: (
+    headId: string,
+    catalog: CatalogItemData[],
+    patch: Partial<SprinklerHead>,
+    pressurePsi?: number
+  ) => void;
+  moveHeadById: (headId: string, position: Point) => void;
   patchSelectedHead: (
     catalog: CatalogItemData[],
     patch: Partial<SprinklerHead>,
@@ -74,6 +96,9 @@ type DesignState = {
   moveSelectedHead: (position: Point) => void;
   deleteSelectedHead: () => void;
   duplicateSelectedHead: () => void;
+  copySelectedHead: () => void;
+  pasteCopiedHead: () => void;
+  flipSelectedHead: (catalog: CatalogItemData[], pressurePsi?: number) => void;
   rotateSelectedHead: (deltaDeg: number, catalog: CatalogItemData[], pressurePsi?: number) => void;
   setSelectedHeadArcDegrees: (
     arcDegrees: number,
@@ -85,6 +110,7 @@ type DesignState = {
     catalog: CatalogItemData[],
     pressurePsi?: number
   ) => void;
+  applyHeadPreset: (preset: HeadPreset, catalog: CatalogItemData[], pressurePsi?: number) => void;
 };
 
 function centeredPosition(
@@ -117,7 +143,22 @@ function zoomTowardViewportCenter(
   };
 }
 
-export const useDesignStore = create<DesignState>((set) => ({
+function patchHeadForState(
+  state: DesignState,
+  headId: string,
+  catalog: CatalogItemData[],
+  patch: Partial<SprinklerHead>,
+  pressurePsi?: number
+): Pick<DesignState, "document" | "isDirty"> {
+  const head = state.document.heads.find((h) => h.id === headId);
+  if (!head || head.locked) return { document: state.document, isDirty: state.isDirty };
+  return {
+    document: patchHeadInDocument(state.document, headId, patch, catalog, pressurePsi),
+    isDirty: true,
+  };
+}
+
+export const useDesignStore = create<DesignState>((set, get) => ({
   projectId: null,
   versionId: null,
   versionKind: null,
@@ -138,6 +179,10 @@ export const useDesignStore = create<DesignState>((set) => ({
   viewportSize: { width: 0, height: 0 },
   contentSize: { width: 1200, height: 800 },
   canvasViewResetAt: 0,
+  headCanvasInteracting: false,
+  copiedHeads: null,
+  pasteGeneration: 0,
+  lastCanvasClick: null,
 
   init: (projectId, versionId, versionKind, doc) =>
     set((s) => {
@@ -162,12 +207,17 @@ export const useDesignStore = create<DesignState>((set) => ({
           s.viewportSize.width > 0
             ? centeredPosition(s.viewportSize, content, zoom)
             : { x: 0, y: 0 },
+        selectedId: null,
+        selectedType: null,
+        copiedHeads: null,
+        pasteGeneration: 0,
       };
     }),
   setDocument: (doc) => set({ document: doc, isDirty: true }),
   setTool: (tool) => set({ activeTool: tool, drawingVertices: [], scalePointA: null, scalePointB: null }),
   setActiveZoneId: (zoneId) => set({ activeZoneId: zoneId }),
   setSelected: (id, type) => set({ selectedId: id, selectedType: type }),
+  clearSelection: () => set({ selectedId: null, selectedType: null }),
   addDrawingVertex: (point) =>
     set((s) => ({ drawingVertices: [...s.drawingVertices, point], isDirty: true })),
   clearDrawing: () => set({ drawingVertices: [] }),
@@ -233,33 +283,43 @@ export const useDesignStore = create<DesignState>((set) => ({
       isDirty: true,
     })),
 
-  patchSelectedHead: (catalog, patch, pressurePsi) =>
+  setHeadCanvasInteracting: (interacting) => set({ headCanvasInteracting: interacting }),
+  setLastCanvasClick: (point) => set({ lastCanvasClick: point }),
+
+  editHead: (headId, catalog, patch, pressurePsi) =>
     set((s) => {
-      if (s.selectedType !== "head" || !s.selectedId) return s;
-      const head = s.document.heads.find((h) => h.id === s.selectedId);
+      const updated = patchHeadForState(s, headId, catalog, patch, pressurePsi);
+      if (!updated.isDirty) return s;
+      return {
+        ...updated,
+        selectedId: headId,
+        selectedType: "head" as const,
+      };
+    }),
+
+  moveHeadById: (headId, position) =>
+    set((s) => {
+      const head = s.document.heads.find((h) => h.id === headId);
       if (!head || head.locked) return s;
       return {
-        document: patchHeadInDocument(
-          s.document,
-          s.selectedId,
-          patch,
-          catalog,
-          pressurePsi
-        ),
+        document: moveHeadInDocument(s.document, headId, position),
+        selectedId: headId,
+        selectedType: "head" as const,
         isDirty: true,
       };
     }),
 
-  moveSelectedHead: (position) =>
-    set((s) => {
-      if (s.selectedType !== "head" || !s.selectedId) return s;
-      const head = s.document.heads.find((h) => h.id === s.selectedId);
-      if (!head || head.locked) return s;
-      return {
-        document: moveHeadInDocument(s.document, s.selectedId, position),
-        isDirty: true,
-      };
-    }),
+  patchSelectedHead: (catalog, patch, pressurePsi) => {
+    const { selectedId } = get();
+    if (!selectedId) return;
+    get().editHead(selectedId, catalog, patch, pressurePsi);
+  },
+
+  moveSelectedHead: (position) => {
+    const { selectedId } = get();
+    if (!selectedId) return;
+    get().moveHeadById(selectedId, position);
+  },
 
   deleteSelectedHead: () =>
     set((s) => {
@@ -285,22 +345,50 @@ export const useDesignStore = create<DesignState>((set) => ({
       };
     }),
 
-  rotateSelectedHead: (deltaDeg, catalog, pressurePsi) =>
+  copySelectedHead: () =>
+    set((s) => {
+      if (s.selectedType !== "head" || !s.selectedId) return s;
+      const head = s.document.heads.find((h) => h.id === s.selectedId);
+      if (!head) return s;
+      return {
+        copiedHeads: [cloneHeadForClipboard(head)],
+        pasteGeneration: 0,
+      };
+    }),
+
+  pasteCopiedHead: () =>
+    set((s) => {
+      if (!s.copiedHeads?.length) return s;
+      const generation = s.pasteGeneration + 1;
+      const ppf =
+        s.lastCanvasClick ??
+        (() => {
+          const source = s.document.heads.find((h) => h.id === s.selectedId);
+          if (source) return source.position;
+          return { x: 100, y: 100 };
+        })();
+      const result = pasteHeadsInDocument(s.document, s.copiedHeads, ppf, generation);
+      return {
+        document: result.document,
+        selectedId: result.newHeadIds[0] ?? s.selectedId,
+        selectedType: "head" as const,
+        pasteGeneration: generation,
+        isDirty: true,
+      };
+    }),
+
+  flipSelectedHead: (catalog, pressurePsi) =>
     set((s) => {
       if (s.selectedType !== "head" || !s.selectedId) return s;
       const head = s.document.heads.find((h) => h.id === s.selectedId);
       if (!head || head.locked) return s;
       const pressure = pressurePsi ?? designPressurePsi(s.document);
-      const next = rotateHeadDegrees(head, deltaDeg, catalog, pressure);
+      const next = flipHead(head, catalog, pressure);
       return {
         document: patchHeadInDocument(
           s.document,
           s.selectedId,
-          {
-            rotationDegrees: next.rotationDegrees,
-            gpm: next.gpm,
-            precipInPerHr: next.precipInPerHr,
-          },
+          { rotationDegrees: next.rotationDegrees, gpm: next.gpm, precipInPerHr: next.precipInPerHr },
           catalog,
           pressure
         ),
@@ -308,52 +396,82 @@ export const useDesignStore = create<DesignState>((set) => ({
       };
     }),
 
-  setSelectedHeadArcDegrees: (arcDegrees, catalog, pressurePsi) =>
-    set((s) => {
-      if (s.selectedType !== "head" || !s.selectedId) return s;
-      const head = s.document.heads.find((h) => h.id === s.selectedId);
-      if (!head || head.locked) return s;
-      const pressure = pressurePsi ?? designPressurePsi(s.document);
-      const next = setHeadArcDegrees(head, arcDegrees, catalog, pressure);
-      if (!next) return s;
-      return {
-        document: patchHeadInDocument(
-          s.document,
-          s.selectedId,
-          {
-            arcDegrees: next.arcDegrees,
-            gpm: next.gpm,
-            precipInPerHr: next.precipInPerHr,
-            radiusFeet: next.radiusFeet,
-          },
-          catalog,
-          pressure
-        ),
-        isDirty: true,
-      };
-    }),
+  rotateSelectedHead: (deltaDeg, catalog, pressurePsi) => {
+    const { selectedId } = get();
+    if (!selectedId) return;
+    const s = get();
+    const head = s.document.heads.find((h) => h.id === selectedId);
+    if (!head || head.locked) return;
+    const pressure = pressurePsi ?? designPressurePsi(s.document);
+    const next = rotateHeadDegrees(head, deltaDeg, catalog, pressure);
+    get().editHead(
+      selectedId,
+      catalog,
+      {
+        rotationDegrees: next.rotationDegrees,
+        gpm: next.gpm,
+        precipInPerHr: next.precipInPerHr,
+      },
+      pressure
+    );
+  },
 
-  adjustSelectedHeadRadius: (deltaFt, catalog, pressurePsi) =>
-    set((s) => {
-      if (s.selectedType !== "head" || !s.selectedId) return s;
-      const head = s.document.heads.find((h) => h.id === s.selectedId);
-      if (!head || head.locked) return s;
-      const pressure = pressurePsi ?? designPressurePsi(s.document);
-      const next = adjustHeadRadius(head, deltaFt, catalog, pressure);
-      if (!next) return s;
-      return {
-        document: patchHeadInDocument(
-          s.document,
-          s.selectedId,
-          {
-            radiusFeet: next.radiusFeet,
-            gpm: next.gpm,
-            precipInPerHr: next.precipInPerHr,
-          },
-          catalog,
-          pressure
-        ),
-        isDirty: true,
-      };
-    }),
+  setSelectedHeadArcDegrees: (arcDegrees, catalog, pressurePsi) => {
+    const { selectedId } = get();
+    if (!selectedId) return;
+    const s = get();
+    const head = s.document.heads.find((h) => h.id === selectedId);
+    if (!head || head.locked) return;
+    const pressure = pressurePsi ?? designPressurePsi(s.document);
+    const next = setHeadArcDegrees(head, arcDegrees, catalog, pressure);
+    if (!next) return;
+    get().editHead(
+      selectedId,
+      catalog,
+      {
+        arcDegrees: next.arcDegrees,
+        radiusFeet: next.radiusFeet,
+        gpm: next.gpm,
+        precipInPerHr: next.precipInPerHr,
+      },
+      pressure
+    );
+  },
+
+  adjustSelectedHeadRadius: (deltaFt, catalog, pressurePsi) => {
+    const { selectedId } = get();
+    if (!selectedId) return;
+    const s = get();
+    const head = s.document.heads.find((h) => h.id === selectedId);
+    if (!head || head.locked) return;
+    const pressure = pressurePsi ?? designPressurePsi(s.document);
+    const next = adjustHeadRadius(head, deltaFt, catalog, pressure);
+    if (!next) return;
+    get().editHead(
+      selectedId,
+      catalog,
+      {
+        radiusFeet: next.radiusFeet,
+        gpm: next.gpm,
+        precipInPerHr: next.precipInPerHr,
+      },
+      pressure
+    );
+  },
+
+  applyHeadPreset: (preset, catalog, pressurePsi) => {
+    const { selectedId } = get();
+    if (!selectedId) return;
+    const nozzle = catalog.find((c) => c.id === preset.catalogItemId);
+    if (!nozzle) return;
+    get().editHead(
+      selectedId,
+      catalog,
+      {
+        headBodyId: preset.headBodyId,
+        catalogItemId: preset.catalogItemId,
+      },
+      pressurePsi
+    );
+  },
 }));
