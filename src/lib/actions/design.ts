@@ -176,6 +176,7 @@ export async function updatePricingProfile(data: {
   valveCost: number;
   laborMultiplier: number;
   markup: number;
+  targetProfitMarginPercent?: number;
   tax: number;
   wasteFactor: number;
 }) {

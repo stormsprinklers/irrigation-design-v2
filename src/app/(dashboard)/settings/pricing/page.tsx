@@ -12,6 +12,7 @@ export default async function PricingSettingsPage() {
         valveCost: pricing.valveCost,
         laborMultiplier: pricing.laborMultiplier,
         markup: pricing.markup,
+        targetProfitMarginPercent: pricing.targetProfitMarginPercent,
         tax: pricing.tax,
         wasteFactor: pricing.wasteFactor,
       }
@@ -21,6 +22,7 @@ export default async function PricingSettingsPage() {
         valveCost: 45,
         laborMultiplier: 1.5,
         markup: 0.25,
+        targetProfitMarginPercent: 35,
         tax: 0.08,
         wasteFactor: 0.1,
       };

@@ -191,6 +191,7 @@ export type PricingProfileData = {
   valveCost: number;
   laborMultiplier: number;
   markup: number;
+  targetProfitMarginPercent?: number;
   tax: number;
   wasteFactor: number;
   fittingAssumptions: Record<string, number>;

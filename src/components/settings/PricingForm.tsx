@@ -14,6 +14,7 @@ type Props = {
     valveCost: number;
     laborMultiplier: number;
     markup: number;
+    targetProfitMarginPercent: number;
     tax: number;
     wasteFactor: number;
   };
@@ -42,6 +43,7 @@ export function PricingForm({ initial }: Props) {
     { key: "valveCost", label: "Valve cost ($)" },
     { key: "laborMultiplier", label: "Labor multiplier" },
     { key: "markup", label: "Markup (decimal)" },
+    { key: "targetProfitMarginPercent", label: "Target profit margin (%)" },
     { key: "tax", label: "Tax (decimal)" },
     { key: "wasteFactor", label: "Waste factor (decimal)" },
   ] as const;

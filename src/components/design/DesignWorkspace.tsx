@@ -10,6 +10,7 @@ import { DesignToolbar } from "./DesignToolbar";
 import { InspectorPanel } from "./InspectorPanel";
 import { ValidationDrawer } from "./ValidationDrawer";
 import { VersionSelector } from "./VersionSelector";
+import { ExportToCrmDialog } from "./ExportToCrmDialog";
 import { MaterialsPanel } from "./MaterialsPanel";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { placeHeads, pointInPolygon } from "@/lib/domain/placement";
@@ -448,6 +449,7 @@ export function DesignWorkspace({
               versions={versions}
               activeVersionId={version.id}
             />
+            <ExportToCrmDialog projectId={project.id} versionId={version.id} />
           </div>
         </div>
       </header>
