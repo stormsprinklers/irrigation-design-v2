@@ -9,13 +9,15 @@ import { searchCrmCustomers } from "@/lib/integrations/crm";
 type Props = {
   projectId: string;
   versionId: string;
+  defaultCustomerId?: string | null;
+  defaultPropertyId?: string | null;
 };
 
-export function ExportToCrmDialog({ projectId, versionId }: Props) {
+export function ExportToCrmDialog({ projectId, versionId, defaultCustomerId, defaultPropertyId }: Props) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [customerId, setCustomerId] = useState("");
-  const [propertyId, setPropertyId] = useState("");
+  const [customerId, setCustomerId] = useState(defaultCustomerId ?? "");
+  const [propertyId, setPropertyId] = useState(defaultPropertyId ?? "");
   const [searching, setSearching] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [results, setResults] = useState<

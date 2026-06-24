@@ -5,7 +5,16 @@ import { Stage, Layer, Line, Circle, Image as KonvaImage, Group, Rect } from "re
 import type Konva from "konva";
 import { useDesignStore } from "@/lib/stores/design-store";
 import { distanceBetweenPoints, generateId, POLYGON_CLOSE_RADIUS } from "@/lib/utils";
-import type { HydrozonePolygon, ExclusionZone, Point, CatalogItemData } from "@/lib/domain/types";
+import type {
+  HydrozonePolygon,
+  ExclusionZone,
+  SiteFeaturePolygon,
+  LandscapeArea,
+  EquipmentPlacement,
+  EquipmentType,
+  Point,
+  CatalogItemData,
+} from "@/lib/domain/types";
 import { InteractiveHeadGraphic } from "@/components/heads/InteractiveHeadGraphic";
 import { getNozzleAdjustability } from "@/lib/catalog/adjustability";
 import { pixelsPerFootFromDocument } from "@/lib/domain/design/head-editing";
@@ -22,7 +31,7 @@ const HYDROZONE_COLORS: Record<string, string> = {
   GARDEN: "rgba(234, 179, 8, 0.25)",
 };
 
-const POLYGON_DRAW_STYLES = {
+const POLYGON_DRAW_STYLES: Record<string, { stroke: string; fill: string; vertex: string; firstVertex: string }> = {
   hydrozone: {
     stroke: "#16a34a",
     fill: "rgba(34, 197, 94, 0.15)",
@@ -35,7 +44,42 @@ const POLYGON_DRAW_STYLES = {
     vertex: "#f87171",
     firstVertex: "#dc2626",
   },
-} as const;
+  siteFeature: {
+    stroke: "#b45309",
+    fill: "rgba(245, 158, 11, 0.2)",
+    vertex: "#f59e0b",
+    firstVertex: "#b45309",
+  },
+  sod: {
+    stroke: "#15803d",
+    fill: "rgba(74, 222, 128, 0.35)",
+    vertex: "#4ade80",
+    firstVertex: "#15803d",
+  },
+  topsoil: {
+    stroke: "#78350f",
+    fill: "rgba(180, 83, 9, 0.25)",
+    vertex: "#d97706",
+    firstVertex: "#78350f",
+  },
+};
+
+const SITE_FEATURE_FILL: Record<string, string> = {
+  SLOPE: "rgba(245, 158, 11, 0.25)",
+  FENCE: "rgba(120, 113, 108, 0.3)",
+  RETAINING_WALL: "rgba(87, 83, 78, 0.35)",
+  CONCRETE: "rgba(148, 163, 184, 0.4)",
+};
+
+const EQUIPMENT_COLORS: Record<EquipmentType, string> = {
+  POC: "#7c3aed",
+  BACKFLOW: "#2563eb",
+  FILTER: "#0891b2",
+  PRESSURE_REGULATOR: "#ca8a04",
+  FLOW_SENSOR: "#059669",
+  WEATHER_SENSOR: "#4f46e5",
+  CONTROLLER: "#9333ea",
+};
 
 function useBackgroundImage(url?: string) {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -102,6 +146,7 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     moveHeadById,
     setHeadCanvasInteracting,
     setLastCanvasClick,
+    showPipes,
   } = useDesignStore();
   const canvasSurface = useCanvasSurface();
 
@@ -143,7 +188,12 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     }
   }, [viewportSize.width, viewportSize.height, canvasViewResetAt, centerCanvasView]);
 
-  const isDrawingPolygon = activeTool === "hydrozone" || activeTool === "exclusion";
+  const isDrawingPolygon =
+    activeTool === "hydrozone" ||
+    activeTool === "exclusion" ||
+    activeTool === "siteFeature" ||
+    activeTool === "sod" ||
+    activeTool === "topsoil";
   const drawStyle = isDrawingPolygon ? POLYGON_DRAW_STYLES[activeTool] : null;
   const isHeadEditTool = activeTool === "select" || activeTool === "head";
   const blockStagePointer =
@@ -189,7 +239,9 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
     isDrawingPolygon ||
     activeTool === "scale" ||
     activeTool === "head" ||
-    activeTool === "pipe";
+    activeTool === "pipe" ||
+    activeTool === "valve" ||
+    activeTool === "equipment";
 
   function pointerDistance(a: Point, b: Point) {
     return Math.hypot(a.x - b.x, a.y - b.y);
@@ -445,6 +497,28 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
             />
           )}
 
+          {(document.landscapeAreas ?? []).map((area) => (
+            <LandscapeShape
+              key={area.id}
+              area={area}
+              fill={area.areaType === "SOD" ? "rgba(74, 222, 128, 0.4)" : "rgba(180, 83, 9, 0.3)"}
+              selected={selectedId === area.id}
+              listening={!passThroughPointer}
+              onSelect={() => setSelected(area.id, "landscape")}
+            />
+          ))}
+
+          {(document.siteFeatures ?? []).map((feature) => (
+            <SiteFeatureShape
+              key={feature.id}
+              feature={feature}
+              fill={SITE_FEATURE_FILL[feature.featureType] ?? "rgba(245, 158, 11, 0.25)"}
+              selected={selectedId === feature.id}
+              listening={!passThroughPointer}
+              onSelect={() => setSelected(feature.id, "siteFeature")}
+            />
+          ))}
+
           {document.exclusionZones.map((zone) => (
             <ExclusionShape
               key={zone.id}
@@ -468,18 +542,33 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
             />
           ))}
 
-          {document.pipes.map((pipe) => (
-            <Line
-              key={pipe.id}
-              points={pipe.points.flatMap((p) => [p.x, p.y])}
-              stroke={isDimmed(pipe.zoneId) ? "#94a3b8" : "#1e40af"}
-              strokeWidth={Math.max(2, pipe.diameterInches * 2)}
-              opacity={isDimmed(pipe.zoneId) ? 0.2 : 0.9}
-              listening={!passThroughPointer}
-              onClick={() => setSelected(pipe.id, "pipe")}
-              onTap={() => setSelected(pipe.id, "pipe")}
-            />
-          ))}
+          {showPipes
+            ? document.pipes.map((pipe) => {
+            const strokeW = Math.max(5, pipe.diameterInches * 3);
+            const points = pipe.points.flatMap((p) => [p.x, p.y]);
+            const dimmed = isDimmed(pipe.zoneId);
+            return (
+              <Group key={pipe.id}>
+                <Line
+                  points={points}
+                  stroke="#ffffff"
+                  strokeWidth={strokeW + 3}
+                  opacity={dimmed ? 0.15 : 0.85}
+                  listening={false}
+                />
+                <Line
+                  points={points}
+                  stroke={dimmed ? "#64748b" : "#1d4ed8"}
+                  strokeWidth={strokeW}
+                  opacity={dimmed ? 0.35 : 1}
+                  listening={!passThroughPointer}
+                  onClick={() => setSelected(pipe.id, "pipe")}
+                  onTap={() => setSelected(pipe.id, "pipe")}
+                />
+              </Group>
+            );
+          })
+            : null}
 
           {document.heads.map((head) => {
             const dimmed = isDimmed(head.zoneId);
@@ -536,7 +625,20 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
             />
           ))}
 
-          {document.waterSource?.poc && (
+          {(document.equipment ?? []).map((equip) => (
+            <EquipmentMarker
+              key={equip.id}
+              equip={equip}
+              color={EQUIPMENT_COLORS[equip.equipmentType]}
+              opacity={isDimmed(equip.zoneId) ? 0.25 : 1}
+              selected={selectedId === equip.id}
+              listening={!passThroughPointer}
+              onSelect={() => setSelected(equip.id, "equipment")}
+            />
+          ))}
+
+          {document.waterSource?.poc &&
+            !(document.equipment ?? []).some((e) => e.equipmentType === "POC") && (
             <Circle
               x={document.waterSource.poc.x}
               y={document.waterSource.poc.y}
@@ -762,6 +864,90 @@ function ExclusionShape({
       onClick={listening ? onSelect : undefined}
       onTap={listening ? onSelect : undefined}
     />
+  );
+}
+
+function SiteFeatureShape({
+  feature,
+  fill,
+  selected,
+  listening = true,
+  onSelect,
+}: {
+  feature: SiteFeaturePolygon;
+  fill: string;
+  selected: boolean;
+  listening?: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <Line
+      points={feature.vertices.flatMap((p) => [p.x, p.y])}
+      closed
+      fill={fill}
+      stroke={selected ? "#b45309" : "#f59e0b"}
+      strokeWidth={selected ? 3 : 2}
+      listening={listening}
+      onClick={listening ? onSelect : undefined}
+      onTap={listening ? onSelect : undefined}
+    />
+  );
+}
+
+function LandscapeShape({
+  area,
+  fill,
+  selected,
+  listening = true,
+  onSelect,
+}: {
+  area: LandscapeArea;
+  fill: string;
+  selected: boolean;
+  listening?: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <Line
+      points={area.vertices.flatMap((p) => [p.x, p.y])}
+      closed
+      fill={fill}
+      stroke={selected ? "#15803d" : area.areaType === "SOD" ? "#22c55e" : "#b45309"}
+      strokeWidth={selected ? 3 : 2}
+      listening={listening}
+      onClick={listening ? onSelect : undefined}
+      onTap={listening ? onSelect : undefined}
+    />
+  );
+}
+
+function EquipmentMarker({
+  equip,
+  color,
+  opacity,
+  selected,
+  listening = true,
+  onSelect,
+}: {
+  equip: EquipmentPlacement;
+  color: string;
+  opacity: number;
+  selected: boolean;
+  listening?: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <Group
+      x={equip.position.x}
+      y={equip.position.y}
+      opacity={opacity}
+      listening={listening}
+      onClick={listening ? onSelect : undefined}
+      onTap={listening ? onSelect : undefined}
+    >
+      <Circle radius={12} fill={color} stroke="#fff" strokeWidth={selected ? 3 : 2} />
+      <Circle radius={4} fill="#fff" listening={false} />
+    </Group>
   );
 }
 

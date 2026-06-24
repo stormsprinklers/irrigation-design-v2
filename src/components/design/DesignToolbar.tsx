@@ -13,6 +13,11 @@ import {
   ZoomOut,
   Maximize2,
   MoreHorizontal,
+  Mountain,
+  Leaf,
+  Layers,
+  Droplets,
+  Wrench,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDesignStore, type DesignTool } from "@/lib/stores/design-store";
@@ -25,9 +30,14 @@ const tools: { id: DesignTool; label: string; tourId: string; icon: React.ReactN
   { id: "pan", label: "Pan", tourId: "tour-tool-pan", icon: <Hand className="h-4 w-4" /> },
   { id: "hydrozone", label: "Zone", tourId: "tour-tool-hydrozone", icon: <Hexagon className="h-4 w-4" /> },
   { id: "exclusion", label: "Exclude", tourId: "tour-tool-exclusion", icon: <Ban className="h-4 w-4" /> },
+  { id: "siteFeature", label: "Site", tourId: "tour-tool-site", icon: <Mountain className="h-4 w-4" /> },
+  { id: "sod", label: "Sod", tourId: "tour-tool-sod", icon: <Leaf className="h-4 w-4" /> },
+  { id: "topsoil", label: "Soil", tourId: "tour-tool-topsoil", icon: <Layers className="h-4 w-4" /> },
   { id: "scale", label: "Scale", tourId: "tour-tool-scale", icon: <Ruler className="h-4 w-4" /> },
   { id: "head", label: "Head", tourId: "tour-tool-head", icon: <CircleDot className="h-4 w-4" /> },
   { id: "pipe", label: "Pipe", tourId: "tour-tool-pipe", icon: <GitBranch className="h-4 w-4" /> },
+  { id: "valve", label: "Valve", tourId: "tour-tool-valve", icon: <Droplets className="h-4 w-4" /> },
+  { id: "equipment", label: "Equip", tourId: "tour-tool-equip", icon: <Wrench className="h-4 w-4" /> },
 ];
 
 type Props = {
@@ -35,13 +45,13 @@ type Props = {
 };
 
 export function DesignToolbar({ layout = "sidebar" }: Props) {
-  const { activeTool, setTool, zoomIn, zoomOut, resetCanvasView, clearCanvasDesign } =
+  const { activeTool, setTool, zoomIn, zoomOut, resetCanvasView, clearCanvasDesign, showPipes, setShowPipes } =
     useDesignStore();
   const [moreOpen, setMoreOpen] = useState(false);
 
   function handleClearCanvas() {
     const confirmed = window.confirm(
-      "Clear all hydrozones, exclusion zones, heads, pipes, and valves from the canvas?\n\nThe property image, scale calibration, and water source will be kept."
+      "Clear all zones, features, heads, pipes, valves, and equipment from the canvas?\n\nThe property image, scale calibration, and water source settings will be kept."
     );
     if (!confirmed) return;
     clearCanvasDesign();
@@ -49,6 +59,8 @@ export function DesignToolbar({ layout = "sidebar" }: Props) {
   }
 
   const isDock = layout === "dock";
+  const primaryTools = isDock ? tools.slice(0, 8) : tools;
+  const extraTools = isDock ? tools.slice(8) : [];
 
   function renderToolButton(tool: (typeof tools)[number]) {
     return (
@@ -113,6 +125,19 @@ export function DesignToolbar({ layout = "sidebar" }: Props) {
           {isDock && <span>Fit</span>}
         </Button>
       </div>
+      <div data-tour="tour-tool-pipes-toggle" className="rounded-md">
+        <Button
+          variant={showPipes ? "default" : "ghost"}
+          size={isDock ? "sm" : "icon"}
+          title={showPipes ? "Hide pipes" : "Show pipes"}
+          aria-label={showPipes ? "Hide pipes" : "Show pipes"}
+          onClick={() => setShowPipes(!showPipes)}
+          className={isDock ? "h-11 min-w-[3.25rem] flex-col gap-0.5 px-2 py-1 text-[10px]" : "h-9 w-9"}
+        >
+          <GitBranch className="h-4 w-4" />
+          {isDock && <span>Pipes</span>}
+        </Button>
+      </div>
       <div data-tour="tour-tool-clear" className="rounded-md">
         <Button
           variant="ghost"
@@ -136,7 +161,8 @@ export function DesignToolbar({ layout = "sidebar" }: Props) {
     return (
       <div className="safe-bottom shrink-0 border-t bg-card">
         <div className="flex items-end gap-0.5 overflow-x-auto p-1">
-          {tools.map(renderToolButton)}
+          {primaryTools.map(renderToolButton)}
+          {extraTools.map(renderToolButton)}
           <div className="relative shrink-0">
             <Button
               variant="ghost"
@@ -151,11 +177,7 @@ export function DesignToolbar({ layout = "sidebar" }: Props) {
             </Button>
             {moreOpen && (
               <>
-                <div
-                  className="fixed inset-0 z-40"
-                  aria-hidden
-                  onClick={() => setMoreOpen(false)}
-                />
+                <div className="fixed inset-0 z-40" aria-hidden onClick={() => setMoreOpen(false)} />
                 <div className="absolute bottom-full right-0 z-50 mb-1 flex gap-1 rounded-lg border bg-card p-1 shadow-lg">
                   {secondaryActions}
                 </div>
@@ -168,7 +190,7 @@ export function DesignToolbar({ layout = "sidebar" }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-1 border-r bg-card p-2">
+    <div className="flex max-h-full flex-col gap-1 overflow-y-auto border-r bg-card p-2">
       {tools.map(renderToolButton)}
       <div className="my-1 border-t" />
       {secondaryActions}

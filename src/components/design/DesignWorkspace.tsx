@@ -16,10 +16,10 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { placeHeads, pointInPolygon } from "@/lib/domain/placement";
 import { resolveHeadAssembly } from "@/lib/catalog/compat";
 import { validateDesign } from "@/lib/domain/validation";
-import { buildMaterialList, calculateMaterialTotal } from "@/lib/domain/materials";
+import { buildMaterialList, calculateQuoteTotals } from "@/lib/domain/materials";
 import { generateId, distanceBetweenPoints, POLYGON_CLOSE_RADIUS } from "@/lib/utils";
 import type { CatalogItemData, DesignDocument, Point, PricingProfileData } from "@/lib/domain/types";
-import { DEFAULT_PRESSURE_PSI } from "@/lib/domain/types";
+import { DEFAULT_PRESSURE_PSI, DEFAULT_WATER_SOURCE } from "@/lib/domain/types";
 import type { DesignVersion, Project } from "@prisma/client";
 import { DesignTour, TourHelpButton } from "./tour/DesignTour";
 import type { TourStatus } from "@/lib/actions/tour";
@@ -78,6 +78,9 @@ export function DesignWorkspace({
     document,
     setDocument,
     activeTool,
+    pendingSiteFeatureType,
+    pendingExclusionType,
+    equipmentPlacementType,
     drawingVertices,
     addDrawingVertex,
     clearDrawing,
@@ -116,13 +119,25 @@ export function DesignWorkspace({
     return () => clearTimeout(timer);
   }, [document, isDirty, projectId, versionId, markSaved, setSaving]);
 
+  const quoteTier = document.metadata?.quoteTier ?? "STANDARD";
+
   const materials = useMemo(
-    () => buildMaterialList(document, catalog, pricing),
-    [document, catalog, pricing]
+    () => buildMaterialList(document, catalog, pricing, quoteTier),
+    [document, catalog, pricing, quoteTier]
   );
   const materialTotals = useMemo(
-    () => calculateMaterialTotal(materials, pricing),
-    [materials, pricing]
+    () => calculateQuoteTotals(document, materials, pricing),
+    [document, materials, pricing]
+  );
+
+  const setQuoteTier = useCallback(
+    (tier: "STANDARD" | "PREMIUM") => {
+      setDocument({
+        ...document,
+        metadata: { ...document.metadata, quoteTier: tier },
+      });
+    },
+    [document, setDocument]
   );
 
   const displayImageUrl = useMemo(() => {
@@ -185,13 +200,36 @@ export function DesignWorkspace({
         id: generateId("ex"),
         name: `Exclusion ${document.exclusionZones.length + 1}`,
         vertices: drawingVertices,
-        exclusionType: "BUILDING" as const,
+        exclusionType: pendingExclusionType,
       };
       setDocument({ ...document, exclusionZones: [...document.exclusionZones, exclusion] });
+    } else if (activeTool === "siteFeature") {
+      const feature = {
+        id: generateId("sf"),
+        name: `${pendingSiteFeatureType.replace(/_/g, " ")} ${(document.siteFeatures?.length ?? 0) + 1}`,
+        vertices: drawingVertices,
+        featureType: pendingSiteFeatureType,
+      };
+      setDocument({
+        ...document,
+        siteFeatures: [...(document.siteFeatures ?? []), feature],
+      });
+    } else if (activeTool === "sod" || activeTool === "topsoil") {
+      const area = {
+        id: generateId("la"),
+        name: `${activeTool === "sod" ? "Sod" : "Topsoil"} ${(document.landscapeAreas?.length ?? 0) + 1}`,
+        vertices: drawingVertices,
+        areaType: activeTool === "sod" ? ("SOD" as const) : ("TOPSOIL" as const),
+        depthInches: activeTool === "topsoil" ? 4 : undefined,
+      };
+      setDocument({
+        ...document,
+        landscapeAreas: [...(document.landscapeAreas ?? []), area],
+      });
     }
     clearDrawing();
     toast.success("Polygon added");
-  }, [activeTool, drawingVertices, document, setDocument, clearDrawing]);
+  }, [activeTool, drawingVertices, document, setDocument, clearDrawing, pendingExclusionType, pendingSiteFeatureType]);
 
   const handleCanvasClick = useCallback(
     (point: Point) => {
@@ -206,7 +244,13 @@ export function DesignWorkspace({
         return;
       }
 
-      if (activeTool === "hydrozone" || activeTool === "exclusion") {
+      if (
+        activeTool === "hydrozone" ||
+        activeTool === "exclusion" ||
+        activeTool === "siteFeature" ||
+        activeTool === "sod" ||
+        activeTool === "topsoil"
+      ) {
         if (drawingVertices.length >= 3) {
           const dist = distanceBetweenPoints(point, drawingVertices[0]);
           if (dist <= POLYGON_CLOSE_RADIUS) {
@@ -255,6 +299,48 @@ export function DesignWorkspace({
         return;
       }
 
+      if (activeTool === "valve") {
+        const zoneId = document.zones[0]?.id;
+        if (!zoneId) {
+          toast.error("Create a zone first");
+          return;
+        }
+        const valveItem = catalog.find((c) => c.category === "VALVE");
+        const valve = {
+          id: generateId("valve"),
+          zoneId,
+          position: point,
+          catalogItemId: valveItem?.id ?? "cat_valve",
+        };
+        setDocument({ ...document, valves: [...document.valves, valve] });
+        setSelected(valve.id, "valve");
+        return;
+      }
+
+      if (activeTool === "equipment") {
+        const zoneId = document.zones[0]?.id;
+        const equip = {
+          id: generateId("equip"),
+          equipmentType: equipmentPlacementType,
+          position: point,
+          zoneId,
+        };
+        const nextDoc = {
+          ...document,
+          equipment: [...(document.equipment ?? []), equip],
+        };
+        if (equipmentPlacementType === "POC") {
+          nextDoc.waterSource = {
+            ...DEFAULT_WATER_SOURCE,
+            ...document.waterSource,
+            poc: point,
+          };
+        }
+        setDocument(nextDoc);
+        setSelected(equip.id, "equipment");
+        return;
+      }
+
       if (activeTool === "pipe") {
         const zoneId = document.zones[0]?.id;
         if (!zoneId) {
@@ -291,6 +377,7 @@ export function DesignWorkspace({
       setDocument,
       setSelected,
       setLastCanvasClick,
+      equipmentPlacementType,
       drawingVertices,
       clearDrawing,
       finishPolygon,
@@ -449,7 +536,15 @@ export function DesignWorkspace({
               versions={versions}
               activeVersionId={version.id}
             />
-            <ExportToCrmDialog projectId={project.id} versionId={version.id} />
+            <ExportToCrmDialog
+              projectId={project.id}
+              versionId={version.id}
+              defaultCustomerId={project.crmCustomerId}
+              defaultPropertyId={project.crmPropertyId}
+            />
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/projects/${project.id}/settings`}>CRM link</Link>
+            </Button>
           </div>
         </div>
       </header>
@@ -475,7 +570,12 @@ export function DesignWorkspace({
           {!isMobile && (
             <>
               <ValidationDrawer />
-              <MaterialsPanel items={materials} totals={materialTotals} />
+              <MaterialsPanel
+                items={materials}
+                totals={materialTotals}
+                quoteTier={quoteTier}
+                onQuoteTierChange={setQuoteTier}
+              />
             </>
           )}
         </div>
@@ -568,7 +668,12 @@ export function DesignWorkspace({
             <SheetTitle>Material estimate</SheetTitle>
           </SheetHeader>
           <div className="max-h-[70dvh] overflow-y-auto">
-            <MaterialsPanel items={materials} totals={materialTotals} />
+            <MaterialsPanel
+              items={materials}
+              totals={materialTotals}
+              quoteTier={quoteTier}
+              onQuoteTierChange={setQuoteTier}
+            />
           </div>
         </SheetContent>
       </Sheet>

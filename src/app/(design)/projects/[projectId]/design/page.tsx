@@ -10,8 +10,9 @@ import { getTourStatus } from "@/lib/actions/tour";
 import { getPlacementMlStatus } from "@/lib/actions/placement-ml";
 import { auth } from "@/lib/auth";
 import { blobProxyUrl } from "@/lib/blob/urls";
+import { mapPricingProfile } from "@/lib/pricing/map-profile";
 import { DesignWorkspace } from "@/components/design/DesignWorkspace";
-import type { DesignDocument, PricingProfileData } from "@/lib/domain/types";
+import type { DesignDocument } from "@/lib/domain/types";
 
 type Props = {
   params: Promise<{ projectId: string }>;
@@ -32,27 +33,7 @@ export default async function DesignPage({ params }: Props) {
     getPlacementMlStatus(),
   ]);
 
-  const pricingData: PricingProfileData = pricing
-    ? {
-        pipePerFoot: pricing.pipePerFoot,
-        headCost: pricing.headCost,
-        valveCost: pricing.valveCost,
-        laborMultiplier: pricing.laborMultiplier,
-        markup: pricing.markup,
-        tax: pricing.tax,
-        wasteFactor: pricing.wasteFactor,
-        fittingAssumptions: (pricing.fittingAssumptions as Record<string, number>) ?? {},
-      }
-    : {
-        pipePerFoot: 1.25,
-        headCost: 8.5,
-        valveCost: 45,
-        laborMultiplier: 1.5,
-        markup: 0.25,
-        tax: 0.08,
-        wasteFactor: 0.1,
-        fittingAssumptions: { elbow: 2.5 },
-      };
+  const pricingData = mapPricingProfile(pricing);
 
   const designData = version.designData as DesignDocument;
   const imageUrl = designData.propertyImage?.blobPath

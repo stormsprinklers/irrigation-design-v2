@@ -3,14 +3,26 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { MaterialLineItem } from "@/lib/domain/types";
+import type { MaterialLineItem, ManHoursBreakdown } from "@/lib/domain/types";
 
 type Props = {
   items: MaterialLineItem[];
-  totals: { subtotal: number; labor: number; markup: number; tax: number; total: number };
+  totals: {
+    subtotal: number;
+    laborCost: number;
+    totalCost: number;
+    sellPrice: number;
+    tax: number;
+    totalWithTax: number;
+    manHours: ManHoursBreakdown;
+    grossMarginPercent: number;
+    jobMinimumApplied: boolean;
+  };
+  quoteTier: "STANDARD" | "PREMIUM";
+  onQuoteTierChange?: (tier: "STANDARD" | "PREMIUM") => void;
 };
 
-export function MaterialsPanel({ items, totals }: Props) {
+export function MaterialsPanel({ items, totals, quoteTier, onQuoteTierChange }: Props) {
   const [open, setOpen] = useState(true);
 
   return (
@@ -22,11 +34,31 @@ export function MaterialsPanel({ items, totals }: Props) {
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
         >
-          Material estimate
+          Material estimate ({quoteTier === "PREMIUM" ? "Premium" : "Standard"})
           <span className="text-xs font-normal text-muted-foreground">
-            ${totals.total.toFixed(2)}
+            Sell ${totals.sellPrice.toFixed(2)} · {totals.manHours.total} hrs
           </span>
         </button>
+        {onQuoteTierChange ? (
+          <div className="mr-2 flex gap-1">
+            <Button
+              type="button"
+              size="sm"
+              variant={quoteTier === "STANDARD" ? "default" : "outline"}
+              onClick={() => onQuoteTierChange("STANDARD")}
+            >
+              Standard
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant={quoteTier === "PREMIUM" ? "default" : "outline"}
+              onClick={() => onQuoteTierChange("PREMIUM")}
+            >
+              Premium
+            </Button>
+          </div>
+        ) : null}
         <Button
           type="button"
           variant="ghost"
@@ -41,7 +73,7 @@ export function MaterialsPanel({ items, totals }: Props) {
 
       {open && (
         <div className="overflow-x-auto px-4 pb-4">
-          <table className="w-full min-w-[280px] text-xs">
+          <table className="w-full min-w-[320px] text-xs">
             <thead>
               <tr className="text-left text-muted-foreground">
                 <th>Item</th>
@@ -63,16 +95,31 @@ export function MaterialsPanel({ items, totals }: Props) {
           </table>
           <div className="mt-2 space-y-1 text-xs text-muted-foreground">
             <div className="flex justify-between">
-              <span>Subtotal</span>
+              <span>Materials subtotal</span>
               <span>${totals.subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
-              <span>Labor</span>
-              <span>${totals.labor.toFixed(2)}</span>
+              <span>Labor ({totals.manHours.total} hrs × rate)</span>
+              <span>${totals.laborCost.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Loaded cost</span>
+              <span>${totals.totalCost.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Sell price ({totals.grossMarginPercent}% gross margin)</span>
+              <span>${totals.sellPrice.toFixed(2)}</span>
+            </div>
+            {totals.jobMinimumApplied ? (
+              <p className="text-amber-600">Job minimum applied</p>
+            ) : null}
+            <div className="flex justify-between">
+              <span>Tax</span>
+              <span>${totals.tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between font-medium text-foreground">
-              <span>Total</span>
-              <span>${totals.total.toFixed(2)}</span>
+              <span>Customer total</span>
+              <span>${totals.totalWithTax.toFixed(2)}</span>
             </div>
           </div>
         </div>

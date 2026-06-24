@@ -37,6 +37,8 @@ export async function createProject(data: {
   name: string;
   customerName?: string;
   address?: string;
+  crmCustomerId?: string;
+  crmPropertyId?: string;
 }) {
   const user = await requireSession();
   const project = await prisma.project.create({
@@ -44,6 +46,8 @@ export async function createProject(data: {
       name: data.name,
       customerName: data.customerName,
       address: data.address,
+      crmCustomerId: data.crmCustomerId,
+      crmPropertyId: data.crmPropertyId,
       organizationId: user.organizationId,
       createdById: user.id,
       versions: {
@@ -58,6 +62,17 @@ export async function createProject(data: {
   });
   revalidatePath("/projects");
   return project;
+}
+
+export async function updateProjectCrmLink(
+  projectId: string,
+  data: { crmCustomerId?: string | null; crmPropertyId?: string | null; address?: string; customerName?: string }
+) {
+  await requireProjectAccess(projectId);
+  return prisma.project.update({
+    where: { id: projectId },
+    data,
+  });
 }
 
 export async function getProject(projectId: string) {
@@ -170,16 +185,9 @@ export async function getPricingProfile() {
   });
 }
 
-export async function updatePricingProfile(data: {
-  pipePerFoot: number;
-  headCost: number;
-  valveCost: number;
-  laborMultiplier: number;
-  markup: number;
-  targetProfitMarginPercent?: number;
-  tax: number;
-  wasteFactor: number;
-}) {
+import type { PricingProfileData } from "@/lib/domain/types";
+
+export async function updatePricingProfile(data: PricingProfileData) {
   const user = await requireSession();
   const existing = await prisma.pricingProfile.findFirst({
     where: { organizationId: user.organizationId, isDefault: true },

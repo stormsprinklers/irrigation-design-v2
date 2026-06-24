@@ -1,10 +1,12 @@
 import {
   buildMaterialList,
-  calculateMaterialTotal,
+  calculateQuoteTotals,
+  applyGrossMargin,
 } from "@/lib/domain/materials";
 import type {
   CatalogItemData,
   DesignDocument,
+  MaterialLineItem,
   PricingProfileData,
 } from "@/lib/domain/types";
 
@@ -26,13 +28,17 @@ export type CrmEstimatePayload = {
   notes?: string | null;
   lineItems: CrmEstimateLineItem[];
   designExportMetadata: Record<string, unknown>;
+  quoteTier?: "STANDARD" | "PREMIUM";
+  estimatedManHours?: number;
+  installDurationDays?: number;
+  designInternalBom?: MaterialLineItem[];
+  premiumOptionTotal?: number;
+  premiumOption?: {
+    sellTotal: number;
+    lineItems: CrmEstimateLineItem[];
+  };
+  attachments?: Array<{ fileName: string; mimeType: string; base64: string }>;
 };
-
-function applyMargin(cost: number, marginPercent: number): number {
-  const margin = Math.min(99, Math.max(0, marginPercent)) / 100;
-  if (margin >= 1) return cost;
-  return Math.round((cost / (1 - margin)) * 100) / 100;
-}
 
 export function buildCrmEstimatePayload(params: {
   doc: DesignDocument;
@@ -47,33 +53,36 @@ export function buildCrmEstimatePayload(params: {
   targetMarginOverride?: number;
   status?: "DRAFT" | "SENT";
   warnings?: string[];
+  includePremiumOption?: boolean;
+  installDurationDays?: number;
 }): CrmEstimatePayload {
-  const materials = buildMaterialList(params.doc, params.catalog, params.pricing);
-  const totals = calculateMaterialTotal(materials, params.pricing);
   const marginPercent =
     params.targetMarginOverride ??
+    params.pricing.grossMarginPercent ??
     params.pricing.targetProfitMarginPercent ??
-    params.pricing.markup * 100;
+    50;
 
-  const lineItems: CrmEstimateLineItem[] = materials.map((item) => ({
-    name: item.description,
-    description: item.unit ? `${item.quantity} ${item.unit}` : null,
-    quantity: item.quantity,
-    unit: item.unit ?? "ea",
-    unitPrice: applyMargin(item.unitCost, marginPercent),
-  }));
+  const pricingWithMargin = { ...params.pricing, grossMarginPercent: marginPercent };
 
-  if (totals.labor > 0) {
-    lineItems.push({
-      name: "Labor",
-      description: "Design labor estimate",
-      quantity: 1,
-      unit: "ea",
-      unitPrice: applyMargin(totals.labor + totals.markup, marginPercent),
-    });
+  function tierPayload(tier: "STANDARD" | "PREMIUM") {
+    const doc = { ...params.doc, metadata: { ...params.doc.metadata, quoteTier: tier } };
+    const materials = buildMaterialList(doc, params.catalog, pricingWithMargin, tier);
+    const totals = calculateQuoteTotals(doc, materials, pricingWithMargin);
+    const zoneNames = doc.zones.map((z) => z.name).join(", ") || "all zones";
+    const lineItems: CrmEstimateLineItem[] = [
+      {
+        name: `Irrigation system installation (${tier === "PREMIUM" ? "Premium" : "Standard"})`,
+        description: `${doc.heads.length} heads · ${doc.zones.length} zones · ${totals.manHours.total} est. hours · ${zoneNames}`,
+        quantity: 1,
+        unit: "job",
+        unitPrice: totals.sellPrice,
+      },
+    ];
+    return { doc, materials, totals, lineItems };
   }
 
-  const subtotal = lineItems.reduce((s, i) => s + i.quantity * i.unitPrice, 0);
+  const standard = tierPayload("STANDARD");
+  const premium = params.includePremiumOption !== false ? tierPayload("PREMIUM") : null;
 
   return {
     externalId: `design:${params.projectId}:${params.versionId}`,
@@ -83,16 +92,49 @@ export function buildCrmEstimatePayload(params: {
     designVersionId: params.versionId,
     status: params.status ?? "DRAFT",
     notes: `Exported from Design: ${params.projectName} (${params.versionLabel})`,
-    lineItems,
+    lineItems: standard.lineItems,
+    quoteTier: "STANDARD" as const,
+    estimatedManHours: standard.totals.manHours.total,
+    installDurationDays: params.installDurationDays ?? 4,
+    designInternalBom: standard.materials,
+    premiumOptionTotal: premium?.totals.sellPrice,
+    premiumOption: premium
+      ? {
+          sellTotal: premium.totals.sellPrice,
+          lineItems: premium.lineItems,
+        }
+      : undefined,
     designExportMetadata: {
       projectName: params.projectName,
       versionLabel: params.versionLabel,
       zoneCount: params.doc.hydrozones?.length ?? 0,
       headCount: params.doc.heads?.length ?? 0,
-      costSubtotal: totals.subtotal,
+      estimatedManHours: standard.totals.manHours.total,
+      manHoursBreakdown: standard.totals.manHours,
+      costSubtotal: standard.totals.subtotal,
+      laborCost: standard.totals.laborCost,
+      totalCost: standard.totals.totalCost,
       marginPercent,
-      sellSubtotal: subtotal,
+      sellSubtotal: standard.totals.sellPrice,
+      premiumSellTotal: premium?.totals.sellPrice,
+      internalBom: standard.materials,
+      premiumInternalBom: premium?.materials,
       warnings: params.warnings ?? [],
+      designSnapshot: {
+        zones: params.doc.zones,
+        heads: params.doc.heads.map((h) => ({
+          id: h.id,
+          zoneId: h.zoneId,
+          position: h.position,
+          catalogItemId: h.catalogItemId,
+        })),
+        pipes: params.doc.pipes,
+        valves: params.doc.valves,
+        equipment: params.doc.equipment,
+        hydrozones: params.doc.hydrozones,
+      },
     },
   };
 }
+
+export { applyGrossMargin };

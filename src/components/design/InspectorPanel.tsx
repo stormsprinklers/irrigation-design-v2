@@ -46,7 +46,14 @@ export function InspectorPanel({
     scalePointA,
     scalePointB,
     activeZoneId,
+    activeTool,
+    pendingSiteFeatureType,
+    pendingExclusionType,
+    equipmentPlacementType,
     setActiveZoneId,
+    setPendingSiteFeatureType,
+    setPendingExclusionType,
+    setEquipmentPlacementType,
   } = useDesignStore();
 
   const scaleFeetRef = useRef<HTMLInputElement>(null);
@@ -172,6 +179,70 @@ export function InspectorPanel({
           />
         </section>
 
+        <section className="space-y-3">
+          <h3 className="text-sm font-medium">Drawing options</h3>
+          {activeTool === "exclusion" && (
+            <div>
+              <Label className="text-xs">Exclusion type</Label>
+              <NativeSelect
+                className="mt-1"
+                value={pendingExclusionType}
+                onChange={(e) => setPendingExclusionType(e.target.value as typeof pendingExclusionType)}
+              >
+                {["BUILDING", "DRIVEWAY", "PATIO", "FENCE", "TREE", "SLOPE", "NO_OVERSPRAY"].map((t) => (
+                  <option key={t} value={t}>
+                    {t.replace(/_/g, " ")}
+                  </option>
+                ))}
+              </NativeSelect>
+            </div>
+          )}
+          {activeTool === "siteFeature" && (
+            <div>
+              <Label className="text-xs">Site feature</Label>
+              <NativeSelect
+                className="mt-1"
+                value={pendingSiteFeatureType}
+                onChange={(e) => setPendingSiteFeatureType(e.target.value as typeof pendingSiteFeatureType)}
+              >
+                {["SLOPE", "FENCE", "RETAINING_WALL", "CONCRETE"].map((t) => (
+                  <option key={t} value={t}>
+                    {t.replace(/_/g, " ")}
+                  </option>
+                ))}
+              </NativeSelect>
+            </div>
+          )}
+          {activeTool === "equipment" && (
+            <div>
+              <Label className="text-xs">Equipment type</Label>
+              <NativeSelect
+                className="mt-1"
+                value={equipmentPlacementType}
+                onChange={(e) => setEquipmentPlacementType(e.target.value as typeof equipmentPlacementType)}
+              >
+                {[
+                  "POC",
+                  "BACKFLOW",
+                  "FILTER",
+                  "PRESSURE_REGULATOR",
+                  "FLOW_SENSOR",
+                  "WEATHER_SENSOR",
+                  "CONTROLLER",
+                ].map((t) => (
+                  <option key={t} value={t}>
+                    {t.replace(/_/g, " ")}
+                  </option>
+                ))}
+              </NativeSelect>
+              <p className="mt-1 text-xs text-muted-foreground">Click on the map to place.</p>
+            </div>
+          )}
+          {(activeTool === "valve" || activeTool === "pipe" || activeTool === "head") && (
+            <p className="text-xs text-muted-foreground">Click on the map to place.</p>
+          )}
+        </section>
+
         <section className="space-y-3" data-tour="tour-zone-isolation">
           <h3 className="text-sm font-medium">Zone isolation</h3>
           <NativeSelect
@@ -272,6 +343,64 @@ export function InspectorPanel({
                 {["SPRAY", "ROTOR", "MP_ROTATOR", "DRIP"].map((t) => (
                   <option key={t} value={t}>
                     {t.replace("_", " ")}
+                  </option>
+                ))}
+              </NativeSelect>
+            </div>
+            <div>
+              <Label className="text-xs">Sun exposure</Label>
+              <NativeSelect
+                className="mt-1"
+                value={selectedHydrozone.sunExposure}
+                onChange={(e) => {
+                  const hydrozones = document.hydrozones.map((h) =>
+                    h.id === selectedHydrozone.id
+                      ? { ...h, sunExposure: e.target.value as typeof h.sunExposure }
+                      : h
+                  );
+                  setDocument({ ...document, hydrozones });
+                }}
+              >
+                {["FULL_SUN", "PART_SHADE", "FULL_SHADE"].map((t) => (
+                  <option key={t} value={t}>
+                    {t.replace(/_/g, " ")}
+                  </option>
+                ))}
+              </NativeSelect>
+            </div>
+            <div>
+              <Label className="text-xs">Slope (%)</Label>
+              <Input
+                type="number"
+                min={0}
+                value={selectedHydrozone.slopePercent}
+                onChange={(e) => {
+                  const hydrozones = document.hydrozones.map((h) =>
+                    h.id === selectedHydrozone.id
+                      ? { ...h, slopePercent: Number(e.target.value) }
+                      : h
+                  );
+                  setDocument({ ...document, hydrozones });
+                }}
+              />
+            </div>
+            <div>
+              <Label className="text-xs">Soil type</Label>
+              <NativeSelect
+                className="mt-1"
+                value={selectedHydrozone.soilType}
+                onChange={(e) => {
+                  const hydrozones = document.hydrozones.map((h) =>
+                    h.id === selectedHydrozone.id
+                      ? { ...h, soilType: e.target.value as typeof h.soilType }
+                      : h
+                  );
+                  setDocument({ ...document, hydrozones });
+                }}
+              >
+                {["CLAY", "LOAM", "SAND", "ROCKY"].map((t) => (
+                  <option key={t} value={t}>
+                    {t}
                   </option>
                 ))}
               </NativeSelect>

@@ -57,6 +57,37 @@ export const exclusionZoneSchema = z.object({
   ]),
 });
 
+export const siteFeatureSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  vertices: z.array(pointSchema).min(3),
+  featureType: z.enum(["SLOPE", "FENCE", "RETAINING_WALL", "CONCRETE"]),
+});
+
+export const landscapeAreaSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  vertices: z.array(pointSchema).min(3),
+  areaType: z.enum(["SOD", "TOPSOIL"]),
+  depthInches: z.number().positive().optional(),
+});
+
+export const equipmentPlacementSchema = z.object({
+  id: z.string(),
+  equipmentType: z.enum([
+    "POC",
+    "BACKFLOW",
+    "FILTER",
+    "PRESSURE_REGULATOR",
+    "FLOW_SENSOR",
+    "WEATHER_SENSOR",
+    "CONTROLLER",
+  ]),
+  position: pointSchema,
+  catalogItemId: z.string().optional(),
+  zoneId: z.string().optional(),
+});
+
 export const irrigationZoneSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -107,13 +138,17 @@ export const designDocumentSchema = z.object({
   waterSource: waterSourceSchema.optional(),
   hydrozones: z.array(hydrozoneSchema),
   exclusionZones: z.array(exclusionZoneSchema),
+  siteFeatures: z.array(siteFeatureSchema).default([]),
+  landscapeAreas: z.array(landscapeAreaSchema).default([]),
   zones: z.array(irrigationZoneSchema),
   heads: z.array(sprinklerHeadSchema),
   pipes: z.array(pipeSegmentSchema),
   valves: z.array(valveSchema),
+  equipment: z.array(equipmentPlacementSchema).default([]),
   metadata: z.object({
     units: z.literal("imperial"),
     lastValidatedAt: z.string().optional(),
+    quoteTier: z.enum(["STANDARD", "PREMIUM"]).optional(),
   }),
 });
 

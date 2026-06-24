@@ -1,7 +1,17 @@
 "use client";
 
 import { create } from "zustand";
-import type { CatalogItemData, DesignDocument, Point, SprinklerHead, ValidationIssue } from "@/lib/domain/types";
+import type {
+  CatalogItemData,
+  DesignDocument,
+  EquipmentType,
+  ExclusionType,
+  Point,
+  SiteFeatureType,
+  SprinklerHead,
+  ValidationIssue,
+} from "@/lib/domain/types";
+import { normalizeDesignDocument } from "@/lib/domain/normalize";
 import { EMPTY_DESIGN_DOCUMENT } from "@/lib/domain/types";
 import {
   adjustHeadRadius,
@@ -23,9 +33,14 @@ export type DesignTool =
   | "pan"
   | "hydrozone"
   | "exclusion"
+  | "siteFeature"
+  | "sod"
+  | "topsoil"
   | "scale"
   | "head"
-  | "pipe";
+  | "pipe"
+  | "valve"
+  | "equipment";
 
 type HeadPreset = {
   headBodyId: string;
@@ -39,8 +54,20 @@ type DesignState = {
   document: DesignDocument;
   activeTool: DesignTool;
   activeZoneId: string | null;
+  pendingSiteFeatureType: SiteFeatureType;
+  pendingExclusionType: ExclusionType;
+  equipmentPlacementType: EquipmentType;
   selectedId: string | null;
-  selectedType: "head" | "hydrozone" | "exclusion" | "pipe" | "valve" | null;
+  selectedType:
+    | "head"
+    | "hydrozone"
+    | "exclusion"
+    | "siteFeature"
+    | "landscape"
+    | "pipe"
+    | "valve"
+    | "equipment"
+    | null;
   drawingVertices: Point[];
   scalePointA: Point | null;
   scalePointB: Point | null;
@@ -57,10 +84,14 @@ type DesignState = {
   copiedHeads: SprinklerHead[] | null;
   pasteGeneration: number;
   lastCanvasClick: Point | null;
+  showPipes: boolean;
 
   init: (projectId: string, versionId: string, versionKind: string, doc: DesignDocument) => void;
   setDocument: (doc: DesignDocument) => void;
   setTool: (tool: DesignTool) => void;
+  setPendingSiteFeatureType: (type: SiteFeatureType) => void;
+  setPendingExclusionType: (type: ExclusionType) => void;
+  setEquipmentPlacementType: (type: EquipmentType) => void;
   setActiveZoneId: (zoneId: string | null) => void;
   setSelected: (id: string | null, type: DesignState["selectedType"]) => void;
   clearSelection: () => void;
@@ -112,6 +143,7 @@ type DesignState = {
     pressurePsi?: number
   ) => void;
   applyHeadPreset: (preset: HeadPreset, catalog: CatalogItemData[], pressurePsi?: number) => void;
+  setShowPipes: (show: boolean) => void;
 };
 
 function centeredPosition(
@@ -166,6 +198,9 @@ export const useDesignStore = create<DesignState>((set, get) => ({
   document: EMPTY_DESIGN_DOCUMENT,
   activeTool: "select",
   activeZoneId: null,
+  pendingSiteFeatureType: "SLOPE",
+  pendingExclusionType: "BUILDING",
+  equipmentPlacementType: "BACKFLOW",
   selectedId: null,
   selectedType: null,
   drawingVertices: [],
@@ -184,6 +219,7 @@ export const useDesignStore = create<DesignState>((set, get) => ({
   copiedHeads: null,
   pasteGeneration: 0,
   lastCanvasClick: null,
+  showPipes: true,
 
   init: (projectId, versionId, versionKind, doc) =>
     set((s) => {
@@ -196,7 +232,7 @@ export const useDesignStore = create<DesignState>((set, get) => ({
         projectId,
         versionId,
         versionKind,
-        document: sanitizeDesignHeads(doc),
+        document: sanitizeDesignHeads(normalizeDesignDocument(doc)),
         isDirty: false,
         drawingVertices: [],
         scalePointA: null,
@@ -215,7 +251,16 @@ export const useDesignStore = create<DesignState>((set, get) => ({
       };
     }),
   setDocument: (doc) => set({ document: doc, isDirty: true }),
-  setTool: (tool) => set({ activeTool: tool, drawingVertices: [], scalePointA: null, scalePointB: null }),
+  setTool: (tool) =>
+    set({
+      activeTool: tool,
+      drawingVertices: [],
+      scalePointA: null,
+      scalePointB: null,
+    }),
+  setPendingSiteFeatureType: (type) => set({ pendingSiteFeatureType: type }),
+  setPendingExclusionType: (type) => set({ pendingExclusionType: type }),
+  setEquipmentPlacementType: (type) => set({ equipmentPlacementType: type }),
   setActiveZoneId: (zoneId) => set({ activeZoneId: zoneId }),
   setSelected: (id, type) => set({ selectedId: id, selectedType: type }),
   clearSelection: () => set({ selectedId: null, selectedType: null }),
@@ -269,10 +314,13 @@ export const useDesignStore = create<DesignState>((set, get) => ({
         ...s.document,
         hydrozones: [],
         exclusionZones: [],
+        siteFeatures: [],
+        landscapeAreas: [],
         zones: [],
         heads: [],
         pipes: [],
         valves: [],
+        equipment: [],
       },
       selectedId: null,
       selectedType: null,
@@ -475,4 +523,6 @@ export const useDesignStore = create<DesignState>((set, get) => ({
       pressurePsi
     );
   },
+
+  setShowPipes: (show) => set({ showPipes: show }),
 }));

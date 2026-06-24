@@ -1,4 +1,4 @@
-import { buildMaterialList, calculateMaterialTotal } from "../materials";
+import { buildMaterialList, calculateQuoteTotals } from "../materials";
 import { recommendRuntimes } from "../runtime";
 import { validateDesign } from "../validation";
 import type {
@@ -25,7 +25,7 @@ export type InstallerSchematic = {
     pipes: Array<{ material: string; diameter: number; length: number; frictionPsi: number }>;
   }>;
   materialList: ReturnType<typeof buildMaterialList>;
-  totals: ReturnType<typeof calculateMaterialTotal>;
+  totals: ReturnType<typeof calculateQuoteTotals>;
   validationIssues: ValidationIssue[];
 };
 
@@ -72,7 +72,7 @@ export function buildInstallerSchematic(
 ): InstallerSchematic {
   const catalogMap = new Map(catalog.map((c) => [c.id, c]));
   const materialList = buildMaterialList(doc, catalog, pricing);
-  const totals = calculateMaterialTotal(materialList, pricing);
+  const totals = calculateQuoteTotals(doc, materialList, pricing);
 
   return {
     zones: doc.zones.map((zone) => {

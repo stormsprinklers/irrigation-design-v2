@@ -106,7 +106,7 @@ export function InstallerSchematicView({
           </tbody>
         </table>
         </div>
-        <p className="mt-4 text-right font-semibold">Total: ${schematic.totals.total.toFixed(2)}</p>
+        <p className="mt-4 text-right font-semibold">Total: ${schematic.totals.totalWithTax.toFixed(2)}</p>
       </section>
 
       {schematic.validationIssues.length > 0 && (

@@ -89,6 +89,8 @@ model Project {
   name           String
   customerName   String?
   address        String?
+  crmCustomerId  String?
+  crmPropertyId  String?
   status         ProjectStatus @default(DRAFT)
   organizationId String
   createdById    String
@@ -137,15 +139,37 @@ model PricingProfile {
   isDefault          Boolean  @default(true)
   pipePerFoot        Float    @default(1.25)
   headCost           Float    @default(8.5)
+  nozzleCost         Float    @default(3.5)
+  headBodyCost       Float    @default(5.0)
   valveCost          Float    @default(45)
+  backflowCost       Float    @default(350)
+  filterCost         Float    @default(85)
+  prsCost            Float    @default(45)
+  flowSensorCost     Float    @default(120)
+  weatherSensorCost  Float    @default(180)
+  controllerCost     Float    @default(250)
+  sodPerSqFt         Float    @default(1.25)
+  topsoilPerSqFt     Float    @default(0.85)
+  laborHourlyRate    Float    @default(65)
+  hoursPerHead       Float    @default(0.25)
+  hoursPerZone       Float    @default(2.5)
+  hoursPer100ftPipe  Float    @default(1.5)
+  hoursSlopeModifier Float    @default(0.15)
+  hoursConcreteModifier Float @default(0.25)
+  hoursRetainingWallModifier Float @default(0.2)
+  jobMinimum         Float    @default(2500)
+  grossMarginPercent Float    @default(50)
+  premiumMaintenanceYearPrice Float @default(450)
   laborMultiplier    Float    @default(1.5)
   markup             Float    @default(0.25)
-  targetProfitMarginPercent Float @default(35)
+  targetProfitMarginPercent Float @default(50)
   crmIntegrationEnabled   Boolean @default(false)
   defaultEstimateExpiryDays Int   @default(30)
   tax                Float    @default(0.08)
   wasteFactor        Float    @default(0.1)
   fittingAssumptions Json     @default("{}")
+  pipePricingByDiameter Json  @default("{}")
+  catalogCostOverrides Json   @default("{}")
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 

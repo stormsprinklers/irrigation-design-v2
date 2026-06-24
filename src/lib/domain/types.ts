@@ -9,6 +9,19 @@ export type ExclusionType =
   | "TREE"
   | "SLOPE"
   | "NO_OVERSPRAY";
+
+export type SiteFeatureType = "SLOPE" | "FENCE" | "RETAINING_WALL" | "CONCRETE";
+export type LandscapeAreaType = "SOD" | "TOPSOIL";
+export type EquipmentType =
+  | "POC"
+  | "BACKFLOW"
+  | "FILTER"
+  | "PRESSURE_REGULATOR"
+  | "FLOW_SENSOR"
+  | "WEATHER_SENSOR"
+  | "CONTROLLER";
+
+export type QuoteTier = "STANDARD" | "PREMIUM";
 export type SunExposure = "FULL_SUN" | "PART_SHADE" | "FULL_SHADE";
 export type SoilType = "CLAY" | "LOAM" | "SAND" | "ROCKY";
 export type HeadFamily = "SPRAY" | "ROTOR" | "MP_ROTATOR" | "DRIP";
@@ -85,6 +98,29 @@ export type ExclusionZone = {
   exclusionType: ExclusionType;
 };
 
+export type SiteFeaturePolygon = {
+  id: string;
+  name: string;
+  vertices: Point[];
+  featureType: SiteFeatureType;
+};
+
+export type LandscapeArea = {
+  id: string;
+  name: string;
+  vertices: Point[];
+  areaType: LandscapeAreaType;
+  depthInches?: number;
+};
+
+export type EquipmentPlacement = {
+  id: string;
+  equipmentType: EquipmentType;
+  position: Point;
+  catalogItemId?: string;
+  zoneId?: string;
+};
+
 export type IrrigationZone = {
   id: string;
   name: string;
@@ -134,6 +170,7 @@ export type Valve = {
 export type DesignMetadata = {
   units: "imperial";
   lastValidatedAt?: string;
+  quoteTier?: QuoteTier;
 };
 
 export type DesignDocument = {
@@ -142,10 +179,13 @@ export type DesignDocument = {
   waterSource?: WaterSourceConfig;
   hydrozones: HydrozonePolygon[];
   exclusionZones: ExclusionZone[];
+  siteFeatures: SiteFeaturePolygon[];
+  landscapeAreas: LandscapeArea[];
   zones: IrrigationZone[];
   heads: SprinklerHead[];
   pipes: PipeSegment[];
   valves: Valve[];
+  equipment: EquipmentPlacement[];
   metadata: DesignMetadata;
 };
 
@@ -183,18 +223,50 @@ export type MaterialLineItem = {
   unit: string;
   unitCost: number;
   extendedCost: number;
+  category?: string;
+};
+
+export type ManHoursBreakdown = {
+  heads: number;
+  zones: number;
+  pipe: number;
+  siteFeatures: number;
+  landscape: number;
+  total: number;
 };
 
 export type PricingProfileData = {
   pipePerFoot: number;
   headCost: number;
+  nozzleCost: number;
+  headBodyCost: number;
   valveCost: number;
+  backflowCost: number;
+  filterCost: number;
+  prsCost: number;
+  flowSensorCost: number;
+  weatherSensorCost: number;
+  controllerCost: number;
+  sodPerSqFt: number;
+  topsoilPerSqFt: number;
+  laborHourlyRate: number;
+  hoursPerHead: number;
+  hoursPerZone: number;
+  hoursPer100ftPipe: number;
+  hoursSlopeModifier: number;
+  hoursConcreteModifier: number;
+  hoursRetainingWallModifier: number;
+  jobMinimum: number;
+  grossMarginPercent: number;
+  premiumMaintenanceYearPrice: number;
   laborMultiplier: number;
   markup: number;
   targetProfitMarginPercent?: number;
   tax: number;
   wasteFactor: number;
   fittingAssumptions: Record<string, number>;
+  pipePricingByDiameter: Record<string, number>;
+  catalogCostOverrides: Record<string, number>;
 };
 
 export type CatalogItemData = {
@@ -213,12 +285,49 @@ export type CatalogItemData = {
   };
 };
 
+export const DEFAULT_PRICING_PROFILE: PricingProfileData = {
+  pipePerFoot: 1.25,
+  headCost: 8.5,
+  nozzleCost: 3.5,
+  headBodyCost: 5.0,
+  valveCost: 45,
+  backflowCost: 350,
+  filterCost: 85,
+  prsCost: 45,
+  flowSensorCost: 120,
+  weatherSensorCost: 180,
+  controllerCost: 250,
+  sodPerSqFt: 1.25,
+  topsoilPerSqFt: 0.85,
+  laborHourlyRate: 65,
+  hoursPerHead: 0.25,
+  hoursPerZone: 2.5,
+  hoursPer100ftPipe: 1.5,
+  hoursSlopeModifier: 0.15,
+  hoursConcreteModifier: 0.25,
+  hoursRetainingWallModifier: 0.2,
+  jobMinimum: 2500,
+  grossMarginPercent: 50,
+  premiumMaintenanceYearPrice: 450,
+  laborMultiplier: 1.5,
+  markup: 0.25,
+  targetProfitMarginPercent: 50,
+  tax: 0.08,
+  wasteFactor: 0.1,
+  fittingAssumptions: { elbow: 2.5, tee: 3.5 },
+  pipePricingByDiameter: {},
+  catalogCostOverrides: {},
+};
+
 export const EMPTY_DESIGN_DOCUMENT: DesignDocument = {
   hydrozones: [],
   exclusionZones: [],
+  siteFeatures: [],
+  landscapeAreas: [],
   zones: [],
   heads: [],
   pipes: [],
   valves: [],
-  metadata: { units: "imperial" },
+  equipment: [],
+  metadata: { units: "imperial", quoteTier: "STANDARD" },
 };
