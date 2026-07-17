@@ -265,11 +265,11 @@ export function TourHelpButton() {
     <button
       type="button"
       onClick={() => startTour()}
-      className="flex h-8 w-8 items-center justify-center rounded-md border bg-background text-muted-foreground hover:bg-accent hover:text-foreground"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border bg-background text-muted-foreground hover:bg-accent hover:text-foreground sm:h-9 sm:w-9"
       title="Design workspace tour"
       aria-label="Start design workspace tour"
     >
-      <CircleHelp className="h-4 w-4" />
+      <CircleHelp className="h-5 w-5 sm:h-4 sm:w-4" />
     </button>
   );
 }

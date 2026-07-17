@@ -432,8 +432,8 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
   const stageWidth = Math.max(viewportSize.width, 1);
   const stageHeight = Math.max(viewportSize.height, 1);
   const isPanTool = activeTool === "pan";
-  const headRadius = isMobile ? 8 : 6;
-  const headHitStroke = isMobile ? 16 : 8;
+  const headRadius = isMobile ? 12 : 6;
+  const headHitStroke = isMobile ? 28 : 8;
   const needsTouchActionNone = isPanTool || isPlacementTool || isMobile;
 
   return (
@@ -459,6 +459,8 @@ export function DesignCanvas({ imageUrl, catalog, onCanvasClick }: Props) {
         isPanningRef.current = false;
         lastPanPointRef.current = null;
         setPreviewPoint(null);
+        activePointersRef.current.clear();
+        pinchRef.current = null;
       }}
     >
       <Stage

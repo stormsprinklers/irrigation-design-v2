@@ -43,7 +43,7 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
       data-tour="tour-versions"
     >
       <NativeSelect
-        className="h-9 w-full min-w-0 py-1 sm:h-8 sm:w-auto"
+        className="h-11 w-full min-w-0 py-1 sm:h-8 sm:w-auto"
         value={activeVersionId}
         onChange={(e) => handleRestore(e.target.value)}
       >
@@ -54,7 +54,7 @@ export function VersionSelector({ projectId, versions, activeVersionId }: Props)
         ))}
       </NativeSelect>
       <Input
-        className="h-9 w-full min-w-0 sm:h-8 sm:w-40"
+        className="h-11 w-full min-w-0 sm:h-8 sm:w-40"
         placeholder="Version label"
         value={label}
         onChange={(e) => setLabel(e.target.value)}

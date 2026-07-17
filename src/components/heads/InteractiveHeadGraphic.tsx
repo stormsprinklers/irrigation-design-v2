@@ -115,6 +115,7 @@ export function InteractiveHeadGraphic({
       ? { stripPattern, patternWidthFt, patternLengthFt }
       : null;
   const markerRadius = headMarkerRadius ?? (selected ? 9 : 6);
+  const touchFriendly = headHitStrokeWidth >= 20;
   const canEdit = editable && !ghost && !locked;
 
   function stopBubble(e: Konva.KonvaEventObject<unknown>) {
@@ -241,10 +242,11 @@ export function InteractiveHeadGraphic({
           <Circle
             x={handlePos.x}
             y={handlePos.y}
-            radius={7}
+            radius={touchFriendly ? 12 : 7}
             fill="#f59e0b"
             stroke="#fff"
             strokeWidth={1.5}
+            hitStrokeWidth={touchFriendly ? 24 : 0}
             draggable
             onMouseDown={stopBubble}
             onTouchStart={stopBubble}
@@ -280,6 +282,7 @@ export function InteractiveHeadGraphic({
                 x={minusPos.x}
                 y={minusPos.y}
                 label="−"
+                touchFriendly={touchFriendly}
                 disabled={head.arcDegrees <= adjustability.arcDegreesMin}
                 onPress={() => adjustArc(-arcStep)}
                 onPressStart={() => {
@@ -295,6 +298,7 @@ export function InteractiveHeadGraphic({
                 x={plusPos.x}
                 y={plusPos.y}
                 label="+"
+                touchFriendly={touchFriendly}
                 disabled={head.arcDegrees >= adjustability.arcDegreesMax}
                 onPress={() => adjustArc(arcStep)}
                 onPressStart={() => {
@@ -319,6 +323,7 @@ function ArcAdjustButton({
   y,
   label,
   disabled,
+  touchFriendly = false,
   onPress,
   onPressStart,
   onPressEnd,
@@ -327,12 +332,13 @@ function ArcAdjustButton({
   y: number;
   label: string;
   disabled: boolean;
+  touchFriendly?: boolean;
   onPress: () => boolean;
   onPressStart?: () => void;
   onPressEnd?: () => void;
 }) {
-  const size = 16;
-  const hitPad = 6;
+  const size = touchFriendly ? 22 : 16;
+  const hitPad = touchFriendly ? 14 : 6;
   const pressingRef = useRef(false);
   const timersRef = useRef<{
     delay?: ReturnType<typeof setTimeout>;

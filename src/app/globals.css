@@ -71,6 +71,14 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+  button,
+  a,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
   select,
   option {
     background-color: var(--background);
